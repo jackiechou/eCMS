@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.ConvalescenceLeave;
+}
+
+<div id="MainBody">
+    @Html.Partial("../Business/HumanResources/SecurityInsurance/Convalescence/_Index")
+</div>
+
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    /*Lấy dữ liệu*/
+    function CreateData() {
+        // Update Item
+        $.ajax({
+            type: "POST",
+            url: "CreateData",
+            data: $("#frmCreateData").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    }
+    $(document).on("click", "#btnCreateData", function () {
+        $("body").addClass("loading");
+        CreateData();
+    });
+    /*Lưu*/
+    $(document).on("click", "#btnAdd", function () {
+        //Kiểm tra phải nhập số ngày nghỉ
+        var check = true;
+        $(".inputDays").each(function (index, elem) {
+            if ($(elem).val() == '') {
+                check = false;
+            }
+        });
+
+        if (check) {
+            $.ajax({
+                type: "POST",
+                url: "Save",
+                data: $("#frmList").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        CreateData();
+                        AlterUpdateSuccess();
+                    } else {
+                        AlterWarning(data);
+                    }
+                }
+            });
+        } else {
+            AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.PleaseEnterTheNumberOfDaysOff)');
+        }
+    });
+
+    /*Format number*/
+    Number.prototype.format = function (n, x, s, c) {
+        var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+            num = this.toFixed(Math.max(0, ~~n));
+
+        return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+    };
+
+    /*Tính Amount*/
+    function Amount(k) {
+
+        var days = $("input[name='[" + k + "].Days']").val();
+        var minSalary = $("input[name='[" + k + "].MinSalary']").val();
+        var percent = $("input[name='[" + k + "].Percent']").val();
+        var amount = 0;
+        if (days != '' && !isNaN(days)) {
+            amount = (days * minSalary * percent) / 100;
+        }
+        $("#a-" + k).html(amount.format(0, 3, ',', '.'));
+    }
+    /*Tập trung - không tập trung*/
+    $(document).on("change", ".IsConcentrate", function () {
+        var k = $(this).data("id");
+        if ($(this).val() == 'True') {
+            $("#sp-" + k).html(40 + '%');
+            $("input[name='[" + k + "].Percent']").val(40);
+        } else {
+            $("#sp-" + k).html(25 +'%');
+            $("input[name='[" + k + "].Percent']").val(25);
+        }
+
+        Amount(k);
+    });
+
+   /*Số ngày nghỉ*/
+    $(document).on("change", ".inputDays", function () {
+        var k = $(this).data("id");
+        Amount(k);
+    });
+
+    /*Mở rộng màn hình khi load*/
+    $(document).ready(function () {
+        $('#changeSidebarPos').trigger('click');
+    });
+</script>
+
+<script>
+    /*Tìm kiếm*/
+    function LoadGridSearch() {
+        $.ajax({
+            type: "POST",
+            url: "Search",
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    }
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        LoadGridSearch();
+    });
+
+    /*Xóa*/
+
+    $(document).on("click", ".deleteItem", function (e) {
+        var ID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "Delete?id=" + ID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                LoadGridSearch();
+                            } else {
+                                AlterWarning(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

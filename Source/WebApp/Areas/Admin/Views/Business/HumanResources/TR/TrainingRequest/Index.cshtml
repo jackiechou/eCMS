@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingRequest;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../Business/HumanResources/Training/TrainingRequest/_Reset")
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+@Html.Action("_PopupEmployeePartial", "TrainingRequest", null)
+
+<script>    
+    var Controller = 'TrainingRequest';
+
+    //Url Reset (Get)
+    var urlResetRequest = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Post)
+    var urlApproval = areas + '/' + Controller + '/Approval';
+
+    //Url redirect (Post)
+    var urlRedirect = areas + '/' + 'TrainingRequestList' + '/Index';
+
+    var urlAddItem = areas + '/' + Controller + '/AddItem';
+
+    var urlRedirectTrainingPlanList = areas + '/' + 'TrainingPlanList' + '/Index';
+
+    $('#changeSidebarPos').trigger('click');
+</script>
+<script src="~/Scripts/app/common/ValidateUtils.js"></script>
+<script src="~/Scripts/app/common/utility.js"></script>
+
+<script>
+    $(document).on("change", "#CheckAll", function () {
+
+        if ($(this).attr('checked')) {
+            $("input[name='Checked']").prop("checked", true)
+        } else {
+            $("input[name='Checked']").prop("checked", false)
+        }
+
+    });
+
+    $(document).on("click", "#btnSelect", function () {
+        loading();
+        var itemselected = '';
+        $("input[name='Checked']").each(function () {
+
+            if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                itemselected += $(this).val() + ';';
+            }
+        });
+
+        GetListOfEmployee(itemselected);
+
+    });
+</script>
+
+<script>       
+    // Save of TrainingRequest
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            AddNew('Save');
+        }
+
+    });
+
+    // SendForApproval of TrainingRequest
+    $(document).on("click", "#btnSendForApproval", function () {
+
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            AddNew('SendForApproval');
+        }
+
+    });
+
+    // Approval a TrainingRequest
+    $(document).on("click", "#btnApproval", function () {
+        Approval('Approval');
+    });
+
+    // UnApproval a TrainingRequest
+    $(document).on("click", "#btnUnApproval", function () {
+        Approval('UnApproval');
+    });
+
+    // Adding TrainingRequest with mode
+    function AddNew(mode) {
+
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlAddNew + '?mode=' + mode,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    window.location.href = urlRedirect;
+                } else if (data == 'timeout') {
+                    window.location.href = '/';
+                } else {
+                    $('#divEdit').html(data);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            }
+        });
+    }
+
+    // Update TrainingRequest with mode
+    function Approval(mode) {
+        $("body").addClass("loading");
+        if ($('#btnApproval').hasClass("AddModel")) {
+            //Add new Item
+            $.ajax({
+                type: "POST",
+                url: urlApproval + '?mode=' + mode,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlReset,
+                            success: function (data) {
+                                $('#MainBody').html(data);
+                                AlterAddSuccess();
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        }
+    }
+
+    $(document).on("click", "#btnReset", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlResetRequest,
+            success: function (data) {
+                $('#MainBody').html(data);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnList", function () {
+        window.location.href = urlRedirect;
+    });
+</script>

@@ -22,7 +22,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return PartialView("../SYS/Group/_Reset");
+                return PartialView("../Sys/Group/_Reset");
             }
             else
             {
@@ -31,7 +31,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                     Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                     return null;
                 }
-                return View("../SYS/Group/Index");
+                return View("../Sys/Group/Index");
             }
         }
         // load danh sach grid nhom
@@ -42,7 +42,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             {
                 RoleRepository _repository = new RoleRepository(db);
                 IList<GroupViewModel> sources = _repository.List().ToList();
-                return PartialView("../SYS/Group/_List", sources);
+                return PartialView("../Sys/Group/_List", sources);
             }
             else
             {
@@ -52,13 +52,13 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         public ActionResult _Create()
         {
             GroupCreateViewModel acc = new GroupCreateViewModel();
-            return PartialView("../SYS/Group/_Create", acc);
+            return PartialView("../Sys/Group/_Create", acc);
         }
         public ActionResult _Edit(int id)
         {
             RoleRepository _repository = new RoleRepository(db);
             GroupCreateViewModel model = _repository.FindEdit(id);
-            return PartialView("../SYS/Group/_Create", model);
+            return PartialView("../Sys/Group/_Create", model);
         }
 
         [HttpPost]
@@ -140,7 +140,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             ViewBag.SortMessage = Eagle.Resource.LanguageResource.Warning;
             ViewBag.Message = ErrorMessage;
 
-            return PartialView("../SYS/Group/_Create", acc);
+            return PartialView("../Sys/Group/_Create", acc);
         }
 
         /// <summary>

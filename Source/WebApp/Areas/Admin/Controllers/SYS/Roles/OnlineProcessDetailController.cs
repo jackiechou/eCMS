@@ -31,13 +31,13 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             }
             ViewBag.OnlineProcessID = new SelectList(list, "Id", "Name");
             #endregion
-            return View("../SYS/OnlineProcessDetail/Index");
+            return View("../Sys/OnlineProcessDetail/Index");
         }
         public ActionResult _List()
         {
             OnlineProcessDetailRepository _repository = new OnlineProcessDetailRepository(db);
 
-            return PartialView("../SYS/OnlineProcessDetail/_List", _repository.GetAll());
+            return PartialView("../Sys/OnlineProcessDetail/_List", _repository.GetAll());
         }
        
         public ActionResult UpdateOnlineProcessDetail(int OnlineProcessEmpID, bool ApproveLevel1, bool ApproveLevel2, bool ApproveLevel3, bool ApproveLevel4, bool ApproveLevel5)
@@ -188,7 +188,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                                                                       Checked = (CurrentDepartmentChecked != null && company.LSCompanyID == CurrentDepartmentChecked)
                                                           })
                                                         .ToList();
-            return PartialView("../SYS/OnlineProcessDetail/_DepartmentList", result);
+            return PartialView("../Sys/OnlineProcessDetail/_DepartmentList", result);
         }
 
         /*Description: Hàm này dùng để lấy xem Quy trình này có tổng bao nhiêu cấp duyệt

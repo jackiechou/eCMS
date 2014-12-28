@@ -1,0 +1,349 @@
+﻿@{
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.TerminationList);
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+     <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass    ">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage     !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div id="divEdit">
+        @Html.Partial("../Business/HumanResources/Termination/TerminationInfo/_SearchForm")
+    </div>
+
+    <div id="divList">
+       @Html.Action("_SearchResults", "TerminationInfo")
+    </div>
+</div>
+}
+@Html.Action("ConfirmPopup", "Common", null)
+
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    InvokeDataTables();
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                        case 1:
+                            DataMgr.BindDetails(data);
+                            break;
+                        case 2:
+                            DataMgr.BindDataToGrid(data);
+                            break;
+                        case 3:
+                            DataMgr.ReloadData(data);
+                            break;
+                        case 3:
+                            DataMgr.ResetControls();
+                            break;
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {                    
+                    ShowDateTimePicker();
+                    $.validator.methods["date"] = function (value, element) { return true; }
+                    //Company - Deparment - Section ===============================================================================================================================
+                    DataMgr.LoadComboTree('selectLSCompanyID', '@Url.Action("GetHierachicalList", "LS_tblCompany")', true); 
+                    //END SELECT2 EVENTS ----------------------------------------------------------------------------------------------------------------------------------------
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "Employee")',
+                     'selectEmpID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'EmpID', 'FullName');                    
+                },
+                Compare2Dates: function (sDate1, sDate2) {
+                    //Date Type : MM/dd/yyyy
+                    var result = false;
+                    if (sDate1 != '' && sDate2 != '') {
+                        var arrDate1 = sDate1.split("/");
+                        var arrDate2 = sDate2.split("/");
+                        var Date1 = new Date(arrDate1[2], arrDate1[0], arrDate1[1]);
+                        var Date2 = new Date(arrDate2[2], arrDate2[0], arrDate2[1]);
+                        if (Date1 > Date2) {
+                            result = false;
+                            showMessageWithTitle('warning', '@Html.Raw(Eagle.Resource.LanguageResource.ValidateInformedDateEffectiveDate)', 'warning', 3000);
+                        }
+                        else
+                            result = true;
+                    }else
+                        result = true;
+                    return result;
+                },
+                BindEvents: function () {
+                    //Tim kiem
+                    $(document).on("click", "#btnSearch", function () {
+                        var LSCompanyID = $("#selectLSCompanyID").val();
+                        var FullName = $("#FullName").val();
+                        var EmpCode = $("#EmpCode").val();
+                        var InformedDate = $("input[type=hidden][id=InformedDate]").val();
+                        var EffectiveDate = $("input[type=hidden][id=EffectiveDate]").val();
+                        var result = false;
+                        if (LSCompanyID == '') {
+                            result = false;
+                            showMessageWithTitle('warning', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseChooseCompany)', 'warning', 3000);
+                        } else {
+                            result = DataMgr.Compare2Dates(InformedDate, EffectiveDate);
+                            if (result == true) {
+                                var params = {};
+                                window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                                    params[key] = value;
+                                });
+                                var data = {
+                                    "LSCompanyID": LSCompanyID,
+                                    "FullName": FullName,
+                                    "EmpCode": EmpCode,
+                                    "InformedDate": InformedDate,
+                                    "EffectiveDate": EffectiveDate,
+                                    "ModuleId": params["ModuleID"]
+                                };                                
+                                DataMgr.SearchData(data);
+                            }
+                        }                                            
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").not(":disabled").valid()) { // Not Valid
+                            return false;
+                        } else {
+                           // DataMgr.RemoveQtip();
+                            // Update Item                           
+                            var data = DataMgr.ConvertFormToJSON("myform");
+                            DataMgr.UpdateData(data);
+                        }
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        window.location.href = areas + "/TerminationInfo/Create?ModuleID=12&TerminationID=" + ID;                        
+                        //DataMgr.GetDetails(ID);                       
+                        ////Go to top
+                        //$('html, body').animate({ scrollTop: 330 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu                       
+                        DataMgr.config.mode = 3;
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {                                    
+                                    DataMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+                    // Click update Status (get)
+                    $(document).on("click", ".updateStatusItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        DataMgr.config.mode = 2;
+                        DataMgr.UpdateStatusData(ID);
+                        return false;
+                    });
+
+                },               
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                LoadComboTree: function (selectId, actionUrl, isRequired) {
+                    var selectBox = $('#' + selectId);
+
+                    var hiddenBox = $('input[type=hidden][name="' + selectId + '"]');
+                    var selectedValue = selectBox.val();
+
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            selectBox.val(selectedValue);
+                            hiddenBox.val(selectedValue);
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },
+                SearchData: function (data) {                   
+                    this.config.method = "_SearchResults";
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                BindDataToGrid: function (data) {
+                    $('#divList').html(data);
+                    InvokeDataTables();
+                },
+                GetDetails: function (id) {
+                    DataMgr.config.mode = 2;
+                    var data = { "id": id };
+                    this.config.method = "Details";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {                 
+                   $('#divEdit').html(data);
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 3;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    var data = { "id": ID };
+                    this.config.method = "Delete";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = JSON.stringify(data);
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 3;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+                    else if (mode == 3) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    }
+                    else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    if (result.flag == 'true') {  
+                            var params = {};
+                            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                                params[key] = value;
+                            });
+                            var data = {
+                                "LSCompanyID": $("#selectLSCompanyID").val(),
+                                "FullName": $("#FullName").val(),
+                                "EmpCode": $("#EmpCode").val(),
+                                "InformedDate": $("input[type=hidden][id=InformedDate]").val(),
+                                "EffectiveDate": $("input[type=hidden][id=EffectiveDate]").val(),
+                                "ModuleId": params["ModuleID"]
+                            };
+                            DataMgr.SearchData(data);
+                       
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error");
+                        hideMessageWithTitle(20000);
+                    }
+                },              
+                ResetControls: function () {                                   
+                    var validateObj = $('#myform');
+                    validateObj.find('input:text, input:password, input:file, select, textarea').val('');
+                    validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                    validateObj.find('input[type="number"]').val(0);
+                    validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                    ShowDateTimePicker();
+                    $.validator.methods["date"] = function (value, element) { return true; }
+                }               
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'TerminationInfo';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "MainBody",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

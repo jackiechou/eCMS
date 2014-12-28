@@ -29,7 +29,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                 Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                 return null;
             }
-            return View("../SYS/FunctionPermission/Index");
+            return View("../Sys/FunctionPermission/Index");
         }
 
         [HttpGet]
@@ -104,7 +104,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             List<GroupViewModel> sources = _repository.ListBox();
             ViewData["lstGroup"] = new SelectList(sources, "GroupID", "GroupName"); ;
 
-            return PartialView("../SYS/FunctionPermission/_Create");
+            return PartialView("../Sys/FunctionPermission/_Create");
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                                             FEdit = p.FEdit == true
                                             
                                         }).ToList();
-            return PartialView("../SYS/FunctionPermission/_FunctionList", functionList);
+            return PartialView("../Sys/FunctionPermission/_FunctionList", functionList);
         }
         /// <summary>
         /// Dùng cho viec binding du lieu cho dropdownlist autocomplete

@@ -17,7 +17,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Roles
         public ActionResult GetRolePermission()
         {
             List<RoleModulePermissionViewModel> sources = RoleRepository.GetRolePermissions();
-            return PartialView("../SYS/Roles/_RolePermission", sources);
+            return PartialView("../Sys/Roles/_RolePermission", sources);
         }
 
 

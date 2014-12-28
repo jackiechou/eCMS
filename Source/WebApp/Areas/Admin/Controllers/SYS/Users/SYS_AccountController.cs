@@ -24,7 +24,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return PartialView("../SYS/Account/_Reset");
+                return PartialView("../Sys/Account/_Reset");
             }
             else
             {
@@ -33,7 +33,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                     Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                     return null;
                 }
-                return View("../SYS/Account/Index");
+                return View("../Sys/Account/Index");
             }
         }
         // load danh sach grid nhom
@@ -50,13 +50,13 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                 sources = _repository.Search(account.UserName, moduleId, account.FAdm == 1).ToList();
             }
 
-            return PartialView("../SYS/Account/_List", sources);
+            return PartialView("../Sys/Account/_List", sources);
         }
         public ActionResult _Create()
         {
             AccountCreateModel acc = new AccountCreateModel();
 
-            return PartialView("../SYS/Account/_Create", acc);
+            return PartialView("../Sys/Account/_Create", acc);
         }
 
         public ActionResult _Edit(int id)
@@ -64,7 +64,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             UserRepository _repository = new UserRepository(db);
             AccountCreateModel model = _repository.FindEditModel(id);
             ViewBag.PasswordVis = false;
-            return PartialView("../SYS/Account/_Create", model);
+            return PartialView("../Sys/Account/_Create", model);
         }
 
 
@@ -180,7 +180,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
 
             ViewBag.PasswordVis = !EditMode;
 
-            return PartialView("../SYS/Account/_Create", acc);
+            return PartialView("../Sys/Account/_Create", acc);
         }
 
         /// <summary>
@@ -189,11 +189,11 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult _PopupEmployeePartial()
         {
-            return PartialView("../SYS/Account/_PopupEmployeePartial");
+            return PartialView("../Sys/Account/_PopupEmployeePartial");
         }
         public ActionResult _SearchAreasPartial()
         {
-            return PartialView("../SYS/Account/_SearchAreasPartial");
+            return PartialView("../Sys/Account/_SearchAreasPartial");
         }
 
         public ActionResult _SearchResultsForPopup(string EmpCode, string FullName, int? LSCompanyID, bool? Active, int? moduleId)
@@ -214,7 +214,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             }
 	        
 
-            return PartialView("../SYS/Account/_SearchResultsForPopup", Employeelst);
+            return PartialView("../Sys/Account/_SearchResultsForPopup", Employeelst);
         }
         
     }

@@ -24,7 +24,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                 Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                 return null;
             }
-            return View("../SYS/UserGroup/Index");
+            return View("../Sys/UserGroup/Index");
         }
         public ActionResult _Create()
         {
@@ -37,7 +37,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             SelectList UserListAssigned = new SelectList(sources1, "UserID", "UserName");
             ViewData["lstBoxAssigned"] = UserListAssigned;
 
-            return PartialView("../SYS/UserGroup/_Create");
+            return PartialView("../Sys/UserGroup/_Create");
         }
         public JsonResult _ListUser(int? groupID)
         {
@@ -161,7 +161,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             ViewBag.SortMessage = Eagle.Resource.LanguageResource.Warning;
             ViewBag.Message = ErrorMessage;
 
-            return PartialView("../SYS/UserGroup/_Create", model);
+            return PartialView("../Sys/UserGroup/_Create", model);
         }
 
     }

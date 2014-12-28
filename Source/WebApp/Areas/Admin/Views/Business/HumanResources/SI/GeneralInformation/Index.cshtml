@@ -1,0 +1,462 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.GeneralInformation;   
+}
+
+<div id="MainBody">
+    @Html.Partial("../Business/HumanResources/SecurityInsurance/GeneralInformation/_Reset")
+</div>
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+<div id="divTmpForm">
+</div>
+<script>
+    var Controller = 'GeneralInformation';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    //var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    //var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    //var urlDelete = areas + '/' + Controller + '/_Delete/';
+
+</script>
+<script>
+    //Add and update post action
+    $(document).on("click", "#btnAdd", function () {
+        if ($('#frmAdd #EmpID').val() == 0 || $('#frmAdd #EmpID').val() == '') {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseEmployee');
+        } else if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            if ($('#btnAdd').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: urlAddNew,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: urlReset,
+                                success: function (data) {
+                                    $('#MainBody').html(data);
+                                    AlterAddSuccess();
+                                }
+                            });
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            $('#divEdit').html(data);
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        }
+                    }
+                });
+            } else {
+                $("body").addClass("loading");
+                // Update Item
+                $.ajax({
+                    type: "POST",
+                    url: urlUpdate,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: urlReset,
+                                success: function (data) {
+                                    $('#MainBody').html(data);
+                                    AlterUpdateSuccess();
+                                }
+                            });
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        }
+                        else {
+                            $('#divEdit').html(data);
+                            $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    // Reset form
+    $(document).on("click", "#btnReset", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlReset,
+            success: function (data) {
+                $('#MainBody').html(data);
+
+            }
+        });
+    });
+
+
+    function ChooseEmployee(id, code, fullName, company, position, controlId) {
+        $("body").addClass("loading");
+        //Set value
+        $('#EmpCode').val(code);
+        $('#FullName').val(fullName);
+        $('#lblCompanyName').html(company);
+        $('#lblPosition').html(position);
+
+        $('.popupEmp').modal('hide');
+        /*remove qtip*/
+        var qtip = $('#strEmpName').attr('aria-describedby');
+        $('#' + qtip).remove();
+
+        $.ajax({
+            url: areas + "/Common/EmployeeDisplay/?EmpID=" + id,
+            encoding: "UTF-8",
+            dataType: "html",
+            contentType: "text/plain; charset=UTF-8",
+            success: function (data) {
+                $('#LeftPane #avatar-display').html(data);
+                //Reset du lieu
+                $.ajax({
+                    type: "GET",
+                    url: urlReset,
+                    success: function (data) {
+                        $('#MainBody').html(data);
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<!--General infomation-->
+<script type="text/javascript">
+    $(document).on("click", "#btnAddPreviousRecord", function () {
+        var EmpID = $("#EmpID").val();
+        //Nếu chưa chọn Candiate thông báo lỗi else popup
+        if (EmpID == 0) {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseEmployee');
+        } else {
+            //alert(candidateId);
+            $.ajax({
+                type: "GET",
+                url: "_popupTab2PreviousRecordPartial",
+                success: function (data) {
+                    $('#divTmpForm').html(data);
+                    $(".popupTab2PreviousRecord").modal("show");
+                }
+            });
+        }
+    });
+    $(document).on("click", "#btnPRSubmit", function () {
+        if (!$("#frmPreviousRecord").valid()) {
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            if ($('#btnPRSubmit').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: "AddPreviousRecord?EmpID=" + $('#EmpID').val(),
+                    data: $("#frmPreviousRecord").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "_Tab2PreviousRecordPartial",
+                                success: function (list) {
+                                    $('#pane-2').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            //$.ajax({
+                            //    type: "GET",
+                            //    url: "_divTmpForm",
+                            //    success: function (data) {
+                            //        $('#divTmpForm').html(data);
+                            //    }
+                            //});
+                            //Tắt popup
+                            $('.popupTab2PreviousRecord').modal('hide');
+                            AlterAddSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            AlertWarning('alertMessageBoxPopup', data);
+                        }
+                    }
+                });
+            } else {
+                // Update Item
+                $.ajax({
+                    type: "POST",
+                    url: "UpdatePreviousRecord?EmpID=" + $('#EmpID').val(),
+                    data: $("#frmPreviousRecord").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "_Tab2PreviousRecordPartial",
+                                success: function (list) {
+                                    $('#pane-2').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            //$.ajax({
+                            //    type: "GET",
+                            //    url: "_divTmpForm",
+                            //    success: function (data) {
+                            //        $('#divTmpForm').html(data);
+                            //    }
+                            //});
+                            //Tắt popup
+                            $('.popupTab2PreviousRecord').modal('hide');
+                            AlterUpdateSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        }
+                        else {
+                            AlertWarning('alertMessageBoxPopup', data);
+                        }
+                    }
+                });
+            }
+        }
+    });
+    $(document).on("click", "#btnPRCancel", function () {
+        $('.qtip').qtip("hide");
+    });
+    $(document).on("click", ".editPreviousRecord", function () {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "GET",
+            url: "_EditPreviousRecord/" + id,
+            success: function (data) {
+                //Create edit form
+                $('#divTmpForm').html(data);
+                //Add => Edit
+                $('#btnPRSubmit').removeClass("AddModel").addClass("EditModel");
+                $(".popupTab2PreviousRecord").modal("show");
+
+            }
+        });
+    });
+    $(document).on("click", ".deletePreviousRecord", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_DeletePreviousRecord/" + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "_Tab2PreviousRecordPartial",
+                                    success: function (list) {
+                                        $('#pane-2').html(list);
+                                    }
+                                });
+                                AlterUpdateSuccess();
+                            } else {
+                                AlterWarning(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+
+
+    $(document).on("change", "#frmPreviousRecord input[name='FromMonthPicker']", function () {
+        CheckAndSetTime();
+    });
+    $(document).on("change", "#frmPreviousRecord input[name='ToMonthPicker']", function () {
+        CheckAndSetTime();
+    });
+    function CheckAndSetTime() {
+        var fromMonth = $("#frmPreviousRecord input[name='FromMonthPicker']").val();
+        var toMonth = $("#frmPreviousRecord input[name='ToMonthPicker']").val();
+
+        var monthOfFromMonth = fromMonth.substring(0, 2);
+        var yearOfFromMonth = fromMonth.substring(3, 7);
+        var monthOfToMonth = toMonth.substring(0, 2);
+        var yearOfToMonth = toMonth.substring(3, 7);
+        if (yearOfToMonth >= yearOfFromMonth && monthOfToMonth >= monthOfFromMonth) {
+            var NoOfMonth = ((yearOfToMonth - yearOfFromMonth) * 12) + (monthOfToMonth - monthOfFromMonth);
+            $("#lblNoOfMonth").html(NoOfMonth);
+            $("#frmPreviousRecord input[name='NoOfMonth']").val(NoOfMonth);
+        } else {
+            @{
+                string errorMessage = string.Format(Eagle.Resource.LanguageResource.DateCompareInvalid,
+                                                    Eagle.Resource.LanguageResource.ToMonth,
+                                                    Eagle.Resource.LanguageResource.FromMonth);
+                }
+            AlertWarning('alertMessageBoxPopup', '@Html.Raw(errorMessage)');
+        }
+    }
+</script>
+
+<!--HI Card-->
+<script type="text/javascript">
+    $(document).on("click", "#btnAddHICard", function () {
+        var EmpID = $("#EmpID").val();
+        //Nếu chưa chọn Candiate thông báo lỗi else popup
+        if (EmpID == 0) {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseEmployee');
+        } else {
+            //alert(candidateId);
+            $.ajax({
+                type: "GET",
+                url: "_popupTab3HICardPartial",
+                success: function (data) {
+                    $('#divTmpForm').html(data);
+                    $(".popupTab3HICard").modal("show");
+                }
+            });
+        }
+    });
+    $(document).on("click", "#btnHISubmit", function () {
+        if (!$("#frmHICard").valid()) {
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            if ($('#btnHISubmit').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: "AddHICard?EmpID=" + $('#EmpID').val(),
+                    data: $("#frmHICard").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+
+                            if ($("#ChangePlace").prop("checked") == true) {
+                                $("#lblNewHospital").html($("input[name='LSHospitalName']").val());
+                            }
+
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "_Tab3HICardPartial",
+                                success: function (list) {
+                                    $('#pane-3').html(list);
+                                }
+                            });
+                            //Tắt popup
+                            $('.popupTab3HICard').modal('hide');
+                            AlterAddSuccess();
+
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            AlertWarning('alertMessageBoxPopup', data);
+                        }
+                    }
+                });
+            } else {
+                // Update Item
+                $.ajax({
+                    type: "POST",
+                    url: "UpdateHICard?EmpID=" + $('#EmpID').val(),
+                    data: $("#frmHICard").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "_Tab3HICardPartial",
+                                success: function (list) {
+                                    $('#pane-3').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            //$.ajax({
+                            //    type: "GET",
+                            //    url: "_divTmpForm",
+                            //    success: function (data) {
+                            //        $('#divTmpForm').html(data);
+                            //    }
+                            //});
+                            //Tắt popup
+                            $('.popupTab3HICard').modal('hide');
+                            AlterUpdateSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        }
+                        else {
+                            AlertWarning('alertMessageBoxPopup', data);
+                        }
+                    }
+                });
+            }
+        }
+    });
+    $(document).on("click", "#btnHICancel", function () {
+        $('.qtip').qtip("hide");
+    });
+    $(document).on("click", ".editHICard", function () {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "GET",
+            url: "_EditHICard/" + id,
+            success: function (data) {
+                //Create edit form
+                $('#divTmpForm').html(data);
+                //Add => Edit
+                $('#btnHISubmit').removeClass("AddModel").addClass("EditModel");
+                $(".popupTab3HICard").modal("show");
+            }
+        });
+    });
+    $(document).on("click", ".deleteHICard", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_DeleteHICard/" + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "_Tab3HICardPartial",
+                                    success: function (list) {
+                                        $('#pane-3').html(list);
+                                    }
+                                });
+                                AlterUpdateSuccess();
+                            } else {
+                                AlterWarning(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingPlanList;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../Business/HumanResources/Training/TrainingPlanList/_Reset")
+</div>
+}
+@Html.Action("ConfirmPopup","Common",null)
+
+<script type="text/javascript">
+
+    $('#changeSidebarPos').trigger('click');
+
+    var urlSearch = areas + "/TrainingPlanList/_List"
+    var urlCreate = areas + "/TrainingPlanList/_Create"
+    var urlDelete = areas + "/TrainingPlanList/_Delete/"
+    var urlResetPlan = areas + "/TrainingPlanList/Index"
+    
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: urlSearch,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnReset", function () {
+        
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlResetPlan,
+            success: function (data) {
+                $('#MainBody').html(data);
+            }
+        });
+    });    
+</script>

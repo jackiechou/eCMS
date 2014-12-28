@@ -28,7 +28,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
        public ActionResult PopulateListBox()
        {
            SelectList lst = LanguageRepository.PopulateActiveLanguages(null,false);
-           return View("../SYS/Pages/_List", lst);
+           return View("../Sys/Pages/_List", lst);
        }
 
 

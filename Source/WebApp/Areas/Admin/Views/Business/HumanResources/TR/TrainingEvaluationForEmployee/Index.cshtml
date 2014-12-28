@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingEvaluationForEmployee;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;  
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../Business/HumanResources/Training/TrainingEvaluationForEmployee/_Reset")
+</div>
+}
+@Html.Action("ConfirmPopup","Common",null)
+
+<script type="text/javascript">
+
+    $('#changeSidebarPos').trigger('click');
+    
+    var urlSearch = areas + "/TrainingEvaluationForEmployee/List";
+    var urlEvaluation = areas + "/TrainingEvaluation/Index";
+    var urlResetTemplate = areas + "/TrainingEvaluationForEmployee/Index";
+    
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: urlSearch,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });
+    $(document).on("click", "#btnReset", function () {        
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlResetTemplate,
+            success: function (data) {
+                $('#MainBody').html(data);
+            }
+        });
+    });
+</script>

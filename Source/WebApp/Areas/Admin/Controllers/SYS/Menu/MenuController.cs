@@ -31,7 +31,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         [SessionExpiration]
         public ActionResult Index()
         {
-           return View("../SYS/Menu/Index");
+           return View("../Sys/Menu/Index");
         }
 
        
@@ -61,11 +61,11 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         public JsonResult PopulateListBox()
         {  
             //List<MenuModel> sources = MenuRepository.GetTreeList(ScopeTypeId);
-            //return PartialView("../SYS/Menu/_List", sources);
+            //return PartialView("../Sys/Menu/_List", sources);
 
             List<MenuTreeModel> sources = MenuRepository.GetTreeList(ScopeTypeId);
             return base.Json(sources, JsonRequestBehavior.AllowGet);
-            //return PartialView("../SYS/Menu/_List", sources);
+            //return PartialView("../Sys/Menu/_List", sources);
         }
         
         [SessionExpiration]
@@ -77,7 +77,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             ViewBag.MenuTypeId = MenuTypeRepository.PopulateActiveMenuTypeSelectList(ScopeTypeId, LanguageCode, entity.MenuTypeId.ToString(), true);
             ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, entity.PageId.ToString(), true);
             
-            return PartialView("../SYS/Menu/_Edit", entity);
+            return PartialView("../Sys/Menu/_Edit", entity);
         }
 
 

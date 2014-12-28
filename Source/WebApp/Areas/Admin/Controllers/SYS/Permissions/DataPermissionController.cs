@@ -21,7 +21,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             if (Request.IsAjaxRequest())
             {
                 CreateViewBag();
-                return PartialView("../SYS/DataPermission/_Reset");
+                return PartialView("../Sys/DataPermission/_Reset");
             }else
             {
                 if (CurrentAcc == null)
@@ -30,7 +30,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                     return null;
                 }
                 CreateViewBag();
-                return View("../SYS/DataPermission/Index");
+                return View("../Sys/DataPermission/Index");
             }
         }
         private void CreateViewBag()
@@ -130,7 +130,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                                                     select new DataPermissionViewModel() { LSCompanyID = company.LSCompanyID, LSCompanyName = company.Name, Checked = list1 != null, GroupID = GroupID, ModuleID = Function, DataPermissionID = (list1 != null ? list1.DataPermissionID : 0) })
                          .ToList();
 
-            return PartialView("../SYS/DataPermission/_List", result);
+            return PartialView("../Sys/DataPermission/_List", result);
         }
 
 

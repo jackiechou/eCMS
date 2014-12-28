@@ -1,0 +1,79 @@
+﻿@model CandidateViewModel 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmAdd" }))
+    { 
+        <div class="row">
+            <div id="alertMessageBox">
+                @if (ViewBag.DisplayErrorMessage == true)
+                {
+                    <div class="@ViewBag.CssClass">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>@ViewBag.SortMessage !</strong>
+                        <div class="padding-left">
+                            @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div id="collapsedContent">
+                <div class="row">
+                </div>
+            </div>
+            <ul class="nav nav-tabs" id="myTab">
+                <li id="tab-1" class="active"><a href="#pane-1" data-toggle="tab">@Eagle.Resource.LanguageResource.GeneralInfo</a></li>
+                <li id="tab-2"><a href="#pane-2" data-toggle="tab">@Eagle.Resource.LanguageResource.Contact</a></li>
+                <li id="tab-3"><a href="#pane-3" data-toggle="tab">@Eagle.Resource.LanguageResource.CultureEducationStudies</a></li>
+                <li id="tab-4"><a href="#pane-4" data-toggle="tab">@Eagle.Resource.LanguageResource.FavouriteAndSkill</a></li>                
+            </ul>
+
+            <div id="myTabContent" class="tab-content responsive">
+                @Html.Hidden("mode")
+                @Html.HiddenFor(model => model.CandidateID)
+                @Html.HiddenFor(model => model.Result)
+                @Html.HiddenFor(model => model.EmpId)
+                @Html.HiddenFor(model => model.InitialIDNo)
+                @Html.HiddenFor(model => model.InitialCandidateCode)
+                
+                @Html.Partial("../Business/HumanResources/REC/NewCandidate/Tab1GeneralInfoPartial")
+                @Html.Partial("../Business/HumanResources/REC/NewCandidate/Tab2AdderssPartial")
+                @Html.Partial("../Business/HumanResources/REC/NewCandidate/Tab3CultureAndEducationPartial")
+                @Html.Partial("../Business/HumanResources/REC/NewCandidate/Tab4FavouriteAndSkillPartial")
+
+            </div>
+
+        </div>
+    }
+
+
+@Html.Action("jqueryval", "Common", null)
+<script type="text/javascript">
+    InvokeDateTimePicker();
+
+    /*Resource*/
+    var strInputCountry = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCountryName)';
+     var strInputProvince = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputProvinceName)';
+    var strInputDistrict = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputDistrictName)';
+
+    var strInputNationality = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputNationalityName)';
+    var strInputReligion = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputReligionName)';
+    var strInputEthnic = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEthnicName)';
+    var strInputEducation = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEducationName)';
+    var strInputQualification = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputQualificationName)';
+    var strInputMajor = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputMajorName)';
+
+    /*popup bộ 3 autocomplete country - province - district*/
+    PopulateCountryProvinceDistrictToDropDownList("BornLS", strInputCountry, strInputProvince, strInputDistrict);
+    PopulateCountryProvinceDistrictToDropDownList("Native", strInputCountry, strInputProvince, strInputDistrict);
+    PopulateCountryProvinceDistrictToDropDownList("PLS", strInputCountry, strInputProvince, strInputDistrict);
+    PopulateCountryProvinceDistrictToDropDownList("TLS", strInputCountry, strInputProvince, strInputDistrict);
+    /*Pupup autocomplete theo url*/
+    PopulateDropDownListAutoComplete("SelectIDIssuedPlace", "IDIssuedPlace", "IDIssuedPlaceName", strInputProvince, areas + '/LS_tblProvince/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSNationalityID", "LSNationalityID", "LSNationalityName", strInputNationality, areas + '/LS_tblNationality/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSReligionID", "LSReligionID", "LSReligionName", strInputReligion, areas + '/LS_tblReligion/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSEthnicID", "LSEthnicID", "LSEthnicName", strInputEthnic, areas + '/LS_tblEthnic/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSEducationID", "LSEducationID", "LSEducationName", strInputEducation, areas + '/LS_tblEducation/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSQualificationID", "LSQualificationID", "LSQualificationName", strInputQualification, areas + '/LS_tblQualification/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSMajorID", "LSMajorID", "LSMajorName", strInputMajor, areas + '/LS_tblMajor/DropdownList');
+
+</script>

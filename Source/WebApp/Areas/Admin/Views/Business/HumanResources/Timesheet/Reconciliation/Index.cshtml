@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_Reconciliation;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<form id="frmAdd" class="form-horizontal user-group-management">
+    <div id="divEdit">
+        @Html.Partial("../Business/HumanResources/Timesheet/Reconciliation/_Create")
+    </div>
+    <div id="divContent">
+        @Html.Action("_List", "Reconciliation", null)
+    </div>
+</form>
+    }
+<script type="text/javascript">
+    $('#changeSidebarPos').trigger('click');
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var moduleId = getParameterByName("ModuleID");
+        var url = areas + '/Reconciliation/_Search?Status=' + $(".chkActive:checked").val() + "&ModuleID=" + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'timeout') {
+                    window.location.href = '/';
+                } else {
+                    $('#divContent').html(data);
+                }
+            }
+        });
+
+    });
+    // save and update
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        var moduleId = getParameterByName("ModuleID");
+            //Add new Account
+            var url = areas + '/Reconciliation/Save';
+            var urlCreate = areas + '/Reconciliation/_Search?Status=' + $(".chkActive:checked").val() + "&ModuleID=" + moduleId;
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $('#btnSearch').trigger('click');
+                        AlterUpdateSuccess();
+                    } else {
+                        $('#divEdit').html(data);
+                        return false;
+                    }
+                }
+            });
+    });
+    // nut check all tren header
+    $(document).on("change", "#chkCheckAll", function () {
+        var check = $(this).prop("checked");
+        $("input.chkCheck").prop("checked", check);
+
+    });
+</script>

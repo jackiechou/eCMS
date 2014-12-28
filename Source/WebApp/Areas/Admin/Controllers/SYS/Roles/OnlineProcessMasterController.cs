@@ -16,7 +16,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return PartialView("../SYS/OnlineProcessMaster/_Reset");
+                return PartialView("../Sys/OnlineProcessMaster/_Reset");
             }
             else
             {
@@ -25,7 +25,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                     Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                     return null;
                 }
-                return View("../SYS/OnlineProcessMaster/Index");
+                return View("../Sys/OnlineProcessMaster/Index");
             }
         }
         // load danh sach grid nhom
@@ -33,20 +33,20 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         {
             OnlineProcessMasterRepository _repository = new OnlineProcessMasterRepository(db);
             List<OnlineProcessMasterViewModel> list = _repository.GetAll();
-            return PartialView("../SYS/OnlineProcessMaster/_List", list);
+            return PartialView("../Sys/OnlineProcessMaster/_List", list);
         }
         public ActionResult _Create()
         {
             SYS_tblProcessOnlineMaster model = new SYS_tblProcessOnlineMaster();
             CreateViewBag();
-            return PartialView("../SYS/OnlineProcessMaster/_Create", model);
+            return PartialView("../Sys/OnlineProcessMaster/_Create", model);
         }
         public ActionResult _Edit(int id)
         {
             OnlineProcessMasterRepository _repository = new OnlineProcessMasterRepository(db);
             SYS_tblProcessOnlineMaster model = _repository.Find(id);
             CreateViewBag(model.DMQuiTrinhID);
-            return PartialView("../SYS/OnlineProcessMaster/_Create", model);
+            return PartialView("../Sys/OnlineProcessMaster/_Create", model);
         }
 
         [HttpPost]
@@ -128,7 +128,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             ViewBag.SortMessage = Eagle.Resource.LanguageResource.Warning;
             ViewBag.Message = ErrorMessage;
             CreateViewBag(model.DMQuiTrinhID);
-            return PartialView("../SYS/OnlineProcessMaster/_Create", model);
+            return PartialView("../Sys/OnlineProcessMaster/_Create", model);
         }
         private void CreateViewBag(int? DMQuiTrinhID = null)
         {

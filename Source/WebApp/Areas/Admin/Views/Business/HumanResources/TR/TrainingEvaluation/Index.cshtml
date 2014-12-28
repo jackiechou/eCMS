@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingEvaluation;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../Business/HumanResources/Training/TrainingEvaluation/_Reset")
+</div>
+}
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+
+
+<script>
+    var Controller = 'TrainingEvaluation';
+    var urlReset = areas + '/' + Controller + '/Index';    
+    var urlAddNew = areas + '/' + Controller + '/Save';    
+    var urlUpdate = areas + '/' + Controller + '/Update';
+    var urlRedirect = areas + '/' + 'TrainingEvaluationForEmployee' + '/Index';
+</script>
+<script>    
+    // AddNew a EvaluationTemplate 
+    $(document).on("click", "#btnListOfEvaluation", function () {
+        window.location.href = urlRedirect;
+    });
+    $(document).on("click", "#btnAdd", function () {
+        
+        AddNew('Save');
+    });
+    $(document).on("click", "#btnComplete", function () {
+
+        AddNew('Complete');
+    });
+
+    // Adding EvaluationTemplate with mode
+    function AddNew(info) {
+        
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlAddNew + '?mode=' + info,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    window.location.href = urlRedirect;
+                } else if (data == 'timeout') {
+                    window.location.href = '/';
+                } else {
+                    $('#divEdit').html(data);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            }
+        });
+    }
+
+    // Reset a EvaluationTemplate
+    $(document).on("click", "#btnReset", function () {
+        
+        Reset();      
+    });
+    function Reset() {
+
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlReset,            
+            success: function (data) {
+                $('#divEdit').html(data);
+                $('html, body').animate({ scrollTop: 80 }, 'slow');
+            }
+        });
+    }
+
+    // Change item of EvaluationTemplate
+    $('#SelectEvaluationTemplateID').on('change', function () {
+        var EvaluationTemplateID = $("#EvaluationTemplateID").val();
+        $.ajax({
+            type: "GET",
+            url: areas + '/TrainingEvaluation/ListOfTrainingEvaluationPartFromTemplate?EvaluationTemplateID=' + EvaluationTemplateID,
+            success: function (data) {
+                $('#divListOfApprisalPart').html(data);
+            }
+        });
+    });
+</script>
+
+

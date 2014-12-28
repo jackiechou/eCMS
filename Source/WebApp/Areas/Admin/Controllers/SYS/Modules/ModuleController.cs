@@ -24,16 +24,16 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest())
-                return PartialView("../SYS/Modules/_Reset");
+                return PartialView("../Sys/Modules/_Reset");
             else
-                return View("../SYS/Modules/Index");
+                return View("../Sys/Modules/Index");
         }
 
         [SessionExpiration]
         public ActionResult List()
         {
             List<ModuleViewModel> lst = ModuleRepository.GetList(true);
-            return PartialView("../SYS/Modules/_List", lst);
+            return PartialView("../Sys/Modules/_List", lst);
         }
 
         [SessionExpiration]
@@ -57,7 +57,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         public ActionResult PopulateList()
         {
             List<ModuleViewModel> lst = ModuleRepository.GetList(true);
-            return PartialView("../SYS/Modules/_ModuleList", lst);
+            return PartialView("../Sys/Modules/_ModuleList", lst);
         }
 
         // GET: /Admin/Module/Details/5        
@@ -67,7 +67,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         {
             ModuleViewModel model = ModuleRepository.Details(Id);
             ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(model.ContentItemId.ToString(), false);
-            return PartialView("../SYS/Modules/_Edit", model);
+            return PartialView("../Sys/Modules/_Edit", model);
         }
 
         // GET: /Admin/Module/Create
@@ -78,7 +78,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
             string sAction = CurrentAction;
             string sCurrentMenuCode = CurrentMenuCode.ToString();
            
-            return PartialView("../SYS/Modules/_Create");
+            return PartialView("../Sys/Modules/_Create");
         }
 
         [SessionExpiration]
@@ -91,7 +91,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
             ViewBag.Pane = ModuleRepository.PopulatePaneList(null, false);
             ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(null, false);
             ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(null, false);
-            return PartialView("../SYS/Modules/_AddNewModule");
+            return PartialView("../Sys/Modules/_AddNewModule");
         }
 
         [SessionExpiration]
@@ -105,7 +105,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
             ViewBag.Pane = ModuleRepository.PopulatePaneList(null, false);
             ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(null, false);
             ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(null, false);
-            return PartialView("../SYS/Modules/_AddExistingModule");
+            return PartialView("../Sys/Modules/_AddExistingModule");
         }
 
         //// POST: /Admin/Module/Create

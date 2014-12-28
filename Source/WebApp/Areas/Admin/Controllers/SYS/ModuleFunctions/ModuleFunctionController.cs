@@ -19,7 +19,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
         {
             FunctionPermissionRepository _respository = new FunctionPermissionRepository(db);
             List<FunctionListViewModel> functionList = _respository.GetFunctionListByModuleIDAndUserID(ModuleID, UserId, LanguageId);
-            return PartialView("../SYS/FunctionList/_VocationalFunctionsByModule", functionList);
+            return PartialView("../Sys/FunctionList/_VocationalFunctionsByModule", functionList);
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
         {
             FunctionPermissionRepository _respository = new FunctionPermissionRepository(db);
             List<FunctionListViewModel> functionList = _respository.GetFunctionListByModuleIDAndUserID(ModuleID, UserId, LanguageId);
-            return PartialView("../SYS/FunctionList/_VocationalFunctionsByModuleEdit", functionList);
+            return PartialView("../Sys/FunctionList/_VocationalFunctionsByModuleEdit", functionList);
         }
 
 
@@ -36,7 +36,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
         {
             FunctionPermissionRepository _respository = new FunctionPermissionRepository(db);
             List<FunctionListViewModel> functionList = _respository.GetFunctionListByModuleIDAndUserID(ModuleID, UserID, LanguageId);
-            return PartialView("../SYS/FunctionList/_VocationalFunctionsByModule", functionList);
+            return PartialView("../Sys/FunctionList/_VocationalFunctionsByModule", functionList);
         }
 
 
@@ -46,7 +46,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
             {
                 if (Request.IsAjaxRequest())
                 {
-                    return PartialView("../SYS/FunctionList/_Reset");
+                    return PartialView("../Sys/FunctionList/_Reset");
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
                         Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                         return null;
                     }
-                    return View("../SYS/FunctionList/Index");
+                    return View("../Sys/FunctionList/Index");
                 }
             }
             else
@@ -71,7 +71,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
         //    if (EmpId != null)
         //    {
         //        IList<FunctionListViewModel> sources = FunctionListRespository.List();
-        //        return PartialView("../SYS/FunctionList/_List", sources);
+        //        return PartialView("../Sys/FunctionList/_List", sources);
         //    }
         //    else
         //    {
@@ -114,7 +114,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
         //{
         //    FileRepository _respository = new FileRepository(db);
         //    string DownloadFileLink = _respository.GenerateDownloadLink(FileId);
-        //    return PartialView("../SYS/FunctionList/_DownloadLink", DownloadFileLink);
+        //    return PartialView("../Sys/FunctionList/_DownloadLink", DownloadFileLink);
         //}
         ////
         //// GET: /Admin/LS_tblTerminationInfo/Create
@@ -128,7 +128,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
             PopulateHiearchialFunctionsToDropDownList(true, null);
             //PopulateTerminationReasonsToDropDownList(true, null);
             FunctionListViewModel model = new FunctionListViewModel();
-            return PartialView("../SYS/FunctionList/_Create", model);
+            return PartialView("../Sys/FunctionList/_Create", model);
             //}
             //else
             //{
@@ -149,7 +149,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.ModuleFunctions
         //        TerminationViewModel entity = TerminationRespository.Details(id);
         //        PopulateTerminationTypesToDropDownList(true, entity.LSTerminationTypeID);
         //        PopulateTerminationReasonsToDropDownList(true, entity.LSTerminationReasonID);
-        //        return PartialView("../SYS/FunctionList/_Edit", entity);
+        //        return PartialView("../Sys/FunctionList/_Edit", entity);
         //    }
         //    else
         //    {

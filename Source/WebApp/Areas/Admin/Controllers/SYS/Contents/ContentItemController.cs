@@ -21,9 +21,9 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Contents
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest())
-                return PartialView("../SYS/Contents/_Reset");
+                return PartialView("../Sys/Contents/_Reset");
             else
-                return View("../SYS/Contents/Index");
+                return View("../Sys/Contents/Index");
         }
 
          // GET: /Admin/ContentItem/Edit/5        
@@ -33,7 +33,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Contents
          {
              ContentItemViewModel model = new ContentItemViewModel();
              ViewBag.ContentTypeId = ContentTypeRepository.PopulateContentTypesToDropDownList(null, false);
-             return PartialView("../SYS/Contents/_Edit", model);
+             return PartialView("../Sys/Contents/_Edit", model);
          }
 
          // GET: /Admin/ContentItem/Edit/5        
@@ -43,7 +43,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Contents
          {
              ContentItemViewModel model = ContentItemRepository.Details(Id);
              ViewBag.ContentTypeId = ContentTypeRepository.PopulateContentTypesToDropDownList(model.ContentTypeId.ToString(), false);
-             return PartialView("../SYS/Contents/_Edit", model);
+             return PartialView("../Sys/Contents/_Edit", model);
          }
 
          [SessionExpiration]
@@ -52,7 +52,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Contents
          {
              List<ContentItemViewModel> lst = ContentItemRepository.GetList(ContentType);
              ViewBag.ContentType = ContentTypeRepository.PopulateContentTypesToDropDownList(ContentType.ToString(), false);
-             return PartialView("../SYS/Contents/_List", lst);
+             return PartialView("../Sys/Contents/_List", lst);
          }
 
          #region autocomplete DropDownList ============================================================================================

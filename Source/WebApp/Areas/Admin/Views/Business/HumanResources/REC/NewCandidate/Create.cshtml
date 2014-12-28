@@ -1,0 +1,138 @@
+﻿@model CandidateViewModel
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.AddNewCandidate;
+}
+
+<script src="~/Scripts/plugins/form-master/jquery.form.js"></script>
+
+<div class="form-horizontal">
+    <div id="divEdit">
+        @Html.Partial("../Business/HumanResources/REC/NewCandidate/InputAreasPartial")
+    </div>
+    <div class="row">
+        <div class="footbar">
+            <div>
+                <input type="button" id="btnCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.SaveAndGoToList" />
+                <input type="button" id="btnReset" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.SaveAndReview" />
+                <input type="button" id="btnAdd" class="btn btn-info" value="@Eagle.Resource.LanguageResource.SaveAndContinue" />
+            </div>
+        </div>
+    </div>
+    <!--End.row-->
+</div>
+<script>
+    $(document).on("click", "a[data-toggle='tab']", function () {
+        if ($(this).attr('href') == '#pane-1') {
+            $('.qtip').qtip('show');
+        } else {
+            $('.qtip').qtip('hide');
+        }
+    });
+    var urlAddNew = areas + '/NewCandidate/Create';
+    //mode == 1 ở lại
+    //mode == 2 redirect qua trang Edit
+    //mode == 3 redirect go to list
+    function Add(mode) {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip('show');
+            return false;
+        } else {
+            $("body").addClass("loading");
+            $("#mode").val(mode);
+            //$.ajax({
+            //    type: "POST",
+            //    url: urlAddNew,
+            //    data: $("#frmAdd").serialize(),
+            //    success: function (data) {
+            //        if (data == 'success') {
+            //            $.ajax({
+            //                type: "GET",
+            //                url: urlAddNew,
+            //                success: function (data) {
+            //                    //Create edit form
+            //                    if (mode == 1) {
+            //                        $('#divEdit').html(data);
+            //                        AlterAddSuccess();
+            //                    } else if (mode == 2) {
+            //                        var urlRedirect = '/Admin/CandidateInformation/Index?ModuleID=8';
+            //                        window.location.replace(urlRedirect);
+
+            //                    } else if (mode == 3) {
+            //                        var urlRedirect = '/Admin/CandidateList/Index?ModuleID=8';
+            //                        window.location.replace(urlRedirect);
+            //                    }
+            //                }
+            //            });
+            //        } else if (data == 'timeout') {
+            //            window.location.href = '/';
+            //        } else {
+            //            $('#divEdit').html(data);
+            //            $('html, body').animate({ scrollTop: 80 }, 'slow');
+            //        }
+            //    }
+            //});
+
+
+            $("#frmAdd").ajaxSubmit({
+                type: "POST",
+                url: urlAddNew,
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlAddNew,
+                            success: function (data) {
+                                //Create edit form
+                                if (mode == 1) {
+                                    $('#divEdit').html(data);
+                                    AlterAddSuccess();
+                                } else if (mode == 2) {
+                                    $("body").addClass("loading");
+                                    var urlRedirect = '/Admin/CandidateInformation/Index?ModuleID=8';
+                                    window.location.replace(urlRedirect);
+
+                                } else if (mode == 3) {
+                                    $("body").addClass("loading");
+                                    var urlRedirect = '/Admin/CandidateList/Index?ModuleID=8';
+                                    window.location.replace(urlRedirect);
+                                }
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+
+        }
+    }
+    function SetTab1Active() {
+        if (!$("div[id='pane-1']").hasClass('active')) {
+            $("div[id='pane-1']").addClass('active in');
+            $("div[id='pane-1'] .tab-pane").addClass('active');
+            $("div[id='pane-1']").siblings().removeClass('active');
+        }
+        if (!$("li[id='tab-1']").hasClass('active')) {
+            $("li[id='tab-1']").addClass('active');
+            $("li[id='tab-1']").siblings().removeClass('active');
+        }
+    }
+    $(document).on("click", "#btnAdd", function () {
+        SetTab1Active();
+        Add(1);
+    });
+    $(document).on("click", "#btnReset", function () {
+        $("a[href='pane-1']").trigger('click');
+        Add(2);
+    });
+    $(document).on("click", "#btnCancel", function () {
+        $("a[href='pane-1']").trigger('click');
+        Add(3);
+    });
+</script>

@@ -16,7 +16,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return PartialView("../SYS/OnlineProcess/_Reset");
+                return PartialView("../Sys/OnlineProcess/_Reset");
             }
             else
             {
@@ -25,7 +25,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                     Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
                     return null;
                 }
-                return View("../SYS/OnlineProcess/Index");
+                return View("../Sys/OnlineProcess/Index");
             }
         }
         // load danh sach grid nhom
@@ -33,13 +33,13 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         {
             OnlineProcessRepository _repository = new OnlineProcessRepository(db);
             List<LS_tblOnlineProcessViewModel> list = _repository.GetAll(LanguageId);
-            return PartialView("../SYS/OnlineProcess/_List", list);
+            return PartialView("../Sys/OnlineProcess/_List", list);
         }
         public ActionResult _Create()
         {
             LS_tblOnlineProcessViewModel model = new LS_tblOnlineProcessViewModel();
             CreateViewBag();
-            return PartialView("../SYS/OnlineProcess/_Create", model);
+            return PartialView("../Sys/OnlineProcess/_Create", model);
         }
         public ActionResult _Edit(int id)
         {
@@ -48,7 +48,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             string BccJson = model.BccJson;
             string CcJson = model.CcJson;
             CreateViewBag(model.FunctionID,model.IsStart,model.NoOfLevel);
-            return PartialView("../SYS/OnlineProcess/_Create", model);
+            return PartialView("../Sys/OnlineProcess/_Create", model);
         }
 
         [HttpPost]
@@ -134,7 +134,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             ViewBag.Message = ErrorMessage;
 
             CreateViewBag(model.FunctionID, model.IsStart, model.NoOfLevel);
-            return PartialView("../SYS/OnlineProcess/_Create", model);
+            return PartialView("../Sys/OnlineProcess/_Create", model);
         }
         private void CreateViewBag(int? FunctionID = null, int IsStart = 0, int NoOfLevel = 1)
         {

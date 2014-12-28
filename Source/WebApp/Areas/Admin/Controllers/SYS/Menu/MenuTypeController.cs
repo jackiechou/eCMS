@@ -23,7 +23,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Menu
         public ActionResult Create()
         {
             MenuTypeViewModel model = new MenuTypeViewModel();
-            return PartialView("../SYS/MenuTypes/_Create", model);
+            return PartialView("../Sys/MenuTypes/_Create", model);
         }
 
         [SessionExpiration]

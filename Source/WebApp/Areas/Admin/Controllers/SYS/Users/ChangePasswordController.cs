@@ -15,7 +15,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Users
 
         public ActionResult Index()
         {
-            return View("../SYS/Users/ChangePassword/Index");
+            return View("../Sys/Users/ChangePassword/Index");
         }
         public ActionResult _Create()
         {
@@ -27,7 +27,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Users
                 model.UserName = acc.UserName;
             }
 
-            return PartialView("../SYS/Users/ChangePassword/_Create", model);
+            return PartialView("../Sys/Users/ChangePassword/_Create", model);
         }
 
         [HttpPost]
@@ -73,7 +73,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Users
             ViewBag.CssClass = "alert alert-warning";
             ViewBag.SortMessage = Eagle.Resource.LanguageResource.Warning;
             ViewBag.Message = ErrorMessage;
-            return PartialView("../SYS/Users/ChangePassword/_Create", model);
+            return PartialView("../Sys/Users/ChangePassword/_Create", model);
         }
 
     }

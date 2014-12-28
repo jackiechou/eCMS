@@ -44,7 +44,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
            // ViewBag.ParentId_Combobox = PageRepository.PopulateSelecuredListByScopeTypeIdAndStatus(ScopeTypeId, null, false);
             //return View();
             ViewBag.LanguageCode = LanguageRepository.PopulateActiveLanguages(null, false);
-            return View("../SYS/Pages/Index");
+            return View("../Sys/Pages/Index");
         }
 
         // GET: /Admin/Contract/Create
@@ -56,7 +56,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
             ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByPageToDropDownList(null, false);
             ViewBag.SkinId = SkinRepository.PopulateActiveSkinSelectList(model.SkinId.ToString(), false);
             ViewBag.LanguageCode = LanguageRepository.PopulateActiveLanguages(null, false);
-            return PartialView("../SYS/Pages/_Edit", model);
+            return PartialView("../Sys/Pages/_Edit", model);
         }
 
 
@@ -68,7 +68,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
             ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByPageToDropDownList(model.ContentItemId.ToString(), false);
             ViewBag.SkinId = SkinRepository.PopulateActiveSkinSelectList(model.SkinId.ToString(), false);
             ViewBag.LanguageCode = LanguageRepository.PopulateActiveLanguages(null, false);
-            return PartialView("../SYS/Pages/_Edit", model);
+            return PartialView("../Sys/Pages/_Edit", model);
         }
 
        
@@ -76,7 +76,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
         public ActionResult List()
         {
             List<PageViewModel> sources = PageRepository.GetListByScopeTypeId(ScopeTypeId);
-            return PartialView("../SYS/Pages/_List", sources);
+            return PartialView("../Sys/Pages/_List", sources);
         }
 
         [SessionExpiration]

@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TransferCandidate;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;    
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../Business/HumanResources/REC/TransferCandidate/_Reset")
+</div>
+
+@Html.Action("ConfirmPopup","Common",null)
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#changeSidebarPos').trigger('click');
+    });
+
+    var urlReset = "_List"
+    var urlCreate = "_Create"
+
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: urlReset,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnReset", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlCreate,
+            success: function (data) {
+                $('#divEdit').html(data);
+            }
+        });
+    });
+
+    $(document).on("click", ".btnDeny", function () {
+        var candidateID = $(this).data("id");
+
+        $('#confirm')
+       .modal({ backdrop: 'static', keyboard: false })
+       .one('click', '[data-value]', function (e) {
+           if ($(this).data('value')) {
+               $("body").addClass("loading");
+               $.ajax({
+                   type: "POST",
+                   url: "Deny?CandidateID=" + candidateID,
+                   success: function (data) {
+                       if (data == "success") {
+                           $("#btnAdd").trigger("click");
+                           AlterUpdateSuccess();
+                       } else {
+                           AlterError(data);
+                       }
+                   }
+               });
+               return false;
+           }
+       });
+
+    });
+
+    $(document).on("click", ".btnWaitingForTransferToStaff", function () {
+        var candidateID = $(this).data("id");
+
+        $('#confirm')
+       .modal({ backdrop: 'static', keyboard: false })
+       .one('click', '[data-value]', function (e) {
+           if ($(this).data('value')) {
+               $("body").addClass("loading");
+               $.ajax({
+                   type: "POST",
+                   url: "TransferToWaiting?CandidateID=" + candidateID,
+                   success: function (data) {
+                       if (data == "success") {
+                           $("#btnAdd").trigger("click");
+                           AlterUpdateSuccess();
+                       } else {
+                           AlterError(data);
+                       }
+                   }
+               });
+               return false;
+           }
+       });
+
+    });
+    
+    $(document).on("click", ".btnPotentialCandidate", function () {
+        var candidateID = $(this).data("id");
+        $('#confirm')
+       .modal({ backdrop: 'static', keyboard: false })
+       .one('click', '[data-value]', function (e) {
+           if ($(this).data('value')) {
+               $("body").addClass("loading");
+
+               $.ajax({
+                   type: "POST",
+                   url: "PotentialCandidate?CandidateID=" + candidateID,
+                   success: function (data) {
+                       if (data == "success") {
+                           AlterUpdateSuccess();
+                           $("#btnAdd").trigger("click");
+                       } else {
+                           AlterError(data);
+                       }
+                   }
+               });
+               return false;
+           }
+       });
+
+
+    });
+
+    $(document).on("click", ".btnTransferToStaff", function () {
+        var candidateID = $(this).data("id");
+        var url = "/Admin/TransferCandidate/Index?ModuleID=8&mode=edit";
+        url = url + "&CandidateCode=" + $("#CandidateCode").val();
+        url = url + "&FullName=" + $("#FullName").val();
+        url = url + "&Gender=" + $("#Gender").val();
+        url = url + "&Status=" + $("#Status").val();
+        url = url + "&CandidateID=" + candidateID;
+
+        window.location.href = url;
+
+    });
+    
+</script>
