@@ -1,0 +1,16 @@
+﻿@model ProjectFeeViewModel
+
+
+<div class="modal hide fade popupFee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="min-width:245px">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.RecruitmentFee</h3>
+    </div>
+    <div class="modal-body">
+        @Html.Partial("../REC/RecruitmentProject/_FeeCreateFormInnerPartial")
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="btnFeeCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Cancel" />
+        <input type="button" id="btnFeeSubmit" class="btn btn-info AddModel" value="@Eagle.Resource.LanguageResource.Add" />
+    </div>
+</div>

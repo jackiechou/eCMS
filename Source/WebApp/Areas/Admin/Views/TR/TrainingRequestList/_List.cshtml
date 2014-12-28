@@ -1,0 +1,114 @@
+﻿@model List<TrainingRequestViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:5%">@Eagle.Resource.LanguageResource.No</th>
+                <th style="width:10%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingCode
+                </th>
+                <th style="width:25%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingCourseName
+                </th>
+                <th class="text_center" style="width:20%">
+                    @Eagle.Resource.LanguageResource.LastCompanyDefine
+                </th>                                                
+                <th style="width:10%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingType
+                </th>                                                
+                <th style="width:10%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingRequestCreater
+                </th>                                                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingRequestStatus
+                </th>                                
+                <th class="table-actions text_center no-sort" style="width:5%">@Eagle.Resource.LanguageResource.Actions</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingCourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Company)
+                    </td>                                        
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingTypeInfo)
+                    </td>     
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestUserName)
+                    </td>               
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusInfo)
+                    </td>                                        
+                    <td class="table-actions text_left no-sort">
+                        <a data-id="@item.TrainingRequestID"  title="Edit" class="ico editItem " href="/Admin/TrainingRequest/Index?TrainingRequestID=@item.TrainingRequestID&ModuleID=3" >&nbsp;&nbsp;&nbsp;</a>
+                        @if (item.Status == 0 && item.EmpIDCreate == @ViewBag.EmpId)
+                        {
+                            <a data-id="@item.TrainingRequestID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>    
+                        }else
+                        {
+                            <a title="Delete" class="ico deleteItemDisable">&nbsp;&nbsp;&nbsp;</a> 
+                        }                                               
+                    </td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();
+</script>
+<script>    
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading2");        
+    });
+      
+    var urlReset = areas + "/TrainingRequestList/_List"
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var urlRedirect = areas + "/TrainingRequestList/_Delete?id=" + lsID; 
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: urlRedirect,
+                        success: function (data) {
+                            alert(urlSearch);
+                            if (data == 'success') {
+                                $("body").addClass("loading");
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlSearch,
+                                    data: $("#frmAdd").serialize(),
+                                    success: function (data) {
+                                        $('#divList').html(data);
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

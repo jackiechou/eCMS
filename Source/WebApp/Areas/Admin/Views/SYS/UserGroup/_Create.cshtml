@@ -1,0 +1,385 @@
+﻿@model Eagle.Model.UserGroupCreateViewModel
+
+<form id="frmAdd" class="form-horizontal user-group-management"> 
+
+        <div id="alertMessageBox">
+            @if (ViewBag.DisplayErrorMessage == true)
+            {
+                <div class="@ViewBag.CssClass">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message 
+                </div>
+            }
+        </div>
+        <div class="box">
+            <div id="form_accordion" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <div class="accordion-content">
+                    <div class="input-area">
+            <div class="row shift-code">
+                <div class="col-md-3">
+                    <div class="control-group">
+                        @Html.RequiredLabelFor(model => model.GroupID, new { @class = "control-label" })
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="control-group">
+                        @Html.TextBoxFor(model => model.GroupID,  null, new {@id="ddlGroupID", @class = "span8" })
+                        @Html.ValidationMessageFor(model => model.GroupID)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+
+                <div class="col-md-5">
+                    <div class="user-style">
+                         <h5>@Eagle.Resource.LanguageResource.UserList </h5>
+                        <div class="control-group">
+                           @Html.ListBox("lstBox", ViewData["lstBox"] as MultiSelectList, new { @id = "lstBox" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">                    
+                    <div id="btnUpdateGroup" class="control-group">
+                        <p style="text-align:center;">
+                            <input type="button" id="btnAdd" value=">" class="direct_bt btn btn-larg1e row-fluid AddModel" />
+                            <input type="button" id="btnAddAll" value=">>" class="direct_bt btn btn-info btn-larg1e row-fluid AddModel" />
+                        </p>
+                        <p style="text-align:center;">
+                            <input type="button" id="btnDeleteAll" value="<<" class="direct_bt btn btn-info btn-larg1e row-fluid DeleteModel launchConfirmAll" />
+                            <input type="button" id="btnDelete" value="<" class="direct_bt btn btn-larg1e row-fluid DeleteModel launchConfirm" />
+                            
+                        </p>
+                    </div>
+                </div>                
+                
+                <div class="col-md-5">
+                    <div class="user-style">
+                       <h5> @Eagle.Resource.LanguageResource.UserAssigned </h5>
+                        <div class="control-group">
+                              @Html.ListBox("lstBoxAssigned",ViewData["lstBoxAssigned"] as MultiSelectList, new { @id = "lstBoxAssigned" })
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+                <script>
+                    (function ($) {
+                        ListForDropdown();
+                        function ListForDropdown() {
+                            //The url we will send our get request to
+                            var requestUrl = '@Url.Action("DropdownList", "Group")';
+                            var pageSize = 20;
+                            var selectBox = $('#ddlGroupID');
+                            selectBox.select2({
+                                placeholder: '@Html.Raw(Eagle.Resource.LanguageResource.InputGroupName)',
+                                minimumInputLength: 0,
+                                allowClear: true,
+                                ajax: {
+                                    params: {
+                                        contentType: 'application/json; charset=utf-8'
+                                    },
+                                    url: requestUrl,
+                                    dataType: 'json',
+                                    quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                    data: function (term, page) {
+                                        return {
+                                            pageSize: pageSize,
+                                            pageNum: page,
+                                            searchTerm: term
+                                        };
+                                    },
+                                    results: function (data, page) {
+                                        //Used to determine whether or not there are more results available,
+                                        //and if requests for more data should be sent in the infinite scrolling                    
+                                        var more = (page * pageSize) < data.Total;
+                                        return { results: data.Results, more: more };
+                                    }
+                                },
+                                formatSelection: function (result) {
+                                    return result.name;
+                                },
+                                formatResult: function (result) {
+                                    return result.name;
+                                },
+                                initSelection: function (element, callback) {
+                                    var selected_value = $('#ddlGroupID').val();
+                                    var data = { id: element.val(), name: element.val() };
+                                    callback(data);
+                                    $('input#ddlGroupID').val(selected_value);
+                                }
+                                
+                            });
+                            
+                        }
+                        //******************************************************************
+                        //Ending AutoComplete **********************************************
+                        //****************************************************************** 
+
+                    })(jQuery);
+
+                </script>
+         </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+@Html.Action("ConfirmPopup","Common",null)           
+
+    </form>
+<script>
+    //function AlterAddSuccess() {
+    //    $('#alertMessage').html('<div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a><strong>Thành Công !</strong> Them moi thanh cong </div>');
+    //}
+    //function AlterUpdateSuccess() {
+    //    $('#alertMessage').html('<div class=\"alert alert-success\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a><strong>Thanh Cong !</strong> Cap nhat thanh cong </div>');
+    //}
+
+    $("#ddlGroupID").change(function () {
+        var GroupId = $(this).val();
+        $.getJSON("/Admin/UserGroup/_ListUser/?GroupId=" + GroupId,
+               function (classesData) {
+                   var select = $("#lstBox");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+        
+        $.getJSON("/Admin/UserGroup/_ListUserInGroup/?GroupId=" + GroupId,
+               function (classesData) {
+                   var select = $("#lstBoxAssigned");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+    });
+    // su kien add all tat ca item trong list
+    $(document).on("click", "#btnAddAll", function () {
+
+        hideCustomAlter();
+
+        //Nếu không chọn group thì báo lỗi
+        if ($('#ddlGroupID').val() == '') {
+            AlterUpdateWarningChooseGroup();
+        } else if ($('#btnAddAll').hasClass("AddModel")) {
+
+            //Add new Account
+            var url = areas + '/UserGroup/Save';
+            //Get sau khi action Save trong controller thuc hien
+            var urlCreate = '/UserGroup/_Create';
+
+            var lstBoxname = $("#lstBox");
+            $("option", lstBoxname).attr('selected', true);
+
+            var selectedValue = $('#lstBox').val();
+            var request = { lstBox: selectedValue }
+            //alert(selectedValue);
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(request),
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                var userList = $('#lstBoxAssigned');
+                                $.each(request.lstBox, function (index, itemData) {
+
+                                    userList.append($('<option/>', {
+                                        value: itemData,
+                                        text: $("#lstBox option[value=" + itemData + "]").text()
+                                    }));
+                                    $("#lstBox option[value=" + itemData + "]").remove();
+                                });
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    }
+                }
+            }); // end ajax
+        }
+    });
+
+    // su kien add du lieu
+    $(document).on("click", "#btnAdd", function () {
+        hideCustomAlter();
+
+        //selectedValue : User list
+        var selectedValue = $('#lstBox').val();
+        var request = { lstBox: selectedValue }
+       
+        //Nếu không chọn group thì báo lỗi
+         if ($('#ddlGroupID').val() == '') {
+            AlterUpdateWarningChooseGroup();
+        }else if (selectedValue == null) {
+            AlterUpdateWarning();
+         }else if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/UserGroup/Save';
+            //Get sau khi action Save trong controller thuc hien
+            var urlCreate = '/UserGroup/_Create';
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(request),
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                var userList = $('#lstBoxAssigned');
+                                $.each(request.lstBox, function (index, itemData) {
+
+                                    userList.append($('<option/>', {
+                                        value: itemData,
+                                        text: $("#lstBox option[value=" + itemData + "]").text()
+                                    }));
+                                    $("#lstBox option[value=" + itemData + "]").remove();
+                                });
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } 
+                }
+            }); // end ajax
+        }
+
+    });
+
+    // confirm Delete 
+    $('.launchConfirm').on('click', function (e) {
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                hideCustomAlter();
+                if ($(this).data('value')) {
+                    
+
+                    var selectedValue = $('#lstBoxAssigned').val();
+                    var requestAssigned = { lstBoxAssigned: selectedValue }
+
+
+                    //Nếu không chọn group thì báo lỗi
+                    if ($('#ddlGroupID').val() == '') {
+                        AlterUpdateWarningChooseGroup();
+                    }else if (selectedValue == null) {
+                        AlterUpdateWarning();
+                    }else if ($('#btnDelete').hasClass("DeleteModel")) {
+
+                        var GroupId = $('#ddlGroupID').val();
+
+                        //Add new Account
+                        var url = areas + '/UserGroup/Delete/?GroupID=' + GroupId;
+                        // get sau khi action Save trong controller thuc hien
+                        var urlCreate = '/UserGroup/_Create';
+
+
+                        $.ajax({
+                            type: "POST",
+                            data: JSON.stringify(requestAssigned),
+                            url: url,
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: areas + urlCreate,
+                                        success: function (data) {
+                                            var userList = $('#lstBox');
+                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                                userList.append($('<option/>', {
+                                                    value: itemData,
+                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                                }));
+                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                            });
+                                            AlterUpdateSuccess();
+                                        }
+                                    });
+                                }
+                            }
+                        }); // end ajax
+                    }
+                } else {
+                    
+                }
+            });
+    });
+
+    // su kien Delete  all  item duoc chon trong listbox
+    $('.launchConfirmAll').on('click', function (e) {
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                hideCustomAlter();
+                if ($(this).data('value')) {
+
+
+                    //Nếu không chọn group thì báo lỗi
+                    if ($('#ddlGroupID').val() == '') {
+                        AlterUpdateWarningChooseGroup();
+                    } else if ($('#btnDeleteAll').hasClass("DeleteModel")) {
+
+                        var GroupId = $('#ddlGroupID').val();
+
+                        //Add new Account
+                        var url = areas + '/UserGroup/Delete/?GroupID=' + GroupId;
+                        // get sau khi action Save trong controller thuc hien
+                        var urlCreate = '/UserGroup/_Create';
+
+                        var lstBoxAssignedName = $("#lstBoxAssigned");
+                        $("option", lstBoxAssignedName).attr('selected', true);
+
+
+                        var selectedValue = $('#lstBoxAssigned').val();
+                        var requestAssigned = { lstBoxAssigned: selectedValue }
+
+                        $.ajax({
+                            type: "POST",
+                            data: JSON.stringify(requestAssigned),
+                            url: url,
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: areas + urlCreate,
+                                        success: function (data) {
+                                            var userList = $('#lstBox');
+                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                                userList.append($('<option/>', {
+                                                    value: itemData,
+                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                                }));
+                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                            });
+                                            AlterUpdateSuccess();
+                                        }
+                                    });
+                                }
+                            }
+                        }); // end ajax
+            }
+            } else {
+
+            }
+        });
+    });
+</script>

@@ -1,0 +1,48 @@
+﻿@model EmployeeViewModel
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row">
+                <span class="col-md-2">
+                    @*<img class="summaryImg" src="/Content/Admin/images/summary_contact.png">*@
+                        @Html.ImageByFileId("Photo", Model.FileId, Model.EmpName, new { width = "80", height = "80", @class = "media-object img-thumbnail user-img img-rounded", @style = "width:80px; height=80px;overflow-x:hidden;border:1px solid #CCC;" })
+                        @Html.HiddenFor(model => model.FileId, new { @value = @Model.FileId })
+                </span>
+                <span class="col-md-8 margin0px">
+                    <span class="row">
+                        <span title="Ms.&nbsp;Thảo Nguyễn" class="recordLabel pushDown">&nbsp;                                  
+                            <span class="firstname">@Html.DisplayFor(model => model.FirstName)</span>&nbsp;
+                            <span class="lastname">@Html.DisplayFor(model => model.LastName)</span>
+                        </span>
+                    </span>
+                    <span class="row">
+                        <span class="title_label">&nbsp;</span>
+                        <a title="Organizations" href="/Admin/LS_tblCompany/Details?Id=@Model.LSCompanyID">@Html.DisplayFor(model => model.CompanyName)</a>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="pull-right detailViewButtoncontainer">
+                <div class="btn-toolbar">
+                    <span class="btn-group">
+                        @*<button data-id="@Model.EmpID" onclick="javascript:document.location.replace('@Url.Action("EditInfo", "Employee", new { ID =@Model.EmpID  })');" id="editItem" class="btn">*@
+                        <button data-id="@Model.EmpID" onclick="javascript:document.location.replace('/Admin/Employee/Index?ID=@Model.EmpID');" id="editItem" class="btn">
+                        <strong>Edit</strong></button>
+                    </span>
+                    @*  <span class="btn-group">
+                        <button onclick="javascript:FunctionMgr.editProfile(&quot;index.php?module=Contacts&amp;view=MassActionAjax&amp;mode=showComposeEmailForm&amp;step=step1&quot;,&quot;Emails&quot;);" id="Contacts_detailView_basicAction_LBL_SEND_EMAIL" class="btn"><strong>Send Email</strong></button>
+                    </span>
+                    <span class="btn-group">
+                        <button data-toggle="dropdown" class="btn dropdown-toggle"><strong>More</strong>&nbsp;&nbsp;<i class="caret"></i></button>
+                        <ul class="dropdown-menu pull-right">
+                            <li id="Contacts_detailView_moreAction_Delete_Contact"><a href="javascript:Vtiger_Detail_Js.deleteRecord(&quot;index.php?module=Contacts&amp;action=Delete&amp;record=19&quot;)">Delete Contact</a></li><li id="Contacts_detailView_moreAction_LBL_DUPLICATE"><a href="http://localhost:8888/index.php?module=Contacts&amp;view=Edit&amp;record=19&amp;isDuplicate=true">Duplicate</a></li>
+                            <li id="Contacts_detailView_moreAction_LBL_ADD_NOTE"><a href="http://localhost:8888/index.php?module=Documents&amp;view=Edit&amp;sourceModule=Contacts&amp;return_action=DetailView&amp;sourceRecord=19&amp;parent_id=19&amp;relationOperation=true">Add Document</a></li><li id="Contacts_detailView_moreAction_LBL_SEND_SMS"><a href="javascript:Vtiger_Detail_Js.triggerSendSms(&quot;index.php?module=Contacts&amp;view=MassActionAjax&amp;mode=showSendSMSForm&quot;,&quot;SMSNotifier&quot;);">Send SMS</a></li><li id="Contacts_detailView_moreAction_LBL_TRANSFER_OWNERSHIP"><a href="javascript:Vtiger_Detail_Js.triggerTransferOwnership(&quot;index.php?module=Contacts&amp;view=MassActionAjax&amp;mode=transferOwnership&quot;)">Transfer Ownership</a></li><li id="Contacts_detailView_moreAction_LBL_ADD_EVENT"><a href="http://localhost:8888/index.php?module=Calendar&amp;view=Edit&amp;mode=Events&amp;contact_id=19">Add Event</a></li><li id="Contacts_detailView_moreAction_LBL_ADD_TASK"><a href="http://localhost:8888/index.php?module=Calendar&amp;view=Edit&amp;mode=Calendar&amp;contact_id=19">Add Task</a></li></ul></span><span class="btn-group"><button data-toggle="dropdown" href="#" class="btn dropdown-toggle"><i title="Settings" alt="Settings" class="icon-wrench"></i>&nbsp;&nbsp;<i class="caret"></i></button><ul class="listViewSetting dropdown-menu"><li><a href="http://localhost:8888/index.php?parent=Settings&amp;module=LayoutEditor&amp;sourceModule=Contacts">Edit Fields</a></li><li><a href="http://localhost:8888/index.php?parent=Settings&amp;module=Vtiger&amp;view=CustomRecordNumbering&amp;sourceModule=Contacts">Module Sequence Numbering</a></li><li><a href="http://localhost:8888/index.php?parent=Settings&amp;module=Workflows&amp;view=List&amp;sourceModule=Contacts">Edit Workflows</a></li><li><a href="http://localhost:8888/index.php?parent=Settings&amp;module=Picklist&amp;view=Index&amp;source_module=Contacts">Edit Picklist Values</a></li>
+                        </ul>
+                    </span>*@
+                </div>
+            </div>
+       </div>        
+    </div>
+</div>   

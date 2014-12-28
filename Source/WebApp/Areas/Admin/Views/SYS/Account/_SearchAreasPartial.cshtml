@@ -1,0 +1,35 @@
+﻿@model EmployeeSearchViewModel
+
+  <!--Begin search -->
+
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.EmpCode)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "span12"  })
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.FullName)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.FullName, new {  @Id = "SearchFullName", @class = "span12"  })
+    </div>
+</div>      
+<div class="row">         
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.LSCompanyID)
+    </div>
+    <div class="col-md-4">
+        <select id="SearchLSCompanyID" name="SearchLSCompanyID" class="easyui-combotree span2"></select>
+        <script type="text/javascript">
+            LoadComboTreeWithAction('SearchLSCompanyID', 'GetAllWithPlease');
+        </script>
+
+    </div>
+    <div class="col-md-4 offset2">
+        <label style="display:inline;margin-left:10px;">@Eagle.Resource.LanguageResource.Active2 @Html.RadioButton("Searchactive1",true,true)</label>
+        <label style="display:inline;margin-left:10px;">@Eagle.Resource.LanguageResource.Terminate @Html.RadioButton("Searchactive1",false,false)</label>
+        <label style="display:inline;margin-left:10px;">@Eagle.Resource.LanguageResource.All @Html.RadioButton("Searchactive1", "", false)</label>
+    </div>
+</div>

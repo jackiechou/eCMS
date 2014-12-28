@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Eagles.Model.Contents.NewsViewModel>
+<div class="table datatable">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.CategoryCode</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.CategoryName</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.Headline</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.Summary</th>             
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td style="text-align:center">
+                        @i
+                    </td>
+                    <td class="text_center">
+                        @item.CategoryCode
+                    </td>
+                    <td>
+                        @item.CategoryName
+                    </td>                   
+                    <td>
+                        @item.Alias
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>                            
+                     <td class="table-actions text_center center no-sort">    
+                          <a data-id="@item.NewsId" title="@Eagle.Resource.LanguageResource.Reset" class="btn btn-smal btn-reset"><i class="icon-align-center icon-reset"></i></a>                    
+                          <a data-id="@item.NewsId" title="@Html.Raw(Eagle.Resource.LanguageResource.Edit)" class="ico editItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

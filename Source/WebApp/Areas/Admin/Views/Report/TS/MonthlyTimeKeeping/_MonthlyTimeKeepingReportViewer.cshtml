@@ -1,0 +1,24 @@
+﻿@Html.DevExpress().ReportViewer(settings =>{
+    // The following settings are necessary for a Report Viewer.
+    settings.Name = "reportViewer1";
+    settings.Report = (MonthlyTimeKeepingXtraReport)ViewData["Report"];
+    settings.AutoSize = true;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Style.Add("margin-bottom", "26px");
+    settings.Attributes.Add("class", "reportViewer");  
+    // Callback and export route values specify the corresponding controllers and their actions.
+    // These settings are necessary as well.
+    settings.CallbackRouteValues = new { Controller = "MonthlyTimeKeepingReport", Action = "PopulateReportViewer_MonthlyTimeKeeping", Month = (ViewBag.Month != null) ? ViewBag.Month : DateTime.Now.Month, Year = (ViewBag.Year != null) ? ViewBag.Year : DateTime.Now.Year, LSCompanyID = ViewBag.LSCompanyID, EmpCode = ViewBag.EmpCode, FullName = ViewBag.FullName, LanguageId = Session["LanguageId"].ToString() };
+    settings.ExportRouteValues = new { Controller = "MonthlyTimeKeepingReport", Action = "ExportData_MonthlyTimeKeeping", Month = (ViewBag.Month != null) ? ViewBag.Month : DateTime.Now.Month, Year = (ViewBag.Year != null) ? ViewBag.Year : DateTime.Now.Year, LSCompanyID = ViewBag.LSCompanyID, EmpCode = ViewBag.EmpCode, FullName = ViewBag.FullName, LanguageId = Session["LanguageId"].ToString() };    
+   //// Add a new button to the Report Toolbar.    
+   // settings.ToolbarItems.Add(new ReportToolbarButton {
+   //     ItemKind = ReportToolbarItemKind.Custom,
+   //     Text = "Custom Button",
+   //     Name = "CustomButton" 
+   // });
+   // // Handle the ToolbarItemClick event on the client side. 
+   // settings.ClientSideEvents.ToolbarItemClick = 
+   //     "function(s, e) { if(e.item.name =='CustomButton' ) alert ('Custom Button'); }";  
+}).GetHtml()
+

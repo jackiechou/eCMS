@@ -1,0 +1,105 @@
+﻿@model List<TimekeepingListViewModel>
+<table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpCode
+                </th>
+                <th style="width:100px;">
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Position
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.DateID
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.WorkDays
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LeaveTypeName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LeaveTaken
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td >
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.PositonName
+                    </td>
+                    <td>
+                        @item.strDateID
+                    </td>
+                    <td>
+                        <input type="text"  class="WorkDays" data-id="@item.TimekeepingID" value="@item.WorkDays" name="[@k].WorkDays" style="width:100px;" />
+                    </td>
+                    <td>
+                        @item.LeaveDays
+                    </td>
+                    <td>
+                        @item.LeaveType
+                    </td>
+                    <td  class="center">
+                        <input type="hidden" value="@item.EmpID" name="[@k].EmpID" />
+                        <input type="hidden" value="@item.TimekeepingID" name="[@k].TimekeepingID" />
+                        <input type="hidden"  data-value="@item.MMYYYY"/>
+                        <a  data-value="@item.MMYYYY" data-id="@item.TimekeepingID" title="Edit" class="ico deleteItem launchConfirmPopup">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+<script type="text/javascript">
+    // region click delete
+    $('.launchConfirmPopup').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var lsValue = $(this).data('value');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/Timekeeping/_DeletePopup?TimekeepingID=' + lsID + '&MMYYYY=' + lsValue,
+                        data: $("#frmAdd").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + '/Timekeeping/_PopupEditTimeKeepingFormInner?EmpID=' + $('#PopupEmpID').val() + '&MMYYYY=' + $('#PopupMMYYYY').val(),
+                                    success: function (data) {
+                                        $('#popupTable').html(data);
+                                    }
+                                })
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

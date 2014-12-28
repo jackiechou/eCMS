@@ -1,0 +1,142 @@
+﻿ @model Eagle.Model.HR.EmployeeEditModel
+
+<div class="tab-pane" id="pane-3">
+    <div>
+         <h6>@Eagle.Resource.LanguageResource.Account</h6>
+    </div>
+    <hr />
+    <div class="row">
+            <div class="col-md-2">@Html.LabelFor(model => model.AccountNumber)</div>
+        <div class="col-md-4">
+            @Html.TextBox("AccountNumber", null, new { @class = "span12", @name = "AccountNumber" })
+        </div>
+
+            <div class="col-md-2">@Html.LabelFor(model => model.AccountName)</div>
+        <div class="col-md-4">
+            @Html.TextBox("AccountName", null, new { @class = "span12", @name = "AccountName" })
+        </div>
+    </div>
+                                       
+    <div class="row">
+        <div class="col-md-2">@Html.LabelFor(model => model.LSBankID)</div>
+        <div class="col-md-4">   
+             <div class="@(ViewBag.btnAddBank != "hidden" ? "input-append" : "") control_wrapper"> 
+               @* <select id="LSBankID" name="LSBankID" class="col-md-10"></select>
+                @Html.HiddenFor(model => model.LSBankID, new { @id = "selectedLSBankID", name = "selectedLSBankID" })*@
+
+                   @Html.TextBox("selectBank", null, new { @class = "span12" })
+                   @Html.HiddenFor(model => model.LSBankID)
+                   @Html.HiddenFor(model => model.LSBankName)
+
+                <span class="add-on @ViewBag.btnAddBank" id="btnAdd_Bank"><i class="icon-plus"></i></span>
+                <input id="btnReload_Bank" type="button" value="Reload" data-id="null" data-isclosed="false" style="display:none" />
+            </div>
+        </div>
+        <div class="col-md-2">@Html.LabelFor(model => model.LSBankBranchID)</div>
+        <div class="col-md-4">            
+            <div class="@(ViewBag.btnAddBank != "hidden" ? "input-append" : "") control_wrapper">
+                @*<select id="LSBankBranchID" name="LSBankBranchID" class="col-md-10"></select>
+            @Html.HiddenFor(model => model.LSBankBranchID, new { @id = "selectedLSBankBranchID", name = "selectedLSBankBranchID" })*@
+                @Html.TextBox("selectBankBranch", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSBankBranchID)
+                @Html.HiddenFor(model => model.LSBankBranchName)
+
+                <span class="add-on  @ViewBag.btnAddBankBranch" id="btnAdd_BankBranch"><i class="icon-plus"></i></span>
+                <input type="button" id="btnReload_BankBranch" value="Reload" data-id="null" data-isclosed="false" style="display:none" />
+            </div>
+        </div>  
+    </div>                                               
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+           @* @Html.CheckBox("PayByBank", Model.PayByBank == true, new { @style = "float:left;" })
+            @Html.LabelFor(model => model.PayByBank, new { @style = "float:left;margin:-4px 4px;" })*@
+
+            @if(Model.PayByBank ==true)
+            {
+                @Html.RadioButtonFor(model => model.PayByBank, true,
+                    new { id = "ByBank", @style = "float:left;", @checked = "checked"})             
+                @Html.Label("ByBank", Eagle.Resource.LanguageResource.ByBank, new { @style = "float:left;margin:-4px 4px;" })
+                                                
+                                              
+                @Html.RadioButtonFor(model => model.PayByBank, false, 
+                    new { id = "ByCash", @style = "float:left;" })             
+                @Html.Label("ByCash", Eagle.Resource.LanguageResource.ByCash, new { @style = "float:left;margin:-4px 4px;" })
+            }else
+            {
+                @Html.RadioButtonFor(model => model.PayByBank, true,
+                    new { id = "ByBank", @style = "float:left;"})             
+                @Html.Label("ByBank", Eagle.Resource.LanguageResource.ByBank, new { @style = "float:left;margin:-4px 4px;" })
+                                                
+                                              
+                @Html.RadioButtonFor(model => model.PayByBank, false, 
+                    new { id = "ByCash", @style = "float:left;", @checked = "checked" })             
+                @Html.Label("ByCash", Eagle.Resource.LanguageResource.ByCash, new { @style = "float:left;margin:-4px 4px;" })
+            }
+
+        </div>
+    </div>
+
+    <div>
+        <h6>@Eagle.Resource.LanguageResource.Insurance</h6>
+    </div>
+    <hr />
+     <div class="row">
+            <div class="col-md-2">@Html.LabelFor(model => model.TaxNo)</div>
+        <div class="col-md-4">
+            @Html.TextBox("TaxNo", null, new { @class = "input_full", @name = "TaxNo" })
+        </div>
+            <div class="col-md-2"> @Html.LabelFor(model => model.NoOfDependent)</div>
+        <div class="col-md-4">
+            @Html.TextBox("NoOfDependent", null, new { @class = "input_full", @name = "NoOfDependent", @type = "number", @min = "0", @max = "100", @value = "0" })
+        </div>
+    </div>
+                                       
+    <div class="row">
+            <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <div style="float:left">@Html.CheckBox("SelfDeduction", Model.SelfDeduction == true, new { @style = "float:left;margin:5px;" })</div>
+            <div style="float:left;margin:-2px 4px;">@Html.LabelFor(model => model.SelfDeduction)</div>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <div style="float:left">@Html.CheckBox("DependDeduction", Model.DependDeduction == true, new { @style = "float:left;margin:5px;" })</div>
+            <div style="float:left;margin:-2px 4px;">@Html.LabelFor(model => model.DependDeduction)</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">@Html.LabelFor(model => model.SIBook)</div>
+        <div class="col-md-4">
+            @Html.TextBox("SIBook", null, new { @class = "input_full", @name = "SIBook" })
+        </div>
+         <div class="col-md-2"> @Html.LabelFor(model => model.HIBook)</div>
+        <div class="col-md-4">
+            @Html.TextBox("HIBook", null, new { @class = "input_full", @name = "HIBook" })
+        </div>
+    </div>  
+
+     <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            @Html.CheckBox("SI", Model.SI == true, new { @style = "float:left;" })
+            @Html.LabelFor(model => model.SI, new { @style = "float:left;margin:-4px 4px;" })
+        </div>
+         <div class="col-md-2"></div>
+        <div class="col-md-4">
+            @Html.CheckBox("HI", Model.HI == true, new { @style = "float:left;" })
+            @Html.LabelFor(model => model.HI, new { @style = "float:left;margin:-4px 4px;" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            @Html.CheckBox("UI", Model.UI == true, new { @style = "float:left;" })
+            @Html.LabelFor(model => model.UI, new { @style = "float:left;margin:-4px 4px;" })
+        </div>
+         <div class="col-md-2"></div>
+        <div class="col-md-4">           
+        </div>
+    </div>
+</div>

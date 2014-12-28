@@ -1,0 +1,100 @@
+﻿@model PreviousRecordViewModel
+<div class="modal hide fade popupTab2PreviousRecord" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.InsuranceProcessBefore</h3>
+    </div>
+    <div class="modal-body">
+
+    <div id="alertMessageBoxPopup">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+        <!--Begin button -->
+        <form id="frmPreviousRecord">
+            @Html.HiddenFor(model => model.PreviousRecordID)
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.FromMonth)
+                </div>
+                <div class="col-md-4">
+                    @Html.MonthPickerFor(model => model.FromMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 input-validation-error" })
+                    @Html.ValidationMessageFor(model => model.FromMonth)
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ToMonth)
+                </div>
+                <div class="col-md-4">
+                    @Html.MonthPickerFor(model => model.ToMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 input-validation-error" })
+                    @Html.ValidationMessageFor(model => model.ToMonth)
+                </div>
+            </div>
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.NoOfMonth)
+                </div>
+                <div class="col-md-4">
+                    <label class="reset-label" id="lblNoOfMonth">@Html.DisplayFor(model => model.NoOfMonth)</label>
+                    @Html.HiddenFor(model => model.NoOfMonth, new { @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.CompanyName)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "span12" })
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Position)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Position, new { @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Salary)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Salary,"{0:##0}", new { @class = "span12" })
+                </div>
+            </div>
+            <!--end row-->
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+                </div>
+            </div>
+        </form>
+        
+    </div>
+    <!--Begin button -->
+    <div class="modal-footer">
+        <input type="button" id="btnPRCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+        <input type="button" id="btnPRSubmit" class="btn btn-info AddModel" value="@Eagle.Resource.LanguageResource.Save" />
+    </div>
+    <!--End button -->
+</div>
+@*<script src="/Scripts/jquery.mtz.monthpicker.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.mtz.monthpicker.custom.js" type="text/javascript"></script>*@
+<script>
+    InvokeDateTimePicker();
+    InvokeMonthPicker();
+</script>

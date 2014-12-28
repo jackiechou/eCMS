@@ -1,0 +1,102 @@
+﻿@model IEnumerable<D07TSViewModel>
+
+<div class="row" style="text-align: right; margin-top: -5px;">
+    @if (Model != null && Model.Count() > 0)
+    {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Deleterow btnDeleteRows" style="margin-right: 5px;">
+    }
+    else
+    {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Delete-disabled-row btnDeleteRows" style="margin-right: 5px;">
+    }
+    <input id="btnAddRow" title="@Eagle.Resource.LanguageResource.AddNew" type="button" class="btn-custom-addrow" style="margin-right: 18px;">
+</div>
+<div style="width: 100%; overflow-x: scroll;">
+    <form id="frmList">
+        <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th class="text_center" style="min-width: 160px;">@Html.DisplayNameFor(model => model.FullName)</th>
+                    <th class="text_center" style="min-width: 100px;">@Html.DisplayNameFor(model => model.SIBook)</th>
+                    <th style="min-width: 180px;">@Html.DisplayNameFor(model => model.ChangeTypeName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Old)</th>
+                    <th>@Html.DisplayNameFor(model => model.New)</th>
+                    <th>@Html.DisplayNameFor(model => model.FromMonth)</th>
+                    <th>@Html.DisplayNameFor(model => model.ToMonth)</th>
+                    <th>@Html.DisplayNameFor(model => model.BasedChange)</th>
+                    <th class="text_center" style="min-width: 80px;">@Html.CheckBox("checkAll")</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @{int i = 0; int k = -1;}
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            k++;
+                            i++;
+                            string strIDSelectEmpID = k.ToString() + "SelectEmpID";
+                            string strIDEmpID = k.ToString() + "EmpID";
+                            string strIDFullName = k.ToString() + "FullName";
+
+                            string strIDSelectChangeTypeID = k.ToString() + "SelectChangeTypeID";
+                            string strIDChangeTypeID = k.ToString() + "ChangeTypeID";
+                            string strIDChangeTypeName = k.ToString() + "ChangeTypeName";
+                            
+                            
+                            <tr>
+                                <td class="text_center">
+                                    <label class="reset-label">@i</label>
+                                    <input type="hidden" value="@i" name="[@k].STT" />
+                                    <input type="hidden" value="@item.DetailID" name="[@k].DetailID" />
+                                </td>
+                                <td>
+                                    <input type="text" name="[@k].SelectEmpID" id="@strIDSelectEmpID" class="col-md-12" />
+                                    <input type="hidden" value="@item.EmpID" name="[@k].EmpID" id="@strIDEmpID" class="grvEmpID" data-id="@k" />
+                                    <input type="hidden" value="@item.FullName" name="[@k].FullName" id="@strIDFullName" />
+                                </td>
+                                <td class="text-center">
+                                    <label id="lblSIBook-@k" class="reset-label">@item.SIBook</label>
+                                    <input type="hidden" value="@item.SIBook" name="[@k].SIBook" />
+                                </td>
+                                <td>
+                                    <input type="text" name="[@k].SelectChangeTypeID" id="@strIDSelectChangeTypeID" class="col-md-12" />
+                                    <input type="hidden" value="@item.ChangeTypeID" name="[@k].ChangeTypeID" id="@strIDChangeTypeID" data-id="@k" />
+                                    <input type="hidden" value="@item.ChangeTypeName" name="[@k].ChangeTypeName" id="@strIDChangeTypeName" />
+                                </td>
+                                <td>
+                                    <input type="text" name="[@k].Old" value="@item.Old" />
+                                </td>
+                                <td>
+                                    <input type="text" name="[@k].New" value="@item.New" />
+                                </td>
+                                <td class="text_center">
+                                    <input type="text" name="[@k].FromMonth" value="@item.FromMonth" class = "text_center span12" style = "min-width:80px"/>
+                                </td>
+                                <td class="text_center">
+                                    <input type="text" name="[@k].ToMonth" value="@item.ToMonth" class = "text_center span12" style = "min-width:80px"/>
+                                </td>
+                                <td>
+                                    <input type="text" name="[@k].BasedChange" value="@item.BasedChange"/>
+                                </td>
+                                <td class="text_center">
+                                    <label class="reset-label">
+                                        @Html.CheckBox("[" + k.ToString() + "].Checked", false, new { @class="check" })
+                                    </label>
+                                </td>
+                            </tr>
+                        }
+                    }
+            </tbody>
+        </table>
+    </form>
+</div>
+<script>
+    InvokeMonthPicker();
+    for (var i = 0; i < @i +0; i++) {
+        PopulateDropDownListAutoComplete(i + "SelectEmpID", i + "EmpID", i + "FullName", "Vui lòng chọn nhân viên", areas + '/Employee/DropdownListOnFullNameDepartment');
+        PopulateDropDownListAutoComplete(i + "SelectChangeTypeID", i + "ChangeTypeID", i + "ChangeTypeName", "Vui lòng chọn sự thay đổi", areas + '/ChangingInsuranceInformationType/DropdownList');
+    }
+    $(".check").prop("checked", false);
+</script>

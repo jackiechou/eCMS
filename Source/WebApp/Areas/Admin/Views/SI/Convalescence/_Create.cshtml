@@ -1,0 +1,37 @@
+﻿@model ConvalescenceViewModel
+<style>.tab-pane {min-height: 130px;}</style>
+ <div class="row">
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+</div>
+ 
+<div class="row">
+    <div id="collapsedContent">
+        <div class="row">
+        </div>
+    </div>
+    <ul class="nav nav-tabs" id="myTab">
+        <li id="tab-1" class="active"><a href="#pane-1" data-toggle="tab">@Eagle.Resource.LanguageResource.Search</a></li>
+        <li id="tab-2"><a href="#pane-2" data-toggle="tab">@Eagle.Resource.LanguageResource.CreateData</a></li>
+    </ul>
+
+    <div id="myTabContent" class="tab-content responsive">
+        @Html.Action("_SearchPartial")
+        @Html.Action("_CreateDataPartial")
+    </div>
+
+</div>
+
+
+
+@Html.Action("jqueryval", "Common", null)

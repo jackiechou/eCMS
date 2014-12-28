@@ -1,0 +1,109 @@
+﻿@model LS_tblCompanyViewModel
+ <div class="detailViewInfo row-fluid">
+    <div class="col-md-12  details">
+        <form id="detailView">
+            <div class="contents">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="summaryView row-fluid">
+                            <div class="recordDetails">
+                                       
+                                <table class="summary-table">
+                                    <tbody>
+                                        <tr class="summaryViewEntries">
+                                            <td style="width: 30%" class="fieldLabel">
+                                                @Html.LabelFor(model=>model.Name, new { @class="muted"})
+                                            </td>
+                                            <td style="width: 70%" class="fieldValue">
+                                                <div class="row">
+                                                    <span style="word-wrap: break-word;" class="value span10">
+                                                        @Html.DisplayFor(model=>model.Name)
+                                                    </span>                                                   
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="summaryViewEntries">
+                                            <td style="width: 30%" class="fieldLabel">
+                                                @Html.LabelFor(model=>model.LSCompanyCode, new { @class="muted"})
+                                            </td>
+                                            <td style="width: 70%" class="fieldValue">
+                                                <div class="row">
+                                                    <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.LSCompanyCode)</span>                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                          <tr class="summaryViewEntries">
+                                            <td style="width: 30%" class="fieldLabel">
+                                                <label class="muted">@Html.LabelFor(model=>model.Address, new { @class="muted"})</label></td>
+                                            <td style="width: 70%" class="fieldValue">
+                                                <div class="row">
+                                                    <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.Address)</span>                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                            <tr class="summaryViewEntries">
+                                            <td style="width: 30%" class="fieldLabel">
+                                                <label class="muted">@Html.LabelFor(model=>model.TaxCode, new { @class="muted"})</label></td>
+                                            <td style="width: 70%" class="fieldValue">
+                                                <div class="row">
+                                                    <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.TaxCode)</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="summaryViewEntries">
+                                            <td style="width: 30%" class="fieldLabel">
+                                                <label class="muted">@Html.LabelFor(model=>model.Phone, new { @class="muted"})</label></td>
+                                            <td style="width: 70%" class="fieldValue">
+                                                <div class="row">
+                                                    <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.Phone)</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="summaryViewEntries">
+                                            <td style="width: 30%" class="fieldLabel">
+                                                @Html.LabelFor(model=>model.Fax, new { @class="muted"})
+                                            </td>
+                                            <td style="width: 70%" class="fieldValue">
+                                                <div class="row">
+                                                    <span style="word-wrap: break-word;" class="value span10">
+                                                        @Html.DisplayFor(model => model.Fax)
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>  
+                                    </tbody>
+                                </table>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4 toggleViewByMode">
+                                        <button style="width:140px" class="btn changeDetailViewMode cursorPointer" type="button">
+                                            <strong>Show Full Details</strong></button><input type="hidden" data-full-url="index.php?module=Contacts&amp;view=Detail&amp;record=19&amp;mode=showDetailViewByMode&amp;requestMode=full" data-currentviewlabel="LBL_COMPLETE_DETAILS" data-nextviewname="full" value="full" name="viewMode">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="pull-right">
+                                            <div>
+                                                <p><small><em>
+                                                    @Html.Raw(Eagle.Resource.LanguageResource.CreateTime)
+                                                    <b>@Html.DisplayFor(model=>model.CreateTime)</b></em></small></p>
+                                            </div>
+                                            <div>
+                                                <p><small><em>@Html.Raw(Eagle.Resource.LanguageResource.EditTime) <b>@Html.DisplayFor(model=>model.EditTime)</b></em></small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                             
+                    </div>               
+                </div>
+            </div>
+        </form>
+    </div>          
+</div>
+
+
+

@@ -1,0 +1,67 @@
+﻿@model Eagle.Model.Contents.Banners.BannerViewModel
+
+<h2 class="StepTitle">@Html.Raw(Eagle.Resource.LanguageResource.BannerUploadAndLifeSpan)</h2>
+<div id="BannerUploadAndLifeSpan">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.BannerContent)
+        </div>
+        <div class="col-md-4">
+            @if (ViewBag.BannerTypeId == 1)
+            {
+                 @Html.TextBoxFor(model => model.BannerContent, new { @type="file", @class = "span12 ignored" })
+            }
+            else 
+            {
+                 @Html.TextBoxFor(model => model.BannerContent, new { @class = "span12 ignored" })
+            }           
+            @Html.ValidationMessageFor(model => model.BannerContent)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.StartDate)
+        </div>
+        <div class="col-md-4">
+           @Html.TextBoxFor(model => model.StartDate, new { @class = "span12 ignored" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.EndDate)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.EndDate, new { @class = "span12 ignored" })
+        </div>
+    </div>
+
+    <div><h6>@Html.Raw(Eagle.Resource.LanguageResource.LimitBannerViews)</h6></div>
+    <hr />
+    <!--start row-->
+    <div class="row">
+        <div id="divBannerUnLimitation">
+            @Html.RadioButton("LimitBannerViews", true, true, new { id = "UnlimitedBannerViews", @style = "float:left;", @checked = "checked" })
+            @Html.Label("UnlimitedScope", Eagle.Resource.LanguageResource.Unlimited, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+            <div>@Html.Label("BannerUnLimitation", Eagle.Resource.LanguageResource.UnlimitedCampaign)</div>
+        </div>
+        
+        <div id="divBannerLimitationByDateTime">
+            @Html.RadioButton("LimitBannerViews", false, false, new { id = "LimitBannerViewsByDateTime", @style = "float:left;" })
+            @Html.Label("BannerScopeByDateTime", Eagle.Resource.LanguageResource.DateTimeScope, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+            <div>@Html.Label("BannerLimitationByDateTime", Eagle.Resource.LanguageResource.LimitBannerViewsByDateTime)</div>
+        </div>
+
+        <div id="divBannerLimitationByClicks">
+            @Html.RadioButton("LimitBannerViews", false, false, new { id = "LimitBannerViewsByClicks", @style = "float:left;" })
+            @Html.Label("BannerScopeByClicks", Eagle.Resource.LanguageResource.Clicks, new { @style = "float:left;margin:margin:-4px 20px -4px 4px;" })
+            <div>@Html.Label("BannerLimitationByClicks", Eagle.Resource.LanguageResource.LimitBannerViewsByClicks)</div>
+        </div>
+
+        <div id="divBannerLimitationByImpressions">
+            @Html.RadioButton("LimitBannerViews", false, false, new { id = "LimitBannerViewsByImpressions", @style = "float:left;" })
+            @Html.Label("BannerScopeByImpressions", Eagle.Resource.LanguageResource.Clicks, new { @style = "float:left;margin:margin:-4px 20px -4px 4px;" })
+            <div>@Html.Label("BannerLimitationByImpressions", Eagle.Resource.LanguageResource.LimitBannerViewsByImpressions)</div>
+        </div>
+    </div>
+    <!--end row-->
+</div>

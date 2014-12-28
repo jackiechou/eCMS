@@ -1,0 +1,64 @@
+﻿@model IEnumerable<InsuranceInformationSearchViewModel>
+
+<form id="frmList">
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text-center">@Eagle.Resource.LanguageResource.No</th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.SIBook)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.HIBook)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.StartDateSI)
+                    </th>
+                    <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Model != null)
+                {
+                    int i = 0;
+                    foreach (var item in Model)
+                    {
+                        i++;
+                    <tr>
+                        <td class="text-center">
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.SIBook)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.HIBook)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.StartDateSI)
+                        </td>
+
+                        <td class="table-actions text_center no-sort">
+                            <a data-id="@item.EmpID"  title="@Eagle.Resource.LanguageResource.View" class="ico viewItem " href="#" >&nbsp;&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</form>
+<script>
+    InvokeDataTables();
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading");
+    });
+</script>

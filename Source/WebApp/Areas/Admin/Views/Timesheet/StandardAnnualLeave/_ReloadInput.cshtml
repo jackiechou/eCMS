@@ -1,0 +1,56 @@
+﻿@model StandardAnnualLeaveAdjustViewModel     
+
+<div id="alertMessageBox2">
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong>
+            <div class="padding-left">
+                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+            </div>
+        </div>
+    }
+</div>
+<!-- start row -->
+@if (Model != null)
+{   
+    @Html.HiddenFor(model => model.EmpID)            
+    @Html.HiddenFor(model => model.ALAdjustID)            
+    <div class="row">
+        <div class="col-md-2">
+            <label>
+                @Eagle.Resource.LanguageResource.FullName
+            </label>
+        </div>
+        <div class="col-md-4">            
+            <label id="FullName" class="reset-label" style="color: #336699;"></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Year)
+        </div>
+        <div class="col-md-4">
+             @Html.TextBoxFor(model => model.Year, new { @class = "span12" })
+             @Html.ValidationMessageFor(model => model.Year)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Days)
+        </div>
+        <div class="col-md-4">
+             @Html.TextBoxFor(model => model.Days, new { @class = "span12" })
+             @Html.ValidationMessageFor(model => model.Days)
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Note)
+        </div>
+        <div class="col-md-10">
+             @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+        </div>
+    </div>
+}
+
+<!-- end row -->

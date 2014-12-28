@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Eagle.Model.Contents.Banners.BannerTypeViewModel>
+
+<div id="BannerType">
+    <h2 class="StepTitle">@Html.Raw(Eagle.Resource.LanguageResource.BannerType)</h2>
+    @{int i = 0;}
+    @foreach (var item in Model)
+    {
+        i++;
+        <div id="type_@i">
+            @Html.RadioButtonFor(modelItem => item.BannerTypeId, new { @style = "float:left;", @checked = "checked" })
+            @Html.LabelFor(modelItem => item.BannerTypeName, new { @style = "float:left;margin:-4px 4px;" })
+        </div>
+        <div>@Html.DisplayFor(modelItem => item.BannerTypeDescription)</div>
+    }
+</div>

@@ -1,0 +1,38 @@
+﻿@using Eagle.Model;
+@{
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MasterLayout;
+
+    //#region Kiểm tra quyền truy cập
+    //List<ModuleFunction> pages = (List<ModuleFunction>)Session[SettingKeys.MenuList];
+    //string url = Request.Url.AbsolutePath;
+    ////Nếu là trang login thì không làm gì
+    //if (url.ToLower() != "/Admin/login")
+    //{
+    //    if (pages != null)
+    //    {
+    //        bool chk = true;
+    //        foreach (var page in pages)
+    //        {
+    //            if (url.ToLower().Contains(page.Url.ToLower()))
+    //            {
+    //                chk = false;
+    //            }
+    //        }
+    //        if (chk)
+    //        {
+    //            Response.Redirect(Url.Action("Login", "User", new { desiredUrl = url, area = "Admin" }));
+    //        }
+    //    }
+    //    else
+    //    {
+    //        try
+    //        {
+    //            Response.Redirect(Url.Action("Login", "User", new { desiredUrl = url, area = "Admin" }));
+    //        }
+    //        catch
+    //        {
+    //        }
+    //    }
+    //}
+    //#endregion
+}

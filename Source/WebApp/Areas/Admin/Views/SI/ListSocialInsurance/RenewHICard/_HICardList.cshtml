@@ -1,0 +1,64 @@
+﻿@model IEnumerable<EmployeeSearchViewModel>
+<div class="row" style="text-align: right; margin-top: -5px;">
+     @if (Model != null && Model.Count() > 0)
+	 {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Deleterow btnDeleteEmployee" style="margin-right: 5px;">
+     }
+     else
+     {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Delete-disabled-row btnDeleteEmployee" style="margin-right: 5px;">
+     }
+     <input id="btnAddEmployee" title="@Eagle.Resource.LanguageResource.AddNew" type="button" class="btn-custom-addrow" style="margin-right: 18px;">
+</div>
+<div style="clear:both;"></div>
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmpCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LSCompanyName)
+                    </th>
+                    <th class="table-actions text_center no-sort"  style="width: 85px;">
+                        @Html.CheckBox("CheckAll")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0; int k = -1;}
+                @foreach (var item in Model)
+                {
+                    i++;
+                    k++;
+                    <tr>
+                        <td class="text_center">
+                            @i
+                            <input type="hidden" name="EmployeeList[@k].EmpCode" value="@item.EmpCode" />
+                            <input type="hidden" name="EmployeeList[@k].FullName" value="@item.FullName" />
+                            <input type="hidden" name="EmployeeList[@k].LSCompanyName" value="@item.LSCompanyName" />
+                            <input type="hidden" name="EmployeeList[@k].EmpID" value="@item.EmpID" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LSCompanyName)
+                        </td>
+                        <td class="table-actions text_center no-sort" >
+                            @Html.CheckBox("checkEmp", false, new { @value = item.EmpID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+

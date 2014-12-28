@@ -1,0 +1,126 @@
+﻿   <div id='jqxTree'></div>
+
+<link href="~/Scripts/plugins/jqwidgets/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/scripts/demos.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxcore.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxdata.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxpanel.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxdragdrop.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxtree.js"></script>
+<script src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      
+        var data = null;
+        data = [{ "id": 1, "parentid": 0, "text": "Friendly Url - Router", "value": "78fb41a9-32b5-46df-b733-db23e2623660", "children": [] }, { "id": 2, "parentid": 0, "text": "Host-Skins", "value": "4f3b25e3-dffc-42a2-8e0f-7a58f58cfd77", "children": [] }, { "id": 7, "parentid": 0, "text": "Dashboard", "value": "ca6bac46-3dce-421a-b9c9-5d0186b6d11a", "children": [] }, { "id": 8, "parentid": 0, "text": "Host Users", "value": "3ba90199-365f-4a37-b22d-1efe8c6ce54f", "children": [] }, { "id": 92, "parentid": 0, "text": "Host Pages", "value": "49a4c477-1b84-438f-bf64-d399dae605ae", "children": [] }, { "id": 9, "parentid": 0, "text": "Host Menus", "value": "20327aa9-dd7d-4ead-bd8c-7b662a379ab7", "children": [] }, { "id": 13, "parentid": 0, "text": "Host Settings", "value": "55c73420-7e7d-4c3b-afc2-f57bf7919ed1", "children": [] }, { "id": 14, "parentid": 0, "text": "Host-Language", "value": "7a8da3e8-4e9a-464d-b1eb-ac36de4ed063", "children": [] }, { "id": 15, "parentid": 0, "text": "Application", "value": "642cae35-b70d-4845-8ae2-48ab444fd0f0", "children": [] }, { "id": 16, "parentid": 0, "text": "Host Modules", "value": "b2b1ea11-9b45-41e0-b5ca-c55ec718fcd0", "children": [] }, { "id": 87, "parentid": 0, "text": "Host Extensions", "value": "1e2e1f60-1e7f-46cb-a1f8-d896d4a377dd", "children": [] }, { "id": 94, "parentid": 0, "text": "Portal Manager", "value": "63c8b128-0c35-48ba-9923-1c5835d1f953", "children": [] }];
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            url: "/Admin/Menu/PopulateListBox",
+            success: function (response, status, xhr) {
+                //var list = $.parseJSON(response);               
+                //$.each(list, function (i) {
+                //    data[i] = list[i];
+                //});
+
+                //data = $.parseJSON(response);
+                data = JSON.stringify(response);
+                alert(data);
+            }
+        });
+       
+        // prepare the data
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'id' },
+                { name: 'parentid' },
+                { name: 'text' },
+                { name: 'value' }
+            ],
+            id: 'id',
+            localdata: data
+        };
+
+        // create data adapter.
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        // perform Data Binding.
+        dataAdapter.dataBind();
+        // get the tree items. The first parameter is the item's id. The second parameter is the parent item's id. The 'items' parameter represents 
+        // the sub items collection name. Each jqxTree item has a 'label' property, but in the JSON data, we have a 'text' field. The last parameter 
+        // specifies the mapping between the 'text' and 'label' fields.  
+        var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
+
+        // Create jqxTree
+        var tree = $('#jqxTree');
+        tree.jqxTree({ source: records, height: 300, width: '100%', allowDrag: true, allowDrop: true });
+
+        tree.on('expand', function (event) {
+            var label = tree.jqxTree('getItem', event.args.element).label;
+            var $element = $(event.args.element);
+            var loader = false;
+            var loaderItem = null;
+            var children = $element.find('ul:first').children();
+            $.each(children, function () {
+                var item = tree.jqxTree('getItem', this);
+                if (item && item.label == 'Loading...') {
+                    loaderItem = item;
+                    loader = true;
+                    return false
+                };
+            });
+            if (loader) {
+                $.ajax({
+                    url: loaderItem.value,
+                    success: function (data, status, xhr) {
+                        var items = jQuery.parseJSON(data);
+                        tree.jqxTree('addTo', items, $element[0]);
+                        tree.jqxTree('removeItem', loaderItem.element);
+                    }
+                });
+            }
+        });
+     
+        tree.on('select', function (event) {
+            alert(event.args.element.value);
+            //$("#ContentPanel").html("<div style='margin: 10px;'>" + event.args.element.id + "</div>");
+        });
+
+        //$("#treeMenu").on('dragStart', function (event) {
+        //    $("#dragStartLog").text("Drag Start: " + event.args.label);
+        //    $("#dragEndLog").text("");
+        //});
+
+        //$("#treeMenu").on('dragEnd', function (event) {
+        //    $("#dragEndLog").text("Drag End");
+        //    if (event.args.label) {
+        //        var ev = event.args.originalEvent;
+        //        var x = ev.pageX;
+        //        var y = ev.pageY;
+        //        if (event.args.originalEvent && event.args.originalEvent.originalEvent && event.args.originalEvent.originalEvent.touches) {
+        //            var touch = event.args.originalEvent.originalEvent.changedTouches[0];
+        //            x = touch.pageX;
+        //            y = touch.pageY;
+        //        }
+        //        var offset = $("#textarea").offset();
+        //        var width = $("#textarea").width();
+        //        var height = $("#textarea").height();
+        //        var right = parseInt(offset.left) + width;
+        //        var bottom = parseInt(offset.top) + height;
+
+        //        if (x >= parseInt(offset.left) && x <= right) {
+        //            if (y >= parseInt(offset.top) && y <= bottom) {
+        //                $("#textarea").val(event.args.label);
+        //            }
+        //        }
+        //    }
+        //});
+    });
+</script>

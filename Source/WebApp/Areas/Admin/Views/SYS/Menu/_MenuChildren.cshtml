@@ -1,0 +1,16 @@
+﻿@model Eagle.Model.SYS.Menu.MenuModel
+@foreach (var item in Model.MenuList)
+{
+    <ul>
+        @if (item != null)
+        {
+            <li>
+                <a href="#" class="usr">@item.MenuName</a>
+                @if (item.MenuList.Count > 0)
+                {
+                    @Html.Partial("_MenuChildren", item)
+                }
+            </li>
+        }
+    </ul>
+}

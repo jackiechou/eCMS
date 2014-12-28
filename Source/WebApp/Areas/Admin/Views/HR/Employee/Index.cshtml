@@ -1,0 +1,374 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.EmployeeList;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+@model List<EmployeeViewModel>
+@section ContentSection
+{
+<!--start box-->
+<div id="MainBody" class="box form-search">       
+         <div id="divEdit" class="row">
+           @Html.Partial("../HR/Employee/_SearchForm")
+        </div>
+       
+        <div id="divList" class="row">
+            @Html.Action("List", "Employee", null)
+        </div>     
+ </div>
+<!--end box-->
+}
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    ContainerClientID: p.ContainerClientID,
+                    LSCompanyID: p.LSCompanyID,                  
+                    LSLocationID: p.LSLocationID,
+                    LSPositionID: p.LSPositionID,
+                    Code: p.Code,
+                    SearchText: p.SearchText
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    InvokeDataTable();
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                        case 0:
+                            DataMgr.GetList();
+                        case 1:
+                            DataMgr.BindGrid(data);
+                            break;
+                        case 2:
+                            DataMgr.BindDetails(data);
+                            break;
+                        case 3:                            
+                            DataMgr.RefreshPage(data);
+                            break;
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+                    DataMgr.RemoveQtip();
+                    DataMgr.LoadComboTree('selectLSCompanyID', '@Url.Action("GetHierachicalList", "LS_tblCompany")', false);
+                    //DataMgr.GetList();
+                },
+                BindEvents: function () {
+                    $(document).on('change', '#LSLocationID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                    });
+
+                    $(document).on('change', '#LSLocationID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                    });
+
+                    $(document).on('click', '#btnSearch', function () {
+                        DataMgr.GetList();
+                    });
+
+                    $(document).on('click', '#btnReset', function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        $("body").addClass("loading");
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        DataMgr.GetLeftBriefEmployeeInfo(ID);
+                        DataMgr.config.method = "Edit";
+                        var edit_url = DataMgr.config.baseURL + DataMgr.config.method + "?ID=" + ID + "&ModuleID=2&mode=edit";                       
+                        window.location.href = edit_url;
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".changeStatusItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {
+                                    
+                                    DataMgr.UpdateStatus(ID);
+                                    return false;
+                                }
+                            });
+                    });
+                },
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                HandleScrollingWithBoostrapModal: function () {
+                    //$('.modal').hide();
+                    $('.modal').on('show shown', function () {
+                        var top = $("body").scrollTop();
+                        (function (pos) {
+                            $(window).scroll(function (e) {
+                                $("body,html").scrollTop(0);
+                                //OR
+                                $("body,html").scrollTop(pos);
+                            });
+                        })(top);
+                    });
+                    $('.modal').on('hide hidden', function () {
+                        $(window).unbind("scroll");
+                    });
+                },               
+                LoadComboTree: function (selectId, actionUrl, isRequired) {
+                    var selectBox = $('#' + selectId);
+
+                    var hiddenBox = $('input[type=hidden][name="' + selectId + '"]');
+                    var selectedValue = selectBox.val();
+
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            selectBox.val(selectedValue);                         
+                            hiddenBox.val(selectedValue);      
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },             
+                RemoveQtip:function(){
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },                            
+                PreviewImage: function (id, width, height) {
+                    var f = document.getElementById(id).files[0];
+                    var output_container = document.getElementById("info_output");
+                    output_container.innerHTML = "";
+
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(f);
+
+                    oFReader.onload = (function (theFile) {
+                        return function (e) {
+                            var span = document.createElement('span');
+                            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                                                '" title="', escape(theFile.name), '" width="' + width + '" height="' + height + '"', '"/>'].join('');
+                            output_container.insertBefore(span, null);
+                        };
+                    })(f);
+                },
+                GetList: function () {
+                    var data = {
+                        LSCompanyID: $('input[type=hidden][name="selectLSCompanyID"]').val(),
+                        LSPositionID: $("#LSLocationID").val(),
+                        LSLocationID: $("#LSPositionID").val(),
+                        Code: $("#Code").val(),
+                        SearchText: $("#FullName").val(),
+                        Active: $('input[name=SearchStatus]:checked').val()
+                    };
+                    
+                    this.config.method = "List";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindGrid: function (data) {
+                    $('#divList').html(data);
+                    InvokeDataTable();
+                },
+                GetLeftBriefEmployeeInfo: function (id) {                   
+                    $.ajax({
+                        url: "/Admin/Common/EmployeeDisplay/?EmpID=" + id,
+                        encoding: "UTF-8",
+                        dataType: "html",
+                        contentType: "text/plain; charset=UTF-8",
+                        success: function (data, statusCode, xhr) {
+                            $('#LeftPane #avatar-display').html(data);
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                GetDetails: function (ID) {
+                    $("body").addClass("loading");
+                    DataMgr.GetLeftBriefEmployeeInfo(ID);
+
+                    var data = { "ID": ID };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {                    
+                    $('#MainBody').html(data);
+                    $('.content-header h2').html('@Html.Raw(Eagle.Resource.LanguageResource.EditEmployee)');                    
+                    DataMgr.InitializeCotrols();                    
+                    $("body").removeClass("loading");
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Update";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                //GetDetails: function (ID) {
+                //    var params = {};
+                //    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                //        params[key] = value;
+                //    });
+                //    var data = { "EmpID": ID, "ModuleID": params["ModuleID"] };
+                //    this.config.method = "GetDetailInfo";                  
+                //    this.config.data = data;
+                //    this.config.type = "GET";
+                //    this.config.dataType = "html";
+                //    this.config.url = DataMgr.config.baseURL + this.config.method;
+                //    this.config.ajaxCallMode = 2;
+                //    this.ajaxCall(this.config);
+                //},
+                //BindDetails: function (data) {
+                //    $('#changeSidebarPos').trigger('click');
+                //    $("body").removeClass("loading");
+                //    //Go to top
+                //    $('html, body').animate({ scrollTop: 0 }, 'fast');
+                //    //bind data
+                //    $('#MainBody').html(data);
+                //},
+                //UpdateData: function (data) {
+                //    DataMgr.config.mode = 1;
+                //    this.config.method = "UpdateData";
+                //    this.config.data = JSON.stringify(data);
+                //    this.config.url = DataMgr.config.baseURL + this.config.method;
+                //    this.config.ajaxCallMode = 3;
+                //    this.ajaxCall(this.config);
+                //},
+                UpdateStatus: function (ID) {
+                    DataMgr.config.mode = 3;
+                    this.config.method = "UpdateStatus";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                RefreshPage: function (data) {
+                    if (data.d == "1") {
+                        DataMgr.ResetControls();
+                        DataMgr.GetList();
+                    }
+                },
+                ResetControls: function () {
+                    $('#Code').val('');
+                    $('#FullName').val('');
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+                    else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    }
+                    else if (mode == 3) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateStatusSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateStatusFailure";
+                    }
+                    else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    // var result = $.parseJSON(data);
+                    if (result.flag == 'true') {
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            success: function (data, statusCode, xhr) {
+                                $('#' + DataMgr.config.ContainerClientID).html(data);
+                                DataMgr.InitializeCotrols();
+                                showMessageWithTitle(titleSuccess, result.message, "success", 3000);
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error",20000);
+                    }
+                },
+            };
+            DataMgr.init();
+        }
+
+        var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+        var base_settings = {
+            ContainerClientID: 'MainBody',
+            BaseURL: base_url + "/Admin/Employee/",
+            LSCompanyID: $("#selectLSCompanyID").val(),
+            LSLocationID: $("#LSLocationID").val(),
+            LSPositionID: $("#LSPositionID").val(),
+            Code: $("#Code").val(),
+            SearchText: $("#FullName").val()
+        };
+        $.createDataBuilder(base_settings);
+
+    })(jQuery);
+</script>

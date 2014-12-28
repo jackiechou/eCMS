@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.btnRenewHICard;   
+}
+
+@section Button{
+   
+}
+
+<div id="MainBody">
+   @Html.Partial("../SI/ListSocialInsurance/RenewHICard/_HICardReset")
+</div>
+<div id="divTmp">
+
+</div>
+<script type="text/javascript">
+    $(document).on("click", "#btnReset", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "Get",
+            url: "/Admin/ListSocialInsurance/Index?ModuleID=10&Mode=RenewHICard",
+            success: function (data) {
+                $("#MainBody").html(data);
+                checkChange();
+            }
+        });
+    });
+
+    $(document).on("click", "#btnAdd", function () {
+
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+
+            $.ajax({
+                type: "Post",
+                url: "Extend",
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "Get",
+                            url: "/Admin/ListSocialInsurance/Index?ModuleID=10&Mode=RenewHICard",
+                            success: function (data) {
+                                $("#MainBody").html(data);
+                                checkChange();
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } else {
+                        AlterWarning(data);
+                    }
+                }
+            });
+        }
+        
+    });
+    function checkChange() {
+        if ($("input[name='AddMode']:checked").val() == 1) {
+            //Toàn bộ nhân viên
+            $("#divList").html("");
+        } else {
+            //Một số nhân viên
+            $.ajax({
+                type: "GET",
+                url: "_HICardList",
+                success: function (data) {
+                    $("#divList").html(data);
+                }
+            });
+            
+        }
+    }
+    $(document).on("change", "input[name='AddMode']", function () {
+        checkChange();
+    });
+    $(document).ready(function () {
+        checkChange();
+    });
+
+    $(document).on("click", "#btnAddEmployee", function () {
+        //var CandidateSelectedList = '';
+
+        //$("input[name='chkCandidateDelete']").each(function () {
+        //    if ($(this).val() != 'false') {
+        //        CandidateSelectedList += $(this).val() + ';';
+        //    }
+        //});
+
+        var urlGetCreateForm = "_EmployeeCreatePartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divTmp').html(data);
+                $(".popupEmpLoyee").modal("show");
+                //$("#CandidateSelectedList").val(CandidateSelectedList);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnEmployeeSearch", function () {
+
+        $("body").addClass("loading");
+        var url = "_EmployeeCreateSearchResultPartial";
+        $.ajax({
+            url: url,
+            type: "Post",
+            data: $("#frmStaffSearch").serialize(),
+            success: function (data) {
+                $("#popEmployeeResult").html(data);
+            }
+        });
+    });
+    $(document).on("click", "#btnEmployeeSubmit", function () {
+        loading();
+        var itemselected = '';
+        $("input[name='chkEmpID']").each(function () {
+
+            if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                itemselected += $(this).val() + ';';
+            }
+        });
+        $("input[name='EmployeeSelectedList']").val(itemselected);
+        var _AddToList = "_AddEmployeeToList";
+        $.ajax({
+            type: "Post",
+            url: _AddToList,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+                $(".popupEmpLoyee").modal("hide");
+            }
+        });
+    });
+
+    $(document).on("click", "#CheckAll", function () {
+        $("input[name='checkEmp']").prop("checked", $(this).prop("checked"));
+    });
+    $(document).on("click", "#chkSearchResultAll", function () {
+        $("input[name='chkEmpID']").prop("checked", $(this).prop("checked"));
+    });
+
+    
+    $(document).on("click", ".btnDeleteEmployee", function () {
+        if ($(this).hasClass("btn-custom-Deleterow")) {
+            $("body").addClass("loading");
+            var SelectedList = '';
+            $("input[name='checkEmp']").each(function () {
+                if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                    SelectedList += $(this).val() + ';';
+                }
+            });
+            $("input[name=EmployeeSelectedList]").val(SelectedList);
+            $.ajax({
+                type: "POST",
+                url: "_DeleteEmployeeList",
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $("#divList").html(data);
+                }
+            });
+        }
+    });
+</script>
+

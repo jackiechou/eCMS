@@ -1,0 +1,92 @@
+﻿@model Eagle.Model.SYS.Menu.MenuViewModel
+
+<div class="add-new-module">
+    <div>
+        <h6>@Eagle.Resource.LanguageResource.PageSelection</h6>
+    </div>
+    <hr />
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PageId)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.PageId, null, new { @class = "span12", autocomplete = "off" })
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.MenuTypeId)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.MenuTypeId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.MenuTypeId)
+        </div>
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.MenuName)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.MenuName, new { @class = "span12" })
+            @Html.ValidationMessageFor(model => model.MenuName)
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.MenuTitle)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.MenuTitle, new { @class = "span12" })
+            @Html.ValidationMessageFor(model => model.MenuTitle)
+        </div>
+    </div>
+    <!--end row-->
+
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+        </div>
+       
+    </div>
+    <!--end row-->
+    <div>
+        <h6>@Eagle.Resource.LanguageResource.Appearance</h6>
+    </div>
+    <hr />
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.IconClass)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.IconClass, new { type = "file", @class = "span12 file" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Target)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Target, new { @class = "span12" })
+        </div>
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Color)
+        </div>
+        <div class="col-md-4">
+            <input id="Color" class="col-md-11 color-picker" value="#31859b" style="border: 1px solid #cccccc; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); padding: 4px 6px; height: 20px; border-radius:4px;" />
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.CssClass)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.CssClass, new { @class = "span12" })
+        </div>
+    </div>
+    <!--end row-->  
+    @Html.Action("GetRolePermission", "Role")
+</div>

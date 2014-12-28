@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.Masterdata_OnlineProcess;   
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../SYS/OnlineProcess/_Reset")
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+@Html.Action("jqueryval", "Common", null)
+<script type="text/javascript">
+    var Controller = 'OnlineProcess';
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/_Delete/';
+
+    $(function () {
+        InvokeDataTables();
+        LoadEmailAutoComplete();
+
+        function LoadEmailAutoComplete() {
+            BindAutoCompleteMultipleChoicesToSelect2('/Admin/Employee/DropdownListForSendingMail',
+            'selectBcc', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'Bcc', true);
+
+
+            BindAutoCompleteMultipleChoicesToSelect2('/Admin/Employee/DropdownListForSendingMail',
+                 'selectCc', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'Cc', true);
+
+        }
+        
+
+       
+
+        //Add and update post action
+        $(document).on("click", "#btnAdd", function () {
+            if (!$("#frmAdd").valid()) { // Not Valid
+                return false;
+            } else {
+                $("body").addClass("loading");
+                if ($('#btnAdd').hasClass("AddModel")) {
+                    //Add new Item
+                    $.ajax({
+                        type: "POST",
+                        url: urlAddNew,
+                        data: $("#frmAdd").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: urlReset,
+                                    success: function (data) {
+                                        $('#MainBody').html(data);
+                                        LoadEmailAutoComplete();
+                                        AlterAddSuccess();
+                                    }
+                                });
+                            } else if (data == 'timeout') {
+                                window.location.href = '/';
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    });
+                } else {
+                    $("body").addClass("loading");
+                    // Update Item
+                    $.ajax({
+                        type: "POST",
+                        url: urlUpdate,
+                        data: $("#frmAdd").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: urlReset,
+                                    success: function (data) {
+                                        $('#MainBody').html(data);
+                                        LoadEmailAutoComplete();
+                                        AlterUpdateSuccess();
+                                    }
+                                });
+                            } else if (data == 'timeout') {
+                                window.location.href = '/';
+                            }
+                            else {
+                                $('#divEdit').html(data);
+                                $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        // Reset form
+        $(document).on("click", "#btnReset", function () {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "GET",
+                url: urlReset,
+                success: function (data) {
+                    $('#MainBody').html(data);
+                    LoadEmailAutoComplete();
+                }
+            });
+        });
+
+        // Click edit (get)
+        $(document).on("click", ".editItem", function () {
+            $("body").addClass("loading");
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+
+            $.ajax({
+                type: "GET",
+                url: urlEdit + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    LoadEmailAutoComplete();
+                }
+            })
+            //Go to top
+            $('html, body').animate({ scrollTop: 80 }, 'slow');
+            return false;
+        });
+
+        // Click delete (get)
+        $(document).on("click", ".deleteItem", function (e) {
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+            $('#confirm')
+                .modal({ backdrop: 'static', keyboard: false })
+                .one('click', '[data-value]', function (e) {
+                    if ($(this).data('value')) {
+                        $("body").addClass("loading");
+                        $.ajax({
+                            type: "POST",
+                            url: urlDelete + lsID,
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: urlReset,
+                                        success: function (data) {
+                                            $('#MainBody').html(data);
+                                            AlterUpdateSuccess();
+                                            LoadEmailAutoComplete();
+                                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                                        }
+                                    });
+                                } else {
+                                    AlterWarning(data);
+                                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                                }
+                            }
+                        })
+                        return false;
+                    }
+                });
+        });
+
+    });
+</script>
+

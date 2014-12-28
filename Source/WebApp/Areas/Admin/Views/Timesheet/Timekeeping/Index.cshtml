@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.Timekeeping;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id="divHeader">
+        <form id="frmAdd" class="form-horizontal user-group-management">
+            @Html.Action("_SearchHeaderEmp", "Timekeeping", null)
+        </form>
+    </div>
+    <div id="divContent">
+       @Html.Action("_List","Timekeeping",null)
+    </div>
+    }
+@*<script src="/Scripts/jquery.mtz.monthpicker.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.mtz.monthpicker.custom.js" type="text/javascript"></script>*@
+<script type="text/javascript">
+    $('#changeSidebarPos').trigger('click');
+    InvokeDateTimePicker();
+    InvokeMonthPicker();
+    $(document).on("click", "#btnSearch", function () {
+        
+        // kiem tra MMYYYY
+        if ($('#MMYYYY').val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose month to get data", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn tháng để tổng hợp dữ liệu", 'warning');
+            }
+            return false;
+        }
+        $("body").addClass("loading");
+        
+        var moduleId = 9;
+        var url = areas + '/Timekeeping/_Search?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divContent').html(data);
+            }
+        });
+    });
+    // save and update
+    $(document).on("click", "#btnCollectionData", function () {
+        // kiem tra MMYYYY
+        if ($('#MMYYYY').val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose month to get data", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn tháng để tổng hợp dữ liệu", 'warning');
+            }
+            return false;
+        }
+        $("body").addClass("loading");
+
+        
+        var moduleId = 9;
+        //Add new Account
+        var url = areas + '/Timekeeping/_GetData?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    $('#btnSearch').trigger('click');
+                }
+                else {
+                    $('#frmAdd').html(data);
+                    return false;
+                }
+
+            }
+        });
+    });
+    $(document).on("change", ".WorkDays", function () {
+        var wordDays = $(this).val();
+
+        var id = $(this).data('id');  // ID cua dong du lieu
+        $("body").addClass("loading");
+        var moduleId = 9;
+        //Add new Account
+        var url = areas + '/Timekeeping/_UpdateData?TimekeepingID=' + id + "&WorkDays=" + wordDays;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    //$('#btnSearch').trigger('click');
+                }
+                else {
+                    $('#frmAdd').html(data);
+                    return false;
+                }
+
+            }
+        });
+    });
+    
+    $(document).on("click", "#btnStaffCancel", function () {
+        $('#btnSearch').trigger('click');
+    });
+    $(document).on("click", ".editItem", function () {
+
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var month = $(this).data('value');  // ID cua dong du lieu
+
+        var urlGetCreateForm = "_PopupEditTimeKeeping?EmpID=" + lsID + "&MMYYYY=" + month;
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            success: function (data) {
+                $('#divPopupEditTimeKeeping').html(data);
+                $(".PopupEditTimeKeeping").modal("show");
+            }
+        });
+    });
+
+
+    $(document).on('click', '.launchConfirm', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var lsMonth = $(this).data('month');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/Timekeeping/_Delete?EmpID=' + lsID + "&MMYYYY=" + lsMonth,
+                        data: $("#frmAdd").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $('#btnSearch').trigger('click');
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

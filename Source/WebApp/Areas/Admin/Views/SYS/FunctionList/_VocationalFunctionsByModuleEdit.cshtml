@@ -1,0 +1,181 @@
+﻿@model List<FunctionListViewModel>
+
+<div class="relatedFunctions">
+    <ul class="nav nav-stacked nav-pills">
+          <li data-link-key="LBL_RECORD_SUMMARY" data-label-key="Related Functions" data-url="" class="active">
+            <a title="Related Functions" style="width: auto" class="textOverflowEllipsis" href="javascript:void(0);">
+                <strong>Related Functions</strong></a>
+        </li>  
+         <li data-url="/Admin/Profile/Details" data-label-key="Employee Profile" data-link-key="Employee Profile">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/Profile/Details", "2")' href="javascript:void(0);" class="textOverflowEllipsis" style="width: auto" title="Employee Profile">
+                    <strong>Employee Profile</strong></a>
+            </li>
+            <li data-url="/Admin/WorkingRecord/Details" data-label-key="Working Record" data-link-key="Working Record">
+                <a data-bind='click: function (data, event) { viewDetails("/Admin/WorkingRecord/GetList","2", data, event) }' href="javascript:void(0);"  class="textOverflowEllipsis" style="width: auto" title="Working Record">
+                    <strong>Working Record</strong></a>
+            </li>
+            <li data-url="/Admin/RewardDiscipline/Details" data-label-key="Award - Discipline" data-link-key="Award - Discipline">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/RewardDiscipline/GetList", "2")'  href="javascript:void(0);"  class="textOverflowEllipsis" style="width: auto" title="Award - Discipline">
+                    <strong>Award - Discipline</strong></a>
+            </li>
+            <li data-url="/Admin/Qualification/Details" data-label-key="Qualification" data-link-key="Qualification">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/Qualification/GetList", "2")'  href="javascript:void(0);" class="textOverflowEllipsis" style="width: auto" title="Qualification">
+                    <strong>Qualification</strong></a>
+            </li>
+            <li data-url="/Admin/Contract/Details" data-label-key="Employee Contract" data-link-key="Employee Contract">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/Contract/GetList", "2")' href="javascript:void(0);" class="textOverflowEllipsis" style="width: auto" title="Employee Contract">
+                    <strong>Employee Contract</strong></a>
+            </li>
+            <li data-url="/Admin/Project/Details" data-label-key="Project Participant" data-link-key="Project Participant">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/Project/GetList", "2")' class="textOverflowEllipsis" style="width: auto" title="Project Participant">
+                    <strong>Project Participant</strong></a>
+            </li>
+            <li data-url="/Admin/WorkingHistory/Details" data-label-key="Working History" data-link-key="Working History">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/WorkingHistory/GetList", "2")' href="javascript:void(0);" class="textOverflowEllipsis" style="width: auto" title="Working History">
+                    <strong>Working History</strong></a>
+            </li>
+            <li data-url="/Admin/Relationship/Details" data-label-key="Family Relationship" data-link-key="Family Relationship">
+                <a data-bind='click: viewDetails.bind($data, "/Admin/Relationship/GetList", "2")' href="javascript:void(0);" class="textOverflowEllipsis" style="width: auto" title="Family Relationship">
+                    <strong>Family Relationship</strong></a>
+            </li>
+    </ul>
+ </div>
+<script src="~/Scripts/knockout-3.1.0.js"></script>
+
+<script type="text/javascript">
+    (function ($) {
+        var FunctionMgr = {
+            config: {             
+                mode: 0,
+                key: 0,
+                ContainerClientID: "EditDetails"
+            },
+            viewDetails: function (url, ModuleID) {
+                var currentUserId = '@HttpContext.Current.Session[SettingKeys.EmpId]';               
+                var data = { "EmpID": currentUserId, "ModuleId": ModuleID };
+                if (currentUserId != undefined && currentUserId != null && currentUserId != 0) {
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        dataType: "html",
+                        data: data,
+                        success: function (response) {
+                            //bind data
+                            $('#EditDetails').html(response);
+                            $('.datetimepicker').datetimepicker();
+                            //$('#dataTable tr').find('th:last, td:last').remove();
+                            // $("body").removeClass('loading');
+                           // FunctionMgr.hideOverlay();
+                        }, error: function (xhr, ajaxOptions, thrownError) {
+                            document.location = '/login';
+                        }
+                    });
+                } else
+                    window.location.href = "/";
+            },           
+
+            registerEvents: function () {
+                $('#spinner').ajaxStart(function () {
+                    $(this).show();
+                }).ajaxComplete(function () {
+                    $(this).hide();
+                });
+            },
+
+            /**
+	         * Listen to xready notiications.
+	         */
+            listenPostAjaxReady: function (callback) {
+                jQuery(document).on('postajaxready', callback);
+            },
+
+            registerPostAjaxEvents: function () {
+                FunctionMgr.registerTooltipEvents();
+            },
+
+            /**
+	         * Function to trigger tooltip feature.
+	         */
+            registerTooltipEvents: function () {
+                var references = jQuery.merge(jQuery('[data-field-type="reference"] > a'), jQuery('[data-field-type="multireference"] > a'));
+                var lastPopovers = [];
+
+                // Fetching reference fields often is not a good idea on a given page.
+                // The caching is done based on the URL so we can reuse.
+                var CACHE_ENABLED = true; // TODO - add cache timeout support.
+
+                function prepareAndShowTooltipView() {
+                    hideAllTooltipViews();
+
+                    var el = jQuery(this);
+                    var url = el.attr('href') ? el.attr('href') : '';
+                    if (url == '') {
+                        return;
+                    }
+
+                    // Rewrite URL to retrieve Tooltip view.
+                    url = url.replace('view=', 'xview=') + '&view=TooltipAjax';
+
+                    var cachedView = CACHE_ENABLED ? jQuery('[data-url-cached="' + url + '"]') : null;
+                    if (cachedView && cachedView.length) {
+                        showTooltip(el, cachedView.html());
+                    } else {
+                        AppConnector.request(url).then(function (data) {
+                            cachedView = jQuery('<div>').css({ display: 'none' }).attr('data-url-cached', url);
+                            cachedView.html(data);
+                            jQuery('body').append(cachedView);
+                            showTooltip(el, data);
+                        });
+                    }
+                }
+
+                function showTooltip(el, data) {
+                    el.popover({
+                        //title: '', - Is derived from the Anchor Element (el).
+                        trigger: 'manual',
+                        content: data,
+                        animation: false,
+                        template: '<div class="popover popover-tooltip"><div class="arrow"></div><div class="popover-inner"><button name="vtTooltipClose" class="close" style="color:white;opacity:1;font-weight:lighter;position:relative;top:3px;right:3px;">x</button><h3 class="popover-title"></h3><div class="popover-content"><div></div></div></div></div>'
+                    });
+                    lastPopovers.push(el.popover('show'));
+                    registerToolTipDestroy();
+                }
+
+                function hideAllTooltipViews() {
+                    // Hide all previous popover
+                    var lastPopover = null;
+                    while (lastPopover = lastPopovers.pop()) {
+                        lastPopover.popover('hide');
+                    }
+                }
+
+                references.each(function (index, el) {
+                    jQuery(el).hoverIntent({
+                        interval: 100,
+                        sensitivity: 7,
+                        timeout: 10,
+                        over: prepareAndShowTooltipView,
+                        out: hideAllTooltipViews
+                    });
+                });
+
+                function registerToolTipDestroy() {
+                    jQuery('button[name="vtTooltipClose"]').on('click', function (e) {
+                        var lastPopover = lastPopovers.pop();
+                        lastPopover.popover('hide');
+                    });
+                }
+            },
+
+        }
+        ko.applyBindings(FunctionMgr);
+
+        //On Page Load
+        jQuery(document).ready(function () {
+            FunctionMgr.registerEvents();
+            FunctionMgr.listenPostAjaxReady(function () {
+                FunctionMgr.registerPostAjaxEvents();
+            });
+        });
+     })(jQuery);
+</script>

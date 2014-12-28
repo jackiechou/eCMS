@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DocumentViewModel>
+
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width: 35px;">@Eagle.Resource.LanguageResource.No</th> 
+                <th>
+                    @Html.DisplayNameFor(model => model.FileTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FileNameVirtual)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSReferenceId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DocumentId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedByUserId)
+                </th>
+                <th class="table-actions text_center no-sort" style="width:60px">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @if(Model != null && Model.Count() > 0)
+            {
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FileTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FileNameVirtual)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReferenceType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DocumentId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserUpload)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            <a data-id="@item.DocumentId"  title="@Eagle.Resource.LanguageResource.View" class="ico viewItem editItemDocument " >&nbsp;&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                }
+            }else
+            {
+                <tr>
+                    <td colspan="7">
+                        @Eagle.Resource.LanguageResource.ThisInformationHaveNotData
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

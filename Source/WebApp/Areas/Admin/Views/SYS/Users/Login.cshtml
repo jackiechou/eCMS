@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.Login;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.LoginLayout;
+}
+@model Eagle.Model.LoginViewModel
+
+@using (Ajax.BeginForm("Login", "Admin", new AjaxOptions { LoadingElementId = "loading" }, new { id = "loginform", @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.DesiredUrl)
+    @Html.AntiForgeryToken()
+    <div style="border:0 none;">
+
+        @*<form class="loginForm">*@
+        <div style="margin-bottom: 10px" class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            @*<input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username or email">*@
+            @Html.TextBoxFor(m => m.UserName, new { @placeholder = @Html.Raw(Eagle.Resource.LanguageResource.UserName), @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+        <div style="margin-bottom: 10px" class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            @*<input id="login-password" type="password" class="form-control" name="password" placeholder="password">*@
+            @Html.TextBoxFor(m => m.Password, new { @placeholder = @Html.Raw(Eagle.Resource.LanguageResource.Password), @class = "form-control", @type = "password" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        @*<div class="btn-group btn-block">
+                <button class="col-sm-10 col-md-11 btn btn-lg btn-default">@Html.Raw(Eagle.Resource.LanguageResource.Select)</button>
+
+                <button class="col-sm-2 col-md-1 btn btn-lg btn-default dropdown-toggle"
+                        data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu btn-block">
+                    <li><a href="#">Reason 1</a></li>
+                    <li><a href="#">Reason 2</a></li>
+                    <li><a href="#">Reason 3</a></li>
+                </ul>
+            </div>*@
+        @*<div style="margin-bottom: 10px" class="row-fulid">
+
+                @Html.DropDownListFor(m => m.LanguageCode, null, new { @class = "form-control" })
+            </div>*@
+
+        <div class="input-group">
+            <span class="input-group-addon">&nbsp;®</span>
+            @Html.DropDownListFor(m => m.LanguageCode, null, new { @class = "form-control" })
+        </div>
+
+        <div class="input-group" style="width:100%;">
+            <div class="checkbox remember-me">
+                @*<label><input id="RememberMe" type="checkbox" name="RememberMe" value="1"> Remember me</label>*@
+                @Html.CheckBoxFor(m => m.RememberMe, new { value = "True" }) @Html.LabelFor(m => m.RememberMe)
+            </div>
+            @*<div class="forgot-password"><a class="pull-right" onclick="$('login_form_holder').hide();$('forgot_form_holder').show();" href="#">Forgot your password?</a></div>*@
+        </div>
+
+        <div style="margin-top:10px" class="form-group">
+            <!-- Button -->
+
+            <div class="col-sm-12 controls">
+                <input type="submit" name="btnLogin" value="@Eagle.Resource.LanguageResource.Login" id="btnLogin" tabindex="4" class="btn btn-info btn-success pull-right btn-medium row-fluid" style="padding-bottom: 4px;">
+
+                @*<input type="submit" name="btnLogin" value="@Eagle.Resource.LanguageResource.Login" id="btnLogin" tabindex="4" class="btn btn-info btn-success pull-right btn-medium row-fluid" style="padding-bottom: 4px;">*@
+                @*<a id="btn-login" href="#" class="btn btn-success">@Eagle.Resource.LanguageResource.Login</a>*@
+                @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
+            </div>
+        </div>
+        @*<div class="separator"></div>*@
+        <div class="form-group">
+            <div class="col-md-12 control">
+                <div style="border-top: 1px solid #ccc; padding-top: 15px; font-size: 85%; ">
+                    <label>@Html.Raw(Eagle.Resource.LanguageResource.DontHaveAnAccount)</label>
+                    <a href="#" onclick="$('#loginbox').hide(); $('#signupbox').show()">
+                        Sign Up Here
+                    </a>
+                    <a class="pull-right" onclick="$('login_form_holder').hide();$('forgot_form_holder').show();" href="#">Forgot your password?</a>
+                    
+                </div>
+                <div class="message" style="padding-top: 15px; font-size: 85%; ">
+                    <label style="color:red;">@ViewBag.Message</label>
+                </div>
+            </div>
+        </div>
+        @*</form>*@
+    </div>
+}
+
+<script type="text/javascript">
+    (function ($) {
+        $('#btnLogin').on('click', function () {
+            $("body").addClass('loading2');
+        });
+        //============================================================
+        $('#UserName').focus();
+        //$("#forgetModal").draggable({ handle: ".modal-header" });
+        $(document).on("click", "#btnForgetPassword", function () {
+            $('.preload').show();
+            var name = $('#email_username').val();
+            $.ajax({
+                type: "POST",
+                url: '/Account/ForgetPassword?name=' + name,
+                success: function (data) {
+                    $('.preload').remove();
+                    $('#ForgetOld').remove();
+                    $('#ForgetPassword').html(data);
+                }
+            })
+
+            return false;
+        });
+
+        $(document).keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                if ($('#UserName').val() != '' && $('#Password') != '')
+                    $('#btnLogin').click();
+            }
+        });
+        //============================================================
+    })(jQuery);
+</script>
+	

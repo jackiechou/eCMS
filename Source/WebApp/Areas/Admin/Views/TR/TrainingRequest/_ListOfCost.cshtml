@@ -1,0 +1,80 @@
+﻿@model List<TrainingRequestCostViewModel>
+ 
+<div class="row">
+<table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+            <tr>
+                <th class="text_center" style="width:10px">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text_center" style="width:60%">
+                    @Eagle.Resource.LanguageResource.TrainingExpenseName
+                </th>
+                <th class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.Currency
+                </th>
+                <th class="text_center" style="width:20%">
+                    @Eagle.Resource.LanguageResource.TrainingRequestActualCost&nbsp;&nbsp;(*)
+                </th>                 
+                <th class="table-actions text_center no-sort" style="width:10px">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+    <tbody>
+            @{
+                int i = 0;
+                int k = -1;
+              }
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <input type="hidden" name="[@k].TrainingExpenseName" value="@item.TrainingExpenseName" />
+                <input type="hidden" name="[@k].TrainingCurrencyName" value="@item.TrainingCurrencyName" />
+                <input type="hidden" name="[@k].ActualCost" value="@item.ActualCost" />  
+                <input type="hidden" name="[@k].LSTrainingExpenseID" value="@item.LSTrainingExpenseID" />                              
+                <tr id="@k">
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingExpenseName)
+                    </td>
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.TrainingCurrencyName)
+                    </td>
+                    <td>                        
+                        <input type="text" name="[@k].Cost" value="@item.ActualCost.Value.ToString("#.###")" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);" onkeyup="CheckNumber(this);" onchange="UpdateOfTrainingCost(this);"/>                        
+                    </td>                    
+                    <td class="table-actions text_center no-sort">      
+                        <a data-id="@item.LSTrainingExpenseID" title="Delete" onclick="DeleteRowOfExpense(this);" class="ico deleteItem">&nbsp;&nbsp;&nbsp; </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+
+<script>
+    function UpdateOfTrainingCost(obj) {        
+        
+        @*var ActualCost = $(obj).val();
+        if (ActualCost == "") {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseCost');
+            return;
+        }
+        var lsID = $(obj).closest('tr').attr('id'); 
+        var LSTrainingExpenseID = $("input[name='[" + lsID + "].LSTrainingExpenseID']").val(); 
+
+        var urlUpdate = areas + '/TrainingRequest/GetValueOfTrainingExpense?LSTrainingExpenseID=' + LSTrainingExpenseID + '&value=' + ActualCost;
+       
+        $.ajax({
+            type: "GET",
+            url: urlUpdate,
+            success: function (data) {
+                hideMessageWithTitle(0);
+                $("body").addClass("loading");
+                $('#divListOfCost').html(data);
+            }
+        });*@
+    }
+</script>
+
+

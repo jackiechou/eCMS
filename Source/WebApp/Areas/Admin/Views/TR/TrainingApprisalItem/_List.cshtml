@@ -1,0 +1,67 @@
+﻿@model List<TrainingApprisalItemViewModel>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:5%">@Eagle.Resource.LanguageResource.No</th>
+                <th  class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.TrainingApprisalItemCode
+                </th>
+                <th class="text_center" style="width:30%">
+                    @Eagle.Resource.LanguageResource.TrainingApprisalItemName
+                </th>
+                <th class="text_center" style="width:20%">
+                    @Eagle.Resource.LanguageResource.TrainingApprisalPart
+                </th>
+                <th class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.TrainingApprisalItemMultiAnswer
+                </th>
+                <th class="text_center" style="width:5%">
+                    @Eagle.Resource.LanguageResource.Used
+                </th>
+                 <th class="text_center" style="width:5%">
+                    @Eagle.Resource.LanguageResource.Rank
+                </th>                
+                <th class="table-actions text_center no-sort" style="width:5%">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @item.LSTrainingApprisalItemCode
+                    </td>                    
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.TrainingApprisalPartName
+                    </td>
+                    <td class="text_center">
+                        @item.IsMultiAnswerInfo
+                    </td>                    
+                    <td class="text_center">
+                        @item.UsedInfo
+                    </td>
+                    <td>
+                        @item.Rank
+                    </td>                    
+                    <td class="table-actions text_center no-sort">
+                        <a data-id="@item.LSTrainingApprisalItemID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        @if (item.IsAllowDelete)
+                        {
+                            <a data-id="@item.LSTrainingApprisalItemID"  title="Delete" class="ico deleteItem" onclick="DeleteRowOfTrainingApprisalItem(this);">&nbsp;&nbsp;&nbsp;</a>
+                        }                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

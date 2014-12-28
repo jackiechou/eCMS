@@ -1,0 +1,136 @@
+﻿@model  List<FunctionListCreateViewModel>
+
+<div class="box">
+    <table class="table table-bordered table-condensed table-hover tablesorter sortableTable">
+         <thead>   
+        <tr>
+                <th>@Eagle.Resource.LanguageResource.No</th>
+                <th>@Eagle.Resource.LanguageResource.Function</th>
+                <th>@Eagle.Resource.LanguageResource.FView
+                    (<a class="check-all-view cursor-pointer">All</a>)
+                </th>
+                <th>@Eagle.Resource.LanguageResource.FEdit
+                    (<a class="check-all-edit cursor-pointer">All</a>)
+
+                </th>
+                <th>@Eagle.Resource.LanguageResource.FDelete
+                    (<a class="check-all-delete cursor-pointer">All</a>)
+
+                </th>
+                <th>@Eagle.Resource.LanguageResource.FExport
+                    (<a class="check-all-export cursor-pointer">All</a>)
+
+                </th>
+            </tr>
+</thead>
+        <tbody>
+            @{  int i = 0;
+                bool fview = true;
+            }
+            @foreach (var item in Model)
+            {
+                string id = "";
+                if (item.strTypeTable != "MasterData")
+                {
+                    id = item.FunctionID;
+                }
+                i++;
+                <tr>
+                    <td class="corlor_td">@i
+                        @Html.Hidden("hTypeTable", id)
+                        @Html.Hidden("AllItem", item.FunctionID)
+                    </td>
+                    <td>@item.FunctionNameE</td>
+                    <td class="corlor_td">@Html.CheckBox("chkFView", item.FView, new { @value = item.FunctionID })</td>
+                    <td class="corlor_td">@Html.CheckBox("chkFEdit", item.FEdit, new { @value = item.FunctionID })</td>
+                    <td class="corlor_td">@Html.CheckBox("chkFDelete", item.FDelete, new { @value = item.FunctionID })</td>
+                    <td class="corlor_td">@Html.CheckBox("chkFExport", item.FExport, new { @value = item.FunctionID })</td>
+                </tr>               
+                    }
+</tbody>
+        </table>
+</div>
+
+<script>
+    var chkFView = true;
+    var chkFEdit = true;
+    var chkFDelete = true;
+    var chkFExport = true;
+    $("input[name='chkFView']").click(function () {
+        var valuetmp = $(this).val();
+        var checktmp = $(this).attr('checked')
+        if (checktmp != 'checked') {
+            $("#chkFEdit[value='" + valuetmp + "']").prop("checked", false);
+            $("#chkFDelete[value='" + valuetmp + "']").prop("checked", false);
+            $("#chkFExport[value='" + valuetmp + "']").prop("checked", false);
+        }
+    });
+
+    $("input[name='chkFEdit']").click(function () {
+        var valuetmp = $(this).val();
+        var checktmp = $(this).attr('checked')
+        if (checktmp == 'checked') {
+            $("#chkFView[value='" + valuetmp + "']").prop("checked", true);
+        }
+    });
+    $("input[name='chkFDelete']").click(function () {
+        var valuetmp = $(this).val();
+        var checktmp = $(this).attr('checked')
+        if (checktmp == 'checked') {
+            $("#chkFView[value='" + valuetmp + "']").prop("checked", true);
+        }
+    });
+    $("input[name='chkFExport']").click(function () {
+        var valuetmp = $(this).val();
+        var checktmp = $(this).attr('checked')
+        if (checktmp == 'checked') {
+            $("#chkFView[value='" + valuetmp + "']").prop("checked", true);
+        }
+    });
+
+    $('.check-all-view').click(function () {
+        if (chkFView) {
+            $("input[name$='chkFView']").prop("checked", true);
+            chkFView = false;
+        } else {
+            $("input[name$='chkFView']").prop("checked", false);
+            $("input[name$='chkFEdit']").prop("checked", false);
+            $("input[name$='chkFDelete']").prop("checked", false);
+            $("input[name$='chkFExport']").prop("checked", false);
+            chkFView = true;
+        }
+    })
+
+    $('.check-all-edit').click(function () {
+        if (chkFEdit) {
+            $("input[name$='chkFEdit']").prop("checked", true);
+            $("input[name$='chkFView']").prop("checked", true);
+            chkFEdit = false;
+        } else {
+            $("input[name$='chkFEdit']").prop("checked", false);
+            chkFEdit = true;
+        }
+    })
+
+    $('.check-all-delete').click(function () {
+        if (chkFDelete) {
+            $("input[name$='chkFDelete']").prop("checked", true);
+            $("input[name$='chkFView']").prop("checked", true);
+            chkFDelete = false;
+        } else {
+            $("input[name$='chkFDelete']").prop("checked", false);
+            chkFDelete = true;
+        }
+    })
+  
+    $('.check-all-export').click(function () {
+        if (chkFExport) {
+            $("input[name$='chkFExport']").prop("checked", true);
+            $("input[name$='chkFView']").prop("checked", true);
+            chkFExport = false;
+        } else {
+            $("input[name$='chkFExport']").prop("checked", false);
+            chkFExport = true;
+        }
+    })
+</script>

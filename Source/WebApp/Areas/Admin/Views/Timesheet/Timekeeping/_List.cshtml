@@ -1,0 +1,69 @@
+﻿@model List<TimekeepingListViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpCode
+                </th>
+                <th style="width:100px;">
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Position
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Month
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.WorkDays
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td >
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.PositonName
+                    </td>
+                    <td>
+                        @item.MMYYYY
+                    </td>
+                    <td>
+                        @item.WorkDays
+                    </td>
+                    <td  class="center">
+                        <input type="hidden" value="@item.EmpID" name="[@k].EmpID" />
+                        <input type="hidden"  data-value="@item.MMYYYY"/>
+                        <a  data-id="@item.EmpID" data-value="@item.MMYYYY" title="Edit" class="ico editItem" >&nbsp;&nbsp;&nbsp;</a>
+                        <a  data-id="@item.EmpID" data-month="@item.MMYYYY" title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="divPopupEditTimeKeeping">
+
+</div>
+
+@Html.Action("ConfirmPopup","Common",null)
+<script>
+    InvokeDataTables();
+</script>

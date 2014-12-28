@@ -1,0 +1,334 @@
+﻿<div id="ModuleContainer">
+    <div id="divSortableList">
+        <input type="text" id="txtModuleSearch" class="sfInputbox" />
+        <input type="button" value="Search" class="sfSearch" id="btnSearchModule">
+        <div class="clear"></div>
+        <div id="message_box"> </div>
+        <ul id="ModuleTree" class="sortable sortable-list"></ul>
+        <span id="ModuleSelection" style="display: none;"></span>
+
+    </div>
+</div>
+<script type="text/javascript">
+    (function ($) {
+        $.createModuleBuilder = function (p) {
+            var ModuleMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    ModuleMgr.GetModules();
+                    ModuleMgr.InitializeCotrols();
+                    ModuleMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(ModuleMgr.config.ajaxCallMode)) {
+                            case 1:
+                                ModuleMgr.BindModules(data);
+                            case 2:
+                                ModuleMgr.BindDetails(data);
+                                break;
+                            case 3:
+                                ModuleMgr.ReloadData(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: ModuleMgr.config.type,
+                        contentType: ModuleMgr.config.contentType,
+                        cache: ModuleMgr.config.cache,
+                        url: ModuleMgr.config.url,
+                        data: ModuleMgr.config.data,
+                        dataType: ModuleMgr.config.dataType,
+                        success: ModuleMgr.ajaxSuccess,
+                        error: ModuleMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+
+                },
+                BindEvents: function () {
+                    $('input:radio[name=IsSecured]').click(function () {
+                        var IsSecured = ($('input:radio[name=IsSecured]:checked').val());
+                        ModuleMgr.GetModules(IsSecured);
+                    });
+
+                    $("#txtModuleSearch").keyup(function (event) {
+                        if (event.keyCode == 13 && event.keyCode != '27' && event.keyCode != '32') {
+                            $("#btnSearchModule").click();
+                        }
+                    });
+
+                    $(document).on("click", "#btnSearchModule", function () {
+                        ModuleMgr.GetModules();
+                    });
+
+                    //Add and update post action
+                    $(document).on("click", "#btnAdd", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            ModuleMgr.AddData();
+                        }
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            ModuleMgr.UpdateData(data);
+                        }
+                    });
+
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        ModuleMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        ModuleMgr.GetDetails(ID);
+
+                        //Go to top
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {
+                                    ModuleMgr.config.mode = 2;
+                                    ModuleMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+                },
+                GetModules: function () {
+                    var rdbAdmin = $('input:radio[name=IsSecured]');
+                    var IsSecured = false;
+                    if (rdbAdmin != null)
+                        IsSecured = rdbAdmin.attr('checked') ? true : false;
+                    this.config.method = "GetList";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.data = JSON.stringify({ "Keywords": $("#txtModuleSearch").val(), "PageId": $("#PageId").val(), "IsSecured": IsSecured });
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindModules: function (data) {
+                    var ModuleId = "";
+                    var ParentId = "";
+                    var IsVisible = "";
+                    var html = "";
+                    var styles = "";
+                    var Index = 0;
+
+                    //html += '<li class="ui-state-default" id="0" title="@Html.Raw(Eagle.Resource.LanguageResource.Root)">@Html.Raw(Eagle.Resource.LanguageResource.Root)</li>';
+                    $.each(data, function (index, item) {
+                        Index++;
+                        ModuleId = item.ModuleId;
+                        ParentId = item.ParentId;
+                        IsVisible = item.IsVisible === true ? "active" : "inactive";
+                        html += '<li class="ui-state-default"  id="' + ModuleId + '" title="' + item.ModuleName + '">' + Index + ' - ' + item.ModuleTitle + '(' + ModuleId + ')</li>';
+                    });
+                    $("#ModuleTree").html(html);
+
+                    ModuleMgr.AddDragDrop();
+                   // ModuleMgr.AddContextMenu();
+                },
+                //AddContextMenu: function ()
+                //{
+                //},
+                AddDragDrop: function ()
+                {
+                    $(".sortable-list").sortable({
+                        cursor: "move",
+                        opacity: 0.8,
+                        connectWith: ['.sortable-list'],
+                        placeholder: 'ui-state-highlight',
+                        stop: function () {
+                           // e.preventDefault();
+                            ModuleMgr.UpdateListOrder();
+                        },
+                        update: function (e) {
+                            // e.preventDefault();
+                            ModuleMgr.UpdateListOrder();
+                        }
+                    });
+                },
+                UpdateListOrder: function ()
+                {
+                    var Ids = [];
+                    $('ul.sortable-list').each(function () {
+                        var itemorder = $(this).sortable('toArray').join(',');
+                        Ids.push(itemorder.toString());
+                    });
+
+                    var service_url = "/Admin/Module/UpdateListOrder";
+                    $.ajax({
+                            type: "POST",
+                            url: service_url,
+                            data: JSON.stringify({ 'Ids': Ids.toString() }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: true,
+                            cache: false,
+                            success: function (response) {
+                                var result = JSON.parse(response);
+                                if (result.flag == 'true')
+                                    ModuleMgr.GetModules();
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                },
+                AddData: function () {
+                    var data = ConvertFormToJSON("myform");
+                    this.config.method = "Create";
+                    this.config.data = data;
+                    this.config.url = ModuleMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                GetDetails: function (id) {
+                    ModuleMgr.config.mode = 1;
+                    ModuleMgr.config.key = id;
+
+                    var data = { "id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+                    ModuleMgr.InitializeCotrols();
+                },
+                UpdateData: function () {
+                    var data = ConvertFormToJSON("myform");
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = ModuleMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = ModuleMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = ModuleMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    } else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    } else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    if (result.flag == 'true') {
+                        //Reload Module after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: ModuleMgr.config.baseURL + this.config.method,
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout") {
+                                    window.location.reload();
+                                } else {
+                                    $('#' + ModuleMgr.config.ContainerClientID).html(data);
+                                    ModuleMgr.InitializeCotrols();
+                                    showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error");
+                        hideMessageWithTitle(20000);
+                    }
+                },
+                ResetControls: function () {
+                    var mode = ModuleMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#myform');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                    } else {
+                        var key = ModuleMgr.config.key;
+                        ModuleMgr.GetDetails(key);
+                    }
+                    ModuleMgr.InitializeCotrols();
+                },
+            };
+            ModuleMgr.init();
+        }
+
+        var Controller = 'Module';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "ModuleContainer",
+            BaseURL: BaseURL
+        };
+        $.createModuleBuilder(base_settings);
+    })(jQuery);
+</script>

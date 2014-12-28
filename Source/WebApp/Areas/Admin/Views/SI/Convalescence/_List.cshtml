@@ -1,0 +1,156 @@
+﻿@model IEnumerable<ConvalescenceViewModel>
+<form id="frmList">
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmpCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LSCompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Regime)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Stage)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.LeaveDate)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Days)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.MinSalary)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.IsConcentrate)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Percent)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th class="no-sort">
+                        @Html.DisplayNameFor(model => model.ConditionEffect)
+                    </th>
+                    <th class="no-sort">
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 0;
+                    int k = -1;
+                }
+                @foreach (var item in Model)
+                {
+                    i++;
+                    k++;
+                    <tr>
+                        <td class="text-center">
+                            @Html.Hidden("[" + k.ToString() + "].YYYY",item.YYYY)
+                            @Html.Hidden("[" + k.ToString() + "].Quarter",item.Quarter)
+                            @Html.Hidden("[" + k.ToString() + "].EmpID",item.EmpID)
+                            @Html.Hidden("[" + k.ToString() + "].LeaveType",item.LeaveType)
+                            @Html.Hidden("[" + k.ToString() + "].LSLeaveDayTypeID",item.LSLeaveDayTypeID)
+                            @Html.Hidden("[" + k.ToString() + "].InsuranceLeaveID",item.InsuranceLeaveID)
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.EmpCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.LSCompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Regime)
+                        </td>
+                        <td class="text-center">
+                            @Html.DropDownList("[" + k.ToString() + "].Stage", ViewBag.StageList as SelectList, new { @style = "" })
+                        </td>
+                        <td>
+                            @Html.DatepickerFromListFor(model => item.LeaveDate, null, new { @style = "margin-bottom: 0px;", @name="["+k.ToString()+"].strLeaveDate", @data_id=k,@class="input-small strLeaveDate" })
+                        </td>
+                        <td class="text-center">
+                            @Html.TextBox("[" + k.ToString() + "].Days", item.Days, new {@style = "width: 50px;margin-bottom: 4px;text-align:center;", @class = "inputDays", @data_id = k })
+                        </td>
+                        <td class="text-center">
+                            @Html.Hidden("[" + k.ToString() + "].MinSalary", item.MinSalary)
+                            <span id="ms-@k">
+                                @Html.DisplayFor(model => item.MinSalary)
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            @Html.DropDownList("[" + k.ToString() + "].IsConcentrate", ViewBag.ConcentrateList as SelectList, new { @class = "IsConcentrate",@data_id = k })
+                        </td>
+                        <td class="text-center">
+                            @Html.Hidden("[" + k.ToString() + "].Percent",item.Percent)
+                            <span id="sp-@k">
+                                @Html.DisplayFor(model => item.Percent)%
+                            </span>
+                        </td>
+                        <td class="text-center">
+                             <span id="a-@k">
+                            @Html.DisplayFor(model => item.Amount)
+                            </span>
+                        </td>
+                         <td>
+                            @Html.TextBox("[" + k.ToString() + "].ConditionEffect",item.ConditionEffect ,new { @style = "width: 150px;margin-bottom: 4px;" })
+                        </td>
+                        <td>
+                            @Html.TextBox("[" + k.ToString() + "].Note",item.Note ,new { @style = "width: 150px;margin-bottom: 4px;" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</form>
+<script>
+    InvokeDataTables();
+
+    function ChangeDate(k, value) {
+
+        var url = "CheckMinSalary?strDate=" + value;
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "json",
+            success: function (data) {
+                $("#ms-" + k).html(data.minSalaryWithFormat);
+                $("input[name='[" + k + "].MinSalary']").val(data.minSalary);
+                Amount(k);
+            }
+        });
+
+
+    }
+    $('.DatepickerFromList').datetimepicker({
+        format: 'dd/MM/yyyy', todayBtn: true, pickTime: false
+    }).on('changeDate', function (e) {
+        var k = $(this).find('input[type=text]').data('id');
+        var value = $(this).find('input[type=text]').val();
+        ChangeDate(k, value);
+        $(this).datetimepicker('hide');
+    });
+
+    $(".strLeaveDate").change(function () {
+        var k = $(this).data('id');
+        var value = $(this).val();
+        ChangeDate(k, value);
+    });
+
+</script>

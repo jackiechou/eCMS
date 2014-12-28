@@ -1,0 +1,60 @@
+﻿<div class="top-toolbar btn-toolbar topnav">
+    <div class="btn-group">
+        <a data-placement="bottom" data-original-title="Show / Hide Sidebar" href="javascript:void(0);" rel="tooltip" class="btn btn-success" id="changeSidebarPos">
+            <i class="icon-resize-horizontal"></i>
+        </a>
+    </div>
+    
+    @if (Session[Eagle.Common.Settings.SettingKeys.UserInfo] != null)
+    {
+        Eagle.Model.SYS.User.UserViewModel acc = (Eagle.Model.SYS.User.UserViewModel)Session[Eagle.Common.Settings.SettingKeys.UserInfo];
+        <div class="btn-group">
+            <a href="/Admin/EditProfile" data-placement="bottom" data-original-title="@acc.FullName" rel="tooltip" class="btn btn-inverse">
+                <i class="icon-user"></i> <small>@acc.FullName</small>
+            </a>
+        </div>
+    }         
+    
+
+    <div class="btn-group">
+        @Html.Action("LoadReminder", "Home")
+    </div>
+
+    <div class="btn-group">
+        <a href="/Admin/ChangePassword" rel="tooltip" class="btn btn-inverse">
+            <i class="icon-envelope"></i> <small>@Eagle.Resource.LanguageResource.ChangePassword</small>
+        </a>
+    </div>
+
+    @*<div class="btn-group">
+        @using (Html.BeginForm("SwitchLanguage", "Language", new { LanguageId = 10002, CurrentLanguage = "vi-VN", @DesiredUrl = Request.Url.AbsoluteUri }, FormMethod.Post, new { @id = "frmVietnamese", @style = "display:inline;" }))
+        {
+
+            <a href="#" onclick="document.getElementById('frmVietnamese').submit(); return false;" role="menuitem" rel="vi" data-original-title="Tiếng Việt" data-placement="bottom">
+                <img src="/Images/icons/languages/vi.png" alt="vi" />
+            </a>
+        }
+        @using (Html.BeginForm("SwitchLanguage", "Language", new { LanguageId = 10001, CurrentLanguage = "en-US", @DesiredUrl = Request.Url.AbsoluteUri }, FormMethod.Post, new { @id = "frmEnglish", @style = "display:inline;" }))
+        {
+
+            <a href="#" onclick="document.getElementById('frmEnglish').submit(); return false;" role="menuitem" rel="en" data-original-title="Tiếng Anh" data-placement="bottom" data-toggle="modal">
+                <img src="/Images/icons/languages/en.png" alt="en" />
+            </a>
+        }
+        
+    </div>*@
+    <div class="btn-group">
+        <a data-placement="bottom" data-original-title="Setting" href="#" rel="tooltip" class="btn btn-inverse">
+            <i class="icon-asterisk"></i> <small>@Eagle.Resource.LanguageResource.Settings</small>
+        </a>
+    </div>
+
+    <div class="btn-group">
+        @using (Html.BeginForm("LogOff", "User", new { @DesiredUrl = Request.Url.AbsoluteUri }, FormMethod.Post, new { id = "logoutForm", @style = "display:inline;margin-right:20px;" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()" data-original-title="@Eagle.Resource.LanguageResource.Logout" data-placement="bottom" class="btn btn-inverse"><i class="icon-off"></i> @Eagle.Resource.LanguageResource.Logout</a>
+        }
+    </div>
+</div>
+
+

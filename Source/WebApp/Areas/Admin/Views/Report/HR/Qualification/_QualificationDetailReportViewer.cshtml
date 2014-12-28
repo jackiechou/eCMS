@@ -1,0 +1,14 @@
+﻿@Html.DevExpress().ReportViewer(settings =>{
+    // The following settings are necessary for a Report Viewer.
+    settings.Name = "reportViewerDetail";
+    settings.Report = (QualificationDetailXtraReport)ViewData["ReportDetail"];
+    settings.AutoSize = true;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Style.Add("margin-bottom", "26px");
+    settings.Attributes.Add("class", "reportViewerDetail");
+    // Callback and export route values specify the corresponding controllers and their actions.
+    // These settings are necessary as well.
+    settings.CallbackRouteValues = new { Controller = "PersonnelReport", Action = "PopulateReportViewer_QualificationDetail", LSCompanyID =  ViewBag.LSCompanyID };
+    settings.ExportRouteValues = new { Controller = "PersonnelReport", Action = "ExportData_QualificationDetail", LSCompanyID = ViewBag.LSCompanyID };    
+}).GetHtml()

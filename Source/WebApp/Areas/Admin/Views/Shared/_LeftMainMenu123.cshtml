@@ -1,0 +1,41 @@
+﻿<!--start.menu left -->
+@{
+    List<SYS_tblFunctionPermissionViewModel> MenuList = (List<SYS_tblFunctionPermissionViewModel>)Session[Eagle.Common.Settings.SettingKeys.MenuList];
+    int moduleid = 0;
+    int.TryParse(Request.QueryString["ModuleID"], out moduleid);
+}
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        @if (MenuList != null)
+        {
+            /*Lấy module đầu tiên*/
+            foreach (var Module in MenuList.Where(p => p.Parent == null && p.FunctionID == moduleid).ToList())
+            {
+                <li class="nav-header"><a href="/@Module.Url">@Module.FunctionNameE</a></li>
+                if (moduleid == Module.FunctionID)
+                {
+                    foreach (var SubMenu in MenuList.Where(p => p.Parent == Module.FunctionID).ToList())
+                    {
+                        <li class="dropdown-submenu">
+                            <a href="#">@SubMenu.FunctionNameE</a>
+                            <ul class="dropdown-menu">
+                                @foreach (var Function in MenuList.Where(p => p.Parent == SubMenu.FunctionID).ToList())
+                                {
+                                    <li><a href="/@Function.Url">@Function.FunctionNameE</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                }
+            }
+
+            /*Lấy các module còn lại*/
+            foreach (var Module in MenuList.Where(p => p.Parent == null && p.FunctionID != moduleid).ToList())
+            {
+                <li class="nav-header"><a href="/@Module.Url">@Module.FunctionNameE</a></li>
+            }
+        }
+    </ul>
+</div>
+
+<!--/.menu left-->

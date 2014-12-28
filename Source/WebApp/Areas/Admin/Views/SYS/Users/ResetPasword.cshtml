@@ -1,0 +1,24 @@
+﻿@section ContentSection
+{
+<div class="container">
+    <div class="row" style="margin-top:60px;">
+        <div class="col-md-4 col-md-offset-4">
+
+            <form method="POST" action="/Admin/User/ResetPassword" accept-charset="UTF-8" role="form" id="loginform" class="form-signin">
+                <input name="_token" type="hidden">
+                <fieldset>
+                    <h2>@Html.Raw(Eagle.Resource.LanguageResource.RequestPasswordReset)</h2>
+                    <hr class="colorgraph">
+                    <input class="form-control" placeholder="Enter your E-mail" name="email" type="text">
+                    <p>
+                        <input id="btnResetPassword" class="btn btn-lg btn-success btn-block" type="submit" value="@Html.Raw(Eagle.Resource.LanguageResource.RequestPasswordReset)">
+                    </p>
+                    <p class="text-center">@Html.Raw(Eagle.Resource.LanguageResource.RememberedYourPassword)
+                        <a href="/Admin/User/Login">@Html.Raw(Eagle.Resource.LanguageResource.LoginHere)</a></p>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+</div>
+}

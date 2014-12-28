@@ -1,0 +1,14 @@
+﻿@using Eagle.WebApp.Areas.Admin.Reports
+
+@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer1";
+    settings.Report = (PaySlipXtraReport)ViewData["Report"];
+    settings.AutoSize = false;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = 1000;    
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "PayslipReport", Action = "LoadPayslipReportViewer" };
+    settings.ExportRouteValues = new { Controller = "PayslipReport", Action = "ExportPayslipData" };
+    settings.PrintUsingAdobePlugIn = false;    
+}).GetHtml()

@@ -1,0 +1,127 @@
+﻿@model WorkingBackgroundViewModel
+<div class="modal hide fade popupTab5WorkingBackground" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.WorkingBackground</h3>
+    </div>
+    <div class="modal-body">
+        <!--Begin button -->
+        <form id="frmWorkingBackground">
+            @Html.HiddenFor(model => model.WokingbackgroupID)
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.FromMonth)
+                </div>
+                <div class="col-md-4">
+                    @Html.MonthPickerFor(model => model.FromMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 input-validation-error" })
+                    @Html.ValidationMessageFor(model => model.FromMonth)
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ToMonth)
+                </div>
+                <div class="col-md-4">
+                    @Html.MonthPickerFor(model => model.ToMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 input-validation-error" })
+                    @Html.ValidationMessageFor(model => model.ToMonth)
+                </div>
+            </div>
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.WorkFor)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.WorkFor, new { @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Position)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Position, new { @class = "span12" })
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Duty)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Duty, new { @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Address)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "span12" })
+                </div>
+            </div>
+            <!--end row-->
+
+            <div class="group-control">
+                <div>
+                    <h6>@Eagle.Resource.LanguageResource.FormerCompany</h6>
+                </div>
+                <hr />
+                <!--start row-->
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.ContactName)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.ContactName, new { @class = "span12" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.ContactPosition)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.ContactPosition, new { @class = "span12" })
+                    </div>
+                </div>
+                <!--end row-->
+                <!--start row-->
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Phone)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "span12" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.LabelFor(model => model.Email)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "span12" })
+                    </div>
+                </div>
+                <!--end row-->
+            </div>
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.ChangeReason)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.ChangeReason, new { @class = "span12" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+                </div>
+            </div>
+        </form>
+        <!--End button -->
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="btnWBCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+        <input type="button" id="btnWBSubmit" class="btn btn-info AddModel" value="@Eagle.Resource.LanguageResource.Save" />
+    </div>
+</div>
+
+<script>
+    InvokeDateTimePicker();
+    InvokeMonthPicker();
+</script>

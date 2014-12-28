@@ -1,0 +1,530 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.CandidateInformation;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+
+
+
+<script src="~/Scripts/plugins/form-master/jquery.form.js"></script>
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Action("_Create")
+</div>
+
+@*popup*@
+<div id="CreateWorkingBackground">
+    @Html.Partial("../REC/CandidateInformation/_popupTab5WorkingBackgroundPartial")
+</div>
+<div id="CreateQualification">
+    @Html.Action("_popupTab6QualificationPartial")
+</div>
+
+<div id="CreateAttachFiles">
+    @Html.Action("_popupTab7AttachFilesPartial")
+</div>
+
+
+
+@Html.Action("ConfirmPopup","Common",null)
+
+    }
+<script>
+    function ResetForm() {
+        var urlGetEditForm = areas + "/CandidateInformation/_Create";
+        $.ajax({
+            type: "GET",
+            url: urlGetEditForm,
+            success: function (data) {
+                $('#divEdit').html(data);
+            }
+        });
+    }
+    function ChooseCandidateCompleted() {
+        ResetForm();
+    }
+    
+    $(document).on("click", "#btnReset", function () {
+        $("body").addClass("loading");
+        ResetForm();
+
+    });
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip('show');
+            return false;
+        } else {
+            $("body").addClass("loading");
+
+            $("#frmAdd").ajaxSubmit({
+                type: "POST",
+                url: areas + "/CandidateInformation/Update",
+                success: function (data) {
+                    if (data == 'success') {
+                        //Load lại avata
+                        $.ajax({
+                            type: "GET",
+                            url: "AvatarPartial",
+                            success: function (data) {
+                                $('#divAvata').html(data);
+                            }
+                        });
+                        //Thông báo cập nhật thành công
+                        AlterUpdateSuccess();
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    
+                }
+            });
+
+        }
+    });
+
+    /*Begin- Working Background*/
+    $(document).on("click", "#btnAddNewBackgroundWorking", function () {
+        var candidateId = $("#CandidateID").val();
+        //Nếu chưa chọn Candiate thông báo lỗi else popup
+        if (candidateId == 0) {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseCandidate');
+        } else {
+            //alert(candidateId);
+            $.ajax({
+                type: "GET",
+                url: "_CreateWorkingBackground",
+                success: function (data) {
+                    $('#CreateWorkingBackground').html(data);
+                    $(".popupTab5WorkingBackground").modal("show");
+                }
+            });
+        }
+    });
+    $(document).on("click", "#btnWBSubmit", function () {
+        if (!$("#frmWorkingBackground").valid()) {
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            if ($('#btnWBSubmit').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: "AddWorkingBackground?CandidateID=" + $('#CandidateID').val(),
+                    data: $("#frmWorkingBackground").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab5WorkingBackgroundPartial",
+                                success: function (list) {
+                                    $('#pane-5').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            $.ajax({
+                                type: "GET",
+                                url: "_CreateWorkingBackground",
+                                success: function (data) {
+                                    $('#CreateWorkingBackground').html(data);
+                                }
+                            });
+                            //Tắt popup
+                            $('.popupTab5WorkingBackground').modal('hide');
+                            AlterAddSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            alert(data);
+                        }
+                    }
+                });
+            } else {
+                // Update Item
+                $.ajax({
+                    type: "POST",
+                    url: "UpdateWorkingBackground?CandidateID=" + $('#CandidateID').val(),
+                    data: $("#frmWorkingBackground").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab5WorkingBackgroundPartial",
+                                success: function (list) {
+                                    $('#pane-5').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            $.ajax({
+                                type: "GET",
+                                url: "_CreateWorkingBackground",
+                                success: function (data) {
+                                    $('#CreateWorkingBackground').html(data);
+                                }
+                            });
+                            //Tắt popup
+                            $('.popupTab5WorkingBackground').modal('hide');
+                            AlterUpdateSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        }
+                        else {
+                            alert(data);
+                        }
+                    }
+                });
+            }
+        }
+    });
+    $(document).on("click", "#btnWBCancel", function () {
+        $('.qtip').qtip("hide");
+    });
+    $(document).on("click", ".editItemBackgroundWorking", function () {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "GET",
+            url: "_EditWorkingBackground/" + id,
+            success: function (data) {
+                //Create edit form
+                $('#CreateWorkingBackground').html(data);
+                //Add => Edit
+                $('#btnWBSubmit').removeClass("AddModel").addClass("EditModel");
+                $(".popupTab5WorkingBackground").modal("show");
+
+            }
+        });
+    });
+    $(document).on("click", ".deleteItemBackgroundWorking", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_DeleteWorkingBackground/" + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "Tab5WorkingBackgroundPartial",
+                                    success: function (list) {
+                                        $('#pane-5').html(list);
+                                    }
+                                });
+                                AlterUpdateSuccess();
+                            } else {
+                                AlterWarning(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+    /*End- Working Background*/
+
+    /*Begin- Qualification*/
+    $(document).on("click", "#btnAddNewQualification", function () {
+        var candidateId = $("#CandidateID").val();
+        //Nếu chưa chọn Candiate thông báo lỗi else popup
+        if (candidateId == 0) {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseCandidate');
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "_popupTab6QualificationPartial",
+                success: function (data) {
+                    $('#CreateQualification').html(data);
+                    $(".popupTab6Qualification").modal("show");
+                }
+            });
+
+        }
+    });
+    $(document).on("click", "#btnQSubmit", function () {
+        if (!$("#frmQualification").valid()) {
+                $('.qtip').qtip("show");
+                return false;
+            } else {
+                $("body").addClass("loading");
+                if ($('#btnQSubmit').hasClass("AddModel")) {
+                    //Add new Item
+                    $.ajax({
+                        type: "POST",
+                        url: "AddQualification?CandidateID=" + $('#CandidateID').val(),
+                        data: $("#frmQualification").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "Tab6QualificationPartial",
+                                    success: function (list) {
+                                        $('#pane-6').html(list);
+                                    }
+                                });
+                                //Load Lại Create Form
+                                $.ajax({
+                                    type: "GET",
+                                    url: "_popupTab6QualificationPartial",
+                                    success: function (data) {
+                                        $('#CreateQualification').html(data);
+                                    }
+                                });
+                                //Tắt popup
+                                $('.popupTab6Qualification').modal('hide');
+                                AlterAddSuccess();
+                            } else if (data == 'timeout') {
+                                window.location.href = '/';
+                            } else {
+                                alert(data);
+                            }
+                        }
+                    });
+                } else {
+                    // Update Item
+                    $.ajax({
+                        type: "POST",
+                        url: "UpdateQualification?CandidateID=" + $('#CandidateID').val(),
+                        data: $("#frmQualification").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "Tab6QualificationPartial",
+                                    success: function (list) {
+                                        $('#pane-6').html(list);
+                                    }
+                                });
+                                //Load Lại Create Form
+                                $.ajax({
+                                    type: "GET",
+                                    url: "_popupTab6QualificationPartial",
+                                    success: function (data) {
+                                        $('#CreateQualification').html(data);
+                                    }
+                                });
+                                //Tắt popup
+                                $('.popupTab6Qualification').modal('hide');
+                                AlterUpdateSuccess();
+                            } else if (data == 'timeout') {
+                                window.location.href = '/';
+                            }
+                            else {
+                                alert(data);
+                            }
+                        }
+                    });
+                }
+            }
+    });
+    $(document).on("click", "#btnQCancel", function () {
+        $('.qtip').qtip("hide");
+    });
+    $(document).on("click", ".editItemQualification", function () {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "GET",
+            url: "_EditQualification/" + id,
+            success: function (data) {
+                //Create edit form
+                $('#CreateQualification').html(data);
+                //Add => Edit
+                $('#btnQSubmit').removeClass("AddModel").addClass("EditModel");
+                $(".popupTab6Qualification").modal("show");
+
+            }
+        });
+
+    });
+    $(document).on("click", ".deleteItemQualification", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_DeleteQualification/" + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "Tab6QualificationPartial",
+                                    success: function (list) {
+                                        $('#pane-6').html(list);
+                                    }
+                                });
+                                AlterUpdateSuccess();
+                            } else {
+                                AlterWarning(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+
+    });
+    /*End - Qualification*/
+
+    /*Begin - Attach File*/
+    $(document).on("click", "#btnAddNewDocument", function () {
+        var candidateId = $("#CandidateID").val();
+        //Nếu chưa chọn Candiate thông báo lỗi else popup
+        if (candidateId == 0) {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseCandidate');
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "_popupTab7AttachFilesPartial",
+                success: function (data) {
+                    $('#CreateAttachFiles').html(data);
+                    $(".popupTab7AttachFiles").modal("show");
+                }
+            });
+
+        }
+    });
+
+    $(document).on("click", "#btnATFSubmit", function () {
+        if (!$("#frmAttachFiles").valid()) {
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            if ($('#btnATFSubmit').hasClass("AddModel")) {
+                //Add new Item
+
+                $("#frmAttachFiles").ajaxSubmit({
+                    type: "POST",
+                    url: "AddAttachFiles?CandidateID=" + $('#CandidateID').val(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab7AttachFilesPartial",
+                                success: function (list) {
+                                    $('#pane-7').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            $.ajax({
+                                type: "GET",
+                                url: "_popupTab7AttachFilesPartial",
+                                success: function (data) {
+                                    $('#CreateAttachFiles').html(data);
+                                }
+                            });
+                            //Tắt popup
+                            $('.popupTab7AttachFiles').modal('hide');
+                            AlterAddSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            alert(data);
+                        }
+                    }
+                });
+            } else {
+                // Update Item
+                $("#frmAttachFiles").ajaxSubmit({
+                    type: "POST",
+                    url: "UpdateDocument?CandidateID=" + $('#CandidateID').val(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab7AttachFilesPartial",
+                                success: function (list) {
+                                    $('#pane-7').html(list);
+                                }
+                            });
+                            //Load Lại Create Form
+                            $.ajax({
+                                type: "GET",
+                                url: "_popupTab7AttachFilesPartial",
+                                success: function (data) {
+                                    $('#CreateAttachFiles').html(data);
+                                }
+                            });
+                            //Tắt popup
+                            $('.popupTab7AttachFiles').modal('hide');
+                            AlterUpdateSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        }
+                        else {
+                            alert(data);
+                        }
+                    }
+                });
+            }
+        }
+    });
+    $(document).on("click", "#btnATFCancel", function () {
+        $('.qtip').qtip("hide");
+    });
+
+
+    $(document).on("click", ".editItemDocument", function () {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "GET",
+            url: "_EditDocument/" + id,
+            success: function (data) {
+                //Create edit form
+                $('#CreateAttachFiles').html(data);
+                //Add => Edit
+                $('#btnATFSubmit').removeClass("AddModel").addClass("EditModel");
+                $(".popupTab7AttachFiles").modal("show");
+
+            }
+        });
+
+    });
+    $(document).on("click", ".deleteItemDocument", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_DeleteDocument/" + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                //Load lại List
+                                $.ajax({
+                                    type: "GET",
+                                    url: "Tab7AttachFilesPartial",
+                                    success: function (list) {
+                                        $('#pane-7').html(list);
+                                    }
+                                });
+                                AlterUpdateSuccess();
+                            } else {
+                                AlterWarning(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+
+    });
+    /*End - Attach File*/
+</script>

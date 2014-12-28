@@ -1,0 +1,319 @@
+﻿.button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .5em 2em .55em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+.button:hover {
+	text-decoration: none;
+}
+.button:active {
+	position: relative;
+	top: 1px;
+}
+
+/********* COLOR ********/
+.orange {
+	color: #fef4e9;
+	border: solid 1px #da7c0c;
+	background: #f78d1d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+}
+.orange:hover {
+	background: #f47c20;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f88e11), to(#f06015));
+	background: -moz-linear-gradient(top,  #f88e11,  #f06015);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f88e11', endColorstr='#f06015');
+}
+.orange:active {
+	color: #fcd3a5;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f47a20), to(#faa51a));
+	background: -moz-linear-gradient(top,  #f47a20,  #faa51a);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f47a20', endColorstr='#faa51a');
+}
+
+
+.toolbar{
+	padding:0px;
+	margin:2px;
+	float:right;
+	text-align:center;
+}
+
+.toolbar a.btn
+{    
+    margin: 0px 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    float: left;
+    padding: 2px 3px 2px 3px;
+    white-space: nowrap;
+    text-align:center;
+    text-decoration:none;
+}
+
+.toolbar a.btn:hover,
+.toolbar a.btn:focus,
+.toolbar a.btn:active {
+	border-left: 1px solid #eee;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	text-decoration: none;
+	text-align:center;
+	color: #0B55C4;
+}
+	
+.toolbar .btn span {
+	float: none;
+	width: 32px;
+	height: 23px;
+	margin: 0 auto;
+	display: block;
+	padding-top:8px;
+}
+.icon16, .icon32, div.menu-image {
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+.icon32 {
+    float: left;
+    height: 34px;
+    margin: 7px 8px 0 0;
+    width: 36px;
+}
+.icon32.icon-appearance, #icon-themes {
+    background-position: -11px -5px;
+}
+.icon32.icon-post, #icon-edit, #icon-post, .icon32.icon-dashboard, #icon-index, .icon32.icon-media, #icon-upload, .icon32.icon-links, #icon-link-manager, #icon-link, #icon-link-category, .icon32.icon-page, #icon-edit-pages, #icon-page, .icon32.icon-comments, #icon-edit-comments, .icon32.icon-appearance, #icon-themes, .icon32.icon-plugins, #icon-plugins, .icon32.icon-users, #icon-users, #icon-profile, #icon-user-edit, .icon32.icon-tools, #icon-tools, #icon-admin, .icon32.icon-settings, #icon-options-general, .icon32.icon-site, #icon-ms-admin, .icon32.icon-generic, #icon-generic 
+{
+    background-image: url(..../images/32x32/icon-32-menulist.png);
+}
+
+/* -- TOOLBAR ICON 16 x 16 STYLES ----------------------------- */
+.icon-16-importdata					{	background-image: url(..../images/16x16/database-import-icon.png);	}
+
+/* -- TOOLBAR ICON STYLES ----------------------------- */
+.icon-32-adduser					{	background-image: url(..../images/32x32/icon-32-adduser.png);	}
+.icon-32-adduser					{	background-image: url(..../images/32x32/icon-32-alert.png);	}
+.icon-32-apply						{	background-image: url(..../images/32x32/icon-32-apply.png);	}
+.icon-32-archive					{	background-image: url(..../images/32x32/icon-32-archive.png);	}
+.icon-32-unarchive					{	background-image: url(..../images/32x32/icon-32-unarchive.png);	}
+.icon-32-article					{	background-image: url(..../images/32x32/icon-32-article.png);	}
+.icon-32-article-add                {	background-image: url(..../images/32x32/icon-32-article-add.png);	}
+.icon-32-back						{	background-image: url(..../images/32x32/icon-32-back.png);	}
+.icon-32-banner                     {	background-image: url(..../images/32x32/icon-32-banner.png);	}
+.icon-32-banner-categories          {	background-image: url(..../images/32x32/icon-32-banner-categories.png);	}
+.icon-32-banner-client              {	background-image: url(..../images/32x32/icon-32-banner-client.png);	}
+.icon-32-banner-tracks              {	background-image: url(..../images/32x32/icon-32-banner-tracks.png);	}
+.icon-32-calendar                   {	background-image: url(..../images/32x32/icon-32-calendar.png);	}
+.icon-32-checkin                    {	background-image: url(..../images/32x32/icon-32-checkin.png);	}
+.icon-32-component                  {	background-image: url(..../images/32x32/icon-32-component.png);	}
+.icon-32-config                     {	background-image: url(..../images/32x32/icon-32-config.png);	}
+.icon-32-cancel						{	background-image: url(..../images/32x32/icon-32-cancel.png);	}
+.icon-32-contacts                   {	background-image: url(..../images/32x32/icon-32-contacts.png);	}
+.icon-32-contacts-categories        {	background-image: url(..../images/32x32/icon-32-contacts-categories.png);	}
+.icon-32-checkin					{	background-image: url(..../images/32x32/icon-32-checkin.png);	}
+.icon-32-download                   {	background-image: url(..../images/32x32/icon-32-download.png);	}
+.icon-32-help						{	background-image: url(..../images/32x32/icon-32-help.png);	}
+.icon-32-options					{	background-image: url(..../images/32x32/icon-32-config.png);	}
+.icon-32-send						{	background-image: url(..../images/32x32/icon-32-send.png);	}
+
+.icon-32-inbox                      {	background-image: url(..../images/32x32/icon-32-inbox.png);	}
+.icon-32-info                       {	background-image: url(..../images/32x32/icon-32-info.png);	}
+.icon-32-links                      {	background-image: url(..../images/32x32/icon-32-links.png);	}
+.icon-32-export						{	background-image: url(..../images/32x32/icon-32-export.png);	}
+.icon-32-forward					{	background-image: url(..../images/32x32/icon-32-forward.png);	}
+.icon-32-save						{	background-image: url(..../images/32x32/icon-32-save.png);	}
+.icon-32-edit						{	background-image: url(..../images/32x32/icon-32-edit.png);	}
+.icon-32-copy						{	background-image: url(..../images/32x32/icon-32-copy.png);	}
+.icon-32-lock                       {	background-image: url(..../images/32x32/icon-32-lock.png);	}
+.icon-32-move						{	background-image: url(..../images/32x32/icon-32-move.png);	}
+.icon-32-new						{	background-image: url(..../images/32x32/icon-32-new.png);	}
+.icon-32-upload						{	background-image: url(..../images/32x32/icon-32-upload.png);	}
+.icon-32-assign						{	background-image: url(..../images/32x32/icon-32-publish.png);	}
+.icon-32-html						{	background-image: url(..../images/32x32/icon-32-html.png);	}
+.icon-32-css						{	background-image: url(..../images/32x32/icon-32-css.png);	}
+.icon-32-menus						{	background-image: url(..../images/32x32/icon-32-menu.png);	}
+.icon-32-publish					{	background-image: url(..../images/32x32/icon-32-publish.png);	}
+.icon-32-unblock					{	background-image: url(..../images/32x32/icon-32-unblock.png);	}
+.icon-32-unpublish					{	background-image: url(..../images/32x32/icon-32-unpublish.png);	}
+.icon-32-restore					{	background-image: url(..../images/32x32/icon-32-revert.png);	}
+.icon-32-trash						{	background-image: url(..../images/32x32/icon-32-trash.png);	}
+.icon-32-preview					{	background-image: url(..../images/32x32/icon-32-preview.png);	}
+.icon-32-default					{	background-image: url(..../images/32x32/icon-32-default.png);	}
+.icon-32-refresh					{	background-image: url(..../images/32x32/icon-32-refresh.png);	}
+.icon-32-save-new					{	background-image: url(..../images/32x32/icon-32-save-new.png);	}
+.icon-32-save-copy					{	background-image: url(..../images/32x32/icon-32-save-copy.png);	}
+.icon-32-search					   {	background-image: url(..../images/32x32/icon-32-search.png);	}
+.icon-32-error						{	background-image: url(..../images/32x32/icon-32-error.png);	}
+.icon-32-new-style					{	background-image: url(..../images/32x32/icon-32-new-style.png);	}
+.icon-32-delete						{	background-image: url(..../images/32x32/icon-32-delete.png);	}
+.icon-32-delete-style				{	background-image: url(..../images/32x32/icon-32-delete-style.png);	}
+.icon-32-deny                       {	background-image: url(..../images/32x32/icon-32-deny.png);	}
+.icon-32-purge						{	background-image: url(..../images/32x32/icon-32-purge.png);	}
+.icon-32-remove						{	background-image: url(..../images/32x32/icon-32-remove.png);	}
+.icon-32-featured					{	background-image: url(..../images/32x32/icon-32-featured.png);	}
+.icon-32-stats					    {	background-image: url(..../images/32x32/icon-32-stats.png);	}
+.icon-32-notice                     {	background-image: url(..../images/32x32/icon-32-notice.png);	}
+.icon-32-module                     {	background-image: url(..../images/32x32/icon-32-module.png);	}
+.icon-32-messaging                  {	background-image: url(..../images/32x32/icon-32-messaging.png);	}
+.icon-32-new-privatemessage         {	background-image: url(..../images/32x32/icon-32-new-privatemessage.png);	}
+.icon-32-read-privatemessage        {	background-image: url(..../images/32x32/icon-32-read-privatemessage .png);	}
+.icon-32-user-add                   {	background-image: url(..../images/32x32/icon-32-user-add .png);	}
+.icon-32-xml                        {	background-image: url(..../images/32x32/icon-32-xml .png);	}
+.icon-32-wait						{	background-image: url(..../images/32x32/icon-32-wait.png);	}
+.toolbar-inactive					{	background-position: 0px 32px;  }
+
+
+
+/*ICON BAR===============================================================================================================*/
+#action_bar{
+	padding:0px;
+	margin:2px;
+	float:right;
+	text-align:center;
+}
+
+#action_bar a.btn
+{    
+    margin: 0px 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    float: left;
+    padding: 2px 3px 2px 3px;
+    white-space: nowrap;
+    text-align:center;
+    text-decoration:none;
+}
+#action_bar a.btn
+{
+    color:#878787;
+}
+#action_bar a.btn:hover,
+#action_bar a.btn:focus,
+#action_bar a.btn:active {
+	border-left: 1px solid #eee;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	text-decoration: none;
+	text-align:center;
+	color: #000000;
+}
+	
+#action_bar .btn span {
+	float: none;
+	width: 32px;
+	height: 23px;
+	margin: 0 auto;
+	display: block;
+	padding-top:8px;
+}
+
+
+.ico-edit,.iconedit,.downloadItem, .editItem {background: url(../images/icons/16x16/icon_edit.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.ico-delete,.deleteItem {background: url(../images/icons/16x16/icon_delete.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.deleteItemDisable {background: url(../images/icons/16x16/icon_delete_disable.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.ico-copy,.copyItem {background: url(../images/icons/16x16/icon_copy.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.btnDelete {
+    background: url(../images/icons/16x16/icon_delete.png) no-repeat;
+    width: 22px !important;
+    height: 22px;
+    display: inline-block;
+    text-decoration: none!important;
+    background-size: 21px;
+    border: none;
+}
+.editItemDisable {background: url(../images/icons/16x16/icon_edit_disable.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+
+.closeItem {background: url(../images/icons/16x16/icon_lock.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.closeItemDisable {background: url(../images/icons/16x16/icon_lock_disable.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+
+.viewItem {background: url(../images/icons/16x16/icon_view.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.viewItemDisable {background: url(../images/icons/16x16/icon_view_disable.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+
+.checkItem {background: url(../images/icons/16x16/icon_check.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.checkItemDisable {background: url(../images/icons/16x16/icon_check_disable.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+
+.updateStatusItem {background: url(../images/icons/16x16/icon_update_status.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+.updateStatusItem_disable {background: url(../images/icons/16x16/icon_update_status_disable.png) no-repeat; width:22px;height:22px; display:inline-block;text-decoration:none !important;cursor:pointer;}
+
+.btn-custom-addrow {
+    background: url('../images/icons/16x16/Add-icon.png') no-repeat;
+    background-size: 24px;
+    border: none;
+    width: 24px!important;
+    height: 24px;
+}
+.btn-custom-Deleterow {
+    background: url('../images/icons/16x16/Delete-icon.png') no-repeat;
+    background-size: 24px;
+    border: none;
+    width: 24px!important;
+    height: 24px;
+}
+.btn-custom-Delete-disabled-row{
+    background: url('../images/icons/16x16/Delete-disabled-icon.png') no-repeat;
+    background-size: 24px;
+    border: none;
+    width: 24px!important;
+    height: 24px;
+}
+
+.btn-green {
+    background-color: #77b55a;
+    border-radius: 4px;
+    border-width:1px;
+    border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    box-shadow:0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0 5px 0 0;
+    padding: 4px 15px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #5b8a3c;
+    vertical-align: top;
+}
+
+.btn-file {
+position: relative;
+overflow: hidden;
+}
+.btn-file input[type=file] {
+position: absolute;
+top: 0;
+right: 0;
+min-width: 100%;
+min-height: 100%;
+font-size: 100px;
+text-align: right;
+filter: alpha(opacity=0);
+opacity: 0;
+outline: none;
+background: white;
+cursor: inherit;
+display: block;
+}

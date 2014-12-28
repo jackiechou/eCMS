@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Eagle.Model.Mail.MailServerProviderViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mail_Server_Provider_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mail_Server_Protocol)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Incoming_Mail_Server_Host)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Incoming_Mail_Server_Port)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Outgoing_Mail_Server_Host)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Outgoing_Mail_Server_Port)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SSL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TLS)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail_Server_Provider_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail_Server_Protocol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incoming_Mail_Server_Host)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Incoming_Mail_Server_Port)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Outgoing_Mail_Server_Host)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Outgoing_Mail_Server_Port)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SSL)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TLS)
+                    </td>
+                    <td class="table-actions text_center center no-sort">
+                        <a data-id="@item.Mail_Server_Provider_Id" title="Edit" class="ico editItem">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.Mail_Server_Provider_Id" title="Delete" class="ico deleteItem">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

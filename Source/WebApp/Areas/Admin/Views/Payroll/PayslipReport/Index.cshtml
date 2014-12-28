@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.Payslip;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section DevScripts{
+@Html.DevExpress().GetStyleSheets( 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+    @Html.DevExpress().GetScripts( 
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new Script { ExtensionSuite = ExtensionSuite.GridView }, 
+        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new Script { ExtensionSuite = ExtensionSuite.Editors }, 
+        new Script { ExtensionSuite = ExtensionSuite.Chart },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+	    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new Script { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../Payroll/PayslipReport/_Reset")
+</div>
+    }
+@Html.Action("ConfirmPopup", "Common", null)
+
+<script type="text/javascript">
+
+    $('#changeSidebarPos').trigger('click');
+
+    var urlSearch = areas + "/PayslipReport/_List"
+
+    var urlReport = areas + "/PayslipReport/ViewReport"
+    var urlReportForSaveAs = areas + "/PayslipReport/ViewReportForSaveAs"
+
+    var isHover = false;
+
+    function ReportForSaving(EmpID, Month, Year) {
+        
+        var openUrl = urlReportForSaveAs + "?EmpID=" + EmpID + "&Month=" + Month + "&Year=" + Year;
+        window.open(openUrl);
+    }
+
+    function ReportForOpenning(EmpID, Month, Year) {        
+        
+        var openUrl = urlReport + "?EmpID=" + EmpID + "&Month=" + Month + "&Year=" + Year;
+        window.open(openUrl);              
+    }
+
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: urlSearch,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });      
+</script>

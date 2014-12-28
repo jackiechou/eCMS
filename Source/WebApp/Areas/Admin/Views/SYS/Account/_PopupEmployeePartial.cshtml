@@ -1,0 +1,84 @@
+﻿@model EmployeeSearchViewModel
+
+@*<button class="btn btnPopupEmp" type="button">...</button>*@
+@*<button href="#myModal" id="btnPopupEmp" class="btn"  data-toggle="modal">...</button>*@
+
+<div class="modal hide fade popupEmp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.SearchEmployees</h3>
+    </div>
+     <div class="modal-body popup-empl-search">
+        
+         @Html.Action("_SearchAreasPartial","SYS_Account")           
+        <!--Begin button -->
+         <div class="row">
+             <div class="footbar">
+                 <input type="button" id="btnCancelpopupEmployee" value="@Eagle.Resource.LanguageResource.Cancel" class="btn" />
+                 <input type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.Search" class="btn btn-info default">
+             </div>
+     </div>
+
+    <div class="popup-empl-button">
+            <div class="row center">
+                
+            </div>
+        </div>
+        <!--End button -->
+
+        <!--Begin results grid -->
+                                
+        <div class="popup-empl-results-grid">
+                @Html.Action("_SearchResultsForPopup","SYS_Account")                
+        </div>
+        <!--End results grid -->
+    </div> 
+    <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">@Eagle.Resource.LanguageResource.Close</button>
+    </div>
+</div>
+<script>
+    /*Dùng để phân biệt khi sử dụng nhiều
+    Partial này
+    */
+    var controlId = 0;
+
+    /*Nút cancel ẩn popup*/
+    //$('#btnCancelpopupEmployee').click(function () {
+    $(document).on("click", "#btnCancelpopupEmployee", function () {
+        $('.popupEmp').modal('hide');
+    })
+    /*Nút search*/
+    //$('#btnSearch').click(function () {
+    $(document).on("click", "#btnSearch", function () {
+        /*Search params*/
+        var EmpCode = $('.popup-empl-search #SearchEmpCode').val();
+        var FullName = $('.popup-empl-search #SearchFullName').val();
+        var LSCompanyID = $(".popup-empl-search input[name='SearchLSCompanyID']").val();
+        var active1 = $('.popup-empl-search input[name=Searchactive1]:checked').val();
+        var moduleId = getParameterByName("ModuleID");
+
+        /*url get result*/
+        var url = '/Admin/SYS_Account/_SearchResultsForPopup?EmpCode=' + EmpCode + '&FullName=' + FullName + '&LSCompanyID=' + LSCompanyID + '&Active=' + active1 + '&moduleId=' + moduleId;
+
+        $.ajax({
+            url: url,
+            context: document.body
+        }).done(function (data) {
+            $('.popup-empl-results-grid').html(data);
+        });
+    })
+
+
+    $(function () {
+        $(".popup-empl-search input").keypress(function (e) {
+            if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+                $("#btnSearch").trigger("click");
+                return false;
+            } else {
+                return true;
+            }
+        });  
+    });
+
+</script>

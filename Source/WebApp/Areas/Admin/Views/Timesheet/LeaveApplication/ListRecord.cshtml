@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_LeaveRecord;   
+}
+<div id="main-data">
+    <form id="frmAdd">
+        <div id="divSearch">
+            @Html.Action("_Search", "LeaveApplication", null)
+        </div>
+    </form>
+    <div id="divList" style="width:100%; overflow-x:scroll;">
+        @Html.Action("_ListRecord", "LeaveApplication", null)
+    </div>
+</div>
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#changeSidebarPos').trigger('click');
+        });
+        // region click edit
+        $(document).on("click", ".editItem", function () {
+            loading();
+        });
+        // region khi click nut search
+        $(document).on("click", "#btnSearch", function () {
+            $("body").addClass("loading");
+            //Search danh sach nhan vien 
+            var moduleId = getParameterByName("ModuleID");
+            var url = areas + '/LeaveApplication/_ListRecord?ModuleID=' + moduleId;
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $('#divList').html(data);
+                }
+            });
+
+        });
+        // region click delete
+        $('.launchConfirm').on('click', function (e) {
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+            $('#confirm')
+                .modal({ backdrop: 'static', keyboard: false })
+                .one('click', '[data-value]', function (e) {
+                    if ($(this).data('value')) {
+                        var urlCreate = '/LeaveApplication/_ListRecord?ModuleID=9';
+                        $.ajax({
+                            type: "POST",
+                            url: areas + '/LeaveApplication/_Delete' + '/' + lsID,
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: areas + urlCreate,
+                                        success: function (data) {
+                                            $('#divList').html(data);
+                                            AlterUpdateSuccess();
+                                        }
+                                    });
+                                } else {
+                                    $('#"main-data').html(data);
+                                }
+                            }
+                        })
+                        return false;
+                    }
+                });
+        });
+    </script>
+}

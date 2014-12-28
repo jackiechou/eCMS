@@ -1,0 +1,98 @@
+﻿@model List<OTRequestViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center"  style="width:50px;">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Month
+                </th>
+                <th style="width:150px;">
+                    @Eagle.Resource.LanguageResource.Creater
+                </th>
+                <th style="width:100px;">
+                    @Eagle.Resource.LanguageResource.CreatedTime
+                </th>
+                <th style="width:50px;">
+                    @Eagle.Resource.LanguageResource.TotalHours
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.NightOTHours
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.HolidayHours
+                </th>
+                <th style="width:100px;">
+                    @Eagle.Resource.LanguageResource.Status
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @if (item.Month.ToString().Length == 1)
+                        {
+                             @Html.Raw("0" + @item.Month.ToString() + "/" + item.Year.ToString())
+                        }
+                        else
+                        {
+                           @Html.Raw(@item.Month.ToString() + "/" + @item.Year.ToString())
+                        }
+                    </td>
+                    <td>
+                        @item.Creater
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td> 
+                    <td>
+                       @item.TotalHours
+                    </td> 
+                    <td>
+                       @item.NightOT
+                    </td> 
+                    <td>
+                       @item.HolidaysOT
+                    </td> 
+                    <td>
+                       @item.StatusLeaveApplication
+                    </td> 
+                    <td class="center action">
+                        <a href="/Admin/OTRequest/Index?OTRecordID=@item.OTRecordID&ModuleID=9"  title="Edit" class="ico editItem" >&nbsp;&nbsp;&nbsp;</a>
+
+                        @if ((item.Status == 0 || item.Status == 3 || item.Status == 5 || item.Status == 7 || item.Status == 9 || item.Status == 11) && item.LevelApprove == 0)
+                        {
+                            <a  data-id="@item.OTRecordID"  title="delete" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>    
+                        }
+                        else
+                        {
+                            <a  title="delete" class="ico deleteItemDisable ">&nbsp;&nbsp;&nbsp;</a>    
+                        }
+                        
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+       <div id="confirm" class="modal hide fade" style="width:300px">
+                          <div class="modal-body">
+                            Do you want to continue?
+                          </div>
+           <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+               <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+           </div>
+</div>
+<script>
+    InvokeDataTables();
+</script>

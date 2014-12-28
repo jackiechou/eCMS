@@ -1,0 +1,438 @@
+﻿@Html.RadioButtonsForEnum("IsSecured", typeof(Eagle.Model.IsSecured), true)
+@*<div id="divPageType">
+    @Html.RadioButton("IsSecured", true, true, new { id = "IsAdmin", @style = "float:left;" })
+    @Html.Label("IsAdmin", Eagle.Resource.LanguageResource.IsAdmin, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+
+    @Html.RadioButton("IsSecured", false, false, new { id = "IsDesktop", @style = "float:left;" })
+    @Html.Label("IsDesktop", Eagle.Resource.LanguageResource.Desktop, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+</div>*@
+<div id="PageContainer">
+    <div id="divSortableList">
+        <input type="text" id="txtPageSearch" class="sfInputbox" />
+        <input type="button" value="Search" class="sfSearch" id="btnSearchPage">
+        <div class="clear"></div>      
+        <ul id="PageTree" class="sortable sortable-list"></ul>
+        <input type="hidden" id="PageId" name="PageId" />  
+    </div>
+
+    <div id="context-menu" class="dropdown clearfix">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+            <li><a data-action="edit" tabindex="-1" href="#">@Html.Raw(Eagle.Resource.LanguageResource.Edit)</a></li>
+            <li><a data-action="lock" tabindex="-1" href="#">@Html.Raw(Eagle.Resource.LanguageResource.Lock)</a></li>
+            <li><a data-action="unlock" tabindex="-1" href="#">@Html.Raw(Eagle.Resource.LanguageResource.UnLock)</a></li>
+            <li class="divider"></li>
+            <li><a data-action="listmodule" tabindex="-1" href="#">@Html.Raw(Eagle.Resource.LanguageResource.ModuleList)</a></li>
+        </ul>
+    </div>
+</div>
+<style type="text/css">
+    /*body {
+        font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
+        font-size: .8em;
+        /* Prevent tablets from selecting text on taphold, etc:
+       Note:
+       If only the potential menu trigger elements should be protected, simply
+       use the 'preventSelect: true' option.
+       But we disable it more globally for tablet pc's, because the whole line
+       or paragraph will still be selected otherwise.
+     */
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }*/
+
+    /* Only for the demo */
+    .hasmenu {
+        border: 1px solid #008;
+        margin: 3px;
+        padding: 5px;
+        width: 30px;
+    }
+
+    /* Optionally define a fixed width for menus */
+    .ui-menu {
+        width: 220px;
+    }
+        /* Allow to use <kbd> elements inside the title to define shortcut hints. */
+        .ui-menu kbd {
+            padding-left: 1em;
+            float: right;
+        }
+
+    /* Define a custom icon */
+    .ui-icon.custom-icon-firefox {
+        background-image: url(application_firefox.gif);
+        background-position: 0 0;
+    }
+</style>
+
+<script type="text/javascript">
+    (function ($) {
+        $.createPageBuilder = function (p) {
+            var PageMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    PageMgr.GetPages();
+                    PageMgr.InitializeCotrols();
+                    PageMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(PageMgr.config.ajaxCallMode)) {
+                            case 1:
+                                PageMgr.BindPages(data);
+                            case 2:
+                                PageMgr.BindPageDetails(data);
+                                break;
+                            case 3:
+                                PageMgr.ReloadData(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: PageMgr.config.type,
+                        contentType: PageMgr.config.contentType,
+                        cache: PageMgr.config.cache,
+                        url: PageMgr.config.url,
+                        data: PageMgr.config.data,
+                        dataType: PageMgr.config.dataType,
+                        success: PageMgr.ajaxSuccess,
+                        error: PageMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+                   
+                },
+                BindEvents: function () {
+                    $('input:radio[name=IsSecured]').click(function () {
+                        var IsSecured = ($('input:radio[name=IsSecured]:checked').val());
+                        PageMgr.GetPages(IsSecured);
+                    });
+                   
+                    $("#txtPageSearch").keyup(function (event) {
+                        if (event.keyCode != '13' && event.keyCode != '27' && event.keyCode != '32') {
+                            $("#btnSearchPage").click();
+                        }
+                    });
+                  
+                    $(document).on("click", "#btnSearchPage", function () {
+                        PageMgr.GetPages();
+                    });
+
+                    //Add and update post action
+                    $(document).on("click", "#btnAdd", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            PageMgr.AddData();
+                        }
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            PageMgr.UpdateData(data);
+                        }
+                    });
+
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        PageMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        PageMgr.GetPageDetails(ID);
+
+                        //Go to top
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {
+                                    PageMgr.config.mode = 2;
+                                    PageMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+                },              
+                GetPages: function () {
+                    var rdbAdmin = $('input:radio[name=IsSecured]');
+                    var IsSecured = false;
+                    if (rdbAdmin != null)
+                        IsSecured = rdbAdmin.attr('checked') ? true : false;
+                    this.config.method = "GetList";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.data = JSON.stringify({ "Keywords": $("#txtPageSearch").val(), "IsSecured": IsSecured });
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindPages: function (data) {
+                    var PageId = "";
+                    var ParentId = "";
+                    var IsVisible = "";
+                    var html = "";
+                    var styles = "";
+                    var Index = 0;
+
+                    //html += '<li class="ui-state-default" id="0" title="@Html.Raw(Eagle.Resource.LanguageResource.Root)">@Html.Raw(Eagle.Resource.LanguageResource.Root)</li>';
+                    $.each(data, function (index, item) {
+                        Index++;
+                        PageId = item.PageId;
+                        ParentId = item.ParentId;
+                        IsVisible = item.IsVisible === true ? "active" : "inactive";
+                        html += '<li class="ui-state-default context-menu"  id="' + PageId + '" title="' + item.PageName + '">' + Index + ' - ' + item.PageTitle + '(' + PageId + ')</li>';
+                    });
+                    $("#PageTree").html(html);
+
+                    PageMgr.AddDragDrop();
+                    PageMgr.AddContextMenu();
+                },
+                AddContextMenu: function ()
+                {
+                    $('ul#PageTree li').contextmenu({
+                        target: '#context-menu',
+                        //scopes: 'ul > li',
+                        before: function (e, element, target) {
+                            e.preventDefault();
+                            if (e.target.tagName == 'SPAN') {
+                                e.preventDefault();
+                                this.closemenu();
+                                return false;
+                            }
+                            return true;
+                        },
+                        onItem: function (context, e) {
+                            //var name = $(context).text(); 
+                           // var text = $(e.target).text();
+                            var action = $(e.target).data("action");                           
+                            var id = $(context).attr("id");
+                            switch (action) {
+                                case "edit":
+                                    PageMgr.GetPageDetails(id);                                    
+                                    break;
+                                //case "lock":
+                                //    PageMgr.UpdateStatus(false);
+                                //    break;
+                                //case "unlock":
+                                //    PageMgr.UpdateStatus(true);
+                                //    break;
+                                //case "listmodule":
+                                //    PageMgr.GetModules();
+                                //    break;
+                            }                            
+                        }
+                      
+                    });
+                },
+                AddDragDrop: function ()
+                {
+                    $(".sortable-list").sortable({
+                        cursor: "move",
+                        opacity: 0.8,
+                        connectWith: ['.sortable-list'],
+                        placeholder: 'ui-state-highlight',
+                        stop: function () {
+                           // e.preventDefault();                
+                            PageMgr.UpdateListOrder();
+                        },
+                        update: function (e) {
+                            // e.preventDefault();                
+                            PageMgr.UpdateListOrder();
+                        }
+                    });
+                },              
+                UpdateListOrder: function ()
+                {
+                    var Ids = [];
+                    $('ul.sortable-list').each(function () {
+                        var itemorder = $(this).sortable('toArray').join(',');
+                        Ids.push(itemorder.toString());
+                    });
+                  
+                    var service_url = "/Admin/Page/UpdateListOrder";
+                    $.ajax({
+                            type: "POST",
+                            url: service_url,                           
+                            data: JSON.stringify({ 'Ids': Ids.toString() }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: true,
+                            cache: false,                          
+                            success: function (response) {
+                                var result = JSON.parse(response);                              
+                                if (result.flag == 'true')
+                                    PageMgr.GetPages();
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                },
+                AddData: function () {
+                    var data = ConvertFormToJSON("myform");
+                    this.config.method = "Create";
+                    this.config.data = data;
+                    this.config.url = PageMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                GetPageDetails: function (id) {
+                    PageMgr.config.mode = 1;
+                    PageMgr.config.key = id;
+
+                    var data = { "Id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                BindPageDetails: function (data) {                  
+                    $('#divEdit').html(data);
+                   // PageMgr.InitializeCotrols();
+                },
+                UpdateData: function () {
+                    var data = ConvertFormToJSON("myform");
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = PageMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                UpdateStatus: function (Status) {
+                    var data = { "PageId": $('input[type=hidden][name="PageId"]').val(), "Status": Status };
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = PageMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = PageMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = PageMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    } else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    } else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    // var result = $.parseJSON(data);
+                    if (result.flag == 'true') {
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: PageMgr.config.baseURL + this.config.method,
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout") {
+                                    window.location.reload();
+                                } else {
+                                    $('#' + PageMgr.config.ContainerClientID).html(data);
+                                    PageMgr.InitializeCotrols();
+                                    showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error");
+                        hideMessageWithTitle(20000);
+                    }
+                },
+                ResetControls: function () {
+                    var mode = PageMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#myform');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                    } else {
+                        var key = PageMgr.config.key;
+                        PageMgr.GetPageDetails(key);
+                    }
+                    PageMgr.InitializeCotrols();
+                },
+            };
+            PageMgr.init();
+        }
+
+        var Controller = 'Page';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "PageContainer",
+            BaseURL: BaseURL
+        };
+        $.createPageBuilder(base_settings);
+    })(jQuery);
+</script>

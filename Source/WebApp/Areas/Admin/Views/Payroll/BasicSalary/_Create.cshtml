@@ -1,0 +1,143 @@
+﻿
+@model Eagle.Model.SalaryViewModels
+
+<form id="frmAdd" class="form-horizontal">
+    @Html.HiddenFor(model => model.SalaryID)
+    @Html.Action("GetEmployeeInfo", "Employee", null)
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">Input region</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.dEffectiveDate)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Datepicker2For(model => model.dEffectiveDate, "dd/MM/yyyy",  new { @name = "strEffectiveDate"} )
+                                    @Html.ValidationMessageFor(model => model.dEffectiveDate)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.BasicSalary)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.BasicSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.ValidationMessageFor(model => model.BasicSalary)
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.PercentBasicSalary)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.PercentBasicSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.ValidationMessageFor(model => model.PercentBasicSalary)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.ActualSalary)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.ActualSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.ValidationMessageFor(model => model.ActualSalary)
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    
+                                </div>
+                                <div class="col-md-3">
+                                    <label style="display: inline; margin-left: 10px;">GROSS @Html.RadioButton("GROSSNET", true,Model.GROSSNET == null ? true: Model.GROSSNET.Value == true, new { @id = "GROSS", @class = "isGross" })</label>
+                                    <label style="display: inline; margin-left: 10px;">NET @Html.RadioButton("GROSSNET", false, Model.GROSSNET == null ? false:  Model.GROSSNET.Value == false, new { @id = "NET", @class = "isGross" })</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.LSCurrencyID)
+                                </div>
+                                <div class="col-md-3">
+                                      @Html.TextBox("SelectLSLSCurrencyID", null, new { @class = "span12" })
+                                      @Html.HiddenFor(model => model.LSCurrencyID)
+                                      @Html.HiddenFor(model => model.LSCurrencyName)
+                                </div>
+                                
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.InsuranceSalary)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.InsuranceSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.ValidationMessageFor(model => model.InsuranceSalary)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RequiredLabelFor(model => model.InsuranceLSCurrencyID)
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBox("InsuranceSelectLSLSCurrencyID", null, new { @class = "span12" })
+                                    @Html.HiddenFor(model => model.InsuranceLSCurrencyID)
+                                    @Html.HiddenFor(model => model.InsuranceLSCurrencyName)
+                                </div>                                
+                            </div>
+                            <!--end row-->
+                             <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.LabelFor(model => model.Note)
+                                    </div>
+                                    <div class="col-md-9">
+                                            @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+                                            @Html.ValidationMessageFor(model => model.Note)
+                                    </div>
+                                </div>
+                                <!--end row-->
+                        </div>
+                    </div>
+                    <!--row button-->
+                    <div class="row">
+                        <div class="footbar">
+                            <div>
+                                <input class="btn ResetModel" type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" />
+                                <input class="btn btn-info AddModel" type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--End.row-->
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    InvokeDateTimePicker();
+</script>
+@*@Html.Action("jqueryval", "Common", null)*@
+<script>
+    var strInput = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCurrency)';
+    PopulateDropDownListAutoComplete("SelectLSLSCurrencyID", "LSCurrencyID", "LSCurrencyName", strInput, areas + '/LS_tblCurrency/DropdownList');
+    PopulateDropDownListAutoComplete("InsuranceSelectLSLSCurrencyID", "InsuranceLSCurrencyID", "InsuranceLSCurrencyName", strInput, areas + '/LS_tblCurrency/DropdownList');
+</script>

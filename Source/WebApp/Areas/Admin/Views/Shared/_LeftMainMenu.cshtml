@@ -1,0 +1,37 @@
+﻿@model string
+<div id="LeftMainMenu" class="menu-container">
+    <ul class="nav nav-list sf-navbar sf-menu sf-vertical" style="display: -moz-box; width: 100%">
+        @Html.Raw(Model)
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //VERTICAL MENU ------------------------------------------------------------------------------------------------
+        $('ul.sf-menu sf-vertical').superfish({
+            animation: { height: 'show' },   // slide-down effect without fade-in
+            delay: 1200               // 1.2 second delay on mouseout
+        });
+        //MENU END =====================================================================================================
+    });
+</script> 
+
+@*<div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">Hệ thống</li>
+            <li><a href="#">Master Data</a></li>
+            <li class="active"><a href="#">Account Managerment</a></li>
+            <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Group Managerment</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Uder Group Managerment</a></li>
+            <li class="nav-header">Sidebar</li>
+            <li><a href="#">Link</a></li>
+        </ul>
+    </div>*@

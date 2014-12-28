@@ -1,0 +1,194 @@
+﻿@model InsuranceInformationViewModel
+
+    <div class="group-control">
+        <div>
+            <h6>@Eagle.Resource.LanguageResource.SocialInsurance</h6>
+        </div>
+        <hr>
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SIBook)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.SIBook, new { @class = "span12" })
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.StartDateSI)
+            </div>
+            <div class="col-md-4">
+                @Html.DatepickerFor(model => model.StartDateSI)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.IssuedDateSIBook)
+            </div>
+            <div class="col-md-4">
+                @Html.DatepickerFor(model => model.IssuedDateSIBook)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.JoinDateAtCompany, new { @class = "has-tooltip", @title = @Eagle.Resource.LanguageResource.JoinDateAtCompany })
+            </div>
+            <div class="col-md-4">
+                @Html.DatepickerFor(model => model.JoinDateAtCompanyAlowNull)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSProvinceIDIssuedSI)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectLSProvinceIDIssuedSI", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSProvinceIDIssuedSI)
+                @Html.HiddenFor(model => model.LSProvinceIDIssuedSIName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.InsuranceYearsAgo)
+            </div>
+            <div class="col-md-4">
+                <label class="reset-label" id="lblInsuranceYearsAgo">@Html.DisplayFor(model => model.InsuranceYearsAgo)</label>
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.InsuranceYears)
+            </div>
+            <div class="col-md-4">
+                <label class="reset-label" id="lblInsuranceYears">@Html.DisplayFor(model => model.InsuranceYears)</label>
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+
+    <div class="group-control">
+        <div>
+            <h6>@Eagle.Resource.LanguageResource.HealthInsurance</h6>
+        </div>
+        <hr>
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.HIBook)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.HIBook, new { @class = "span12" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSHospitalIDOriginal)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectLSHospitalIDOriginal", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSHospitalIDOriginal)
+                @Html.HiddenFor(model => model.LSHospitalIDOriginalName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.IssuedDateHIBook)
+            </div>
+            <div class="col-md-4">
+                @Html.DatepickerFor(model => model.IssuedDateHIBook)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSProvinceIDIssuedHI)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectLSProvinceIDIssuedHI", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSProvinceIDIssuedHI)
+                @Html.HiddenFor(model => model.LSProvinceIDIssuedHIName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.StartDateHI)
+            </div>
+            <div class="col-md-4">
+                @Html.DatepickerFor(model => model.StartDateHI)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSHospitalIDNew)
+            </div>
+            <div class="col-md-4">
+                <label class="reset-label" id="lblNewHospital">
+                    @Html.DisplayFor(model => model.LSHospitalIDNewName, new { @class = "span12" })
+                </label>
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ReturnDateHI)
+            </div>
+            <div class="col-md-4">
+                @Html.DatepickerFor(model => model.ReturnDateHI)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+
+@Html.Hidden("NowDate", DateTime.Now.ToString("dd/MM/yyyy"))
+<script>
+    PopulateDropDownListAutoComplete("SelectLSProvinceIDIssuedSI", "LSProvinceIDIssuedSI", "LSProvinceIDIssuedSIName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputProvinceName)', areas + '/LS_tblProvince/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSProvinceIDIssuedHI", "LSProvinceIDIssuedHI", "LSProvinceIDIssuedHIName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputProvinceName)', areas + '/LS_tblProvince/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSHospitalIDOriginal", "LSHospitalIDOriginal", "LSHospitalIDOriginalName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputHospitalName)', areas + '/Hospital/DropdownList');
+    function checkQty() {
+
+        var StartDateSItmp = $("#StartDateSItmp").val();
+        var StartMonth = StartDateSItmp.substring(3, 5);
+        var StartYear = StartDateSItmp.substring(6, 10);
+
+        var JoinDateAtCompanyAlowNulltmp = $("#JoinDateAtCompanyAlowNulltmp").val();
+        var JoinMonth = JoinDateAtCompanyAlowNulltmp.substring(3, 5);
+        var JoinYear = JoinDateAtCompanyAlowNulltmp.substring(6, 10);
+
+        var NowDate = $("#NowDate").val();
+        var NowMonth = NowDate.substring(3, 5);
+        var NowYear = NowDate.substring(6, 10);
+
+        var yearsAgo = (JoinYear - StartYear) * 12 + (JoinMonth - StartMonth);
+        var yearsAgo2 = (NowYear - StartYear) * 12 + (NowMonth - StartMonth);
+
+        
+
+        if (StartDateSItmp != '') {
+
+
+            if (JoinDateAtCompanyAlowNulltmp != '') {
+                $("#lblInsuranceYearsAgo").html(yearsAgo + " " + '@Eagle.Resource.LanguageResource.Months');
+            }
+            $("#lblInsuranceYears").html(yearsAgo2 + " " + '@Eagle.Resource.LanguageResource.Months');
+        }
+    }
+    $(document).on("change", "#StartDateSI", function () {
+        checkQty();
+    })
+    $(document).on("change", "#JoinDateAtCompanyAlowNull", function () {
+        checkQty();
+    })
+    $(document).ready(function () {
+        checkQty();
+    });
+</script>

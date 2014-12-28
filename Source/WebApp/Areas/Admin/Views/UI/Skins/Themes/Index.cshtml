@@ -1,0 +1,21 @@
+﻿@{ 
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.Themes);
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+@Html.DropDownList("Theme")
+}
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $('#Theme').change(function () {
+
+            $.post('@Url.Action("Index", "Theme")', { "SelectedTheme": $(this).val() }, function (result) {
+                $('body').html('');
+                $('body').html(result);
+            });
+        });
+    });
+</script>

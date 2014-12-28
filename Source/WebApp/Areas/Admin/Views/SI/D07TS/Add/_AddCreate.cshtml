@@ -1,0 +1,44 @@
+﻿@model D07TSViewModel
+
+<div class="row" style="margin-bottom:5px;">
+    <div class="col-md-2">@Html.RequiredLabelFor(model => model.FullName)</div>
+    <div class="col-md-4">
+        @Html.TextBox("SelectEmpID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.EmpID)
+        @Html.HiddenFor(model => model.FullName)
+    </div>
+    <div class="col-md-2">@Html.LabelFor(model => model.SIBook)</div>
+    <div class="col-md-4">
+        <label id="lblSIBook" class="reset-label"></label>
+        @Html.HiddenFor(model => model.SIBook)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.RequiredLabelFor(model => model.ChangeTypeID)</div>
+    <div class="col-md-4">
+        @Html.TextBox("SelectChangeTypeID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.ChangeTypeID)
+        @Html.HiddenFor(model => model.ChangeTypeName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.LabelFor(model => model.Old)</div>
+    <div class="col-md-4">@Html.TextBoxFor(model => model.Old)</div>
+    <div class="col-md-2">@Html.LabelFor(model => model.New)</div>
+    <div class="col-md-4">@Html.TextBoxFor(model => model.New)</div>
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.LabelFor(model => model.FromMonth)</div>
+    <div class="col-md-4">@Html.TextBoxFor(model => model.FromMonth)</div>
+    <div class="col-md-2">@Html.LabelFor(model => model.ToMonth)</div>
+    <div class="col-md-4">@Html.TextBoxFor(model => model.ToMonth)</div>
+</div>
+<div class="row">
+    <div class="col-md-2">@Html.LabelFor(model => model.BasedChange)</div>
+    <div class="col-md-4">@Html.TextBoxFor(model => model.BasedChange)</div>
+</div>
+
+<script type="text/javascript">
+    PopulateDropDownListAutoComplete("SelectEmpID", "EmpID", "FullName", "Vui lòng chọn nhân viên", areas + '/Employee/DropdownListOnFullNameDepartment');
+    PopulateDropDownListAutoComplete("SelectChangeTypeID", "ChangeTypeID", "ChangeTypeName", "Vui lòng chọn sự thay đổi", areas + '/ChangingInsuranceInformationType/DropdownList');
+</script>

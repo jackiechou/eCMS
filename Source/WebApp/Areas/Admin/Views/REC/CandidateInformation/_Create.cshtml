@@ -1,0 +1,19 @@
+﻿
+@Html.Action("_CandidateBox","Candidate",null)
+
+<div class="form-horizontal">
+
+<div id="divEdit">
+    @Html.Partial("../REC/CandidateInformation/InputAreasPartial")
+</div>
+    <div class="row">
+        <div class="footbar">
+            <div>                
+                <input type="button" id="btnReset" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+                <input type="button" id="btnAdd" class="btn btn-info" value="@Eagle.Resource.LanguageResource.Save" />
+            </div>
+        </div>
+    </div>
+    <!--End.row-->
+</div>
+

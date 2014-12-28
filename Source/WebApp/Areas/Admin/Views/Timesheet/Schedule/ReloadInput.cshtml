@@ -1,0 +1,137 @@
+﻿@model ScheduleFindViewModel     
+
+<div id="alertMessageBox2">
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong>
+            <div class="padding-left">
+                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+            </div>
+        </div>
+    }
+</div>
+<!-- start row -->
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.ScheduleID)
+        </div>
+        <div class="col-md-3">
+            @Html.HiddenFor(model => model.ScheduleID)
+            @Html.HiddenFor(model => model.ScheduleName)
+            <label id="ScheduleName" class="reset-label" style="color: #336699;"></label>
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Year)
+        </div>
+        <div class="col-md-4">
+            <span style="width: 60px; float: left; padding-right: 5px;">
+                @Html.TextBoxFor(model => model.Year, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.Year)
+            </span>
+            <span style="float: left;">
+                <input type="button" id="btnSearch" value=" @Eagle.Resource.LanguageResource.btnSearch" class="direct_bt btn btn-info btn-larg1e row-fluid " />
+            </span>
+        </div>
+    </div>
+}
+
+<!-- end row -->
+<hr />
+<!-- start row-->
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.FromDate)
+    </div>
+    <div class="col-md-3">
+        @Html.Datepicker2For(model => model.FromDate, "dd/MM/yyyy")
+
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.ToDate)
+    </div>
+    <div class="col-md-4">
+        @Html.Datepicker2For(model => model.ToDate, "dd/MM/yyyy")
+    </div>
+</div>
+<!-- end row -->
+<!-- start row -->
+<div class="row">
+    <div class="col-md-2">
+        <label>@Eagle.Resource.LanguageResource.ShiftName</label>
+    </div>
+    <div class="col-md-3">
+        @Html.TextBox("LSShiftIDName", null, new { @class = "span12" })
+        @Html.Hidden("LSShiftIDtmp")
+        @*@Html.TextBox("LSShiftID", null, new { @id="LSShiftID", @name="LSShiftID", @class="col-md-12"})*@
+    </div>
+    <div class="col-md-6 offset1">
+        <label style="display: inline; margin-left: 10px;">@Html.RadioButton("optInclude", 1, true, new { id = "optInclude1" }) @Eagle.Resource.LanguageResource.Exclude </label>
+        <br />
+        <label style="display: inline; margin-left: 10px;">@Html.RadioButton("optInclude", 0, false, new { id = "optInclude0" }) @Eagle.Resource.LanguageResource.Include </label>
+    </div>
+</div>
+<!-- end row -->
+
+@Html.Action("jqueryval", "Common", null)
+<script type="text/javascript">
+    InvokeDateTimePicker();
+</script>
+ <script>
+     InvokeDateTimePicker();
+     (function ($) {
+         ListForDropdown();
+         function ListForDropdown() {
+             //The url we will send our get request to
+             var requestUrl = '@Url.Action("DropdownList", "Shift")';
+                var pageSize = 20;
+                var selectBox = $('#LSShiftIDName');
+                selectBox.select2({
+                    placeholder: 'Input shift type',
+                    minimumInputLength: 0,
+                    allowClear: true,
+                    ajax: {
+                        url: requestUrl,
+                        dataType: 'json',
+                        quietMillis: 10,  //How long the user has to pause their typing before sending the next request
+                        data: function (term, page) {
+                            return {
+                                pageSize: pageSize,
+                                pageNum: page,
+                                searchTerm: term
+                            };
+                        },
+                        results: function (data, page) {
+                            //Used to determine whether or not there are more results available,
+                            //and if requests for more data should be sent in the infinite scrolling                    
+                            var more = (page * pageSize) < data.Total;
+                            return { results: data.Results, more: more };
+                        }
+                    },
+                    formatSelection: function (result) {
+                        $('#LSShiftIDtmp').val(result.id);
+                        return result.name;
+                    },
+                    formatResult: function (result) {
+                        return result.name;
+                    },
+                    initSelection: function (element, callback) {
+                        var selected_value = element.id;
+                        var data = { id: element.val(), name: element.val() };
+                        callback(data);
+                    }
+
+                });
+                                               @*var selected_id = @Model.LSShiftID;
+                                               selectBox.select2('val',selected_id == 0 ? '' : selected_id);*@
+
+            }
+            //******************************************************************
+            //Ending AutoComplete **********************************************
+            //****************************************************************** 
+        })(jQuery);
+
+    </script>

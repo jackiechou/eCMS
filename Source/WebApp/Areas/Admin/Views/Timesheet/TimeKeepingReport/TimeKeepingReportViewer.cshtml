@@ -1,0 +1,11 @@
+﻿@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer1";
+    settings.Report = (TimeKeepingXtraReport)ViewData["Report"];
+    settings.AutoSize = false;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = 1000;    
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "TimeKeepingReport", Action = "LoadTimeKeepingReportViewer" };
+    settings.ExportRouteValues = new { Controller = "TimeKeepingReport", Action = "ExportTimeKeepingData" };
+}).GetHtml()

@@ -1,0 +1,38 @@
+﻿@model EmployeeViewModel
+@if (Model != null)
+{
+    <div class="user img-rounded">
+        <div class="row">
+            <div id="avatar" class="col-md-4 avatar">
+            
+                    @*<a menu="#context_menu" data-toggle="context" data-fileid="@Model.FileId" class="user-link" href="#">*@
+                    <a data-toggle="context" data-fileid="@Model.FileId" class="user-link" href="#">
+                        @Html.HiddenFor(model => model.FileId)
+                        @Html.Hidden("ItemId", @Model.EmpID)
+                        @*            @Html.ImageByFileId("Photo", Model.FileId, Model.EmpName, new { width = "80", height = "80", @class = "media-object img-thumbnail user-img img-rounded", @style = "width:80px; height=80px;overflow-x:hidden;border:1px solid #CCC;" })*@
+                        <img id="Photo" src="~/Handlers/ViewFile.ashx?FileId=@Model.FileId" alt="@Model.EmpID" width="80" height="80" class="media-object img-thumbnail user-img img-rounded" />
+                    </a>
+                
+                    <div id="context-menu-avatar">
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-id="@Model.FileId" data-empid="@Model.EmpID" tabindex="-1">@Html.Raw(Eagle.Resource.LanguageResource.ChangeAvatar)</a></li>
+                            <li class="divider"></li>
+                            <li><a data-id="null" tabindex="-1">@Html.Raw(Eagle.Resource.LanguageResource.Quit)</a></li>
+                        </ul>
+                    </div>
+                    
+            </div>
+            <div class="brief_user_info span8">
+                <p><strong> @Model.FullName</strong></p>
+                <div class="brief_user_details">
+                    <ul>
+                        <li>@{ string date = Model.DOB != null ? ((DateTime)Model.DOB).ToString("dd/MM/yyyy") : ""; }</li>
+                        <li>@date</li>
+                        <li>@Model.CompanyName</li>
+                        <li>@Model.Position</li>
+                    </ul>                 
+                </div>
+            </div>
+        </div>
+    </div>
+}   

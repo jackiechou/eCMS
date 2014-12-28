@@ -1,0 +1,193 @@
+﻿@model Eagle.Model.FunctionPermissionCreateViewModel
+
+<form id="frmAdd" class="form-horizontal"> 
+        <div id="alertMessageBox">
+            @if (ViewBag.DisplayErrorMessage == true)
+            {
+                <div class="@ViewBag.CssClass">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message 
+                </div>
+            }
+        </div>
+       
+        <div class="box">
+        <div class="row">
+
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">Input region</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="accordion-content">
+                                <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model => model.GroupID)
+                                    </div>
+                                    <div class="col-md-4">
+                                            @Html.DropDownList("GroupID", ViewData["lstGroup"] as MultiSelectList,null, new { @id = "GroupID", @class = "span12"})
+                                            @Html.ValidationMessageFor(model => model.ModuleID)
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model => model.ModuleID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.ModuleID,  null, new {@id="ddlModuleID", @class = "span12" })
+                                        @Html.ValidationMessageFor(model => model.ModuleID)
+                                    </div>
+                                    
+                                </div>
+                                <!--end row-->
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="footbar">
+                                <div>
+                                    <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="direct_bt btn btn-info btn-larg1e row-fluid AddModel" />
+                                </div>
+                            </div>
+                        </div>
+                        <!--End.row-->
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        <div class="input-area">
+                <script>
+                    (function ($) {
+                        ListForDropdown();
+                        function ListForDropdown() {
+                            //The url we will send our get request to
+                            var requestUrl = '@Url.Action("DropdownList", "FunctionPermission")';
+                            var pageSize = 20;
+                            var selectBox = $('#ddlModuleID');
+                            selectBox.select2({
+                                placeholder: 'Input module name',
+                                minimumInputLength: 0,
+                                allowClear: true,
+                                ajax: {
+                                    url: requestUrl,
+                                    dataType: 'json',
+                                    quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                    data: function (term, page) {
+                                        return {
+                                            pageSize: pageSize,
+                                            pageNum: page,
+                                            searchTerm: term
+                                        };
+                                    },
+                                    results: function (data, page) {
+                                        //Used to determine whether or not there are more results available,
+                                        //and if requests for more data should be sent in the infinite scrolling                    
+                                        var more = (page * pageSize) < data.Total;
+                                        return { results: data.Results, more: more };
+                                    }
+                                },
+                                formatSelection: function (result) {
+                                    return result.name;
+                                },
+                                formatResult: function (result) {
+                                    return result.name;
+                                },
+                                initSelection: function (element, callback) {
+                                    var selected_value = $('#ddlModuleID').val();
+                                    var data = { id: element.val(), name: element.val() };
+                                    callback(data);
+                                    $('input#ddlModuleID').val(selected_value);
+                                }
+                                
+                            });
+                            
+                        }
+                        //******************************************************************
+                        //Ending AutoComplete **********************************************
+                        //****************************************************************** 
+                    })(jQuery);
+
+                </script>
+         </div>
+
+        <div class="input-area">
+            <div class="row">
+                <div class="col-md-12" id="ListFunction"></div>
+            </div>
+        </div>
+        <div id="confirm" class="modal hide fade">
+            <div class="modal-body">
+                Do you want to continue?
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+                <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+            </div>
+        </div>  
+    </form>
+<script>
+   
+    // su kien selected index change dropdownlist 
+    $("#ddlModuleID").change(function () {
+        hideCustomAlter();
+        var ModuleID = $(this).val();
+        var selectedValue = $('#GroupID').val();
+        $.ajax({
+            type: "GET",
+            url: areas + '/FunctionPermission/_FunctionByModule/?ModuleID=' + ModuleID + '&GroupID=' + selectedValue,
+            success: function (data) {
+                $('#ListFunction').html(data);
+            }
+        })
+        return false;               
+    });
+   
+    $("#GroupID").change(function () {
+        hideCustomAlter();
+        var GroupID = $(this).val();
+        var ModuleID = $('#ddlModuleID').val();
+        $.ajax({
+            type: "GET",
+            url: areas + '/FunctionPermission/_FunctionByModule/?ModuleID=' + ModuleID + '&GroupID=' + GroupID,
+            success: function (data) {
+                $('#ListFunction').html(data);
+            }
+        })
+        return false;
+    });
+    // su kien save / update du lieu
+    // su kien add du lieu
+    $(document).on("click", "#btnAdd", function () {
+        if ($('#btnAdd').hasClass("AddModel")) {
+            var ModuleID = $('#ddlModuleID').val();
+            if (ModuleID == "") {
+                showMessageWithTitle('Warning', 'please choose a module to update.', 'warning');
+                return;
+            }
+            else {
+                var GroupID = $('#GroupID').val();
+                var url = areas + '/FunctionPermission/_UpdatePermission';
+
+                $.ajax({
+                    type: "POST",
+                    //data: JSON.stringify(request),
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            AlterUpdateSuccess();
+                        } else if (data == "error") {
+                            AlterUpdateError();
+                        } else if (data == "warning") {
+                            AlterUpdateWarning();
+                        }
+                    }
+                }); // end ajax
+            }
+        }
+    });
+</script>

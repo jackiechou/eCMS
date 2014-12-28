@@ -1,0 +1,51 @@
+﻿@model List<TrainingAnswerTypeViewModel>
+ 
+<div class="row">
+<table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+            <tr>
+                <th class="text_center" style="width:10px">@Eagle.Resource.LanguageResource.No</th>      
+                <th class="text_center" style="width:15%">
+                    @Eagle.Resource.LanguageResource.TrainingAnswerTypeCode&nbsp;&nbsp;(*)
+                </th>          
+                <th class="text_center" style="width:85%">
+                    @Eagle.Resource.LanguageResource.TrainingAnswerTypeName&nbsp;&nbsp;(*)
+                </th>                
+                <th class="table-actions text_center no-sort" style="width:10px">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+    <tbody>
+            @{
+                int i = 0;
+                int k = -1;
+            }
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;                
+                <input type="hidden" name="[@k].LSTrainingAnswerTypeID" value="@item.LSTrainingAnswerTypeID" />                
+                <input type="hidden" name="[@k].LSTrainingApprisalItemID" value="@item.LSTrainingApprisalItemID" />
+                
+                <tr id="@k">
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td class="text_center">                        
+                        <input type="text" name="[@k].LSTrainingAnswerTypeCode" value="@item.LSTrainingAnswerTypeCode" class="col-md-10" style="text-align:left;width:100%" />                        
+                    </td>
+                    <td class="text_center">                        
+                        <input type="text" name="[@k].Name" value="@item.Name" class="col-md-10" style="text-align:left;width:100%" />                        
+                    </td>
+                    <td class="table-actions text_center no-sort">      
+                        @if (item.LSTrainingAnswerTypeID == 0)
+                        {
+                            <a data-id="@item.LSTrainingAnswerTypeID" title="Delete" onclick="DeleteRowOfTrainingAnswer(this);" class="ico deleteItem">&nbsp;&nbsp;&nbsp; </a>
+                        }                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+
+

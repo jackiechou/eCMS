@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CandidateResultViewModel>
+<div class="row" style="text-align: right; margin-top: -5px;">
+     @if (Model != null && Model.Count() > 0)
+	 {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Deleterow btnDeleteCandidate" style="margin-right: 5px;">
+     }else
+     {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Delete-disabled-row btnDeleteCandidate" style="margin-right: 5px;">
+     }
+
+    <input id="btnAddCandidate" title="@Eagle.Resource.LanguageResource.AddNew" type="button" class="btn-custom-addrow" style="margin-right: 18px;">
+</div>
+<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CandidateCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplyDate)
+                </th>
+                <th class="table-actions text_center no-sort">@Html.CheckBox("chkCandidateDeleteAll")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0; int k = -1;}
+            @if (Model != null && Model.Count() > 0)
+	        {
+                foreach (var item in Model)
+                {
+                    i++;
+                    k++;
+                    <tr>
+                        <td>
+                            @i
+                            <input type="hidden" name="CandidateList[@k].CandidateID" value="@item.CandidateID" />
+                            <input type="hidden" name="CandidateList[@k].CandidateCode" value="@item.CandidateCode" />
+                            <input type="hidden" name="CandidateList[@k].FirstName" value="@item.FirstName" />
+                            <input type="hidden" name="CandidateList[@k].LastName" value="@item.LastName" />
+                            <input type="hidden" name="CandidateList[@k].DOB" value="@item.DOB" />
+                            <input type="hidden" name="CandidateList[@k].ApplyDate" value="@item.ApplyDate" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CandidateCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplyDate)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            @Html.CheckBox("chkCandidateDelete", false, new { @value = item.CandidateID }) 
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" class="text-center">
+                        @Eagle.Resource.LanguageResource.PleaseClickAddNewButton_btnAddCandidate
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>

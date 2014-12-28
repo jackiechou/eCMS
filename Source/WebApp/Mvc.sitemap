@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="$resources:SiteMapLocalizations,Home" action="Index" controller="Home" area="Admin">
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,ChangePassword" url="/Admin/ChangePassword" />
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,SystemAdministration" url="/Admin/SystemAdministration/Index?ModuleID=1" >
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,AccountManagement" url="/Admin/SYS_Account/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,GroupManagement" url="/Admin/Group/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,UserGroupManagement" url="/Admin/UserGroup/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,FunctionPermission" url="/Admin/FunctionPermission/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,DataPermission" url="/Admin/DataPermission/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,PayrollInsuranceParameter" url="/Admin/PayrollParameter/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,SystemParameter" url="/Admin/SystemParameter/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Delegate" url="/Admin/Delegate/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,MasterDataOnlineProcess" url="/Admin/OnlineProcess/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OnlineProcessMaster" url="/Admin/OnlineProcessMaster/Index?ModuleID=1" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OnlineProcessDetail" url="/Admin/OnlineProcessDetail/Index?ModuleID=1" />
+    </mvcSiteMapNode>
+
+
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Training" url="/Admin/Training/Index?ModuleID=3" >
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Recruitment" url="/Admin/Recruitment/Index?ModuleID=8" >
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,AddNewCandidate" url="/Admin/NewCandidate/Create?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,CandidateList" url="/Admin/CandidateList/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,CandidateInformation" url="/Admin/CandidateInformation/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,WorkingExpectation" url="/Admin/WorkingExpectation/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Skill" url="/Admin/Skill/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,WorkingBackground" url="/Admin/WorkingBackground/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,QuotaRecruitment" url="/Admin/QuotaRecruitment/Index?ModuleID=8" />
+
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Qualification" url="/Admin/CandidateQualification/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentSource" url="/Admin/RecruitmentSource/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentFee" url="/Admin/RecruitmentFee/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentTournament" url="/Admin/RecruitmentTournament/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentType" url="/Admin/RecruitmentType/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentPlan" url="/Admin/RecruitmentPlan/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,PlanList" url="/Admin/PlanList/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentDemand" url="/Admin/RecruitmentDemand/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentDemandRecord" url="/Admin/RecruitmentDemandRecord/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentProject" url="/Admin/RecruitmentProject/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RecruitmentProjectList" url="/Admin/RecruitmentProjectList/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,InterviewSchedule" url="/Admin/InterviewCalendar/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Interview" url="/Admin/CandidateTournament/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,TransferCandidate" url="/Admin/TransferCandidate/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,InterviewCriteriaType" url="/Admin/InterviewCriteriaType/Index?ModuleID=8" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,InterviewCriteria" url="/Admin/InterviewCriteria/Index?ModuleID=8" />
+
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,InterviewCalendar" url="/Admin/InterviewCalendarReport/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,InterviewEvaluationReport" url="/Admin/InterviewEvaluationReport/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,CandidateEvaluationReport" url="/Admin/CandidateEvaluationReport/Index" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Timesheet" url="/Admin/Timesheet/Index?ModuleID=9" >
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,LeaveType" url="/Admin/LeaveType/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,LeaveDayType" url="/Admin/LeaveDayType/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Shift" url="/Admin/Shift/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Holidays" url="/Admin/Holidays/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Schedule" url="/Admin/Schedule/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,AssignStaffSchedule" url="/Admin/AssignStaffSchedule/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,StandardAnnualLeave" url="/Admin/StandardAnnualLeave/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,ScheduleChange" url="/Admin/ScheduleChange/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Timekeeping" url="/Admin/Timekeeping/Index?ModuleID=9" />
+
+      <!--Report-->
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OTRecord" url="/Admin/OTRecord/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OTNightRecord" url="/Admin/OTNightRecord/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,WorkingSchedule" url="/Admin/WorkingSchedule/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,TimeKeepingReport" url="/Admin/TimeKeepingReport/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,YearlyOTReport" url="/Admin/YearlyOTReport/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,MonthlyOTReport" url="/Admin/MonthlyOTReport/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,MonthlyTimeKeepingReport" url="/Admin/MonthlyTimeKeepingReport/Index?ModuleID=9" />
+      <!--End Report-->
+
+      <!--Leave request-->
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,LeaveApplication" url="/Admin/LeaveApplication/Index" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,LeaveRecord" url="/Admin/LeaveApplication/List?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Reconciliation" url="/Admin/Reconciliation/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,MTLChild" url="/Admin/MTLChild/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,TimesheetCyclic" url="/Admin/Cyclic/Index?ModuleID=9" />
+      <!--End Leave request-->
+
+      <!--Overtime-->
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OTLimitByStaff" url="/Admin/OTLimitByStaff/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OTRequest" url="/Admin/OTRequest/Index?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,OTRequestRecord" url="/Admin/OTRequest/List?ModuleID=9" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,IndividualOT" url="/Admin/IndividualOT/Index?ModuleID=9" />
+      <!--End Overtime-->
+
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Insurance" url="/Admin/Insurance/Index?ModuleID=10">
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Hospital" url="/Admin/Hospital/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,GeneralInformation" url="/Admin/GeneralInformation/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,ListOfParticipating" url="/Admin/ListSocialInsurance/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RenewHICard" url="/Admin/ListSocialInsurance/Index?ModuleID=10&amp;Mode=RenewHICard" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,LeaveOfInsurance" url="/Admin/LeaveInsurance/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Convalescence" url="/Admin/Convalescence/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,InsNoticeData" url="/Admin/InsNoticeData/Index?ModuleID=10" />
+
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,C66a" url="/Admin/C66a/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,C67a" url="/Admin/C67a/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,C68a" url="/Admin/C68a/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,C69a" url="/Admin/C69a/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,C70a" url="/Admin/C70a/Index?ModuleID=10" />
+
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,A01TS" url="/Admin/A01TS/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,A01aTS" url="/Admin/A01aTS/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,D02TS" url="/Admin/D02TS/Index?ModuleID=10" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,D07TS" url="/Admin/D07TS/Index?ModuleID=10">
+        <mvcSiteMapNode title="$resources:SiteMapLocalizations,AddNew" url="/Admin/D07TS/Index?ModuleID=10&amp;mode=add" />
+        <mvcSiteMapNode title="$resources:SiteMapLocalizations,Update" area="Admin" action="Index" controller="D07TS"/>
+      </mvcSiteMapNode>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Payroll" url="/Admin/Payroll/Index?ModuleID=11" >
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Scale" url="/Admin/Scale/Index?ModuleID=11" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,SalaryGrade" url="/Admin/Grade/Index?ModuleID=11" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,SalaryRank" url="/Admin/Rank/Index?ModuleID=11" />
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Termination" url="/Admin/Termination/Index?ModuleID=12" >
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,TerminationList" url="/Admin/TerminationInfo/Index?ModuleID=12" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,EditTermination" url="/Admin/TerminationInfo/Create?ModuleID=12" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,TerminationType" url="/Admin/LS_tblTerminationType/Index?ModuleID=12" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,TerminationReason" url="/Admin/LS_tblTerminationReason/Index?ModuleID=12" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,BasicConfiguration" url="/Admin/TerminationParameter/Index?ModuleID=12" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,SeveranceSettlement " url="/Admin/LeaveApplication/Index?ModuleID=12" />
+    </mvcSiteMapNode>
+
+    <!--HR-->
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,Personnel" url="/Admin/Personnel/Index?ModuleID=2">
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,CompanyInfomation" url="/Admin/Company/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,MasterDataInfo" url="/Admin/HR_MasterData/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,EmployeeList" url="/Admin/Employee/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Profile" url="/Admin/Profile/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,LaborContracts" url="/Admin/Contract/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,JoinedProjects" url="/Admin/Project/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,Qualification" url="/Admin/Qualification/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,FamilyRelationship" url="/Admin/Relationship/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,RewardDiscipline" url="/Admin/RewardDiscipline/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,WorkingHistory" url="/Admin/WorkingHistory/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,WorkingRecord" url="/Admin/WorkingRecord/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,AddNewEmployee " url="/Admin/Employee/Create?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,EmployeeProfile" action="Edit" controller="Employee" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,EmployeeProfile" url="/Admin/Employee/EditProfile?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,HRReport" url="/Admin/HRReport/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,CAFR" url="/Admin/CAFR/Index?ModuleID=2" />
+      <mvcSiteMapNode title="$resources:SiteMapLocalizations,PersonnelReport" url="/Admin/PersonnelReport/Index?ModuleID=2" />
+    </mvcSiteMapNode>
+    <!--End HR-->
+
+    <!--Service-->
+    <mvcSiteMapNode title="$resources:SiteMapLocalizations,SelfService" url="/Admin/SelfService/Index">
+    </mvcSiteMapNode>
+    <!--End Service-->
+
+
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

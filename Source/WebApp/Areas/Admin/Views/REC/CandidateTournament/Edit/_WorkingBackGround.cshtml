@@ -1,0 +1,63 @@
+﻿@model IEnumerable<REC_tblWorkingBackground>
+
+ <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text_center" style="width: 35px;">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FromMonth)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToMonth)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkFor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Position)
+                    </th>
+                    <th class="table-actions text_center no-sort" style="width:60px">@Eagle.Resource.LanguageResource.Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count() > 0)
+                {
+                    int i = 0;
+                    foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FromMonth)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ToMonth)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.WorkFor)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td class="table-actions text_center no-sort">
+                                <a data-id="@item.WokingbackgroupID"  title="@Eagle.Resource.LanguageResource.View" class="ico viewItem editItemBackgroundWorking" >&nbsp;&nbsp;&nbsp;</a>
+                            </td>
+                        </tr>
+                    }
+                }else
+                {
+                    <tr>
+                        <td colspan="6">
+                            @Eagle.Resource.LanguageResource.ThisInformationHaveNotData
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+

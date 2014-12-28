@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_AdditionSalary;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<form id="frmAdd" class="form-horizontal user-group-management">
+    <div id="divHeader">
+        @Html.Action("_Create","AdditionSalary",null)
+    </div>
+</form>
+<div id="divSearchEmployee"></div>
+    }
+<script type="text/javascript">
+    //$('#changeSidebarPos').trigger('click');
+    $(document).on("click", "#btnCollectionData", function () {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var moduleId = 9;
+        var url = areas + '/AdditionSalary/_GetData?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divContent').html(data);
+            }
+        });
+        
+    });
+    // save and update
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        var moduleId = 11;
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/AdditionSalary/Save';
+            
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        window.location.href = '/Admin/AdditionSalary/IndexList?ModuleID=11';
+                    } else {
+                        $('#frmAdd').html(data);
+                        return false;
+                    }
+                }
+            });
+        } 
+    });
+    function checkDivCurrency(type) {
+
+        if ($("#CASH").prop("checked") == false) {
+            if (!$('.divCurrency').hasClass("hidden")) {
+                $('.divCurrency').addClass("hidden");
+            }
+        }
+        else {
+            if ($('.divCurrency').hasClass("hidden")) {
+                $('.divCurrency').removeClass("hidden");
+            }
+        }
+    }
+    $(document).ready(function () {
+        checkDivCurrency();
+    });
+    $(document).on("change", ".PaymentMethod", function () {
+        var type = $(this).val();
+        checkDivCurrency();
+    });
+</script>
+<!-- popup add staff-->
+<script type="text/javascript">
+    $(document).on("click", "#btnAddStaff", function () {
+        //loading();
+        var StaffList = '';
+
+        $("input[name='chkDelete']").each(function () {
+            if ($(this).val() != 'false') {
+                StaffList += $(this).val() + ';';
+            }
+        });
+
+        var urlGetCreateForm = "_SearchEmployeePartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divSearchEmployee').html(data);
+                $(".popupStaff").modal("show");
+                $("#StaffList").val(StaffList);
+            }
+        });
+    });
+    $(document).on("click", "#btnStaffSearch", function () {
+
+        $("body").addClass("loading");        
+        //Search danh sach nhan vien 
+        var moduleId = 9;
+        var url = areas + '/AdditionSalary/_SearchPopup?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $('#popStaffResult').html(data);
+            }
+        });
+
+    });
+    // nut check all tren header popup
+    $(document).on("change", "#chkSearchResultAll", function () {
+        var check = $(this).prop("checked");
+        $("input[name='chkEmpID']").prop("checked", check);
+
+    });
+    // Add nhan vien vao luoi chinh từ popup
+    $(document).on("click", "#btnStaffSubmit", function () {
+        loading();
+        var itemselected = '';
+        $("input[name='chkEmpID']").each(function () {
+
+            if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                itemselected += $(this).val() + ';';
+            }
+        });
+
+        var _AddStaffToList = "_AddStaffToList?StaffListAdd=" + itemselected;
+        $.ajax({
+            type: "Post",
+            url: _AddStaffToList,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divStaffList').html(data);
+                $(".popupStaff").modal("hide");
+            }
+        });
+
+    });
+
+    // check all delete ngoai form chinh
+    $(document).on("change", "#chkDeleteAll", function () {
+        var check = $(this).prop("checked");
+        $("input[name='chkDelete']").prop("checked", check);
+    });
+    // delete staff trendanh sach chinh
+
+    $(document).on("click", ".btnDeleteStaff", function () {
+        if ($(this).hasClass("btn-custom-Deleterow")) {
+            loading();
+
+            var StaffSelectedList = '';
+            $("input[name='chkDelete']").each(function () {
+                if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                    StaffSelectedList += $(this).val() + ';';
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                //url: "_DeleteCandidateList?CandidateSelectedList=" + StaffSelectedList,
+                url: "_DeleteStaffList?StaffSelectedList=" + StaffSelectedList,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $("#divStaffList").html(data);
+                }
+            });
+        }
+    });
+</script>

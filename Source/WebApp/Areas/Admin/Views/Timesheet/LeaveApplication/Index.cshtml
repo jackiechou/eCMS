@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_LeaveApplication;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<form id="frmAdd" class="form-horizontal user-group-management">
+
+    <div id="divHeader">
+        @*@Html.Action("Employee","Common",null)*@
+    </div>
+    <div id="divContent">
+        @Html.Action("_Create","LeaveApplication",null)
+    </div>
+</form>
+}
+<script>
+    $(document).on("change", "#EmpID", function () {
+        var Year = $("#Year").val();
+        $.ajax({
+            url: areas + "/LeaveApplication/_Create?Year=" + Year,
+            encoding: "UTF-8",
+            dataType: "html",
+            contentType: "text/plain; charset=UTF-8",
+            success: function (data) {
+                $('#divContent').html(data);
+            }
+        })
+    });
+
+    function strToDateChange() {
+        var DateFromValue = $("#FromDate").val();
+        var DateToValue = $("#ToDate").val();
+        if (Date.parse(DateToValue) < Date.parse(DateFromValue)) {
+            AlertFromdateToDate();
+            return false;
+        }
+        if ($("#LSLeaveDayTypeID").val() == "")
+        {
+            AlertChooseLeaveType();
+            return false;
+        }
+        
+        $.ajax({
+            url: areas + "/LeaveApplication/_GetDate?FromDate=" + DateFromValue + "&ToDate=" + DateToValue ,
+            success: function (data) {
+                $('#LeaveTakenView').val(data);
+                $('#LeaveTaken').val(data);
+                $.ajax({
+                    url: areas + "/LeaveApplication/_ListDays?FromDate=" + DateFromValue + "&ToDate=" + DateToValue,
+                    encoding: "UTF-8",
+                    dataType: "html",
+                    contentType: "text/plain; charset=UTF-8",
+                    success: function (data) {
+                        $('#divPopup').html(data);
+                    }
+                })
+            }
+        })
+        return true;
+    }
+    // input datetime vao textbox
+    $(document).on("change", "#ToDate", function () {
+        strToDateChange();
+    });
+    // su kien change khi chọn todate
+    $(document).on("change2", "#ToDate", function () {
+        strToDateChange();
+    });
+
+    $(document).on("keyup", "#Year", function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+
+            var Year = $("#Year").val();
+
+            $.ajax({
+                url: areas + "/LeaveApplication/_Create?Year=" + Year,
+                encoding: "UTF-8",
+                dataType: "html",
+                contentType: "text/plain; charset=UTF-8",
+                success: function (data) {
+                    $('#divContent').html(data);
+                }
+            })
+        }
+    });
+    //strToDateChange();
+    $('#btnDetail').on('click', function (e) {
+       //strToDateChange();
+    });
+    // popup
+    $('.launchConfirm').on('click', function (e) {
+        $('#modal-content')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                
+                if ($(this).data('value')) {
+                    var Days = 0;
+                    $(".text-box").each(function () {
+                        Days += parseFloat($(this).val());
+                        
+                    });
+                    $('#LeaveTaken').val(Days);
+                    $('#LeaveTakenView').val(Days);
+                }
+            });
+    });
+    // save and update
+    $(document).on("click", "#btnAdd", function () {
+
+        if ($('#btnAdd').hasClass("AddModel")) {
+            if ($('#LeaveTakenView').val() == 0 || $('#LeaveTaken').val() == 0)
+            {
+                AlertChooseDate();
+                return false;
+            }
+            //Add new Account
+            var url = areas + '/LeaveApplication/Save';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        window.location.href = areas + '/LeaveApplication/List?ModuleID=9';
+                    } else {
+                        AlterWarning(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        return false;
+                    }
+                }
+            });
+        };
+    });
+    // nếu click vào nút send for approval
+    $(document).on("click", "#btnSendForApproval", function () {
+
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new request and send  for approval
+            var url = areas + '/LeaveApplication/Save_SendForApproval';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        window.location.href = areas + '/LeaveApplication/List?ModuleID=9';
+                    } else {
+                        AlterWarning(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        return false;
+                    }
+                }
+            });
+        };
+    });
+    $(document).on("change", "input[name$='Time']", function () {
+        switch ($(this).val()) {
+            case '1': case '2':
+                $('.set' +$(this).data('id')).val('0.5');
+                break;
+            case '3':
+                $('.set' + $(this).data('id')).val('1');
+                break;
+            case '4':
+                $('.set' + $(this).data('id')).val('0');
+                break;
+            default:
+                return false;
+        }
+    });
+</script>

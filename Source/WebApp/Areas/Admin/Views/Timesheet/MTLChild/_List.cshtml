@@ -1,0 +1,122 @@
+﻿@model List<MTLChildListViewModel>
+<style type="text/css">
+    #dataTable tbody tr td {
+        padding-top: 0px!important;
+        padding-bottom: 0px!important;
+    }
+</style>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Position
+                </th>
+                <th>
+                     @Eagle.Resource.LanguageResource.FromDate
+                </th>
+                <th>
+                     @Eagle.Resource.LanguageResource.ToDate
+                </th>
+                @if(ViewBag.Display == "1")
+                {
+                <th class="text_center no-sort">
+                    @Eagle.Resource.LanguageResource.Actions
+                </th>
+                }
+                <th class="no-sort">
+                    
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.strPositionName
+                    </td>
+                    <td class="center action">
+                        @Html.Datepicker2For(modelItem => item.dFromDate, "dd/MM/yyyy", new { @name= "["+k.ToString()+"].strFromDate", @style ="width:75px;"})
+                    </td>
+                    <td class="center action">
+                        @Html.Datepicker2For(modelItem => item.dToDate, "dd/MM/yyyy", new { @name= "["+k.ToString()+"].strToDate", @style ="width:75px;"})
+                    </td>
+                    @if(ViewBag.Display == "1")
+                    {
+                    <td  class="center">
+                       <a  data-id="@item.MLChildID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                     }
+                    <td  class="center">
+                        <input type="hidden" value="@item.EmpID" name="[@k].EmpID" />
+                        <input type="hidden" value="@item.MLChildID" name="[@k].MLChildID" />
+                        <input type="checkbox"  name="[@k].chkCheck"  value="true"/>
+                       
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="confirm" class="modal hide fade" style="width:300px">
+        <div class="modal-body">
+        Do you want to continue?
+        </div>
+        <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+        </div>
+</div>
+
+<script>
+    InvokeDataTables();
+    InvokeDateTimePicker();
+</script>
+<script type="text/javascript">
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var urlCreate = '/MTLChild/_List';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/MTLChild/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $('#btnSearch').trigger('click');
+                                AlterDeleteSuccess();
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

@@ -1,0 +1,47 @@
+﻿@model int?
+@section HeadScripts{
+<style>
+    .content-header .span10 h2 {
+        font-size:23px;
+    }
+</style>
+}
+@section DevScripts{
+   @Html.DevExpress().GetStyleSheets( 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+    @Html.DevExpress().GetScripts( 
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new Script { ExtensionSuite = ExtensionSuite.GridView }, 
+        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new Script { ExtensionSuite = ExtensionSuite.Editors }, 
+        new Script { ExtensionSuite = ExtensionSuite.Chart },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+	    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new Script { ExtensionSuite = ExtensionSuite.TreeList }
+    )    
+}
+@Html.DevExpress().ReportToolbar(settings =>
+{
+    settings.Name = "ReportViewerToolbar";
+    settings.ReportViewerName = "reportViewer";
+}).GetHtml()
+
+<div id="divReportDetail" style="width:900px; margin:auto auto;">
+    @Html.Action("ReportViewerPartial", new {@MasterID = Model})
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#changeSidebarPos").trigger("click");
+    });
+</script>

@@ -1,0 +1,436 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.NewsCategoryManagement);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@model List<Eagle.Model.Contents.NewsCategoryViewModel>
+
+<div id="MainBody" class="main_box">
+    @*@Html.Partial("../Contents/NewsCategory/_Reset")*@
+    <div id="divEdit">
+        @Html.Action("Create", "NewsCategory", null)
+    </div>
+</div>
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+@Html.Action("jqueryval", "Common", null)
+
+<link href="~/Scripts/plugins/fancytree/skin-win7/ui.fancytree.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/fancytree/jquery.fancytree.js"></script>
+<script src="~/Scripts/plugins/fancytree/jquery.fancytree.dnd.js"></script>
+<script src="~/Scripts/plugins/fancytree/jquery.fancytree.edit.js"></script>
+
+<link href="~/Scripts/plugins/fancytree/3rd-party/extensions/contextmenu/css/jquery.contextMenu.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/fancytree/3rd-party/extensions/contextmenu/js/jquery.contextMenu-1.6.5.js"></script>
+<script src="~/Scripts/plugins/fancytree/3rd-party/extensions/contextmenu/js/jquery.fancytree.contextMenu.js"></script>
+
+<style type="text/css">
+    #draggableSample, #droppableSample {
+        height: 100px;
+        padding: 0.5em;
+        width: 150px;
+        border: 1px solid #AAAAAA;
+    }
+
+    #draggableSample {
+        background-color: silver;
+        color: #222222;
+    }
+
+    #droppableSample {
+        background-color: maroon;
+        color: white;
+    }
+
+        #droppableSample.drophover {
+            border: 1px solid green;
+        }
+</style>
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {                 
+                            case 1:
+                                DataMgr.BindDetails(data);
+                                break;
+                            case 2:
+                                DataMgr.ReloadData(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () { 
+                    DataMgr.RemoveQtip();
+
+                    if ($('input[type=hidden][name=FileId]').val() == null || $('input[type=hidden][name=FileId]').val() == '')
+                        $('#ImagePreviewBox').css('display', 'none');
+                    else
+                        $('#ImagePreviewBox').css('display', 'block');
+
+                    $("#FileUpload").change(function () {
+                        DataMgr.PreviewImage("FileUpload", 80, 80);
+                    });
+
+                    DataMgr.HandleAddEditMode();
+                    DataMgr.GetTreeList();
+                },                        
+                BindEvents: function () {
+                   
+                    $('#Description').keypress(function () {
+                        if (this.value.length >= 150)
+                            return false;
+                    });
+                   
+
+                    //Add and update post action
+                    $(document).on("click", "#btnAdd", function () {
+                        if (!$("#myform").valid()) { // Not Valid                           
+                            return false;
+                        } else {
+                            DataMgr.RemoveQtip();                            
+                            DataMgr.AddData();                            
+                        }
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").valid()) { // Not Valid                           
+                            return false;
+                        } else {
+                            DataMgr.RemoveQtip();                            
+                            DataMgr.UpdateData();
+                            
+                        }
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+                },
+                PreviewImage: function (id, width, height) {
+                    var f = document.getElementById(id).files[0];
+                    var output_container = document.getElementById("ImagePreviewBox");
+                    output_container.innerHTML = "";
+
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(f);
+
+                    oFReader.onload = (function (theFile) {
+                        return function (e) {
+                            var span = document.createElement('span');
+                            span.innerHTML = '<img class="thumb" src="' + e.target.result + '" title="' + escape(theFile.name) + '" width="' + width + '" height="' + height + '"/>';
+                            output_container.insertBefore(span, null);
+                        };
+                    })(f);
+                },
+                RemoveQtip: function () {
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                GetTreeList: function () {
+                    // Attach the fancytree widget to an existing <div id="tree"> element
+                    // and pass the tree options as an argument to the fancytree() function:                   
+                    $("#tree").fancytree({
+                        source: $.ajax({
+                            url: "/Admin/NewsCategory/GetTreeList",
+                            dataType: "json"
+                        }),
+                        activeVisible: true,
+                        autoActivate: true, // Automatically activate a node when it is focused (using keys).
+                        //autoCollapse: false, // Automatically collapse all siblings, when a node is expanded.
+                        selectMode: 1,
+                        generateIds: true, // Generate id attributes like <span id='fancytree-id-KEY'>
+                        idPrefix: "ft", // Used to generate node id´s like <span id='fancytree-id-<key>'>.
+                        icons: true, // Display node icons.
+                        keyboard: true, // Support keyboard navigation.
+                        //click: function (event, data) {
+                        //    // We should not toggle, if target was "checkbox", because this
+                        //    // would result in double-toggle (i.e. no toggle)
+                        //    if ($.ui.fancytree.getEventTargetType(event) === "title") {
+                        //        data.node.toggleSelected();
+                        //    }
+                        //    DataMgr.GetDetails(data.node.key);
+                        //},
+                        //select: function (event, data) {
+                        //    // Display list of selected nodes
+                        //    var s = data.tree.getSelectedNodes().join(", ");
+                        //    alert(s);
+                        //},
+                        //dblclick: function(event, data) {
+                        //    data.node.toggleSelected();
+                        //},
+                        //keydown: function(event, data) {
+                        //    if( event.which === 32 ) {
+                        //        data.node.toggleSelected();
+                        //        return false;
+                        //    }
+                        //},       
+                        extensions: ['contextMenu', "dnd", "edit"],
+                        contextMenu: {
+                            menu: {
+                                'edit': { 'name': '@Html.Raw(Eagle.Resource.LanguageResource.Edit)', 'icon': ''},
+                                'delete': { 'name': '@Html.Raw(Eagle.Resource.LanguageResource.Delete)', 'icon': '' },
+                                'sep1': '------------------------------',
+                                'quit': { 'name': '@Html.Raw(Eagle.Resource.LanguageResource.Quit)', 'icon': '' }
+                            },
+                            actions: function (node, action, options) {
+                                switch (action) {
+                                    case 'edit':
+                                        DataMgr.GetDetails(node.key);
+                                        break;
+                                    case 'delete':
+                                        DataMgr.DeleteData(node.key);
+                                        break;
+                                    case 'quit':
+                                        $(document).bind("contextmenu", function (e) {
+                                            return false;
+                                        });
+                                        break;
+                                    default:
+                                        $(document).bind("contextmenu", function (e) {
+                                            return false;
+                                        });
+                                        break;
+                                }                                    
+                            }
+                        },
+                        dnd: {
+                            autoExpandMS: 400,
+                            focusOnClick: true,
+                            preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+                            preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+                            dragStart: function (node, data) {
+                                /** This function MUST be defined to enable dragging for the tree.
+                                 *  Return false to cancel dragging of node.
+                                 */
+                                return true;
+                            },
+                            dragEnter: function (node, data) {
+                                /** data.otherNode may be null for non-fancytree droppables.
+                                 *  Return false to disallow dropping on node. In this case
+                                 *  dragOver and dragLeave are not called.
+                                 *  Return 'over', 'before, or 'after' to force a hitMode.
+                                 *  Return ['before', 'after'] to restrict available hitModes.
+                                 *  Any other return value will calc the hitMode from the cursor position.
+                                 */
+                                // Prevent dropping a parent below another parent (only sort
+                                // nodes under the same parent)
+                                /*           if(node.parent !== data.otherNode.parent){
+                                            return false;
+                                          }
+                                          // Don't allow dropping *over* a node (would create a child)
+                                          return ["before", "after"];
+                                */
+                                return true;
+                            },
+                            dragDrop: function (node, data) {
+                                /** This function MUST be defined to enable dropping of items on
+                                 *  the tree.
+                                 */
+                                data.otherNode.moveTo(node, data.hitMode);
+                            }
+                        },
+                        //lazyload: function (e, data) {
+                        //    data.result = data;
+                        //}
+                    });
+                },
+                ReloadTreeList: function () {                   
+                    var tree = $("div:ui-fancytree").fancytree("getTree");
+                    tree.reload({ url: "/Admin/NewsCategory/GetTreeList" });
+                },
+                ValidateCode: function () {
+                    var params = {};
+                    params.Code = $('#ContractNo').val();
+                    $.getJSON('@Url.Action("ValidateCode", "Contract")', params,
+                         function (data) {
+                             if (data == false)
+                                 ShowToolTip('ContractNo', '@Html.Raw(Eagle.Resource.LanguageResource.InValid)');
+                             else
+                                 CloseToolTip('ContractNo');
+                         });
+                },
+                HandleAddEditMode: function () {
+                    var mode = DataMgr.config.mode;
+                    if (mode == 1) {
+                        $("#btnAdd").hide();
+                        $("#btnEdit").show();
+                    }
+                    else {
+                        $("#btnAdd").show();
+                        $("#btnEdit").hide();
+                    }
+                },               
+                AddData: function () {                  
+                    var formData = new FormData($("#myform")[0]);
+                    this.config.method = "Create";
+                    $.ajax({
+                        type: "POST",
+                        url: DataMgr.config.baseURL + this.config.method,
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data, statusCode, xhr) {
+                            DataMgr.ReloadData(data);
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                    return false;
+                },                
+                GetDetails: function (id) {
+                    DataMgr.config.mode = 1;
+                    DataMgr.config.key = id;                   
+                    
+                    var data = { "id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+                    DataMgr.InitializeCotrols();
+                },
+                UpdateData: function () {                   
+                    var formData = new FormData($("#myform")[0]);
+                    this.config.method = "Edit";
+
+                    $.ajax({
+                        type: "POST",
+                        url: DataMgr.config.baseURL + this.config.method,
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data, statusCode, xhr) {
+                            DataMgr.ReloadData(data);
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                DeleteData: function (ID) {
+                    DataMgr.config.mode = 2;
+                    var data = { "id": ID };
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify(data);
+                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    } else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    } else {
+                         titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    if (result.message == "timeout")
+                        window.location.reload();
+                    else {
+                        if (result.flag == 'true') {
+                            //Reload page after success
+                            DataMgr.ReloadTreeList();
+                            showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                        } else {
+                            showMessageWithTitle(titleFailure, result.message, "error");
+                            hideMessageWithTitle(20000);
+                        }
+                    }
+                },
+                ResetControls: function () {
+                    var mode = DataMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#myform');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                        DataMgr.InitializeCotrols();
+                    } else {
+                        var key = DataMgr.config.key;
+                        DataMgr.GetDetails(key);
+                    }
+                },
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'NewsCategory';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "MainBody",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

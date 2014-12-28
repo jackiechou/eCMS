@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.Page + " : " + Eagle.Resource.LanguageResource.Edit);
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FormLayout;
+}
+
+@model Eagle.Model.SYS.Pages.PageViewModel
+<form id="myform" name="myform" autocomplete="off" method="post" enctype="multipart/form-data">
+    @section TopActionButtons {       
+        <input type="button" class="btn btnReset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+        <input type="button" class="btn btn-info add btnAdd" value="@Eagle.Resource.LanguageResource.Save" />                  
+    }
+
+    <div class="form-horizontal">
+        <div class="form-lead">@Html.Raw(@Eagle.Resource.LanguageResource.RequiredFill)</div>
+        <div class="add-new-module">
+           
+            <!--start row-->
+            <div class="row">               
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ContentItemId)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "span12", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.ContentItemId)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.SkinId)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.SkinId, null, new { @class = "span12", autocomplete = "off" })
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.PageTitle)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PageTitle, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PageTitle)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PageName)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PageName, null, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PageName)
+                </div>
+            </div>
+            <!--end row-->
+
+        
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PageUrl)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PageUrl, null, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PageUrl)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PagePath)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PagePath, null, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PagePath)
+                </div>
+            </div>
+            <!--end row-->
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+
+                    <div class="col-md-2">
+                        <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                            @Html.CheckBox("DisableLink", false)
+                        </div>
+                        <div style="float:left">
+                            <label style="float:left">@Eagle.Resource.LanguageResource.DisableLink</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                            @Html.CheckBox("DisplayTitle", false)
+                        </div>
+                        <div style="float:left">
+                            <label style="float:left">@Eagle.Resource.LanguageResource.DisplayTitle</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                            @Html.CheckBox("IsExtenalLink", false)
+                        </div>
+                        <div style="float:left">
+                            <label style="float:left">@Eagle.Resource.LanguageResource.IsExtenalLink</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                            @Html.CheckBox("IsDeleted", false)
+                        </div>
+                        <div style="float:left">
+                            <label style="float:left">@Eagle.Resource.LanguageResource.IsDeleted</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                            @Html.CheckBox("IsMenu", false)
+                        </div>
+                        <div style="float:left">
+                            <label style="float:left">@Eagle.Resource.LanguageResource.IsMenu</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                            @Html.CheckBox("IsSecured", false)
+                        </div>
+                        <div style="float:left">
+                            <label style="float:left">@Eagle.Resource.LanguageResource.IsSecured</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <div style="float:left;margin-right:5px;padding: 3px 0 0 0;">
+                        @Html.CheckBox("IsVisible", false)
+                    </div>
+                    <div style="float:left">
+                        <label style="float:left">@Eagle.Resource.LanguageResource.IsVisible</label>
+                    </div>
+                </div>
+            </div>           
+
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Keywords)
+                </div>
+                <div class="col-md-4">  
+                    <input type="text" name='selectKeywords' id='selectKeywords' value="null"
+                           data-init-value='@Html.Raw(Model.Keywords)' class="col-md-12" />              
+                    @Html.HiddenFor(model => model.Keywords)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+            <!--end row-->
+
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.StartDate)
+                </div>
+                <div class="col-md-4">
+                    @Html.DateTimePickerFor(model => model.StartDate)
+                    @Html.ValidationMessageFor(model => model.StartDate)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.EndDate)
+                </div>
+                <div class="col-md-4">
+                    @Html.DateTimePickerFor(model => model.EndDate)
+                    @Html.ValidationMessageFor(model => model.EndDate)
+                </div>
+            </div>
+            <!--end row-->
+
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PageHeadText)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.PageHeadText, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PageHeadText)               
+                 </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PageFooterText)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.PageFooterText, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PageFooterText)                    
+                </div>
+            </div>
+            <!--end row-->
+            @Html.Action("GetRolePermission", "Role")
+        </div>
+    </div>
+
+    @section BottomActionButtons {
+        <input type="button" class="btn btnReset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+        <input type="button" class="btn btn-info add btnAdd" value="@Eagle.Resource.LanguageResource.Save" />
+    }
+</form>
+
+<script type="text/javascript">
+    (function ($) {
+        BindAutoCompleteMultipleChoicesToSelect2('@Url.Action("DropDownListByPage", "ContentItem")',
+           'selectKeywords', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'Keywords', true);
+
+        ShowDateTimePicker();
+     })(jQuery);
+</script>

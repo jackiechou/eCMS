@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.ListOfParticipating;   
+}
+
+@section Button{
+    <input id="btnRenewHICard" class="edit" type="image" value="@Eagle.Resource.LanguageResource.btnRenewHICard" src="@Eagle.Resource.LanguageResource.srcBtnRenewHICard" />    
+}
+
+<div id="MainBody">
+   @Html.Partial("../SI/ListSocialInsurance/_Reset")
+</div>
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    //Add and update post action
+   
+
+    // Reset form
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "Post",
+            url: "_List",
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });
+    $(document).on("click", ".viewItem", function () {
+        $("body").addClass("loading");
+        var EmpID = $(this).data("id");
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Common/EmployeeDisplay/?EmpID=" + EmpID,
+            success: function (data) {
+                $("body").addClass("loading");
+                window.location.href = "/Admin/GeneralInformation/Index?ModuleID=10";
+            }
+        });
+    });
+    
+    $(document).on("click", "#btnRenewHICard", function () {
+        $("body").addClass("loading");
+        window.location.href = "/Admin/ListSocialInsurance/Index?ModuleID=10&Mode=RenewHICard";
+    });
+</script>

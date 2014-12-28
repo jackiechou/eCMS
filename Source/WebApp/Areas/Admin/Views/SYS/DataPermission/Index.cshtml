@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.DataPermission;   
+}
+@section ContentSection
+{
+    @using (Html.BeginForm("SaveDataPermisstion", "DataPermission", FormMethod.Post, new { @id = "frmSaveDataPermisstion" }))
+    {
+        @Html.ValidationSummary(true)
+        <div id="alertMessageBox">
+        </div>
+        <div id="divEdit">
+            @Html.Partial("../SYS/DataPermission/_Reset")
+        </div>
+    }
+}
+
+<script>
+    (function ($) {
+        $(document).on("click", "#btnReset", function () {
+            loading();
+            $.ajax({
+                url: 'Index',
+                type: 'GET',
+                success: function (data) {
+                    $('#divEdit').html(data);
+                }
+            });
+        });
+        $(document).on("change", "input[name='LSCompanyID']", function () {
+           
+            var CompanyID = $(this).val();
+            var GroupID = $('#GroupID').val();
+            var Function = $('#Function').val();
+            if (CompanyID != '') {
+                loading();
+                $.ajax({
+                    url: 'GetSettings?NearLastCompanyID=' + CompanyID + '&GroupID=' + GroupID + '&Function=' + Function,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#divList').html(data);
+                    }
+                });
+            }
+        });
+        $('#GroupID').change(function () {
+            $("input[name='LSCompanyID']").trigger("change");
+        });
+        $('#Function').change(function () {
+            $("input[name='LSCompanyID']").trigger("change");
+        });
+        $('#btnAdd').click(function () {
+            if ($('#CompanyId').val() == '') {
+                AlterUpdateWarning();
+            } else {
+                loading();
+                $.ajax({
+                    url: 'SaveDataPermisstion',
+                    type: 'post',
+                    data: $('form#frmSaveDataPermisstion').serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterWarning(data);
+                        }
+                    }
+                });
+            }
+        });
+    })(jQuery);
+</script>

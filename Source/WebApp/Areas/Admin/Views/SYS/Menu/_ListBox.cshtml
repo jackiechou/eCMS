@@ -1,0 +1,15 @@
+﻿<div class="tile-box">
+    <h6>@Eagle.Resource.LanguageResource.MenuSelection</h6>
+</div>
+<hr/>
+<div class="row">
+    <div class="easyui-panel" style="padding:5px">
+        <ul id="tt" class="easyui-tree" data-options="url:'/Admin/Menu/PopulateListBox',method:'get',animate:true,lines:true,dnd:true"></ul>
+    </div>
+    <div id="mm" class="easyui-menu" style="width:120px;">
+        <div onclick="edit()" data-options="iconCls:'icon-add'">@Html.Raw(Eagle.Resource.LanguageResource.Edit)</div>
+        <div class="menu-sep"></div>
+        <div onclick="remove()" data-options="iconCls:'icon-remove'">@Html.Raw(Eagle.Resource.LanguageResource.Remove)</div>
+    </div>
+
+</div>

@@ -1,0 +1,124 @@
+﻿@using MvcPaging
+@model List<LeaveDayTypeViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table use-dataTable table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Code
+                </th>
+                <th style="min-width:205px">
+                    @Eagle.Resource.LanguageResource.Name
+                </th>
+                <th >
+                    @Eagle.Resource.LanguageResource.ExceptedHolidays
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.DaysPerPeriod
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.DaysPerYear
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ConvalescenceLeave
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.PercentSI
+                </th>
+              @*  <th>
+                    @Eagle.Resource.LanguageResource.Note
+                </th>*@
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.LSLeaveDayTypeCode
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td class="text_center">
+                        @item.strExceptedHolidays
+                    </td>
+                    <td>
+                        @item.DaysPerPeriod
+                    </td>
+                    <td>
+                        @item.DaysPerYear
+                    </td>
+                    <td>
+                        @item.ConvalescenceLeave
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.PercentSI)
+                    </td>
+
+                   @* <td>
+                        @item.Note
+                    </td> *@
+                    <td class="center action">
+                        <a  data-id="@item.LSLeaveDayTypeID"  title="Edit" class="ico editItem" >&nbsp;&nbsp;&nbsp;</a>
+                        <a  data-id="@item.LSLeaveDayTypeID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+
+<div id="confirm" class="modal hide fade" style="width: 300px">
+    <div class="modal-body">
+        Do you want to continue?
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+    </div>
+</div>
+<script>
+    //InvokeDataTables();
+</script>
+<script>
+
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var urlCreate = '/LeaveDayType/Index';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/LeaveDayType/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        $('#main-data').html(data);
+                                        AlterUpdateSuccess();
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

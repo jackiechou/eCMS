@@ -1,0 +1,616 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FamilyRelationship;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+}
+@model List<Eagle.Model.HR.RelationshipViewModel>
+
+@section ContentSection
+{
+    <div id="MainBody" class="main_box">
+        @Html.Partial("../Hr/Relationship/_Reset")
+    </div>
+}
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+@*<style type="text/css">
+        td.mtz-monthpicker-month {
+            text-align: center;
+        }
+
+        select.mtz-monthpicker:focus {
+            outline: none;
+        }
+    </style>*@
+@Html.Action("jqueryval", "Common", null)
+
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    InvokeDataTables();
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                            //case 0:
+                            //    DataMgr.GetList();
+                            case 1:
+                                DataMgr.BindDetails(data);
+                                break;
+                            case 2:
+                                DataMgr.ReloadData(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {                   
+                    ShowDateTimePicker();
+                    $.validator.methods["date"] = function (value, element) { return true; }
+
+                    DataMgr.HandleCheckBoxEvent("IsDependant");
+                    DataMgr.HandleCheckBoxEvent("StillAlive");
+                   
+                    DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblRelationship", new {@Type=1 })',
+                        'selectLSRelationshipID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRelationshipID', 'LSRelationshipName');
+
+                    DataMgr.RemoveQtip();    
+                },
+                RemoveQtip: function () {
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                BindEvents: function () {
+                    $('#Note').keypress(function () {
+                        if (this.value.length >= 150)
+                            return false;
+                    });
+
+                    DataMgr.HandleIsYOBEvent(false);                    
+                    @*$(document).on('change', '#Type', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        var TypeId = $(this).val();
+                        DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblRelationship")?Type=' + TypeId,
+                       'selectLSRelationshipID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRelationshipID', 'LSRelationshipName');
+                        DataMgr.PopulateRewardLevelsToDropDownList(TypeId);
+                    });*@
+
+                    //Add and update post action
+                    $(document).on("click", "#btnAdd", function () {
+                        //DataMgr.ValidateForm();
+
+                        if (!$("#myform").valid()) { // Not Valid
+                            if ($('#LSRelationshipID').val() == '')
+                                ShowToolTip("LSRelationshipID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else
+                                CloseToolTip("LSRelationshipID");
+                            return false;
+                        } else {                           
+                            if ($('#LSRelationshipID').val() == '')
+                                ShowToolTip("LSRelationshipID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else {
+                                CloseToolTip("LSRelationshipID");
+                                DataMgr.RemoveQtip();
+                                //Add new Item
+                                var data = DataMgr.ConvertFormToJSON("myform");
+                                DataMgr.AddData(data);
+                            }
+                        }
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            if ($('#LSRelationshipID').val() == '')
+                                ShowToolTip("LSRelationshipID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                             else
+                                 CloseToolTip("LSRelationshipID");
+                            return false;
+                        } else {
+                            if ($('#LSRelationshipID').val() == '')
+                                ShowToolTip("LSRelationshipID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else {
+                                CloseToolTip("LSRelationshipID");
+                                DataMgr.RemoveQtip();
+                                // Update Item
+                                var data = DataMgr.ConvertFormToJSON("myform");
+                                DataMgr.UpdateData(data);
+                            }
+                        }
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu                       
+                        DataMgr.GetDetails(ID);
+
+                        //Go to top
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {
+                                    DataMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+                },
+                HandleCheckBoxEvent: function (checkFieldId) {
+                    var hiddenSelector = $("input:hidden[name=" + checkFieldId + "]");
+                    var checkBoxSelector = $("input:checkbox[name=" + checkFieldId + "]");                   
+                    var chkStatus = checkBoxSelector.is(":checked");
+
+                    checkBoxSelector.attr("checked", chkStatus);
+                    checkBoxSelector.val(chkStatus);
+                    hiddenSelector.val(chkStatus);
+
+                    checkBoxSelector.click(function () {
+                        var checkBoxStatus = $(this).is(":checked");
+                        checkBoxSelector.attr("checked", checkBoxStatus);
+                        checkBoxSelector.val(checkBoxStatus);
+                        hiddenSelector.val(checkBoxStatus);
+                    });
+                },
+                HandleIsYOBEvent: function (chkStatus) {
+                    DataMgr.ShowHiveDiv(chkStatus, "dpDOB", "dpYOB");
+                    $("input[type=checkbox][name=IsYOB]").click(function () {
+                        DataMgr.ShowHiveDiv($(this).is(':checked'), "dpDOB", "dpYOB")
+                    });
+                },
+                ShowHiveDiv: function (selected_value, divBox1, divBox2) {
+                    if (selected_value == "1") {
+                        $("#" + divBox1).css("display", "none");
+                        $("#" + divBox2).css("display", "block");
+                    } else {
+                        $("#" + divBox1).css("display", "block");
+                        $("#" + divBox2).css("display", "none");
+                    }
+                    return false;
+                },
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                BindAutoCompleteSelect2: function (requestUrl, selectId, placeholder, hiddenID, hiddenName) {
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectId);
+                    selectBox.select2({
+                        placeholder: placeholder,
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        multiple: false,
+                        ajax: {
+                            url: requestUrl,
+                            dataType: 'json',
+                            quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                            data: function (term, page) {
+                                return {
+                                    pageSize: pageSize,
+                                    pageNum: page,
+                                    searchTerm: term
+                                };
+                            },
+                            results: function (data, page) {
+                                //Used to determine whether or not there are more results available,
+                                //and if requests for more data should be sent in the infinite scrolling
+                                var more = (page * pageSize) < data.Total;
+                                return { results: data.Results, more: more };
+                            }
+                        },
+                        formatSelection: function (result) {
+                            if (result.id != undefined && result.id != null)
+                                CloseToolTip(hiddenID);
+                            $("input[name=" + hiddenID + "]").val(result.id);
+                            $("input[name=" + hiddenName + "]").val(result.name);
+
+                            return result.name;
+                        },
+                        formatResult: function (result) {
+                            return result.name;
+                        },
+                        initSelection: function (element, callback) {
+                            var selected_id = $("input[name=" + hiddenID + "]").val();
+                            var selected_name = $("input[name=" + hiddenName + "]").val();
+                            var data = { id: selected_id, name: selected_name };
+                            callback(data);
+                        }
+                    });
+                    selectBox.select2('val', $("input[name=" + hiddenID + "]").val());
+
+                    selectBox.on("change", function (e) {                       
+                        if (e.removed) {
+                            //for (var i = 0; i < this.options.length; i++) {
+                            //    if (this.options[i].value === e.removed.id) {
+                            //        this.options[i].selected = false;
+                            //    }
+                            //};
+                            $("input[name=" + hiddenID + "]").val('');
+                        }
+                        //if (e.added) {
+                        //    for (var i = 0; i < this.options.length; i++) {
+                        //        var vals = $(this).select2("val");
+                        //        for (var j = 0; j < vals.length; j++) {
+                        //            if (this.options[i].value === vals[j]) {
+                        //                this.options[i].selected = true;
+                        //            }
+                        //        }
+
+                        //    };
+                        //}
+                    });
+                },
+                AddData: function (data) {
+                    this.config.method = "Create";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                GetDetails: function (id) {
+                    DataMgr.config.mode = 1;
+                    DataMgr.config.key = id;
+                    var data = { "id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+              
+                    ShowDateTimePicker();
+                    DataMgr.HandleCheckBoxEvent("IsDependant");
+                    DataMgr.HandleCheckBoxEvent("StillAlive");
+
+                    DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblRelationship")', "selectLSRelationshipID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRelationshipID', 'LSRelationshipName');
+                    DataMgr.HandleIsYOBEvent($("input[type=checkbox][name=IsYOB]").is(':checked'));
+                    ShowDateTimePicker();
+
+                    //var chkIsYOBStatus = $("input[name=IsYOB]").is(":checked");
+                    //DataMgr.HandleDecisionCheckBoxEvent(chkIsYOBStatus);
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.processData = false;
+                    this.config.async = true;
+                    this.config.mimeType = "multipart/form-data";
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (id) {
+                    var data = JSON.stringify({ 'id': id });
+                    this.config.method = "Delete";
+                    this.config.type = "POST";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    // var result = $.parseJSON(data);
+                    if (result.flag == 'true') {
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            statusCode: {
+                                401: function () {
+                                    window.location.reload();
+                                },
+                                403: function () {
+                                    window.location.reload();
+                                },
+                                590: function () {
+                                    window.location.reload();
+                                }
+                            },
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout")
+                                    window.location.reload();
+                                else {
+                                    $('#' + DataMgr.config.ContainerClientID).html(data);
+                                    DataMgr.InitializeCotrols();
+                                    showMessageWithTitle(titleSuccess, result.message, "success");
+                                    hideMessageWithTitle(20000);
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error", 20000);
+                    }
+                },
+                ResetControls: function () {
+                    var mode = DataMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#myform');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();                        
+                    } else {
+                        var key = DataMgr.config.key;
+                        DataMgr.GetDetails(key);
+                    }
+                    DataMgr.InitializeCotrols();
+                },
+                ValidateForm: function () {
+                    //Set border color when text class getting focus or remove border color when lost focus from textbox.
+                    $('.text').focus(function () { $('.text').removeClass('focused'); $(this).addClass('focused'); })
+
+                    .blur(function () { $(this).removeClass('focused'); });
+
+                    $.validator.addMethod("acceptName", function (value, element) {
+                        var patt = new RegExp("/^[\d+/g\ \'\.\*\+\-\?\^\=\!\:\$\%\&\#\{\}\(\)\<\>\|\[\]\/\\]+$/");
+                        var isValid = patt.test(value);
+                        return isValid;
+                    }, "Please just input unicode alphabet ");
+
+
+                    $.validator.addMethod("acceptNumber", function (value, element) {
+                        return value.match(new RegExp(".[0-9]+$"));
+                    }, "Please just input number ");
+
+                    $.validator.addMethod("accept", function (value, element, param) {
+                        return value.match(new RegExp("." + param + "$"));
+                    });
+
+                    $.validator.addMethod("regex", function (value, element, regexp) {
+                        var check = false;
+                        return this.optional(element) || regexp.test(value);
+                    }, "Please check your input.");
+
+                    $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+                        return arg != value;
+                    }, "Please select an item");
+
+                    $.validator.addMethod("validateCompareDate", function (value, element) {
+                        var isValid = false;
+                        if ($("#FromDatePIT").val() != null && $("#FromDatePIT").val() != ""
+                            && $("#ToDatePIT").val() != null && $("#ToDatePIT").val() != ""
+                            ) {
+                            var StartDate = $("#FromDatePIT").val();
+                            var _StartDate = new Date(StartDate);
+
+                            var JoinDate = $("#ToDatePIT").val();
+                            var _JoinDate = new Date(JoinDate);
+                            if (_StartDate > _JoinDate)
+                                isValid = true;
+                            else
+                                isValid = false;
+                        }
+                        return isValid;
+                    }, "Please pick ToDatePIT less than FromDatePIT");
+
+                    $.validator.addMethod("validateDateOfBirth", function (value, element) {
+                        var isValid = false;
+                        if (value == "")
+                            isValid = false;
+                        else {
+                            var strDOB = $("#DOB").val();
+                            var objDate = strDOB.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+                            if (objDate != null) {
+                                var arr = objDate.toString().split('/');
+                                dtMonth = arr[0];
+                                dtDay = arr[1];
+                                dtYear = arr[2];
+
+                                if (dtMonth < 1 || dtMonth > 12)
+                                    isValid = false;
+                                else if (dtDay < 1 || dtDay > 31)
+                                    isValid = false;
+                                else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+                                    isValid = false;
+                                else if (dtMonth == 2) {
+                                    var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+                                    if (dtDay > 29 || (dtDay == 29 && !isleap))
+                                        isValid = true;
+                                }
+
+                                //Compare ========================================
+                                //var minDate = new Date(1990,1,1);
+                                var age = 18;
+                                var currdate = new Date();
+                                currdate.setFullYear(currdate.getFullYear() - age);
+
+                                //var DOB = new Date(arr[2], arr[1], arr[0]);
+                                var DOB = new Date();
+                                DOB.setFullYear(dtYear, dtMonth - 1, dtDay);
+
+                                if ((currdate - DOB) > 0)
+                                    isValid = true;
+                                else
+                                    isValid = false;
+
+                                //===============================================
+                            }
+                        }
+                        return isValid;
+                    }, "Invalid");
+
+                    $('#myForm').validate({
+                        rules: {
+                            FirstName: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 100,
+                                acceptName: true
+                            },
+                            LastName: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 100,
+                                acceptName: true
+                            },
+                            Gender: {
+                                required: true
+                            },
+                            Telephone: {
+                                minlength: 5,
+                                required: false,
+                                regex: /^[\d\s\-\(\)\-\+\.]+$/
+                            },
+                            DOBPicker: {
+                                minlength: 10,
+                                required: true,
+                                validateDateOfBirth: true
+                            },
+                            FromDatePITPicker: {
+                                minlength: 10,
+                                required: false,
+                                validateCompareDate: true
+                            },
+                            ToDatePITPicker: {
+                                minlength: 10,
+                                required: false,
+                                validateCompareDate: true
+                            },
+                            @*message: {
+                                FirstName: {
+                                    required: "@Html.Raw(Eagle.Resource.LanguageResource.FirstName)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateRequired)",
+                                    minlength: "@Html.Raw(Eagle.Resource.LanguageResource.FirstName)"+ "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateMinLength2)"
+                                },
+                                LastName: {
+                                    required: "@Html.Raw(Eagle.Resource.LanguageResource.LastName)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateRequired)",
+                                minlength:  "@Html.Raw(Eagle.Resource.LanguageResource.LastName)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateMinLength2)"
+                                },
+                                Gender: "@Html.Raw(Eagle.Resource.LanguageResource.Gender)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateRequired)",
+                                Telephone: {
+                                    minlength: "@Html.Raw(Eagle.Resource.LanguageResource.Telephone)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateRequired)",
+                                    regex: "@Html.Raw(Eagle.Resource.LanguageResource.Telephone)" + "@Eagle.Resource.LanguageResource.ValidateInputValue)"
+                                },
+                                DOBPicker: {
+                                    minlength: "@Html.Raw(Eagle.Resource.LanguageResource.DOB)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateMinLength2)",
+                                    validateDateOfBirth: "@Html.Raw(Eagle.Resource.LanguageResource.DOB)" + "@Eagle.Resource.LanguageResource.ValidateInputValue)"
+                                },
+                                FromDatePITPicker: {
+                                    minlength:  "@Html.Raw(Eagle.Resource.LanguageResource.FromDatePIT)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateMinLength10)"
+                                },
+                                ToDatePITPicker: {
+                                    minlength:  "@Html.Raw(Eagle.Resource.LanguageResource.ToDatePIT)" + "@Html.Raw(@Eagle.Resource.LanguageResource.ValidateMinLength10)",
+                                    validateCompareDate: true
+                                }
+                            }*@
+                        },
+                        highlight: function (element) {
+                            $(element).closest('.control-group').removeClass('success').addClass('error');
+                        },
+                        unhighlight: function (element) {
+                            $(element).closest('.control-group').removeClass('error').addClass('success');
+                        },
+                        success: function (element) {
+                            element
+                            .addClass('valid')
+                            .closest('.control-group').removeClass('error').addClass('success');
+                        },
+                        errorPlacement: function (error, element) {
+                            if (element.attr("name") == "DOBPicker"
+                                || element.attr("name") == "FromDatePITPicker"
+                                || element.attr("name") == "ToDatePITPicker") {
+                                error.appendTo(element.parent().parent("div"));
+                            } else {
+                                error.insertAfter(element);
+                            }
+                        }, submitHandler: function () {
+                            $('#myForm').submit();
+                            return false;
+                        }
+                    });
+                }
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'Relationship';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "MainBody",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

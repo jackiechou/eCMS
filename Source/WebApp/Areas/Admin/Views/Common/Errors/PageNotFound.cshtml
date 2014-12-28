@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.PageNotFound;   
+}
+
+<div class="wrapper center" style="margin-top:50px;">    
+    <div class="container">
+        <div class="row">
+            <h2>@Html.Raw(Eagle.Resource.LanguageResource.Error404)</h2>
+            <div class="photo">
+                <img alt="Error 404" src="~/Content/Admin/images/error404.png" />
+            </div>
+            <div class="contents">                
+                <p>@Html.Raw(Eagle.Resource.LanguageResource.Error404Contents)</p>
+                <input id="btnBack" type="button" value="@Html.Raw(Eagle.Resource.LanguageResource.GoBackToLoginPage)" onclick="location.href = '/Admin/login'" />
+            </div>
+        </div>
+    </div>
+</div>

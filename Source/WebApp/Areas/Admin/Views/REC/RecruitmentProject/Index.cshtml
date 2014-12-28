@@ -1,0 +1,529 @@
+﻿@model RecruitmentProjectViewModel
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.RecruitmentProject;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../REC/RecruitmentProject/_Reset")
+</div>
+<!--Confirm box-->
+<div id="divHasRecruitmentTournamentCreatePartial">
+    @*@Html.Action("_RecruitmentTournamentCreatePartial")*@
+</div>
+<div id="divHasCandidateCreatePartial">
+    @*@Html.Action("_RecruitmentTournamentCreatePartial")*@
+</div>
+<div id="divHasListOfRecruitmentDemandCreatePartial">
+    @*@Html.Action("_ListOfRecruitmentDemandCreatePartial")*@
+</div>
+<div id="divHasFeeCreatePartial">
+    @*@Html.Action("_FeeCreatePartial")*@
+</div>
+@Html.Action("_PopupEmployeePartial", "SYS_Account", null)
+
+
+@Html.Action("ConfirmPopup","Common",null)
+}
+<script>
+    var Controller = 'RecruitmentProject';
+
+    //Url Reset (Get)
+    var urlReset = '@Request.Url.AbsoluteUri';
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/_Delete/';
+
+</script>
+
+<script src="~/Scripts/plugins/common/AddUpdateDelete.js"></script>
+
+<!-- Tournament -->
+<script type="text/javascript">
+
+    $(document).on("click", ".modal-backdrop", function () {
+        $('.qtip').qtip("hide");
+    });
+    function CheckVis(option) {
+        if ($("#chk" + option).prop("checked") == true) {
+            if ($("#div" + option).hasClass("hidden")) {
+                $("#div" + option).removeClass("hidden")
+            }
+        } else {
+            if (!$("#div" + option).hasClass("hidden")) {
+                $("#div" + option).addClass("hidden")
+            }
+        }
+    }
+    $(document).on("change", "#chkRecruitmentTournamentList", function () {
+        CheckVis("RecruitmentTournamentList");
+    });
+    $(document).on("change", "#chkCandidateList", function () {
+        CheckVis("CandidateList");
+    });
+    $(document).on("change", "#chkListOfRecruitmentDemand", function () {
+        CheckVis("ListOfRecruitmentDemand");
+    });
+    $(document).on("change", "#chkRecruitmentCosts", function () {
+        CheckVis("RecruitmentCosts");
+    });
+    $(document).ready(function () {
+        CheckVis("RecruitmentTournamentList");
+        CheckVis("CandidateList");
+        CheckVis("ListOfRecruitmentDemand");
+        CheckVis("RecruitmentCosts");
+    });
+
+    $(document).on("click", "#btnAddRecruitmentTournament", function () {
+        //loading();
+        var urlGetCreateForm = "_RecruitmentTournamentCreatePartial";
+        $.ajax({
+            type: "GET",
+            url: urlGetCreateForm,
+            success: function (data) {
+                $('#divHasRecruitmentTournamentCreatePartial').html(data);
+                $(".popupRecruitmentTournament").modal("show");
+                $("#SEQ").val("");
+            }
+        });
+    });
+
+    $(document).on("click", "#frmRecruitmentTournament .btnPopupEmp", function () {
+        $(".popupRecruitmentTournament").modal("hide");
+        $('.qtip').qtip("hide");
+        controlId = "RecruitmentTournament";
+        $(".popupEmp").modal("show");
+    });
+    
+    function ChooseEmployee(id, code, fullName, companyName, position, controlId) {
+        if (controlId == "RecruitmentTournament") {
+
+            $('.popupRecruitmentTournament #EmpID').val(id);
+            $('.popupRecruitmentTournament #strEmpName').val(fullName);
+
+            ///*remove */
+            var qtip = $('#strEmpName').attr('aria-describedby');
+            $('#' + qtip).remove();
+            $(".qtip,.qtip-content").removeClass("hidden");
+
+            $(".popupEmp").modal("hide");
+            $(".popupRecruitmentTournament").modal("show");
+        }
+    };
+
+    $(document).on("click", "#btnTournamentSubmit", function () {
+        if (!$("#frmRecruitmentTournament").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            //Nỗi chuối gán vào danh sách interviewCiteriaSelected
+            var InterviewCiteriaSelected = '';
+            $("input[Name='interviewCiteriaSelected']").each(function () {
+                if ($(this).prop('checked') == true)
+                {
+                    InterviewCiteriaSelected = InterviewCiteriaSelected + $(this).val() + ';';
+                }
+            })
+
+
+            var params = "?ProjectTournamentID=" + $("#frmRecruitmentTournament input[name='ProjectTournamentID']").val()
+                                    + "&ProjectID=" + $("#frmRecruitmentTournament input[name='ProjectID']").val()
+                                    + "&LSRecruitmentTournamentIDAlowNull=" + $("#frmRecruitmentTournament input[name='LSRecruitmentTournamentIDAlowNull']").val()
+                                    + "&LSRecruitmentTournamentID=" + $("#frmRecruitmentTournament input[name='LSRecruitmentTournamentIDAlowNull']").val()
+                                    + "&TypeAlowNull=" + $("#frmRecruitmentTournament input[name='TypeAlowNull']").val()
+                                    + "&Type=" + $("#frmRecruitmentTournament input[name='TypeAlowNull']").val()
+                                    + "&SEQ=" + $("#frmRecruitmentTournament input[name='SEQ']").val()
+                                    + "&FromDateAlowNull=" + $("#frmRecruitmentTournament input[name='FromDateAlowNull']").val()
+                                    + "&FromDate=" + $("#frmRecruitmentTournament input[name='FromDateAlowNull']").val()
+                                    + "&ToDateAlowNull=" + $("#frmRecruitmentTournament input[name='ToDateAlowNull']").val()
+                                    + "&ToDate=" + $("#frmRecruitmentTournament input[name='ToDateAlowNull']").val()
+                                    + "&EmpID=" + $("#frmRecruitmentTournament input[name='EmpID']").val()
+                                    + "&strEmpName=" + $("#frmRecruitmentTournament input[name='strEmpName']").val()
+                                    + "&TypeName=" + $("#frmRecruitmentTournament input[name='TypeName']").val()
+                                    + "&LSRecruitmentTournamentName=" + $("#frmRecruitmentTournament input[name='LSRecruitmentTournamentName']").val()
+                                    + "&OldSEQ=" + $("#frmRecruitmentTournament input[name='OldSEQ']").val()
+                                    + '&InterviewCiteriaSelected=' + InterviewCiteriaSelected;
+            if ($(this).hasClass("EditModel")) {
+                params = params + "&mode=" + "edit";
+            } else {
+                params = params + "&mode=" + "add";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "_CheckAddRecruitmentTournamentToList" + params,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "POST",
+                            url: "_AddRecruitmentTournamentToList" + params,
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                $("#divRecruitmentTournamentList").html(data);
+                                $(".popupRecruitmentTournament").modal("hide");
+                            }
+                        });
+                    }  else {
+                        $('.popupRecruitmentTournament .modal-body').html(data);
+                    }
+                }
+            });
+        };
+    });
+
+    $(document).on("click", ".delete-tournament", function () {
+        var SEQ = $(this).data("id");
+        $.ajax({
+            type: "POST",
+            url: "_DeleteTournament?SEQ=" + SEQ,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divRecruitmentTournamentList').html(data);
+            }
+        });
+    });
+
+    $(document).on("click", ".edit-tournament", function () {
+        var SEQ = $(this).data("id");
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: "_EditTournament?SEQ=" + SEQ,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == "CouldNotFound") {
+                    alert('@Eagle.Resource.LanguageResource.CouldNotFound');
+                } else {
+                    $('#divHasRecruitmentTournamentCreatePartial').html(data);
+                    $(".popupRecruitmentTournament  #btnTournamentSubmit").removeClass("AddModel").addClass("EditModel");
+                    $(".popupRecruitmentTournament").modal("show");
+                    $("#OldSEQ").val($("#SEQ").val());
+                    $("#btnTournamentSubmit").val('@Eagle.Resource.LanguageResource.btnUpdate');
+                }
+            },
+            error: function (data) {
+                $("body").removeClass("loading");
+            }
+        });
+    });
+    
+</script>
+<!-- Candidate List -->
+<script type="text/javascript">
+    $(document).on("change", "#chkSearchResultAll", function () {
+        var check = $(this).prop("checked");
+        $("input[name='chkCandidate']").prop("checked", check);
+
+    });
+    $(document).on("change", "#chkCandidateDeleteAll", function () {
+        var check = $(this).prop("checked");
+        $("input[name='chkCandidateDelete']").prop("checked", check);
+    });
+    
+    $(document).on("click", "#btnAddCandidate", function () {
+        //loading();
+        var CandidateSelectedList = '';
+
+        $("input[name='chkCandidateDelete']").each(function () {
+            if ($(this).val() != 'false') {
+                CandidateSelectedList += $(this).val() + ';';
+            }
+        });
+
+        var urlGetCreateForm = "_CandidateCreatePartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divHasCandidateCreatePartial').html(data);
+                $(".popupCandidate").modal("show");
+                $("#CandidateSelectedList").val(CandidateSelectedList);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnCandidateSearch", function () {
+        loading();
+        var urlGetCreateForm = "_CandidateCreateSearchResultPartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmRecruitmentTournament").serialize(),
+            success: function (data) {
+                $('#popCandidateResult').html(data);
+            }
+        });
+    });
+    $(document).on("click", "#btnCandidateSubmit", function () {
+        loading();
+        var itemselected = '';
+        $("input[name='chkCandidate']").each(function () {
+
+            if ($(this).prop("checked") == true && $(this).val() != 'false')
+            {
+                itemselected += $(this).val() + ';';
+            }
+        });
+
+        var _AddCandidateToList = "_AddCandidateToList?CandidateListAdd=" + itemselected;
+        $.ajax({
+            type: "Post",
+            url: _AddCandidateToList,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divCandidateList').html(data);
+                $(".popupCandidate").modal("hide");
+            }
+        });
+
+    });
+    $(document).on("click", "#btnTournamentCancel,#btnCandidateCancel", function () {
+        $('.qtip').qtip("hide");
+    });
+    $(document).on("click", ".btnDeleteCandidate", function () {
+        if ($(this).hasClass("btn-custom-Deleterow")) {
+            loading();
+
+            var CandidateSelectedList = '';
+            $("input[name='chkCandidateDelete']").each(function () {
+                if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                    CandidateSelectedList += $(this).val() + ';';
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "_DeleteCandidateList?CandidateSelectedList=" + CandidateSelectedList,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $("#divCandidateList").html(data);
+                }
+            });
+        }
+    });
+    
+</script>
+<!--Project Demand-->
+<script type="text/javascript">
+
+    $(document).on("change", "#chkDemandSearchResultAll", function () {
+        var check = $(this).prop("checked");
+        $("input[name='chkDemand']").prop("checked", check);
+
+    });
+    $(document).on("change", "#chkDemandDeleteAll", function () {
+        var check = $(this).prop("checked");
+        $("input[name='chkDemandDelete']").prop("checked", check);
+    });
+
+    $(document).on("click", "#btnAddRecruitmentDemand", function () {
+        var DemandSelectedList = '';
+
+        $("input[name='chkDemandDelete']").each(function () {
+            if ($(this).val() != 'false') {
+                DemandSelectedList += $(this).val() + ';';
+            }
+        });
+
+        var urlGetCreateForm = "_DemandCreatePartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divHasListOfRecruitmentDemandCreatePartial').html(data);
+                $(".popupDemand").modal("show");
+                $("#DemandSelectedList").val(DemandSelectedList);
+            }
+        });
+    });
+    
+    $(document).on("click", "#btnDemandSearch", function () {
+        loading();
+        var urlGetCreateForm = "_DemandCreateSearchResultPartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmRecruitmentDemand").serialize(),
+            success: function (data) {
+                $('#popDemandResult').html(data);
+            }
+        });
+    });
+    $(document).on("click", "#btnDemandSubmit", function () {
+        loading();
+        var itemselected = '';
+        $("input[name='chkDemand']").each(function () {
+
+            if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                itemselected += $(this).val() + ';';
+            }
+        });
+
+        var _AddDemandToList = "_AddDemandToList?DemandListAdd=" + itemselected;
+        $.ajax({
+            type: "Post",
+            url: _AddDemandToList,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divListOfRecruitmentDemand').html(data);
+                $(".popupDemand").modal("hide");
+            }
+        });
+    });
+
+    $(document).on("click", ".btnDeleteRecruitmentDemand", function () {
+        if ($(this).hasClass("btn-custom-Deleterow")) {
+            loading();
+
+            var DemandSelectedList = '';
+            $("input[name='chkDemandDelete']").each(function () {
+                if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                    DemandSelectedList += $(this).val() + ';';
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "_DeleteDemandList?DemandSelectedList=" + DemandSelectedList,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $("#divListOfRecruitmentDemand").html(data);
+                }
+            });
+        }
+    });
+</script>
+<!--Project Fee-->
+<script type="text/javascript">
+    $(document).on("click", "#btnAddFee", function () {
+        //loading();
+        //var CandidateSelectedList = '';
+
+        //$("input[name='chkCandidateDelete']").each(function () {
+        //    if ($(this).val() != 'false') {
+        //        CandidateSelectedList += $(this).val() + ';';
+        //    }
+        //});
+
+        var urlGetCreateForm = "_FeeCreatePartial";
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divHasFeeCreatePartial').html(data);
+                $(".popupFee").modal("show");
+                //$("#CandidateSelectedList").val(CandidateSelectedList);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnFeeSubmit", function () {
+        if (!$("#frmFee").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            loading();
+            var params = "?ProjectID=" + $("#frmFee #ProjectID").val()
+                        + "&LSRecruitmentFeeIDAlowNull=" + $("#frmFee #LSRecruitmentFeeIDAlowNull").val()
+                        + "&LSRecruitmentFeeName=" + $("#frmFee #LSRecruitmentFeeName").val()
+                        + "&AmountAlowNull=" + $("#frmFee #AmountAlowNull").val()
+                        + "&CurrencyIDAlowNull=" + $("#frmFee #CurrencyIDAlowNull").val()
+                        + "&CurrencyName=" + $("#frmFee #CurrencyName").val()
+                        + "&OldLSRecruitmentFeeID=" + $("#frmFee input[name='OldLSRecruitmentFeeID']").val();
+            
+
+
+            if ($(this).hasClass("EditModel")) {
+                params = params + "&mode=" + "edit";
+                        
+            } else {
+                params = params + "&mode=" + "add";
+            }
+
+            var checkParams = params
+                        + "&LSRecruitmentFeeID=0" 
+                        + "&Amount=0" 
+                        + "&CurrencyID=0"
+            var addParams = params
+                        + "&LSRecruitmentFeeID=" + $("#LSRecruitmentFeeIDAlowNull").val()
+                        + "&Amount=" + $("#AmountAlowNull").val()
+                        + "&CurrencyID=" + $("#CurrencyIDAlowNull").val();
+
+           
+
+            $.ajax({
+                type: "Post",
+                url: "_CheckFeeToList" + checkParams,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        //thêm
+                        $.ajax({
+                            type: "POST",
+                            url: "_AddFeeToList" + addParams,
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                $("#divRecruitmentCosts").html(data);
+                                $(".popupFee").modal("hide");
+                            }
+                        });
+                    }
+                    else {
+                        //Báo lỗi
+                        $(".popupFee .modal-body").html(data);
+                    }
+                }
+            });
+        }
+    });
+    $(document).on("click", ".edit-fee", function () {
+        var LSRecruitmentFeeID = $(this).data("id");
+        loading()
+        $.ajax({
+            type: "POST",
+            url: "_EditFee?LSRecruitmentFeeID=" + LSRecruitmentFeeID,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == "CouldNotFound") {
+                    alert('@Eagle.Resource.LanguageResource.CouldNotFound');
+                } else {
+                    $('#divHasFeeCreatePartial').html(data);
+                    $(".popupFee  #btnFeeSubmit").removeClass("AddModel").addClass("EditModel");
+                    $(".popupFee").modal("show");
+                    $(".popupFee #OldLSRecruitmentFeeID").val($(".popupFee #LSRecruitmentFeeIDAlowNull").val());
+                    $(".popupFee #btnFeeSubmit").val('@Eagle.Resource.LanguageResource.btnUpdate');
+                }
+            },
+             error: function (data) {
+                 $("body").removeClass("loading");
+             }
+         });
+    });
+
+    $(document).on("click", ".delete-fee", function () {
+        var LSRecruitmentFeeID = $(this).data("id");
+        loading();
+        $.ajax({
+            type: "POST",
+            url: "_DeleteFee?LSRecruitmentFeeID=" + LSRecruitmentFeeID,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divRecruitmentCosts').html(data);
+            }
+        });
+    });
+</script>

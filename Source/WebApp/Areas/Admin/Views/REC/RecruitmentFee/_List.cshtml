@@ -1,0 +1,57 @@
+﻿@model IEnumerable<LS_tblRecruitmentFee>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSRecruitmentFeeCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rank)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.Used)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSRecruitmentFeeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td class="text-center">                        
+                        @Html.CheckBox("zz", item.Used == true, new { @disabled = "disabled" })
+                    </td>
+                    <td class="table-actions text_center no-sort">
+                        <a data-id="@item.LSRecruitmentFeeID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.LSRecruitmentFeeID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    InvokeDataTables();
+</script>

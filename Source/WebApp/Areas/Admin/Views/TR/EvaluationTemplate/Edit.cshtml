@@ -1,0 +1,84 @@
+﻿@model int
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingEvaluationTemplate;   
+}
+<div id="MainBody">
+    @Html.Action("_Edit",new {@id = @Model})
+</div>
+
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+<!--Confirm box-->
+
+
+<script>
+    var Controller = 'EvaluationTemplate';
+
+    //Url Reset (Get)
+    var urlResetRequest = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Update';    
+
+    //Url redirect (Post)
+    var urlRedirect = areas + '/' + 'EvaluationTemplateList' + '/Index';
+     
+</script>
+
+<script>
+    $(document).on("change", "#chkAll", function () {
+        alert('hung');
+        if ($(this).attr('checked')) {
+            $("input[name='Item_Checked']").prop("checked", true)
+        } else {
+            $("input[name='Item_Checked']").prop("checked", false)
+        }
+
+    });
+    // AddNew a EvaluationTemplate
+    $(document).on("click", "#btnAdd", function () {
+        
+        AddNew();
+    });
+
+    // Adding EvaluationTemplate with mode
+    function AddNew() {
+
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlAddNew,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    window.location.href = urlRedirect;
+                } else if (data == 'timeout') {
+                    window.location.href = '/';
+                } else {
+                    $('#divEdit').html(data);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            }
+        });
+    }
+
+    // Reset a EvaluationTemplate
+    $(document).on("click", "#btnReset", function () {
+
+        Reset();
+    });
+    function Reset() {
+
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlReset,
+            success: function (data) {
+                $('#divEdit').html(data);
+                $('html, body').animate({ scrollTop: 80 }, 'slow');
+            }
+        });
+    }
+</script>

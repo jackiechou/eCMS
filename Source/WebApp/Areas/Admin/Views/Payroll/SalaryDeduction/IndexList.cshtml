@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_DeductionSalary ;   
+}
+
+<form id="frmSearch" class="form-horizontal user-group-management">
+<div id="alertMessageBox">
+</div>
+    <div id="divHeader">
+        @Html.Action("_HeaderSearchList","SalaryDeduction",null)
+    </div>
+    <hr />
+    <!--/row-->
+    <div class="row">
+        <div class="footbar">
+            <input type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.btnSearch" class="btn" />
+        </div>
+    </div>
+    <!--End.row-->
+    <div id="divListAdditionSalary" >
+        @Html.Action("_ListDeductionSalary","SalaryDeduction",null)
+    </div>
+</form>
+<script type="text/javascript">
+    $('#changeSidebarPos').trigger('click');
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var moduleId = 11;
+        var url = areas + '/SalaryDeduction/_SearchList?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $('#divListAdditionSalary').html(data);
+            }
+        });
+        
+    });
+    $(document).on("click", ".editItem", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var urlGetCreateForm = "_PopupEditDeductionSalary?DeductionSalaryID=" + lsID;
+        $.ajax({
+            type: "Post",
+            url: urlGetCreateForm,
+            success: function (data) {
+                $('#divPopupEditAdditionSalary').html(data);
+                $(".popupEditDeductionSalary").modal("show");
+            }
+        });
+    });
+
+    $(document).on("click", "#btnAdd", function () {
+
+        var url = areas + '/SalaryDeduction/Update';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmEditPopup").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        reloadForm();
+                        $(".popupEditDeductionSalary").modal("hide");
+                    } else {
+                        $('.popupEditDeductionSalary .modal-body').html(data);
+                        return false;
+                    }
+                }
+            });
+    });
+
+    function reloadForm() {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var moduleId = 11;
+        var url = areas + '/SalaryDeduction/_SearchList?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $('#divListAdditionSalary').html(data);
+            }
+        });
+    }
+</script>

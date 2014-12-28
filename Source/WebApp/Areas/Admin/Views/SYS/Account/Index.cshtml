@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_AccountManagement;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+    <div id="MainBody">
+       @Html.Partial("../SYS/Account/_Reset")
+     @*   @Html.Action("_Reset", "SYS_Account", null)*@
+    </div>
+
+    <!--Confirm box-->
+    @Html.Action("ConfirmPopup","Common",null)
+}
+<script>
+    var Controller = 'SYS_Account';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/_Delete/';
+
+    resetTextBoxForChrome();
+    function resetTextBoxForChrome() {
+        var contadorInterval = 0;
+        if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
+            var _interval = window.setInterval(function () {
+                var autofills = $('input:-webkit-autofill');
+                if (autofills.length > 0) {
+                    window.clearInterval(_interval); // stop polling
+                    autofills.each(function () {
+                        var clone = $(this).clone(true, true);
+                        $(this).after(clone).remove();
+                        setTimeout(function () {
+                            $("#UserName").val('');
+                            $("#Password").val('');
+                        }, 10);
+                    });
+                }
+                contadorInterval++;
+                if (contadorInterval > 50) window.clearInterval(_interval); // stop polling
+            }, 20);
+        } else {
+            setTimeout(function () {
+                $("#UserName").val('');
+                $("#Password").val('');
+            }, 100);
+        }
+    }
+
+</script>
+<script src="~/Scripts/plugins/common/AddUpdateDelete.js"></script>
+
+
+
+
+<script type="text/javascript">
+    /*button gọi show popup*/
+    $(document).on("click", '.btnPopupEmp', function () {
+        //nếu mà add thì mới show
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+            controlId = "strEmpName";
+            $('.popupEmp').modal('show');
+
+            var EmpNameInput = $('#strEmpName').val();
+
+            $('.popup-empl-search #SearchEmpCode').val();
+            $('.popup-empl-search #SearchFullName').val(EmpNameInput);
+            // Nếu có nhập thì search, còn không nhập thì xóa bỏ lưới search
+            if (EmpNameInput != '') {
+                $('.popup-empl-button #btnSearch').trigger("click");
+            } else {
+                $('.popup-empl-results-grid').html('');
+            }
+            //Ẩn Qtip
+            $(".qtip,.qtip-content").addClass("hidden");
+        }
+        return false;
+
+    })
+    /*popup sẽ call hàm này khi chọn kết quả*/
+    /*
+        id: EmplId  int
+        code: EmplCode string        
+    */
+    function ChooseEmployee(id, code, fullName, companyName, position, controlId) {
+        if (controlId == "strEmpName") {
+            $('#strEmpName').val(fullName);
+            $('#strEmpID').val(id);
+
+            $('.popupEmp').modal('hide');
+            //chỉ gọi hàm này cho chức năng "Account Management"
+            resetTextBoxForChrome();
+            /*remove */
+            var qtip = $('#strEmpName').attr('aria-describedby');
+            $('#' + qtip).remove();
+            $(".qtip,.qtip-content").removeClass("hidden");
+        }
+    }
+
+</script>

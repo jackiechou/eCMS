@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ProjectTournamentViewModel>
+<div class="row" style="text-align: right; margin-top: -5px;">
+    <input id="btnAddRecruitmentTournament" title="@Eagle.Resource.LanguageResource.AddNew" type="button" class="btn-custom-addrow" style="margin-right: 18px;">
+</div>
+<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+        <tr>
+            <th>@Eagle.Resource.LanguageResource.No</th>
+            <th>@Html.DisplayNameFor(model => model.LSRecruitmentTournamentID)</th>
+            <th>@Html.DisplayNameFor(model => model.EmpID)</th>
+            <th>@Html.DisplayNameFor(model => model.FromDate)</th>
+            <th>@Html.DisplayNameFor(model => model.ToDate)</th>
+            <th class="text-center">@Eagle.Resource.LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{ int k = -1;}
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                k++;
+                <tr>
+
+                    <td> @Html.DisplayFor(model => item.SEQ)
+                        <input type="hidden" name="ProjectTournamentList[@k].ProjectTournamentID" value="@item.ProjectTournamentID"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].ProjectID" value="@item.ProjectID"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].LSRecruitmentTournamentID" value="@item.LSRecruitmentTournamentID"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].SEQ" value="@item.SEQ"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].FromDate" value="@item.FromDate"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].ToDate" value="@item.ToDate"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].EmpID" value="@item.EmpID"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].LSRecruitmentTournamentName" value="@item.LSRecruitmentTournamentName"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].strEmpName" value="@item.strEmpName"  />
+
+                        <input type="hidden" name="ProjectTournamentList[@k].InterviewCiteriaSelected" value="@item.InterviewCiteriaSelected"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].LSRecruitmentTournamentIDAlowNull" value="@item.LSRecruitmentTournamentIDAlowNull"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].FromDateAlowNull" value="@item.FromDateAlowNull"  />
+                        <input type="hidden" name="ProjectTournamentList[@k].ToDateAlowNull" value="@item.ToDateAlowNull"  />
+                    </td>
+                    <td>@Html.DisplayFor(model => item.LSRecruitmentTournamentName)</td>
+                    <td>@Html.DisplayFor(model => item.strEmpName)</td>
+                    <td>@Html.DisplayFor(model => item.FromDate)</td>
+                    <td>@Html.DisplayFor(model => item.ToDate)</td>
+                    <td class="text-center">
+                        <a data-id="@item.SEQ" title="@Eagle.Resource.LanguageResource.Edit" class="ico ico-edit edit-tournament">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.SEQ" title="@Eagle.Resource.LanguageResource.Delete" class="ico ico-delete delete-tournament">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        @Eagle.Resource.LanguageResource.PleaseClickAddNewButton
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>

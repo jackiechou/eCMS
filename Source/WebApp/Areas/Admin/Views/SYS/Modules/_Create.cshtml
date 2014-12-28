@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.CreateForm);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.FormLayout;
+}
+@model Eagle.Model.SYS.Modules.ModuleViewModel
+@section TopActionButtons {
+    <input type="button" class="btn btnReset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+    <input type="button" class="btn btn-info add btnAdd" value="@Eagle.Resource.LanguageResource.Save" />
+}
+
+<div id="MainBody">
+    @using (Html.BeginForm("Insert", "Module", FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform", autocomplete = "off" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-lead">@Html.Raw(@Eagle.Resource.LanguageResource.RequiredFill)</div>
+            <div class="row">
+                <div id="collapsedContent">
+                    <div class="row">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li id="tab-1" class="active"><a href="#pane-1" data-url='@Url.Action("AddNewModule", "Module")' data-toggle="tab">@Eagle.Resource.LanguageResource.AddNewModuleToPage</a></li>
+                            <li id="tab-2"><a href="#pane-2" data-url='@Url.Action("AddExistingModule", "Module")' data-toggle="tab">@Eagle.Resource.LanguageResource.AddExistingModuleToPage</a></li>
+                        </ul>
+
+                        <div id="myTabContent" class="tab-content responsive">
+                            <div class="tab-pane  fade in active" id="pane-1"></div>
+                            <div class="tab-pane fade" id="pane-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section BottomActionButtons {
+    <input type="button" class="btn btnReset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+    <input type="button" class="btn btn-info add btnAdd" value="@Eagle.Resource.LanguageResource.Save" />
+}

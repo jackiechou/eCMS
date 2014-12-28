@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.PermissionError;
+    Layout = "~/Areas/Admin/Views/Shared/_ErrorLayout.cshtml";
+}
+
+<div class="wrapper center" style="margin-top:50px;">    
+    <div class="container">
+        <div class="row">
+            <h2>@Html.Raw(Eagle.Resource.LanguageResource.PermissionDenied)</h2>
+            <div class="photo">
+                <img alt="Error403" src="~/Content/Admin/images/user_security.png" />
+            </div>
+            <div class="contents">                
+                <p>@Html.Raw(Eagle.Resource.LanguageResource.Error403Contents)</p>
+            </div>
+        </div>
+    </div>
+</div>

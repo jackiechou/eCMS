@@ -1,0 +1,77 @@
+﻿@model int
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingEvaluation;   
+}
+<div id="MainBody">
+    @Html.Action("_Edit", "TrainingEvaluation", new {@TrainingEvaluationID = @Model})
+</div>
+
+<script>
+    var Controller = 'TrainingEvaluation';
+
+    //Url Reset (Get)
+    var urlResetRequest = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Update';    
+
+    //Url redirect (Post)
+    var urlRedirect = areas + '/' + 'TrainingEvaluationForEmployee' + '/Index';
+     
+</script>
+
+<script>
+    $(document).on("click", "#btnListOfEvaluation", function () {
+        window.location.href = urlRedirect;
+    });
+    // AddNew a EvaluationTemplate
+    $(document).on("click", "#btnAdd", function () {
+
+        AddNew('Save');
+    });
+    $(document).on("click", "#btnComplete", function () {
+
+        AddNew('Complete');
+    });
+
+    // Adding EvaluationTemplate with mode
+    function AddNew(info) {
+
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlAddNew + '?mode=' + info,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    window.location.href = urlRedirect;
+                } else if (data == 'timeout') {
+                    window.location.href = '/';
+                } else {
+                    $('#divEdit').html(data);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            }
+        });
+    }
+
+    // Reset a EvaluationTemplate
+    $(document).on("click", "#btnReset", function () {
+
+        Reset();
+    });
+    function Reset() {
+
+        $("body").addClass("loading");
+        //Add new Item
+        $.ajax({
+            type: "POST",
+            url: urlReset,
+            success: function (data) {
+                $('#divEdit').html(data);
+                $('html, body').animate({ scrollTop: 80 }, 'slow');
+            }
+        });
+    }
+</script>

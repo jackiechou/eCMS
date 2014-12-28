@@ -1,0 +1,156 @@
+﻿@model ProjectTournamentViewModel
+
+ <!--Begin button -->
+<div>
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong>
+            <div class="padding-left">
+                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+            </div>
+        </div>
+    }
+</div>
+<form id="frmRecruitmentTournament">
+    @Html.HiddenFor(model => model.ProjectTournamentID)
+    @Html.HiddenFor(model => model.ProjectID)
+    @Html.HiddenFor(model => model.EmpID)
+    @Html.HiddenFor(model => model.strEmpName)
+    @Html.Hidden("OldSEQ")
+    <div class="row">
+                
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.EmpID)
+        </div>
+        <div class="col-md-4"> 
+            <div class="input-append" id="InputstrEmpName" style="margin-bottom:-6px;">
+                <div class="input-append">
+                    @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span10" , @disabled = "disabled"})
+                    <button class="btn btnPopupEmp" type="button">...</button>
+                </div>                                            
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.SEQ)
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.SEQ, new { @class = "span8" })
+            @Html.ValidationMessageFor(model => model.SEQ)
+        </div>
+        <div class="col-md-3" id="divLSRecruitmentTournamentID">
+            @Html.RequiredLabelFor(model => model.LSRecruitmentTournamentID)
+        </div>
+        <div class="col-md-3">
+            @Html.TextBox("SelectLSRecruitmentTournamentIDAlowNull", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.LSRecruitmentTournamentName)
+            @Html.HiddenFor(model => model.LSRecruitmentTournamentIDAlowNull)
+        </div>
+    </div>
+            
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.FromDateAlowNull)
+        </div>
+        <div class="col-md-4">
+            @Html.DatepickerFor(model => model.FromDateAlowNull)
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.ToDateAlowNull)
+        </div>
+        <div class="col-md-4">
+            @Html.DatepickerFor(model => model.ToDateAlowNull)
+        </div>
+    </div>
+    <!--End row-->    
+    
+    <div class="row">
+        <div class="col-md-2">
+            <label>
+                    @Eagle.Resource.LanguageResource.InterviewCriteria
+            </label>
+        </div>
+        <div class="col-md-10">
+            @if (ViewBag.InterviewCiteriaTypes != null && ViewBag.InterviewCiteriaTypes.Count > 0)
+            {
+                foreach (var item in ViewBag.InterviewCiteriaTypes as List<REC_tblInterviewCriteriaType>)
+                {
+                    var chkTypeChecked = false;
+                    if (((List<SelectedViewModel>)ViewBag.InterviewCiterias).Count(p => p.Type == item.InterviewCriteriaTypeID && p.isSelected == true) > 0)
+                    {
+                        chkTypeChecked = true;
+                    }
+                    <div class="row">                                
+                        <div style="text-align: left;float: left;">
+                            <label class="reset-label">
+                                    @Html.CheckBox("Decision", chkTypeChecked, new { @class="chkType", @value = item.InterviewCriteriaTypeID}) @item.Name
+                            </label>
+                        </div>                                
+                    </div>
+                    <div class="divType-@item.InterviewCriteriaTypeID  reset-firt-div" style="border-top: 1px solid #ccc;">
+                    @foreach (var ic in ViewBag.InterviewCiterias as List<SelectedViewModel>)
+                    {
+                        if (ic.Type == item.InterviewCriteriaTypeID)
+                        {
+                            <div class="col-md-5">
+                                <label class="reset-label">
+                                    @{
+                                        string radChecked = "";
+                                        if (ic.isSelected)
+                                        {
+                                            radChecked = "checked=\"checked\"";
+                                        }
+                                    }
+                                    <input name="interviewCiteriaSelected" type="checkbox" value="@ic.ID" @radChecked>
+                                    @ic.Name
+                                </label>
+                            </div>  
+                        }
+                    }
+                    </div>
+                    <div style="clear:both"></div>
+                }
+            }
+      </div>
+    </div>
+    <!--End row-->  
+</form>
+@Html.Action("jqueryval", "Common", null)
+<script>
+    InvokeDateTimePicker();
+
+    PopulateDropDownListAutoComplete("SelectLSRecruitmentTournamentIDAlowNull", "LSRecruitmentTournamentIDAlowNull", "LSRecruitmentTournamentName",
+        '@Html.Raw(Eagle.Resource.LanguageResource.PleaseChooseRecruitmentTournament)', areas + '/RecruitmentTournament/DropdownList');
+    
+
+    $(".chkType").each(function () {
+        if ($(this).prop("checked") == false) {
+            var div = $('.divType-' + $(this).val());
+            div.addClass("hidden");
+        }
+    })
+
+    $(document).on("change", ".chkType", function () {
+        $(".chkType").each(function () {
+            var div = $('.divType-' + $(this).val());
+
+            if ($(this).prop("checked") == false) {
+                if (!div.hasClass("hidden")) {
+                    div.addClass("hidden");
+                    //un check
+                    $(".divType-" + $(this).val() + " input[type='checkbox']").prop("checked", false);
+                }
+            } else {
+                if (div.hasClass("hidden")) {
+                    div.removeClass("hidden");
+                }
+            }
+        })
+    })
+</script>
+<!--End button -->

@@ -1,0 +1,242 @@
+﻿@model RecruitmentProjectViewModel
+
+<form id="frmAdd" class="form-horizontal">
+    @Html.HiddenFor(model => model.ProjectID)
+    @Html.HiddenFor(model => model.InitialProjectCode)
+    
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="box">
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.ProjectCode)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ProjectCode, new { @class = "span12" })
+                                </div>
+                            </div>
+                            <!--end row-->
+                             <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.ApplyDateFromAlowNull)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DatepickerFor(model => model.ApplyDateFromAlowNull)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.ApplyDateToAlowNull)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DatepickerFor(model => model.ApplyDateToAlowNull)
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.RecruitFromAlowNull)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DatepickerFor(model => model.RecruitFromAlowNull)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.RecruitToAlowNull)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DatepickerFor(model => model.RecruitToAlowNull)
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.PlanCost)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.PlanCost,"{0:##0}")
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.ActualCost)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ActualCost,"{0:##0}")
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.LSCurrencyID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSCurrencyID", null, new { @class = "span12" })
+                                    @Html.HiddenFor(model => model.LSCurrencyID)
+                                    @Html.HiddenFor(model => model.LSCurrencyName)
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.LSLocationID)
+                                </div>
+                                <div class="col-md-4">
+                                    
+                                    @Html.TextBox("SelectLSLocationID", null, new { @class = "span12" })
+                                    @Html.HiddenFor(model => model.LSLocationID)
+                                    @Html.HiddenFor(model => model.LSLocationName)
+                                </div>
+                            </div>
+                            <!--end row-->
+                             <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.RecruitmentSource</label>
+                                </div>
+                                <div class="col-md-10">
+                                   
+                                    <style>
+                                        #reset-firt-div div {
+                                            margin-left: 2.564102564102564%;
+                                        }
+                                        #reset-firt-div div input{
+                                            margin-top: -1px;
+                                        }
+                                    </style>
+                                    <div class="row" id="reset-firt-div">
+                                        @if (ViewBag.RecruitmentSources != null)
+                                        {
+                                            foreach (var source in ViewBag.RecruitmentSources as List<RecruitmentSourceSelectedViewModel>)
+                                            {
+                                                <div class="col-md-5">
+                                                    <label class="reset-label">
+                                                        @{
+                                                            string radChecked = "";
+                                                            if (source.isSelected)
+                                                            {
+                                                                radChecked = "checked=\"checked\"";
+                                                            }
+                                                        }
+                                                        <input id="sourceSelected" name="sourceSelected" type="checkbox" value="@source.LSRecruitmentSourceID" @radChecked>
+                                                        @source.LSRecruitmentSourceName
+                                                    </label>
+                                                </div>  
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end row-->
+                             <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Content)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Content, new { @class = "span12" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Description)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "span12" })
+                                </div>
+                            </div>
+                            <!--/row-->
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="reset-label">
+                                        @Html.CheckBox("chkRecruitmentTournamentList") @Eagle.Resource.LanguageResource.RecruitmentTournamentList
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="divRecruitmentTournamentList" class="row">
+                                @Html.Action("_RecruitmentTournamentListPartial", new {lst = ViewBag.ProjectTournaments})
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="reset-label">
+                                        @Html.CheckBox("chkCandidateList") @Eagle.Resource.LanguageResource.CandidateList
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="divCandidateList" class="row">
+                                @Html.Action("_CandidateListPartial", new { lst = ViewBag.Candidates })
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="reset-label">
+                                        @Html.CheckBox("chkListOfRecruitmentDemand") @Eagle.Resource.LanguageResource.RecruitmentRequirementsRelatedList
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div id="divListOfRecruitmentDemand" class="row">
+                                @Html.Action("_ListOfRecruitmentDemandPartial", new { lst = ViewBag.RecruitmentDemands })
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="reset-label">
+                                        @Html.CheckBox("chkRecruitmentCosts") @Eagle.Resource.LanguageResource.RecruitmentCosts
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="divRecruitmentCosts" class="row">
+                                @Html.Action("_FeeListPartial", new { lst = ViewBag.RecruitmentCosts })
+                            </div>
+                            
+                            <div class="row">
+                                <div class="footbar">
+                                    <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" />                                
+                                    <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" />
+                                </div>
+                            </div>
+                            <!--End.row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Action("jqueryval", "Common", null)
+<script type="text/javascript">
+    InvokeDateTimePicker();
+    PopulateDropDownListAutoComplete("SelectLSCurrencyID", "LSCurrencyID", "LSCurrencyName",
+        '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCurrencyName)', areas + '/LS_tblCurrency/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSLocationID", "LSLocationID", "LSLocationName",
+           '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputLocationName)', areas + '/LS_tblLocation/DropdownList');
+
+    if (typeof CheckVis == 'function') {
+        CheckVis("RecruitmentTournamentList");
+        CheckVis("CandidateList");
+        CheckVis("ListOfRecruitmentDemand");
+        CheckVis("RecruitmentCosts");
+    }
+
+</script>

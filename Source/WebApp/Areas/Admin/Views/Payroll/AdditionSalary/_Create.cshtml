@@ -1,0 +1,130 @@
+﻿@model AdditionSalaryViewModels
+
+<div id="alertMessageBox">
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong>
+            <div class="padding-left">
+                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+            </div>
+        </div>
+    }
+</div>
+
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.LSSalaryAdjustID)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBox("selectLSSalaryAdjustID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.LSSalaryAdjustIDNull)
+        @Html.HiddenFor(model => model.LSSalaryAdjustName)
+        @Html.ValidationMessageFor(model => model.LSSalaryAdjustIDNull)
+    </div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.FromMonth)
+    </div>
+    <div class="col-md-4">
+        <label class="reset-label">
+            @Html.MonthPickerFor(model => model.FromMonth, null, new { @name = "FromMonth" })
+            @Html.ValidationMessageFor(model => model.FromMonth)
+        </label>
+    </div>
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.ToMonth)
+    </div>
+    <div class="col-md-4">
+        <label class="reset-label">
+            @Html.MonthPickerFor(model => model.ToMonth, null, new { @name = "ToMonth" })
+            @Html.ValidationMessageFor(model => model.ToMonth)
+        </label>
+    </div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+            <label style="display: inline; margin-left: 10px;"> @Eagle.Resource.LanguageResource.Cash  @Html.RadioButton("PaymentMethod", "Cash", string.IsNullOrEmpty(Model.PaymentMethod) ? true : Model.PaymentMethod == "Cash", new { @id = "CASH", @class = "PaymentMethod" })</label>
+            <label style="display: inline; margin-left: 10px;">@Eagle.Resource.LanguageResource.PercentSalary @Html.RadioButton("PaymentMethod", "Percent", string.IsNullOrEmpty(Model.PaymentMethod) ? false : Model.PaymentMethod == "Percent", new { @id = "PERCENT", @class = "PaymentMethod" })</label>
+            <label style="display: inline; margin-left: 10px;">@Eagle.Resource.LanguageResource.Coef @Html.RadioButton("PaymentMethod", "Coef", string.IsNullOrEmpty(Model.PaymentMethod) ? false : Model.PaymentMethod == "Coef", new { @id = "COEF", @class = "PaymentMethod" })</label>
+    </div>
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.Amount)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.Amount, new { @class = "span12" })
+        @Html.ValidationMessageFor(model => model.Amount)
+    </div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+        <label style="display: inline; margin-left: 10px;">GROSS @Html.RadioButton("GROSSNET", true, Model.GROSSNET == null ? true : Model.GROSSNET.Value == true, new { @id = "GROSS", @class = "isGross" })</label>
+        <label style="display: inline; margin-left: 10px;">NET @Html.RadioButton("GROSSNET", false, Model.GROSSNET == null ? false : Model.GROSSNET.Value == false, new { @id = "NET", @class = "isGross" })</label>
+    </div>
+
+    <div class="col-md-2 divCurrency">
+        @Html.LabelFor(model => model.LSCurrencyID)
+    </div>
+    <div class="col-md-4 divCurrency">
+        @Html.TextBox("SelectLSLSCurrencyID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.LSCurrencyID)
+        @Html.HiddenFor(model => model.LSCurrencyName)
+    </div>
+
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.Note)
+    </div>
+    <div class="col-md-10">
+        @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+        @Html.ValidationMessageFor(model => model.Note)
+    </div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">
+    
+</div>
+<div id="divStaffList" class="row">
+    @Html.Action("_ListStaffPartial")
+</div>
+<!--/row-->
+<div class="row">
+    <div class="footbar">
+        <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" />
+        <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" />
+    </div>
+</div>
+<!--End.row-->
+
+<script>
+    InvokeMonthPicker();
+    var strInput = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCurrency)';
+    PopulateDropDownListAutoComplete("SelectLSLSCurrencyID", "LSCurrencyID", "LSCurrencyName", strInput, areas + '/LS_tblCurrency/DropdownList');
+
+    var strInputPosition = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)';
+    PopulateDropDownListAutoComplete("selectLSPositionID", "LSPositionID", "LSPositionName", strInputPosition, areas + '/LS_tblPosition/DropdownList');
+
+    var strInputSalaryAdjust = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputSalaryAdjust)';
+    PopulateDropDownListAutoComplete("selectLSSalaryAdjustID", "LSSalaryAdjustIDNull", "LSSalaryAdjustName", strInputSalaryAdjust, areas + '/SalaryAdjust/DropdownList');
+
+    if (typeof checkDivCurrency == 'function') {
+        checkDivCurrency();
+    }
+</script>

@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_BasicSalary;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<div id="main-data">
+    <div id="divEdit">
+        @Html.Action("_Create", "BasicSalary", null)
+    </div>
+    <div id="divList">
+        @Html.Action("_List", "BasicSalary", null)
+    </div>
+</div>
+    }
+@section Scripts{
+
+<script type="text/javascript">
+    //$('#changeSidebarPos').trigger('click');
+    
+    // region click edit
+    $(document).on("click", ".editItem", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $.ajax({
+            type: "GET",
+            url: areas + '/BasicSalary/_Edit' + '/' + lsID,
+            success: function (data) {
+                //Create edit form
+                $('#divEdit').html(data);
+                //Add => Edit
+                $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                //
+                return false;
+            }
+        })
+        return false;
+    });
+
+    $(document).on("click", "#btnAdd", function () {
+
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/BasicSalary/Save';
+            var urlCreate = '/BasicSalary/Index';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                $('#main-data').html(data);
+                                AlterAddSuccess();
+                                return false;
+                            }
+                        });
+                    } else {
+                        $('#divEdit').html(data);
+                        return false;
+                    }
+                }
+            });
+        } else {
+            // Update Account
+            var url = '@Url.Action("Update", "BasicSalary")';
+            var urlCreate = '/BasicSalary/Index';
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                $('#main-data').html(data);
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    }
+                    else {
+                        $('#divEdit').html(data);
+                    }
+                    return false;
+                }
+            });
+        };
+    });
+
+    $(document).on("click", "#btnAddCoef", function () {
+       
+        if ($('#btnAddCoef').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/BasicSalary/SaveCoef';
+            var urlCreate = '/BasicSalary/Index';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                $('#main-data').html(data);
+                                AlterAddSuccess();
+                                return false;
+                            }
+                        });
+                    } else {
+                        $('#divEdit').html(data);
+                        return false;
+                    }
+                }
+            });
+        } else {
+            // Update Account
+            var url = '@Url.Action("UpdateCoef", "BasicSalary")';
+            var urlCreate = '/BasicSalary/Index';
+           
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                            $('#main-data').html(data);
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    }
+                    else {
+                        $('#divEdit').html(data);
+                    }
+                    return false;
+                }
+            });
+        };
+    });
+    // reset form
+    $(document).on("click", "#btnReset", function () {
+        var urlCreate = '/BasicSalary/_Create';
+        $.ajax({
+            type: "GET",
+            url: areas + urlCreate,
+            success: function (data) {
+                $('#divEdit').html(data);
+            }
+        });
+    });
+    $(document).on("keyup", "#BasicSalary", function () {
+
+        var basicSalary = $("#BasicSalary").val();
+        var percentBasicSalary = $("#PercentBasicSalary").val();
+        var actualSalary = basicSalary * percentBasicSalary / 100;
+        $("#ActualSalary").val(actualSalary);
+        $("#InsuranceSalary").val(basicSalary);
+    });
+    $(document).on("keyup", "#PercentBasicSalary", function () {
+
+        var basicSalary = $("#BasicSalary").val();
+        var percentBasicSalary = $("#PercentBasicSalary").val();
+        var actualSalary = basicSalary * percentBasicSalary / 100;
+        $("#ActualSalary").val(actualSalary);
+    });
+
+    // su kien change cua Salary Scale
+    $(document).on("change", "input[name='SalaryScaleID']", function () {
+        var SalaryScaleID = $(this).val();
+        var strInputGrade = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputGrade)';
+        PopulateDropDownListAutoComplete("SelectSalaryGradeID", "SalaryGradeID", "GradeName", strInputGrade, areas + '/Grade/DropdownListByID?SalaryScaleID=' + SalaryScaleID);
+    });
+    // su kien change cua Salary Grade
+    $(document).on("change", "input[name='SalaryGradeID']", function () {
+        var SalaryGradeID = $(this).val();
+        var strInputRank = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputSalaryRank)';
+        PopulateDropDownListAutoComplete("SelectSalaryRankID", "SalaryRankID", "RankName", strInputRank, areas + '/Rank/DropdownListByID?SalaryGradeID=' + SalaryGradeID);
+    });
+</script>
+}

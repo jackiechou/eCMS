@@ -1,0 +1,159 @@
+﻿@model List<PR_sprptPayrollSummaryReport_Result>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:2%">@Eagle.Resource.LanguageResource.No</th>
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.Month
+                </th>                
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.Year
+                </th>                
+                <th style="width:10%" class="text_left">
+                    @Eagle.Resource.LanguageResource.EmployeeName
+                </th>
+                <th style="width:10%" class="text_left">
+                    @Eagle.Resource.LanguageResource.Position
+                </th>                
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.StandardWorking
+                </th>    
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.WorkDays
+                </th>            
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.BasicSalary
+                </th>                
+                <th style="width:3%" class="text_center" >
+                    @Eagle.Resource.LanguageResource.PayslipSalaryInsurance
+                </th>                
+                <th style="width:3%" class="text_center" >
+                    @Eagle.Resource.LanguageResource.PayslipSalaryRate
+                </th>
+                <th style="width:3%" class="text_center" >
+                    @Eagle.Resource.LanguageResource.PayslipInsuranceRate
+                </th>                
+                <th style="width:3%" class="text_center" >
+                    @Eagle.Resource.LanguageResource.Currency
+                </th>                
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipSocialInsurance
+                </th>                
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipHealthInsurance
+                </th>                
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipUnEmployeeInsurance
+                </th>                             
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipDependant
+                </th>                                               
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipPIT
+                </th>
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipOTIncome
+                </th>
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipOT_NoneTax
+                </th>
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipTotalIncome
+                </th>                      
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipTaxableIncome
+                </th>
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipIncomeTax
+                </th>
+                <th style="width:3%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipNetTakeHome
+                </th>                 
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td class="text_center">
+                        @item.Month
+                    </td>                
+                    <td class="text_center">
+                        @item.Year
+                    </td>                
+                    <td class="text_left">
+                        @item.EmployeeName
+                    </td>         
+                    <td class="text_left">
+                        @item.PositionName
+                    </td>       
+                    <td class="text_center">
+                        @item.StandardWorkINfo
+                    </td>    
+                    <td class="text_center">
+                        @item.ActualWorkINfo
+                    </td>            
+                    <td  class="text_right">
+                        @item.SalaryInfo
+                    </td>                
+                    <td class="text_right" >
+                        @item.SalaryInsuranceInfo
+                    </td>                
+                    <td class="text_right" >
+                        @item.ExchangeRateSalary
+                    </td>                                    
+                    <td class="text_right">
+                        @item.ExchangeRateInsurance
+                    </td>      
+                    <td class="text_right">
+                        @item.CurrencyName
+                    </td>      
+                    <td class="text_right">
+                        @item.SocialInsuranceInfo
+                    </td>          
+                    <td class="text_right">
+                        @item.HealthInsucreanceInfo
+                    </td>                
+                    <td class="text_right">
+                        @item.UnEmployeeInsuranceInfo
+                    </td>                             
+                    <td class="text_right">
+                        @item.Dependent
+                    </td>                                               
+                    <td>
+                        @item.PITInfo
+                    </td>
+                    <td class="text_right">
+                        @item.OT_IncomeTax
+                    </td>
+                    <td class="text_right">
+                        @item.OT_NoneTax
+                    </td>
+                    <td class="text_right">
+                        @item.TotalIncome
+                    </td>                      
+                    <td class="text_right">
+                        @item.TaxableIncome
+                    </td>
+                    <td class="text_right">
+                        @item.IncomeTax
+                    </td>
+                    <td class="text_right">
+                        @item.NetTakeHome
+                    </td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();
+</script>

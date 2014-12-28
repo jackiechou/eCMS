@@ -1,0 +1,57 @@
+﻿<div id="search_box" class="search-box">
+    <div class="row">
+        <div class="search-content">
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="Keywords">@Eagle.Resource.LanguageResource.Keywords</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("Keywords", new { @class = "span2" })
+                </div>               
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="Author">@Eagle.Resource.LanguageResource.Author</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("Author", new { @class = "span2" })
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="Code">@Eagle.Resource.LanguageResource.PostedDate</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DateTimePicker("PostedDate", null, DateTime.Now.ToString("dd/MM/yyyy"), false, new { @readonly = "readonly" })
+                </div>             
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="Status">@Eagle.Resource.LanguageResource.Status</label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Status", null, new { @class = "span12" })
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+    <!--/row-->
+    <div class="row">
+        <div class="bottom-button-bar">
+            <div class="action-buttons">
+                <button class="btn" type="button" id="btnReset">@Eagle.Resource.LanguageResource.Reset</button>
+                <button class="btn btn-info" type="button" id="btnSearch">@Eagle.Resource.LanguageResource.Search</button>
+            </div>
+        </div>
+    </div>
+    <!--End.row-->
+</div>
+

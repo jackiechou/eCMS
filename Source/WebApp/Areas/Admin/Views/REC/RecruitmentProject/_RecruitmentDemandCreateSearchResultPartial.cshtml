@@ -1,0 +1,66 @@
+﻿@model IEnumerable<RecruitmentDemandResultViewModel>
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        @{int i = 0;}
+        @if (Model != null && Model.Count() > 0)
+	    {
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DemandCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmpCreateName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LSCompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LSPositionName)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.DemandQuantity)
+                    </th>
+                    <th class="table-actions text_center no-sort">@Html.CheckBox("chkDemandSearchResultAll")</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @item.DemandCode
+                        </td>
+                        <td>
+                            @item.EmpCreateName
+                        </td>
+                        <td>
+                            @item.LSCompanyName
+                        </td>
+                        <td>
+                            @item.LSPositionName
+                        </td>
+                        <td class="text_center">
+                            @item.DemandQuantity
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            @Html.CheckBox("chkDemand", false, new { @value = item.DemandID }) 
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }else
+        {
+            <tr>
+                <td style="text-align:center">
+                    @Eagle.Resource.LanguageResource.CouldNotFound
+                </td>
+            </tr>
+        }
+
+    </table>

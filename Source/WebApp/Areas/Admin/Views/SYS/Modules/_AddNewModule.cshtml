@@ -1,0 +1,102 @@
+﻿@model Eagle.Model.SYS.Modules.ModuleViewModel
+
+<div class="add-new-module">
+    <div>
+        <h6>@Html.Raw(Eagle.Resource.LanguageResource.ModuleSelection)</h6>
+    </div>
+    <hr />   
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.PageId)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.PageId, null, new { @class = "span12", autocomplete = "off" })
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.ContentItemId)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.ContentItemId)
+        </div>
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.ModuleTitle)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.ModuleTitle, new { @class = "span12" })
+            @Html.ValidationMessageFor(model => model.ModuleTitle)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Visibility)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.Visibility, null, new { @class = "span12" })
+        </div>
+    </div>
+    <!--end row-->
+
+
+    <div>
+        <h6>@Eagle.Resource.LanguageResource.ModuleLocation</h6>
+    </div>
+    <hr />
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Pane)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.Pane, null, new { @class = "span12" })
+            @Html.ValidationMessageFor(model => model.Pane)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.InsertedPosition)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.InsertedPosition, null, new { @class = "span12" })
+            @Html.ValidationMessageFor(model => model.InsertedPosition)
+        </div>
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Alignment)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.Alignment, null, new { @class = "span12" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Border)
+        </div>
+        <div class="col-md-4">            
+            <div class="border-range">
+                <input class="single-slider" id="Border" type="hidden" value="0" />
+            </div>
+        </div>
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Color)
+        </div>
+        <div class="col-md-4">        
+            <input id="Color" class="col-md-11 color-picker" value="#31859b" style="border: 1px solid #cccccc; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); padding: 4px 6px; height: 20px; border-radius:4px; " />          
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Icon)
+        </div>
+        <div class="col-md-4">
+            <input id="Icon" name="Icon" type="file" multiple="true" class="file-loading" accept="image/*" />
+        </div>
+    </div>
+    <!--end row-->
+
+    @Html.Action("GetRolePermission", "Role")
+</div>

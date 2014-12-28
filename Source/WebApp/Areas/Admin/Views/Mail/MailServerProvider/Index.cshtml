@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.MailServerProvider;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+}
+@model List<Mail_Templates>
+@Html.Hidden("AccountId")
+@section ContentSection
+{
+<div id="MainBody" class="main_box">
+    @Html.Partial("../Mail/MailServerProvider/_Reset")
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+<script type="text/javascript">
+    $(function () {
+        LoadTab();
+
+        $('#togglemenuleft a').click(function () {
+            LoadTab();
+        });
+    });
+
+    function LoadTab() {
+        $("#tabs").tabs({ active: 0 });
+    }
+
+
+
+    //    function LoadVerticalTab()
+    //    {
+    //        $("#tabs").tabs({ active: 0 }).addClass("ui-tabs-vertical ui-helper-clearfix");
+    //        $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
+    //        var TabWrapperWidth = parseInt($("#tabs").css("width"));
+    //        var leftTabWidth = 170;
+    //        //var paddingWidth = 41 + 270; //270 padding for accordion - 41 padding outer padding
+    //        var paddingWidth = 91;
+    //        var rightTabWidth = TabWrapperWidth - (leftTabWidth + paddingWidth);
+    //        $("#tabs ul").css('width', leftTabWidth + 'px');
+    //        $("#tabs div").css('width', rightTabWidth + 'px');
+    //    }
+
+
+
+    function UpdateMailServerProvider(Mail_Server_Provider_Id) {
+        var Mail_Server_Provider_Name = $('#input_Mail_Server_Provider_Name_' + Mail_Server_Provider_Id).val();
+        var Mail_Server_Protocol = $('#cbo_Protocal_Type_' + Mail_Server_Provider_Id).val();
+        var Incoming_Mail_Server_Host = $('#input_Incoming_Mail_Server_Host_' + Mail_Server_Provider_Id).val();
+        var Incoming_Mail_Server_Port = $('#input_Incoming_Mail_Server_Port_' + Mail_Server_Provider_Id).val();
+        var Outgoing_Mail_Server_Host = $('#input_Outgoing_Mail_Server_Host_' + Mail_Server_Provider_Id).val();
+        var Outgoing_Mail_Server_Port = $('#input_Outgoing_Mail_Server_Port_' + Mail_Server_Provider_Id).val();
+        // var SSL = $('#chk_SSL_' + Mail_Server_Provider_Id).val() == "on" ? "true" : "false";
+
+        var SSL = $('#chk_SSL_' + Mail_Server_Provider_Id).is(':checked') ? '1' : '0';
+        var TLS = $('#chk_TLS_' + Mail_Server_Provider_Id).is(':checked') ? '1' : '0';
+
+        var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/services/mail_services.asmx/UpdateMailServerProvider";
+        $('#notice_board').css("display", "block");
+        $('#message_box').empty();
+        $.ajax({
+            type: "POST",
+            url: base_url,
+            data: "{Mail_Server_Provider_Id:'" + Mail_Server_Provider_Id + "',Mail_Server_Provider_Name:'" + Mail_Server_Provider_Name
+            + "',Mail_Server_Protocol:'" + Mail_Server_Protocol + "',Incoming_Mail_Server_Host:'" + Incoming_Mail_Server_Host + "',Incoming_Mail_Server_Port:'" + Incoming_Mail_Server_Port
+            + "',Outgoing_Mail_Server_Host:'" + Outgoing_Mail_Server_Host + "',Outgoing_Mail_Server_Port:'" + Outgoing_Mail_Server_Port + "',SSL:'" + SSL + "',TLS:'" + TLS + "'}",
+            beforeSend: function (xhr) { xhr.setRequestHeader("Content-type", "application/json; charset=utf-8"); },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                if (msg.d == '1') {
+                    $('#message_box').html("Cập nhật thành công.");
+                    LoadTab();
+                }
+                else
+                    $('#message_box').append("Cập nhật không thành công.");
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+</script>
+
+<section id="tool_bar">
+    <div id="heading_bar">
+        <div id="title_bar">
+            <div class="icon32" id="icon-themes">
+            </div>
+            <h3>
+                Mail Server Provider
+            </h3>
+        </div>
+        <div id="action_bar">
+            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn"
+                            onclick="btnAdd_Click" OnClientClick="LoadTab();"><span class="icon-32-new"></span>Thêm</asp:LinkButton>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div id="control_bar">
+    </div>
+</section>
+<section id="notice_board">
+    <div id="message_box" clientidmode="Static" runat="server">
+    </div>
+</section>
+<section id="content_box">
+    <div id="accordion">
+        <h3>Thêm Mail Server Provider</h3>
+        <div id="add_box">
+            <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" runat="server">
+                <triggers>
+                    <asp:postbacktrigger controlid="btnAdd" />
+                </triggers>
+                <contenttemplate>
+                    <table cellpadding="2" cellspacing="2" width="100%">
+                        <tr>
+                            <td style="width:180px">
+                                * Mail Server Provider Name
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtMailServerProviderName" runat="server"></asp:TextBox>
+                            </td>
+                            <td style="width:150px">
+                                * SSL :
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="chkSSL" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                * Mail Server Protocol:
+                            </td>
+                            <td>
+                                <asp:DropDownList ID="ddlMailServerProtocol" runat="server">
+                                    <asp:listitem selected="True" text="POP3" value="POP3"></asp:listitem>
+                                    <asp:listitem text="IMAP" value="IMAP"></asp:listitem>
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                * TLS :
+                            </td>
+                            <td>
+                                <asp:CheckBox ID="chkTLS" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>Incoming Mail Server (POP3/IMAP)</strong>
+                            </td>
+                            <td colspan="2">
+                                <strong>Outgoing Mail Server (SMTP)</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Incoming Host
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtIncomingMailServerHost" runat="server"></asp:TextBox>
+                            </td>
+                            <td>
+                                Outcoming Host
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtOutgoingMailServerHost" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Incoming Port
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtIncomingMailServerPort" runat="server"></asp:TextBox>
+                            </td>
+                            <td>
+                                Outcoming Port
+                            </td>
+                            <td>
+                                <asp:TextBox ID="txtOutgoingMailServerPort" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                    </table>
+                </contenttemplate>
+            </asp:UpdatePanel>
+            <div style="clear:both"></div>
+        </div>
+
+        <h3>Cập nhật Mail Server Provider</h3>
+        <div id="tabs" runat="server" clientidmode="Static">
+        </div>
+    </div>
+</section>

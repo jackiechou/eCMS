@@ -1,0 +1,112 @@
+﻿@model List<ScheduleViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ScheduleCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ScheduleName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Used
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Note
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.ScheduleCode
+                    </td>
+                    <td>
+                        @item.ScheduleName
+                    </td>
+                    <td class="center">
+                        @item.strUsed
+                    </td> 
+                    <td>
+                        @item.Note
+                    </td> 
+                    <td class="center action">
+                        <a  data-id="@item.ScheduleID" data-name="@item.ScheduleName"  title="Edit" class="viewItem viewDetail" >&nbsp;&nbsp;&nbsp;</a>
+                        <a  data-id="@item.ScheduleID"  title="Edit" class="ico editItem" >&nbsp;&nbsp;&nbsp;</a>
+                        <a  data-id="@item.ScheduleID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+@Html.Action("ConfirmPopup","Common",null)
+@Html.Action("_PopupDetail", "Schedule", null)
+<script>
+    
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var urlCreate = '/Schedule/Index';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/Schedule/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        $('#main-data').html(data);
+                                        AlterUpdateSuccess();
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+    @{ int YearNow = DateTime.Now.Year;}
+    (function ($) {
+        $('.viewDetail').click(function (e) {
+            var lsID = $(this).data('id');
+            var lsName = $(this).data('name');  //name cua dong du lieu
+            var year = @YearNow;
+       
+            $('.popupDetail').modal('show');
+            // gan ten lich lam viec vao cho label
+            $(".popupDetail input[name='ScheduleID']").val(lsID);
+            $(".popupDetail input[name='ScheduleName']").val(lsName);
+            $(".popupDetail input[name='Year']").val(year);
+            $('.popupDetail #ScheduleName').html(lsName);    
+            
+            $('#divResultTable').html('');
+            $('#btnSearch').click();
+        });
+    })(jQuery);
+</script>
+<script>
+    InvokeDataTables();    
+</script>
+
+

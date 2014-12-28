@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "DS người lao động đề nghị hưởng chế độ ốm đau";
+}
+
+@section Button{
+    <input id="btnReport" type="image" value="@Eagle.Resource.LanguageResource.btnReport" src="@Eagle.Resource.LanguageResource.srcBtnViewReport" />    
+}
+
+<div id="MainBody">
+    <div id="divEdit">
+        @Html.Action("_Create")
+    </div>
+   
+    <div id="divList">  
+       @Html.DevExpress().ReportToolbar(settings =>
+        {
+            settings.Name = "ReportViewerToolbar";
+            settings.ReportViewerName = "reportViewer";
+        }).GetHtml()
+        <div id="divReport" style="width: 890px;margin: auto;">  
+              
+            <div style="text-align:center">@Eagle.Resource.LanguageResource.lblViewReport</div>
+        </div>
+        
+    </div>
+
+</div>
+
+@section HeadScripts{
+<style>
+    .content-header .span10 h2 {
+        font-size:24.5px;
+    }
+</style>    
+}
+@section DevScripts{
+   @Html.DevExpress().GetStyleSheets( 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+    @Html.DevExpress().GetScripts( 
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new Script { ExtensionSuite = ExtensionSuite.GridView }, 
+        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new Script { ExtensionSuite = ExtensionSuite.Editors }, 
+        new Script { ExtensionSuite = ExtensionSuite.Chart },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+	    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new Script { ExtensionSuite = ExtensionSuite.TreeList }
+    )    
+}
+
+@section Scripts{
+    <script>
+        $('#changeSidebarPos').trigger('click');
+
+
+        $(document).on("click", "#btnReport", function () {
+            loading();
+            call();
+            $.ajax({
+                type: 'GET',
+                url: "ReportViewerPartial",
+                async: false,
+                data: $("#frmSearch").serialize(),
+                statusCode: {
+                    200: function (data) {
+                        $('#divReport').html(data);
+                        call();
+                    },
+                    400: function (data) {
+
+                    },
+                    500: function (data) {
+
+                    }
+                }
+            });
+        });
+       
+        function call() {
+            var dxo = new ClientReportToolbar('ReportViewerToolbar');
+            window['ReportViewerToolbar'] = dxo;
+            dxo.menuID = 'ReportViewerToolbar_Menu';
+            dxo.reportViewerID = 'reportViewer';
+            dxo.InlineInitialize();
+        }
+    </script>
+}

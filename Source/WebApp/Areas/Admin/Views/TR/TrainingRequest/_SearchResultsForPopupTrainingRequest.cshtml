@@ -1,0 +1,63 @@
+﻿@model List<Eagle.Model.HR.EmployeeViewModel>
+@if (Model.Count > 0)
+{
+    <div class="box-table">
+        <table class="reset-font table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        @Html.LabelFor(model => model.First().EmpCode, new { @class="center"} )
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.First().FullName, new { @class="center"} )
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.First().CompanyName, new { @class="center"} )
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.First().Position, new { @class="center"} )
+                    </th>
+                    <th class="text_center">
+                        @Html.CheckBox("CheckAll")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var employee in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>                            
+                            @employee.EmpCode
+                        </td>
+                        <td>
+                            @employee.FullName
+                        </td>
+                        <td>
+                            @employee.CompanyName
+                        </td>
+                        <td>
+                            @employee.Position
+                        </td>
+                        <td class="text_center">                            
+                            @Html.CheckBox("Checked", false, new { @value = employee.EmpID }) 
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    if (ViewBag.FirstRequest != true)
+    {   
+        <center>@Eagle.Resource.LanguageResource.ThereAreNoResultsThatMatch</center>   
+    }
+
+}

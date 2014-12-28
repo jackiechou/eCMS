@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_LeaveType;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<div id="main-data">
+    <div id="divEdit">
+        @Html.Action("_Create", "LeaveType", null)
+    </div>
+    <div id="divList">
+        @Html.Action("_List", "LeaveType", null)
+    </div>
+</div>
+    }
+@section Scripts{
+
+<script type="text/javascript">
+    // region click edit
+    $(document).on("click", ".editItem", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $.ajax({
+            type: "GET",
+            url: areas + '/LeaveType/_Edit' + '/' + lsID,
+            success: function (data) {
+                //Create edit form
+                $('#divEdit').html(data);
+                //Add => Edit
+                $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                //
+                return false;
+            }
+        })
+        return false;
+    });
+
+
+
+    
+
+    $(document).on("click", "#btnAdd", function () {
+       
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/LeaveType/Save';
+            var urlCreate = '/LeaveType/Index';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                $('#main-data').html(data);
+                                //
+                                AlterAddSuccess();
+                                return false;
+                            }
+                        });
+                    } else {
+                        $('#divEdit').html(data);
+                        return false;
+                    }
+                }
+            });
+        } else {
+            // Update Account
+            var url = '@Url.Action("Update", "LeaveType")';
+            var urlCreate = '/LeaveType/Index';
+           
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                            $('#main-data').html(data);
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    }
+                    else {
+                        $('#divEdit').html(data);
+                    }
+                    return false;
+                }
+            });
+        };
+    });
+    // reset form
+    $(document).on("click", "#btnReset", function () {
+        var urlCreate = '/LeaveType/_Create';
+        $.ajax({
+            type: "GET",
+            url: areas + urlCreate,
+            success: function (data) {
+                $('#divEdit').html(data);
+            }
+        });
+    });
+</script>
+}

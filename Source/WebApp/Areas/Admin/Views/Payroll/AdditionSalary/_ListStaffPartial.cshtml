@@ -1,0 +1,78 @@
+﻿@model IEnumerable<EmployeeForPayrollViewModels>
+
+<div class="row" style="text-align: right; margin-top: -5px;">
+     @if (Model != null && Model.Count() > 0)
+	 {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Deleterow btnDeleteStaff" style="margin-right: 5px;">
+     }else
+     {
+        <input title="@Eagle.Resource.LanguageResource.Delete" type="button" class="btn-custom-Delete-disabled-row btnDeleteStaff" style="margin-right: 5px;">
+     }
+
+    <input id="btnAddStaff" title="@Eagle.Resource.LanguageResource.AddNew" type="button" class="btn-custom-addrow" style="margin-right: 18px;">
+</div>
+<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSPositionName)
+                </th>
+                <th class="table-actions text_center no-sort">@Html.CheckBox("chkDeleteAll")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0; int k = -1;}
+            @if (Model != null && Model.Count() > 0)
+	        {
+                foreach (var item in Model)
+                {
+                    i++;
+                    k++;
+                    <tr>
+                        <td>
+                            @i
+                            <input type="hidden" name="StaffList[@k].EmpID" value="@item.EmpID" />
+                            <input type="hidden" name="StaffList[@k].EmpCode" value="@item.EmpCode" />
+                            <input type="hidden" name="StaffList[@k].FullName" value="@item.FullName" />
+                            <input type="hidden" name="StaffList[@k].Department" value="@item.Department" />
+                            <input type="hidden" name="StaffList[@k].Position" value="@item.LSPositionName" />
+                            
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Department)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LSPositionName)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            @Html.CheckBox("chkDelete", false, new { @value = item.EmpID }) 
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" class="text-center">
+                        @Eagle.Resource.LanguageResource.PleaseClickAddNewButton_btnAddStaffList
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>

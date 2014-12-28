@@ -1,0 +1,205 @@
+﻿@model CandidateQualificationViewModel
+<div class="modal hide fade popupQualification" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.Qualification</h3>
+    </div>
+    <div class="modal-body">
+        <!--Begin button -->
+        <form id="frmQualification">
+            @Html.HiddenFor(model => model.QualificationID)
+            @Html.HiddenFor(model => model.InitialPriorityAlowNull)
+            @Html.HiddenFor(model => model.InitialQualificationNo)
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.QualificationNo)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.QualificationNo, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.QualificationNo)
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.LSQualificationID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectLSQualificationIDAlowNull", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSQualificationIDAlowNull)
+                    @Html.HiddenFor(model => model.LSQualificationIDAlowNullName)
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.QualificationDate)
+                </div>
+                <div class="col-md-4">
+                    @Html.DatepickerFor(model => model.QualificationDateAlowNull)
+                    @Html.ValidationMessageFor(model => model.QualificationDateAlowNulltmp)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.AttachFile)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.AttachFile, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.AttachFile)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.FromMonth)
+                </div>
+                <div class="col-md-4">
+                    @Html.MonthPickerFor(model => model.FromMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 valid" })
+                    @Html.ValidationMessageFor(model => model.FromMonth)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.ToMonth)
+                </div>
+                <div class="col-md-4">
+                    @Html.MonthPickerFor(model => model.ToMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 valid" })
+                    @Html.ValidationMessageFor(model => model.ToMonth)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSSchoolID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectLSSchoolID", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSSchoolID)
+                    @Html.HiddenFor(model => model.LSSchoolName)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.OtherSchool)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.OtherSchool, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.OtherSchool)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSFacultyID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectLSFacultyID", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSFacultyID)
+                    @Html.HiddenFor(model => model.LSFacultyName)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.OtherFaculty)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.OtherFaculty, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.OtherFaculty)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSMajorID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectLSMajorID", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSMajorID)
+                    @Html.HiddenFor(model => model.LSMajorName)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSTrainingTypeID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectLSTrainingTypeID", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSTrainingTypeID)
+                    @Html.HiddenFor(model => model.LSTrainingTypeName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TrainingPlace)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.TrainingPlace, null, new { @class = "span12" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.PriorityAlowNull)
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.PriorityAlowNull, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PriorityAlowNull)
+                </div>
+            </div>
+
+            <div id="divCountries" class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSCountryID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectLSCountryID", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSCountryID)
+                    @Html.HiddenFor(model => model.LSCountryName)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PayByCompany)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("PayByCompany")
+                </div>
+
+            </div>
+        </form>
+        <!--End button -->
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="btnQCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+    </div>
+</div>
+
+@*<script src="/Scripts/jquery.mtz.monthpicker.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.mtz.monthpicker.custom.js" type="text/javascript"></script>*@
+<script>
+    InvokeDateTimePicker();
+    InvokeMonthPicker();
+
+    var strSchool = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputSchoolName)';
+    var strFaculty = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputFacultyName)';
+    var strMajor = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputMajorName)';
+    var strCountry = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCountryName)';
+    var strQualification = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputQualificationName)';
+
+    PopulateDropDownListAutoComplete("selectLSSchoolID", "LSSchoolID", "LSSchoolName", strSchool, areas + '/LS_tblSchool/DropdownList');
+    PopulateDropDownListAutoComplete("selectLSFacultyID", "LSFacultyID", "LSFacultyName", strFaculty, areas + '/LS_tblFaculty/DropdownList');
+    PopulateDropDownListAutoComplete("selectLSMajorID", "LSMajorID", "LSMajorName", strMajor, areas + '/LS_tblMajor/DropdownList');
+    PopulateDropDownListAutoComplete("selectLSCountryID", "LSCountryID", "LSCountryName", strCountry, areas + '/LS_tblCountry/DropdownList');
+    PopulateDropDownListAutoComplete("selectLSQualificationIDAlowNull", "LSQualificationIDAlowNull", "LSQualificationIDAlowNullName", strQualification, areas + '/LS_tblQualification/DropdownList');
+
+    function checkCountryVisiable() {
+        var divCountries = $('#divCountries');
+        if ($("#TrainingPlace").val() == 1) {
+            //trong nước
+            divCountries.css("display", "none");
+            $('#LSCountryName').val('');
+            $('#LSCountryID').val('');
+
+        } else {
+            //nước ngoài
+            divCountries.css("display", "block");
+        }
+    }
+    $(document).on("change", "#TrainingPlace", function () {
+        checkCountryVisiable();
+    });
+    $(document).ready(function () {
+        checkCountryVisiable();
+    });
+</script>

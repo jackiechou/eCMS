@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.ProfileManagement;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+@model EmployeeViewModel
+@section ContentSection
+{
+    <div id="MainBody">      
+        <div class="detailViewContainer">
+             <div class="row detailViewTitle">
+                @Html.Action("GetEmpSummary", "Profile", null)
+             </div>
+             <div class="detailViewInfo row-fluid">
+                <div id="EditDetails" class="col-md-10 details main_content">               
+                     @Html.Action("GetEmpDetails", "Profile", null)
+                </div>
+                 <div class="related span2 marginLeftZero">
+                    @Html.Action("ListFunctionsByModuleID", "ModuleFunction", null)               
+                 </div>
+             </div>    
+        </div>
+    </div>
+}

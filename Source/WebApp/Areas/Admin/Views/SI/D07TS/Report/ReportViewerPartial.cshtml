@@ -1,0 +1,10 @@
+﻿@using Eagle.WebApp.Areas.Admin.Reports.SI.D07TS
+
+@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer";
+    settings.Report = (D07TSXtraReport)ViewData["Report"];
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "D07TS", Action = "CallbackReportViewerPartial", MasterID = ViewBag.MasterID };
+    settings.ExportRouteValues = new { Controller = "D07TS", Action = "ExportReportViewerPartial", MasterID = ViewBag.MasterID };
+}).GetHtml()

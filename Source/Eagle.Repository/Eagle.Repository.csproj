@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E701BBA7-F816-4C6F-AA9F-9F6576AE2AE1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eagle.Repository</RootNamespace>
+    <AssemblyName>Eagle.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.DataVisualization.Design" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Administration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CommonRepository.cs" />
+    <Compile Include="Common\DataProvider.cs" />
+    <Compile Include="Sys\Contents\ContentTypeRepository.cs" />
+    <Compile Include="Sys\Languages\LanguageRepository.cs" />
+    <Compile Include="Services\Logs\ErrorLogRepository.cs" />
+    <Compile Include="ShopCart\Customers\CustomerRepository.cs" />
+    <Compile Include="ShopCart\Customers\CustomerTypeRepository.cs" />
+    <Compile Include="ShopCart\Manufacturers\ManufacturerCategoryRepository.cs" />
+    <Compile Include="ShopCart\Manufacturers\ManufacturerRepository.cs" />
+    <Compile Include="ShopCart\Vendors\ContactRepository.cs" />
+    <Compile Include="Sys\Menus\MenuPermissionRepository.cs" />
+    <Compile Include="Sys\Menus\MenuTypeRepository.cs" />
+    <Compile Include="Extensions\HtmlExtensions\DropdownListUtils.cs" />
+    <Compile Include="Common\GenderRespository.cs" />
+    <Compile Include="Common\MasterDataRepository.cs" />
+    <Compile Include="Contents\Banners\BannerPositionRepository.cs" />
+    <Compile Include="Contents\Banners\BannerRepository.cs" />
+    <Compile Include="Contents\News\NewsCategoryRepository.cs" />
+    <Compile Include="Contents\News\NewsRepository.cs" />
+    <Compile Include="HR\DOC\DocumentRepository.cs" />
+    <Compile Include="Sys\Host\HostSettingRespository.cs" />
+    <Compile Include="HR\Personnel\ContractRespository.cs" />
+    <Compile Include="HR\Personnel\EmployeeRepository.cs" />
+    <Compile Include="HR\Personnel\ProjectRespository.cs" />
+    <Compile Include="HR\Personnel\QualificationRespository.cs" />
+    <Compile Include="HR\Personnel\RelationshipRespository.cs" />
+    <Compile Include="HR\Personnel\RewardDisciplineRespository.cs" />
+    <Compile Include="HR\Personnel\WorkingHistoryRespository.cs" />
+    <Compile Include="HR\Personnel\WorkingRecordRespository.cs" />
+    <Compile Include="LS\CompanyDefineRepositoty.cs" />
+    <Compile Include="LS\CompanyRepository.cs" />
+    <Compile Include="LS\LS_tblBankBranchRepository.cs" />
+    <Compile Include="LS\LS_tblBankRepository.cs" />
+    <Compile Include="LS\LS_tblChangeStatusRepository.cs" />
+    <Compile Include="LS\LS_tblCompanyRepository.cs" />
+    <Compile Include="LS\LS_tblContractTypeRespository.cs" />
+    <Compile Include="LS\LS_tblCountryRepository.cs" />
+    <Compile Include="LS\LS_tblCurrencyRespository.cs" />
+    <Compile Include="LS\LS_tblDistrictRepository.cs" />
+    <Compile Include="LS\LS_tblEducationRepository.cs" />
+    <Compile Include="LS\LS_tblEthnicRepository.cs" />
+    <Compile Include="LS\LS_tblFacultyRepository.cs" />
+    <Compile Include="LS\LS_tblGradeRepository.cs" />
+    <Compile Include="LS\LS_tblLocationRepository.cs" />
+    <Compile Include="LS\LS_tblMajorRepository.cs" />
+    <Compile Include="LS\LS_tblMaritalRepository.cs" />
+    <Compile Include="LS\LS_tblNationalityRepository.cs" />
+    <Compile Include="LS\LS_tblOnlineProcessMailBccRespository.cs" />
+    <Compile Include="LS\LS_tblOnlineProcessMailCcRespository.cs" />
+    <Compile Include="LS\LS_tblPositionRepository.cs" />
+    <Compile Include="LS\LS_tblProvinceRepository.cs" />
+    <Compile Include="LS\LS_tblQualificationRepository.cs" />
+    <Compile Include="LS\LS_tblRelationshipRepository.cs" />
+    <Compile Include="LS\LS_tblReligionRepository.cs" />
+    <Compile Include="LS\LS_tblRewardLevelRespository.cs" />
+    <Compile Include="LS\LS_tblRewardRespository.cs" />
+    <Compile Include="LS\LS_tblSchoolRepository.cs" />
+    <Compile Include="LS\LS_tblTerminationReasonRespository.cs" />
+    <Compile Include="LS\LS_tblTerminationTypeRespository.cs" />
+    <Compile Include="LS\LS_tblTrainingTypeRepository.cs" />
+    <Compile Include="Sys\Mail\MailAccountRespository.cs" />
+    <Compile Include="Sys\Mail\MailConfigRepository.cs" />
+    <Compile Include="Sys\Mail\MailRespository.cs" />
+    <Compile Include="Sys\Mail\MailServerProviderRespository.cs" />
+    <Compile Include="Sys\Mail\MailTemplateRespository.cs" />
+    <Compile Include="Sys\Mail\MailTypeRespository.cs" />
+    <Compile Include="HR\Payroll\AddSalaryByPositionRepository.cs" />
+    <Compile Include="HR\Payroll\AddSalaryByStaffRepository.cs" />
+    <Compile Include="HR\Payroll\BasicSalaryRepository.cs" />
+    <Compile Include="HR\Payroll\CalculatePayrollRepository.cs" />
+    <Compile Include="HR\Payroll\GradeRepository.cs" />
+    <Compile Include="HR\Payroll\IncomeTaxGrossRepository.cs" />
+    <Compile Include="HR\Payroll\IncomeTaxNetRepository.cs" />
+    <Compile Include="HR\Payroll\InsuranceExchangeRateRepository.cs" />
+    <Compile Include="HR\Payroll\LS_tblSalaryDeductionRepository.cs" />
+    <Compile Include="HR\Payroll\PayrollExchangeRateRepository.cs" />
+    <Compile Include="HR\Payroll\PayrollReportRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\Payroll\RankRepository.cs" />
+    <Compile Include="HR\Payroll\Salary13CoefRepository.cs" />
+    <Compile Include="HR\Payroll\Salary13Repository.cs" />
+    <Compile Include="HR\Payroll\SalaryAjustRepository.cs" />
+    <Compile Include="HR\Payroll\ScaleRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HR\REC\CandidateQualificationRepository.cs" />
+    <Compile Include="HR\REC\CandidateRepository.cs" />
+    <Compile Include="HR\REC\CandidateTournamentRepository.cs" />
+    <Compile Include="HR\REC\DemandRepository.cs" />
+    <Compile Include="HR\REC\InterviewCalendarRepository.cs" />
+    <Compile Include="HR\REC\InterviewCriteriaRepository.cs" />
+    <Compile Include="HR\REC\InterviewCriteriaTypeRepository.cs" />
+    <Compile Include="HR\REC\InterviewEvaluationRepository.cs" />
+    <Compile Include="HR\REC\ProjectTournamentRepository.cs" />
+    <Compile Include="HR\REC\QuotaRecruitmentRepository.cs" />
+    <Compile Include="HR\REC\RecruitmentFeeRepository.cs" />
+    <Compile Include="HR\REC\RecruitmentPlanRepository.cs" />
+    <Compile Include="HR\REC\RecruitmentProjectRepository.cs" />
+    <Compile Include="HR\REC\RecruitmentSourceRepository.cs" />
+    <Compile Include="HR\REC\RecruitmentTournamentRepository.cs" />
+    <Compile Include="HR\REC\RecruitmentTypeRepository.cs" />
+    <Compile Include="HR\REC\WorkingBackgroundRepository.cs" />
+    <Compile Include="HR\REC\WorkingExpectationRepository.cs" />
+    <Compile Include="Report\HR\CAFRRepository.cs" />
+    <Compile Include="Report\HR\HRReportRespository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\TS\MonthlyOTReportRespository.cs" />
+    <Compile Include="Report\TS\MonthlyTimeKeepingReportRespository.cs" />
+    <Compile Include="Report\TS\YearlyOTReportRepository.cs" />
+    <Compile Include="Settings\Globals.cs" />
+    <Compile Include="HR\SI\ConvalescenceRepository.cs" />
+    <Compile Include="HR\SI\HICardRepository.cs" />
+    <Compile Include="HR\SI\HospitalRepository.cs" />
+    <Compile Include="HR\SI\InsNoticeDataRepository.cs" />
+    <Compile Include="HR\SI\InsuranceInformationRepository.cs" />
+    <Compile Include="HR\SI\InsuranceLeaveRepository.cs" />
+    <Compile Include="HR\SI\PreviousRecordRepository.cs" />
+    <Compile Include="Sys\Application\ApplicationSettings.cs" />
+    <Compile Include="Sys\Contents\ContentItemRepository.cs" />
+    <Compile Include="Sys\Menus\MenuRepository.cs" />
+    <Compile Include="Sys\Common\DelegateRepository.cs" />
+    <Compile Include="Sys\FileManager\FileRepository.cs" />
+    <Compile Include="Sys\FileManager\FolderRespository.cs" />
+    <Compile Include="Sys\ModuleFunctions\FunctionListRespository.cs" />
+    <Compile Include="Sys\Permissions\FunctionPermissionRepository.cs" />
+    <Compile Include="Sys\Modules\ModuleRepository.cs" />
+    <Compile Include="Sys\Common\OnlineProcessDetailRepository.cs" />
+    <Compile Include="Sys\Common\OnlineProcessMasterRepository.cs" />
+    <Compile Include="Sys\Common\OnlineProcessRepository.cs" />
+    <Compile Include="Sys\Pages\PageRepository.cs" />
+    <Compile Include="Sys\Common\PayrollParameterRepository.cs" />
+    <Compile Include="Sys\Application\ApplicationRepository.cs" />
+    <Compile Include="Sys\Application\ApplicationSettingRepository.cs" />
+    <Compile Include="Sys\Permissions\MenuPermissionRepository.cs" />
+    <Compile Include="Sys\Permissions\ModulePermissionRepository.cs" />
+    <Compile Include="Sys\Permissions\PagePermissionRepository.cs" />
+    <Compile Include="Sys\Permissions\PermissionRepository.cs" />
+    <Compile Include="Sys\Roles\RoleRepository.cs" />
+    <Compile Include="Sys\Session\AjaxAuthorizeAttribute.cs" />
+    <Compile Include="Sys\Session\AjaxEmpAuthorizeAttribute.cs" />
+    <Compile Include="Sys\Session\AjaxEmpSessionActionFilter.cs" />
+    <Compile Include="Sys\Session\AjaxSessionActionFilter.cs" />
+    <Compile Include="Sys\Session\SessionExpiration.cs" />
+    <Compile Include="Sys\Session\SessionManager.cs" />
+    <Compile Include="Sys\Common\SYS_tblDataPermissionRepository.cs" />
+    <Compile Include="Sys\ModuleFunctions\SYS_tblFunctionListRepository.cs" />
+    <Compile Include="Sys\Common\SYS_tblParameterRepository.cs" />
+    <Compile Include="Sys\Roles\UserRoleRepository.cs" />
+    <Compile Include="HR\Termination\TerminationParameterRespository.cs" />
+    <Compile Include="HR\Termination\TerminationRespository.cs" />
+    <Compile Include="HR\Timesheet\AssignEmpScheduleRepository.cs" />
+    <Compile Include="HR\Timesheet\CyclicRepository.cs" />
+    <Compile Include="HR\Timesheet\HolidaysRepository.cs" />
+    <Compile Include="HR\Timesheet\IndividualOTRepository.cs" />
+    <Compile Include="HR\Timesheet\LeaveDayTypeRepository.cs" />
+    <Compile Include="HR\Timesheet\LeaveTypeRepository.cs" />
+    <Compile Include="HR\Timesheet\MTLChildRepository.cs" />
+    <Compile Include="HR\Timesheet\OTLimitByStaffRepository.cs" />
+    <Compile Include="HR\Timesheet\OTNightRecordReportRepository.cs" />
+    <Compile Include="HR\Timesheet\OTRecordReportRepository.cs" />
+    <Compile Include="HR\Timesheet\OTRequestRepository.cs" />
+    <Compile Include="HR\Timesheet\ReconciliationRepository.cs" />
+    <Compile Include="HR\Timesheet\ScheduleChangeRepository.cs" />
+    <Compile Include="HR\Timesheet\ScheduleRepository.cs" />
+    <Compile Include="HR\Timesheet\ShiftRepository.cs" />
+    <Compile Include="HR\Timesheet\TimeKeepingReportRepository.cs" />
+    <Compile Include="HR\Timesheet\TimekeepingRepository.cs" />
+    <Compile Include="HR\Timesheet\WorkingScheduleReportRepository.cs" />
+    <Compile Include="HR\TR\AnswerTypeRepository.cs" />
+    <Compile Include="HR\TR\EvaluationTemplateReposiory.cs" />
+    <Compile Include="HR\TR\TrainingAnswerTypeRepository.cs" />
+    <Compile Include="HR\TR\TrainingApprisalItemRepository.cs" />
+    <Compile Include="HR\TR\TrainingApprisalPartRepository.cs" />
+    <Compile Include="HR\TR\TrainingCategoryRepository.cs" />
+    <Compile Include="HR\TR\TrainingCodeRepository.cs" />
+    <Compile Include="HR\TR\TrainingCourseRepository.cs" />
+    <Compile Include="HR\TR\TrainingEvaluationForEmployeeRepository.cs" />
+    <Compile Include="HR\TR\TrainingEvaluationRepository.cs" />
+    <Compile Include="HR\TR\TrainingExpenseRepository.cs" />
+    <Compile Include="HR\TR\TrainingFormRepository.cs" />
+    <Compile Include="HR\TR\TrainingLocationRepository.cs" />
+    <Compile Include="HR\TR\TrainingPlanRepository.cs" />
+    <Compile Include="HR\TR\TrainingProviderRepository.cs" />
+    <Compile Include="HR\TR\TrainingRequestRepository.cs" />
+    <Compile Include="HR\TR\TrainingTypeRepository.cs" />
+    <Compile Include="Sys\Users\UserRepository.cs" />
+    <Compile Include="Extensions\HtmlExtensions\CKEditorHelpers.cs" />
+    <Compile Include="Extensions\HtmlExtensions\CustomHelpers.cs" />
+    <Compile Include="Extensions\HtmlExtensions\HtmlRequestHelper.cs" />
+    <Compile Include="UI\Layout\LayoutAttribute .cs" />
+    <Compile Include="UI\Layout\LayoutType.cs" />
+    <Compile Include="UI\Layout\SectionExtensions.cs" />
+    <Compile Include="UI\Skins\SkinRepository.cs" />
+    <Compile Include="UI\Skins\SkinBackgrounds.cs" />
+    <Compile Include="UI\Skins\SkinTemplateRepository.cs" />
+    <Compile Include="UI\Skins\SkinControl.cs" />
+    <Compile Include="UI\Skins\SkinPackages.cs" />
+    <Compile Include="UI\Skins\ThemeViewEngine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sys\Mail\MailTypes.xslt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eagle.Common\Eagle.Common.csproj">
+      <Project>{50709a7a-41c3-47d6-8c85-35c899cbae0f}</Project>
+      <Name>Eagle.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eagle.Core\Eagle.Core.csproj">
+      <Project>{d1276a46-d078-4c31-8a18-31eaa3da6496}</Project>
+      <Name>Eagle.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eagle.Resource\Eagle.Resource.csproj">
+      <Project>{5e79bc1f-181c-4d80-bf4d-1578c664e425}</Project>
+      <Name>Eagle.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eagles.Model\Eagle.Model.csproj">
+      <Project>{c5c30f8f-bb95-4c91-b11c-9244e91915df}</Project>
+      <Name>Eagle.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ElFinder.Net\ElFinder.Net.csproj">
+      <Project>{ee8da138-7eda-4eb5-b3fd-377763d5eaae}</Project>
+      <Name>ElFinder.Net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

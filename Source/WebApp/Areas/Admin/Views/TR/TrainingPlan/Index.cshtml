@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingPlan;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../TR/TrainingPlan/_Reset")
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    var Controller = 'TrainingPlan';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Post)
+    var urlApproval = areas + '/' + Controller + '/Approval';
+
+    //Url redirect (Post)
+    var urlRedirect = areas + '/' + 'TrainingPlanList' + '/Index';
+
+    var urlAddItem = areas + '/' + Controller + '/AddItem';
+
+    $('#changeSidebarPos').trigger('click');
+</script>
+<script src="~/Scripts/app/common/ValidateUtils.js"></script>
+<script src="~/Scripts/app/common/utility.js"></script>
+
+<script type="text/javascript">
+    (function ($) {
+        function AddItem() {
+            $("body").addClass("loading");
+            if ($('#btnApproval').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: urlAddItem,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $('#MainBody').html(data);
+                            AlterAddSuccess();
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            $('#divEdit').html(data);
+                        }
+                    }
+                });
+            }
+        }
+        function AddNew(mode) {
+            $("body").addClass("loading");
+            if ($('#btnAdd').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: urlAddNew + '?mode=' + mode,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            window.location.href = urlRedirect;
+                        } else if (data == 'timeout') {
+                            window.location.href = '/';
+                        } else {
+                            $('#divEdit').html(data);
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        }
+                    }
+                });
+            }
+        }
+        function Approval(mode) {
+            $("body").addClass("loading");
+            if ($('#btnApproval').hasClass("AddModel")) {
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: urlApproval + '?mode=' + mode,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: urlReset,
+                                success: function (data) {
+                                    $('#MainBody').html(data);
+                                    AlterAddSuccess();
+                                }
+                            });
+                        } if (data == 'successWithoutMail') {
+                            AlterWarning('@Eagle.Resource.LanguageResource.TrainingPlanApprovalSuccessWithoutSendMail');
+                        $.ajax({
+                            type: "GET",
+                            url: urlReset,
+                            success: function (data) {
+                                $('#MainBody').html(data);
+                            }
+                        });
+                    }
+                    else if (data == 'timeout') {
+                        window.location.href = '/';
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        }
+    }
+        $(document).on("click", ".deleteItem", function () {
+            $("body").addClass("loading");
+            var lsID = $(this).data('id');  // ID cua dong du lieu      
+            var urlDelete = areas + "/TrainingPlan/_DeleteExpense?id=" + lsID;
+            $.ajax({
+                type: "POST",
+                url: urlDelete,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $('#divEdit').html(data);
+                }
+            });
+        });
+
+        //Add and update post action    
+        $(document).on("click", "#btnAdd", function () {
+            if (!$("#frmAdd").valid()) { // Not Valid
+                return false;
+            } else {
+                AddNew('Save');
+            }
+        });
+        $(document).on("click", "#btnSendForApproval", function () {
+            if (!$("#frmAdd").valid()) { // Not Valid
+                return false;
+            } else {
+                AddNew('SendForApproval');
+            }
+        });
+        $(document).on("click", "#btnApproval", function () {
+
+            Approval('Approval');
+        });
+        $(document).on("click", "#btnUnapproval", function () {
+
+            Approval('UnApproval');
+        });
+
+        $(document).on("click", "#btnAddExpense", function () {
+            if ($('#SelectLSTrainingExpenseID').val() == '') {
+                AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseName)');
+            return;
+        }
+        if ($('#Expense_Cost').val() == '') {
+            AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseCost)');
+            return;
+        }
+        if ($('#SelectLSTrainingCurrencyID').val() == '') {
+            AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseCurrencyName)');
+            return;
+        }
+        AddItem();
+    });
+
+        $(document).on("click", "#btnReset", function () {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "GET",
+                url: urlReset,
+                success: function (data) {
+                    $('#MainBody').html(data);
+                }
+            });
+        });
+        $(document).on("click", "#btnList", function () {
+            window.location.href = urlRedirect;
+        });
+    })(jQuery);
+</script>

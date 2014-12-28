@@ -1,0 +1,13 @@
+﻿@using Eagle.WebApp.Areas.Admin.Reports.PR
+
+@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer1";
+    settings.Report = (PIT02KKXtraReport)ViewData["Report"];
+    settings.AutoSize = false;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = 1000;    
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "PIT02KKReport", Action = "LoadPIT02KKReportViewer" };
+    settings.ExportRouteValues = new { Controller = "PIT02KKReport", Action = "ExportPIT02KKData" };
+}).GetHtml()

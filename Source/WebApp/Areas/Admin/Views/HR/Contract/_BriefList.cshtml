@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Eagle.Model.HR.ContractViewModel>
+<div id="table_list" class="table datatable">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>              
+                <th>
+                    @Html.DisplayNameFor(model => model.ContractNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSContractTypeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpName)
+                </th>               
+                <th>
+                    @Html.DisplayNameFor(model => model.ContractStatusName)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContractNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSContractTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpName)
+                    </td>                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContractStatusName)
+                    </td>
+                    <td class="table-actions text_center center no-sort">
+                        <a data-id="@item.ContractID" id="editItem_Contract" title="Edit" class="ico ico-edit editItem_Contract">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.ContractID" id="deleteItem_Contract" title="Delete" class="ico ico-delete deleteItem_Contract">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

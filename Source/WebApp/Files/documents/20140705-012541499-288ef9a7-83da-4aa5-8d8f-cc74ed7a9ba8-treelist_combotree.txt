@@ -1,0 +1,88 @@
+LoadComboTree: function (selectId, hiddenId, actionUrl, isRequired, selectedValue) {
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+                    if (selectedValue == undefined || selectedValue == null)
+                        selectedValue = 0;
+                    var selectBox = $('#' + selectId);
+
+                    var flag = true;
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            $('#' + hiddenId).val(selectedValue);
+                            DataMgr.ValidateLSCompanyID(hiddenId, selectedValue);
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },
+                ValidateLSCompanyID: function (elementId, selectedValue) {
+                    // nếu mà là note cuối cùng cho qua
+                    // note cấp trên thì báo lỗi                   
+                    if (elementId != undefined && elementId != null) {
+
+                        if (selectedValue != undefined && selectedValue != null) {
+                            var error_message = '';
+                          @*  if (selectedValue == '0') {
+                                error_message = '@Eagle.Resource.LanguageResource.PleaseSelectAnItem';
+                                DataMgr.AddTooltip(elementId, error_message);
+                            } else {*@
+                                var selectedNode = $('div[node-id=' + selectedValue + ']');
+                                if (!$(selectedNode).children("span.tree-icon").hasClass("tree-file")) {
+                                    var error_message = '@string.Format(Eagle.Resource.LanguageResource.ANotIsB,Eagle.Resource.LanguageResource.LastCompanyDefine,Eagle.Resource.LanguageResource.LastCompanyDefine)';
+                                    DataMgr.AddTooltip(elementId, error_message);
+                                }
+                                else {
+                                    DataMgr.RemoveTooltip(elementId);
+                                }
+                            //}
+                        } else {
+                            error_message = '@Eagle.Resource.LanguageResource.InValid';
+                            DataMgr.AddTooltip(elementId, error_message);
+                        }
+                    }
+                },
+                RemoveTooltip: function (elementId) {
+                    //var element = $('#' + elementId);
+                    //element.qtip('destroy');
+                    var qtipId = $('#qtip-' + elementId);
+                    qtipId.remove();
+                },
+                AddTooltip: function (elementId, message) {
+                    if (elementId != undefined && elementId != null) {
+                        var qtipId = 'qtip-' + elementId;
+                        var element = $('input[type=hidden][id="' + elementId + '"]');
+                        var divContent = $('<div/>', {
+                            id: qtipId + '-content',
+                            // 'class': 'qtip qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            'class': 'ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: { 'aria-atomic': "true" },
+                            html: '<span id="' + qtipId + '-content-span" for="' + elementId + '"></span>'
+                        });
+
+                        var divWrapper = $('<div/>', {
+                            id: qtipId,
+                            'class': 'qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: {
+                                style: "z-index: 15003; display: block; top: 375px; left: 737.467px;",
+                                tracking: "false", role: "alert", "aria-live": "polite", "aria-atomic": "false",
+                                "aria-describedby": "qtip-1-content", "aria-hidden": "false", "data-qtip-id": "1",
+                            }
+                        });
+
+                        if (element.siblings('#' + qtipId).length == 0) {
+                            divWrapper.append(divContent);
+                            divWrapper.insertAfter(element);
+                        }
+                        $('#' + qtipId + '-content-span').html(message);
+                        element.show();
+                    }
+                },

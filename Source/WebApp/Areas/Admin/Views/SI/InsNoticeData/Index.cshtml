@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_InsNoticeData;   
+}
+
+
+<form id="frmAdd" class="form-horizontal user-group-management">
+<div id="alertMessageBox">
+</div>
+    <div id="divHeader">
+        @Html.Action("_SearchHeaderEmp","InsNoticeData",null)
+    </div>
+    <hr />
+    <!--/row-->
+    <div class="row">
+        <div class="footbar">
+            <input type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.btnSearch" class="btn" />
+            <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" />
+        </div>
+    </div>
+    <!--End.row-->
+    <div id="divContent">
+        @Html.Action("_List","InsNoticeData",null)
+    </div>
+</form>
+
+<script type="text/javascript">
+    $('#changeSidebarPos').trigger('click');
+    InvokeDateTimePicker();
+
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        //if ($(".chkActive:checked").val() != 'True')
+        //{
+        //    //Add => Edit
+        //    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+        //}
+        //Search danh sach nhan vien 
+        var moduleId = 10;
+        var url = areas + '/InsNoticeData/_Search?Status=' + $(".chkActive:checked").val() + "&ModuleID=" + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divContent').html(data);
+            }
+        });
+        
+    });
+    // save and update
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        var moduleId = 10;
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/InsNoticeData/Save';            
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $('#btnSearch').trigger('click');
+                    } else {
+                        $('#frmAdd').html(data);
+                        return false;
+                    }
+                }
+            });
+        } 
+    });
+
+    // nut check all tren header popup
+    $(document).on("change", "#chkCheckAll", function () {
+        var check = $(this).prop("checked");
+        $("input.chkCheck").prop("checked", check);
+
+    });
+
+</script>

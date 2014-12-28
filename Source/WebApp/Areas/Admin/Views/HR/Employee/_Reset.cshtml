@@ -1,0 +1,1660 @@
+﻿@model Eagle.Model.HR.EmployeeEditModel
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform" }))
+{ 
+    <div class="row">
+        <div id="alertMessageBox" aria-hidden="true" aria-labelledby="alertMessage" role="dialog" class="modal hide fade">
+            <div class="modal-body">
+                <div id="alertMessage">
+                    @if (ViewBag.DisplayErrorMessage == true)
+                    {
+                <div class="@ViewBag.CssClass">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message
+                </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>    
+    
+    <div id="right_accordion" class="accordion-group">
+        <div class="accordion-heading toolbar">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                <span class="heading-tite">@Eagle.Resource.LanguageResource.FormArea</span>
+            </a>
+        </div>
+        <div id="form_accordion" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <div class="accordion-content">   
+                    <div class="row">
+                        <div id="collapsedContent">                                
+                            <div class="row">
+                                @*<div class="lead">Please fill in the blanks with requirement which is marked by asterisk</div>*@
+                                <ul class="nav nav-tabs" id="myTab">
+                                    <li id="tab-1" class="active"><a href="#pane-1" data-toggle="tab">@Eagle.Resource.LanguageResource.GeneralInfo</a></li>
+                                    <li id="tab-2"><a href="#pane-2" data-toggle="tab">@Eagle.Resource.LanguageResource.Contract</a></li>
+                                    <li id="tab-3"><a href="#pane-3" data-toggle="tab">@Eagle.Resource.LanguageResource.CultureEducationStudies</a></li>                                    
+                                    <li id="tab-4"><a href="#pane-4" data-toggle="tab">@Eagle.Resource.LanguageResource.Others</a></li>
+                                </ul>
+
+                                <div id="myTabContent" class="tab-content responsive">
+                                       
+                                    <div class="tab-pane  fade in active" id="pane-1">
+                                        @Html.HiddenFor(model => model.EmpID)
+                                        @Html.Partial("../HR/Employee/_EditBasics")
+                                    </div>
+
+                                     <div class="tab-pane fade" id="pane-2">                                            
+                                        @Html.Partial("../HR/Employee/_EditContract")
+                                    </div>
+                                       
+                                    <div class="tab-pane fade" id="pane-3">                                            
+                                        @Html.Partial("../HR/Employee/_EditQualification")
+                                    </div>
+                                       
+                                    <div class="tab-pane fade" id="pane-4">
+                                            @Html.Partial("../HR/Employee/_EditAccountInfo")
+                                    </div>                                      
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="row">
+                        <div class="footbar">
+                            <input type="button" id="btnReset" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+                            <input type="button" id="btnEdit" class="btn btn-info edit" value="@Eagle.Resource.LanguageResource.Save" />
+                        </div>
+                    </div>
+                </div>                     
+            </div>
+        </div>
+    </div>
+}
+
+@*@Html.Action("jqueryval", "Common", null)*@
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                            case 1:
+                                DataMgr.ReloadData(data);
+                                break;
+                            case 2:
+                                DataMgr.ResetControls();
+                                break;
+                            case 3:
+                                DataMgr.BindDetails(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+                    InvokeQtip();
+                    CheckEdit();
+
+                    // Hide the "busy" Gif at load:
+                    // $("#divProcessing").hide();
+                    //$('#IDIssuedPlace').find('option:first').attr("selected", "selected");
+
+                    if ($('input[type=hidden][name=FileId]').val() == null || $('input[type=hidden][name=FileId]').val() == '')
+                        $('#ImagePreviewBox').css('display', 'none');
+                    else
+                        $('#ImagePreviewBox').css('display', 'block');
+
+                    ShowDateTimePicker();
+                    //$("form").data("validator").settings.ignore = ".data-val-ignore, .ignore, :hidden, :disabled";
+                    $.validator.methods["date"] = function (value, element) { return true; }
+
+                    DataMgr.RemoveQtip();
+                    DataMgr.HandleTabEvent();
+                    //start handling checkbox event ==================================================================================
+                    DataMgr.HandleCheckBoxEventIsYOB("IsYOB", false, "dpDOB", "dpYOB");
+                    //DataMgr.HandleCheckBoxEvent("PayByBank", $("input[id=PayByBank]").is(":checked"));
+                    DataMgr.HandleCheckBoxEvent("SelfDeduction", $("input[id=SelfDeduction]").is(":checked"));
+                    DataMgr.HandleCheckBoxEvent("DependDeduction", $("input[id=DependDeduction]").is(":checked"));
+                    //end handling checkbox event ====================================================================================
+
+                    DataMgr.LoadComboTree('LSCompanyID', '@Url.Action("GetHierachicalList", "LS_tblCompany")', true);
+
+                    //START SELECT2 EVENTS -----------------------------------------------------------------------------------------------------------------------------------
+                    //Born Country - Province - District---------------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectBornLSCountryID', 'BornLSCountryID', 'BornLSCountryName',
+                        "selectBornLSProvinceID", "BornLSProvinceID", "BornLSProvinceName", "selectBornLSDistrictID", "BornLSDistrictID", "BornLSDistrictName");
+
+                    //Permanent Country - Province - District----------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectPLSCountryID', 'PLSCountryID', 'PLSCountryName',
+                        "selectPLSProvinceID", "PLSProvinceID", "PLSProvinceName", "selectPLSDistrictID", "PLSDistrictID", "PLSDistrictName");
+
+                    //Temporary Country - Province - District----------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectTLSCountryID', 'TLSCountryID', 'TLSCountryName',
+                        "selectTLSProvinceID", "TLSProvinceID", "TLSProvinceName", "selectTLSDistrictID", "TLSDistrictID", "TLSDistrictName");
+
+                    //Native Country - Province - District ----------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectNativeCountryID', 'NativeCountryID', 'NativeCountryName',
+                        "selectNativeProvinceID", "NativeProvinceID", "NativeProvinceName", "selectNativeDistrictID", "NativeDistrictID", "NativeDistrictName");
+
+                    //Company Deparment Section Manager ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "Employee")', 'selectManager', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputLineManager)', 'LineManagerID', 'LineManagerName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblLocation")', 'selectLSLocationID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputLocationName)', 'LSLocationID', 'LSLocationName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblProvince")', 'selectIDIssuedPlace', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputIDIssuedPlaceName)', 'IDIssuedPlace', 'IDIssuedPlaceName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblNationality")', 'selectLSNationalityID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputNationalityName)', 'LSNationalityID', 'LSNationalityName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblReligion")', 'selectLSReligionID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputReligionName)', 'LSReligionID', 'LSReligionName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblEthnic")', 'selectLSEthnicID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEthnicName)', 'LSEthnicID', 'LSEthnicName');
+
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblEducation")', 'selectLSEducationID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEducationName)', 'LSEducationID', 'LSEducationName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblMajor")', 'selectLSMajorID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputMajorName)', 'LSMajorID', 'LSMajorName');
+
+                    //END SELECT2 EVENTS -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                    //****************************************************************************************************************
+                    //Begin BANK - BRANCH *******************************************************************************************
+                    //****************************************************************************************************************
+                    DataMgr.PopulateBanksToDropDownList();
+                    $(document).on('change', '#selectBank', function () {
+                        //$(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        DataMgr.PopulateBankBranchesToDropDownList();
+                    });
+                    //****************************************************************************************************************
+                    //End BANK - BRANCH *********************************************************************************************
+                    //****************************************************************************************************************
+
+                    $("#modalEdit").draggable({ handle: ".modal-header" });
+                },
+                RemoveQtip: function () {
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                HandleTabEvent: function () {
+                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                        var currentTab = $(e.target).text(); // get current tab
+                        var lastTab = $(e.relatedTarget).text(); // get last tab
+                        var currentIndex = $(this).attr("href");
+                        var lastTabIndex = $(e.relatedTarget).attr("href");
+
+                        if (currentIndex == "#pane-1")
+                            $('.footbar').show();
+                        else if (currentIndex == "#pane-2")
+                            $('.footbar').hide();
+                        else if (currentIndex == "#pane-3")
+                            $('.footbar').hide();
+                        else if (currentIndex == "#pane-4")
+                            $('.footbar').show();
+                        else
+                            $('.footbar').show();
+
+                        //e.preventDefault();
+                        //$(this).tab('show');
+                    });
+                },
+                BindDataToTab: function () {
+                    var defaultButon = $("#EmpTypeButtonGroup > .btn[id=button-1]");
+                    defaultButon.addClass("active").siblings().removeClass("active").show();
+                    DataMgr.LoadData(defaultButon.attr("data-url"), defaultButon.attr("data-id"));
+
+                    $("#EmpTypeButtonGroup > .btn").click(function () {
+                        $(this).addClass("active").siblings().removeClass("active").show();
+                        var id = $(this).attr("id");
+                        var url = $(this).attr("data-url");
+                        var empid = $(this).attr("data-id");
+                        DataMgr.LoadData(url, empid);
+                    });
+                },
+                BindEvents: function () {
+                    //START SELECT2 EVENTS -------------------------------------------------------------------------------------------------------------------------------------
+                    //BORNLS Country - Province - District
+                    $('#selectBornLSCountryID').on("change", function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectBornLSProvinceID', 'BornLSProvinceID', 'BornLSProvinceName', 'BornLSCountryID', 'selectBornLSDistrictID', 'BornLSDistrictID', 'BornLSDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectBornLSDistrictID', 'BornLSDistrictID', 'BornLSDistrictName', 'BornLSProvinceID');
+                    });
+                    $('#selectBornLSProvinceID').on("change", function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectBornLSDistrictID', 'BornLSDistrictID', 'BornLSDistrictName', 'BornLSProvinceID');
+                    });
+
+                    //PLS Country - Province - District
+                    $('#selectPLSCountryID').on("change", function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectPLSProvinceID', 'PLSProvinceID', 'PLSProvinceName', 'PLSCountryID', 'selectPLSDistrictID', 'PLSDistrictID', 'PLSDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectPLSDistrictID', 'PLSDistrictID', 'PLSDistrictName', 'PLSProvinceID');
+                    });
+                    $('#selectPLSProvinceID').on("change", function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectPLSDistrictID', 'PLSDistrictID', 'PLSDistrictName', 'PLSProvinceID');
+                    });
+
+                    //TLS Country - Province - District
+                    $('#selectTLSCountryID').on("change", function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectTLSProvinceID', 'TLSProvinceID', 'TLSProvinceName', 'TLSCountryID', 'selectTLSDistrictID', 'TLSDistrictID', 'TLSDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectTLSDistrictID', 'TLSDistrictID', 'TLSDistrictName', 'TLSProvinceID');
+                    });
+                    $('#selectTLSProvinceID').on("change", function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectTLSDistrictID', 'TLSDistrictID', 'TLSDistrictName', 'TLSProvinceID');
+                    });
+
+                    //Native Country - Province - District ===============================================================================================================================
+                    $(document).on('change', '#selectNativeCountryID', function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectNativeProvinceID', 'NativeProvinceID', 'NativeProvinceName', 'NativeCountryID', 'selectNativeDistrictID', 'NativeDistrictID', 'NativeDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectNativeDistrictID', 'NativeDistrictID', 'NativeDistrictName', 'NativeProvinceID');
+                    });
+
+                    $(document).on('change', '#selectNativeProvinceID', function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectNativeDistrictID', 'NativeDistrictID', 'NativeDistrictName', 'NativeProvinceID');
+                    });
+
+                    $(document).on('change', '#BloodType', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                    });
+
+                    //****************************************************************************************************************
+                    //Begin BANK - BRANCH *******************************************************************************************
+                    //****************************************************************************************************************
+                    //Xu ly bank popup
+                    $(document).on("click", "#btnAdd_Bank", function () {
+                        DataMgr.PopulatePopupBank();
+                    });
+
+                    $(document).on("click", "#btnAdd_BankBranch", function () {
+                        DataMgr.PopulatePopupBankBranch();
+                    });
+
+                    $(document).on('change', '#LSBankID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        DataMgr.PopulateBankBranchesToDropDownList($("input[name=selectedLSBankBranchID]").val());
+                    });
+
+                    $(document).on("click", "#btnReload_Bank", function () {
+                        //var selectedValue = $(this).attr('data-id');
+                        //var selectedValue = $("input[name=selectedLSBankID]").val();
+                        var isClosed = $(this).attr('data-isclosed');
+                        DataMgr.PopulateBanksToDropDownList();
+                        if (isClosed != undefined && isClosed != null && isClosed != '' && isClosed.toLowerCase() == 'true')
+                            hideContentPopUp();
+                    });
+
+                    $(document).on("click", "#btnReload_BankBranch", function () {
+                        // var selectedValue = $(this).attr('data-id');
+                        //var selectedValue = $("input[name=selectedLSBankBranchID]").val();
+                        var isClosed = $(this).attr('data-isclosed');
+                        DataMgr.PopulateBankBranchesToDropDownList();
+                        if (isClosed != undefined && isClosed != null && isClosed != '' && isClosed.toLowerCase() == 'true')
+                            hideContentPopUp();
+                    });
+                    //****************************************************************************************************************
+                    //End BANK - BRANCH *********************************************************************************************
+                    //****************************************************************************************************************
+
+                    $(document).on("keyup keydown", "#IDNo", function () {
+                        $(this).val($(this).val().toUpperCase());
+                    });
+
+                    $(document).on("keyup keydown", "#FirstName", function () {
+                        //DataMgr.FormatString(this);
+                        var first_name = $(this).val();
+                        var last_name = $("#LastName").val();
+                        var full_name = last_name + " " + first_name;
+                        setTimeout(function () {
+                            $('#EmergencyContact').val('');
+                            $('#AccountName').val('');
+
+                            $('#EmergencyContact').val(full_name);
+                            $('#AccountName').val(full_name);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#LastName", function () {
+                        //DataMgr.FormatString(this);
+                        var first_name = $("#FirstName").val();
+                        var last_name = $(this).val();
+                        var full_name = last_name + " " + first_name;
+                        setTimeout(function () {
+                            $('#EmergencyContact').val('');
+                            $('#AccountName').val('');
+
+                            $('#EmergencyContact').val(full_name);
+                            $('#AccountName').val(full_name);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#PAddress", function () {
+                        var text = $(this).val();
+                        setTimeout(function () {
+                            $('#EmergencyAddess').val('');
+                            $('#EmergencyAddess').val(text);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#Telephone", function () {
+                        var text = $(this).val();
+                        setTimeout(function () {
+                            $('#EmergencyPhone').val(text);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#Mobile", function () {
+                        var text = $(this).val();
+                        setTimeout(function () {
+                            $('#EmergencyMobile').val(text);
+                        }, 50);
+                    });
+
+                    $('input[type="number"]').returnPressNumber();
+
+                    $("#FileUpload").change(function () {
+                        DataMgr.PreviewImage("FileUpload", 80, 80);
+                    });
+
+                    $('div[data-id="DOB"]').datetimepicker().on('changeDate', function (e) {
+                        var flag = validateBirthDate($(this).find('input[type=text]').attr("id"));
+                        if (flag == false)
+                            ShowToolTip("DOB", '@Html.Raw(Eagle.Resource.LanguageResource.BirthDateInvalid)');
+                        else
+                            CloseToolTip("DOB");
+                    });
+
+                    //Add and update post action
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$('#myform').valid()) { // Not Valid
+                            DataMgr.ValidateCompany("LSCompanyID");
+                            DataMgr.ValidateDOBYOB();
+                            //DataMgr.SetTabActive('tab-3', 'pane-3');
+                            return false;
+                        } else {
+                            DataMgr.RemoveQtip();
+                            // var flag = DataMgr.ValidateDOBYOB();
+                            //if (flag == true)
+                            //{
+                            flag = DataMgr.ValidateCompany("LSCompanyID");
+                            if (flag == true)
+                                DataMgr.UpdateData();
+                        }
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.GetDetails();
+                    });
+                },
+                ValidateDOBYOB: function () {
+                    var result = false;
+                    var IsYOB = $("#IsYOB").is(":checked");
+                    var DOB = $("#DOB").val();
+                    var YOB = $("#YOB").val();
+
+                    if (IsYOB == false) {
+                        if (DOB != '') {
+                            result = validateBirthDay(DOB);
+                            if (result == false)
+                                ShowToolTip("DOB", '@Html.Raw(Eagle.Resource.LanguageResource.InValidBirthDate)');
+                            //result = true;
+                        }
+                        else
+                            ShowToolTip("DOB", '@Html.Raw(Eagle.Resource.LanguageResource.Required)');
+                    } else {
+                        CloseToolTip("DOB");
+                        if (YOB != '')
+                            result = true;
+                        else
+                            ShowToolTip("YOB", '@Html.Raw(Eagle.Resource.LanguageResource.Required)');
+                    }
+                    return result;
+                },
+                FormatString: function (obj) {
+                    var strvalue;
+                    if (eval(obj))
+                        strvalue = eval(obj).value;
+                    else
+                        strvalue = obj;
+                    var str;
+                    str = strvalue.toString().replace(/\$|\,/g, '');
+
+                    if (!isNaN(str))
+                        str = "";
+
+                    eval(obj).value = str;
+                },
+                LoadComboTree: function (selectId, actionUrl, isRequired) {
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+
+                    var hiddenBox = $('input[type=hidden][name="' + selectId + '"]');
+                    var selectBox = $('#' + selectId);
+                    var selectedValue = selectBox.val();
+
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onSelect: function (node) {
+                            var tree = $(this).tree;
+                            //Selected node is a leaf node, if it is not a leaf node, clear the check
+                            var isLeaf = tree('isLeaf', node.target);
+                            if (!isLeaf) {
+                                var error_message = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectADepartment)';
+                                DataMgr.AddTooltip(selectId, error_message);
+                            } else {
+                                DataMgr.RemoveTooltip(selectId);
+                            }
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            hiddenBox.val(selectedValue);
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },
+                SetTabActive: function (tabId, panelId) {
+                    var tabPanel = $('li[id="' + tabId + '"]');
+                    var panel = $('div[id="' + panelId + '"]');
+
+                    if (!tabPanel.hasClass('active'))
+                        tabPanel.addClass('active').siblings().removeClass('active');
+
+                    if (!panel.hasClass('active'))
+                        panel.addClass('active in').siblings().removeClass('active');
+                },
+                ValidateCompany: function (elementId) {
+                    // nếu mà là note cuối cùng cho qua
+                    // note cấp trên thì báo lỗi
+                    var flag = false;
+                    var error_message = '';
+
+                    if (elementId != undefined && elementId != null) {
+                        var selectedValue = $('input[type=hidden][name="' + elementId + '"]').val();
+                        if (selectedValue != undefined && selectedValue != null) {
+                            if (selectedValue == '0') {
+                                error_message = '@Eagle.Resource.LanguageResource.PleaseChooseCompany';
+                                DataMgr.AddTooltip(elementId, error_message);
+                            } else {
+                                var cb_tree = $("#" + elementId).combotree('tree');	// get the tree object
+                                var node = cb_tree.tree('getSelected');		// get selected node
+
+                                if (!$("#" + elementId).tree('isLeaf', node.target)) {
+                                    var error_message = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectADepartment)';
+                                    DataMgr.AddTooltip(elementId, error_message);
+                                } else {
+                                    DataMgr.RemoveTooltip(elementId);
+                                    flag = true;
+                                }
+                            }
+                        } else {
+                            error_message = '@Eagle.Resource.LanguageResource.InValid';
+                            DataMgr.AddTooltip(elementId, error_message);
+                        }
+                    }
+                    return flag;
+                },
+                AddTooltip: function (elementId, message) {
+                    if (elementId != undefined && elementId != null) {
+                        var qtipId = 'qtip-' + elementId;
+                        var element = $('input[type=hidden][name="' + elementId + '"]');
+
+                        if (element.hasClass('input-validation-error'))
+                            element.addClass('input-validation-error');
+                        element.attr({ 'data-hasqtip': elementId, 'aria-describedby': qtipId });
+
+                        var valSpan = element.parents().siblings('span[data-valmsg-for="' + elementId + '"]');
+                        valSpan.addClass('field-validation-error').removeClass('field-validation-valid');
+
+                        var divContent = $('<div/>', {
+                            id: qtipId + '-content',
+                            // 'class': 'qtip qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            'class': 'ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: { 'aria-atomic': "true" },
+                            html: '<span id="' + qtipId + '-content-span" for="' + elementId + '"></span>'
+                        });
+
+                        var divWrapper = $('<div/>', {
+                            id: qtipId,
+                            'class': 'qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: {
+                                style: "z-index: 15003; display: block; top: 375px; left: 737.467px;",
+                                tracking: "false", role: "alert", "aria-live": "polite", "aria-atomic": "false",
+                                "aria-describedby": "qtip-1-content", "aria-hidden": "false", "data-qtip-id": "1",
+                            }
+                        });
+
+                        if (valSpan.siblings('#' + qtipId).length == 0) {
+                            divWrapper.append(divContent);
+                            divWrapper.insertAfter(valSpan);
+                        }
+                        showMessageWithTitle('warning', message, "warning", 3000);
+                        $('#' + qtipId + '-content-span').html(message);
+                        element.show();
+                    }
+                },
+                RemoveTooltip: function (elementId) {
+                    var qtipId = $('#qtip-' + elementId);
+                    qtipId.remove();
+                },
+                PopulatePopupBank: function () {
+                    var service_url = "/Admin/LS_tblBank/Index";
+                    $.ajax({
+                        type: "GET",
+                        url: service_url,
+                        success: function (data, statusCode, xhr) {
+                            if (data.message == "timeout")
+                                window.location.reload();
+                            else
+                                showContentPopUp('@Html.Raw(Eagle.Resource.LanguageResource.BankManagement)', data);
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                PopulatePopupBankBranch: function () {
+                    var BankID = $("#LSBankID").val();
+                    if (BankID == undefined || BankID == null || BankID == 0) {
+                        showContentPopUp("@Eagle.Resource.LanguageResource.Warning", "@Eagle.Resource.LanguageResource.PleaseSelectBankBeforeSelectingBankBranch");
+                    } else {
+                        var params = { "BankID": $("#LSBankID").val(), "BankName": $("#LSBankID").find(":selected").text() };
+                        var service_url = "/Admin/LS_tblBankBranch/Index";
+                        $.ajax({
+                            type: "GET",
+                            url: service_url,
+                            data: params,
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout")
+                                    window.location.reload();
+                                else
+                                    showContentPopUp('@Html.Raw(Eagle.Resource.LanguageResource.BankBranchManagement)', data);
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    }
+                },
+                PopulateBanksToDropDownList: function () {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputBank)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblBank")';
+                    var pageSize = 20;
+                    var selectBox = $('#selectBank');
+                    var hiddenId = $("input[name=LSBankID]");
+                    var hiddenName = $("input[name=LSBankName]");
+                    var hiddenBankBranchId = $("input[name=LSBankBranchID]");
+                    var hiddenBankBranchName = $("input[name=LSBankBranchName]");
+
+                    selectBox.select2({
+                        placeholder: placeholder,
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        ajax: {
+                            url: requestUrl,
+                            dataType: 'json',
+                            params: {
+                                contentType: 'application/json; charset=utf-8'
+                            },
+                            quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                            data: function (term, page) {
+                                return {
+                                    pageSize: pageSize,
+                                    pageNum: page,
+                                    searchTerm: term
+                                };
+                            },
+                            results: function (data, page) {
+                                //Used to determine whether or not there are more results available,
+                                //and if requests for more data should be sent in the infinite scrolling
+                                var more = (page * pageSize) < data.Total;
+                                return { results: data.Results, more: more };
+                            }
+                        },
+                        //Chọn xong => làm gì đó
+                        formatSelection: function (result) {
+                            hiddenId.val(result.id)
+                            hiddenName.val(result.name)
+                            return result.name;
+                        },
+                        //Chọn xong => return kết quả hiển thị
+                        formatResult: function (result) {
+                            return result.name;
+                        },
+                        //Đầu tiên gán vào từ đầu
+                        initSelection: function (element, callback) {
+                            var selected_id = hiddenId.val();
+                            var selected_name = hiddenName.val();
+                            var data = { id: selected_id, name: selected_name, text: selected_name };
+                            callback(data);
+                        }
+                    });
+
+                    selectBox.select2('val', hiddenId.val());
+                    selectBox.on('select2-removed', function (e) {
+                        hiddenId.val('');
+                        hiddenName.val('');
+                        hiddenBankBranchId.val('');
+                        hiddenBankBranchName.val('');
+                    });
+
+                    selectBox.on('change', function (e) {
+                        hiddenBankBranchId.val('');
+                        hiddenBankBranchName.val('');
+                    });
+
+                    DataMgr.PopulateBankBranchesToDropDownList();
+                },
+                PopulateBankBranchesToDropDownList: function () {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputBankBranch)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblBankBranch")';
+                    var pageSize = 20;
+                    var selectBox = $('#selectBankBranch');
+                    var hiddenId = $("input[name=LSBankBranchID]");
+                    var hiddenName = $("input[name=LSBankBranchName]");
+
+                    var hiddenBankIdValue = $("input[name=LSBankID]").val();
+                    var requestParams = { "LSBankID": $("input[name=LSBankID]").val() };
+
+                    if (hiddenBankIdValue == '') {
+                        selectBox.select2("val", "");
+                        selectBox.attr('disabled', 'disabled');
+                    }
+                    else {
+                        selectBox.removeAttr('disabled');
+                        selectBox.select2({
+                            placeholder: placeholder,
+                            minimumInputLength: 0,
+                            allowClear: true,
+                            ajax: {
+                                url: requestUrl,
+                                dataType: 'json',
+                                quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                data: function (term, page) {
+                                    var params = {
+                                        pageSize: pageSize,
+                                        pageNum: page,
+                                        searchTerm: term
+                                    };
+                                    var objParams = $.extend({}, params, requestParams);
+                                    return objParams;
+                                },
+                                results: function (data, page) {
+                                    //Used to determine whether or not there are more results available,
+                                    //and if requests for more data should be sent in the infinite scrolling
+                                    var more = (page * pageSize) < data.Total;
+                                    return { results: data.Results, more: more };
+                                }
+                            },
+                            formatSelection: function (result) {
+                                hiddenId.val(result.id);
+                                hiddenName.val(result.name);
+                                return result.name;
+                            },
+                            formatResult: function (result) {
+                                return result.name;
+                            },
+                            initSelection: function (element, callback) {
+                                var selected_id = hiddenId.val();
+                                var selected_name = hiddenName.val();
+                                var data = { id: selected_id, name: selected_name, text: selected_name };
+                                callback(data);
+                            }
+                        });
+                        selectBox.select2('val', hiddenId.val());
+                        selectBox.on('select2-removed', function (e) {
+                            hiddenId.val('');
+                        });
+                    }
+                },
+                @* PopulateBanksToDropDownList: function (selected_value) {
+                    var select = $("#LSBankID");
+                    select.empty();
+                    $.getJSON("/Admin/LS_tblBank/GetBanks",
+                        function (classesData) {
+                            if (classesData.length > 0) {
+                                $.each(classesData, function (index, itemData) {
+                                    select.append($('<option/>', {
+                                        value: itemData.Value,
+                                        text: itemData.Text
+                                    }));
+                                });
+
+                                //var selected_value = $("input[name=selectedLSBankID]").val();
+                                if (selected_value != null && selected_value != '')
+                                    select.find('option[value="' + selected_value + '"]').attr('selected', true).siblings().attr('selected', false);
+                                else
+                                    select.find('option:first').attr("selected", "selected");
+                                DataMgr.PopulateBankBranchesToDropDownList($("input[name=selectedLSBankBranchID]").val());
+                            } else
+                                select.append($('<option/>', { value: '', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                        });
+                },
+                PopulateBankBranchesToDropDownList: function (selected_value) {
+                    var select = $("#LSBankBranchID");
+                    select.empty();
+                    var id = parseInt($("#LSBankID").val());
+
+                    var param_data = { "id": id };
+                    if (id > 0) {
+                        $.getJSON("/Admin/LS_tblBankBranch/GetBankBranchesByBankId", param_data,
+                         function (classesData) {
+                             if (classesData.length > 0) {
+                                 $.each(classesData, function (index, itemData) {
+                                     select.append($('<option/>', {
+                                         value: itemData.Value,
+                                         text: itemData.Text
+                                     }));
+                                 });
+                                // var selected_value = @Model.LSBankBranchID;
+                                // var selected_value = $("input[name=selectedLSBankBranchID]").val();
+                                 if (selected_value != null && selected_value != '')
+                                     select.find('option[value="' + selected_value + '"]').attr("selected", "selected");
+                                 else
+                                     select.find('option:first').attr('selected', true).siblings().attr('selected', false);
+                             } else {
+                                 select.append($('<option/>', { value: '', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                             }
+                         });
+                    } else {
+                        select.append($('<option/>', { value: '', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                        select.attr('disabled', 'disabled');
+                    }
+                },*@
+                PopulateCountriesIntoDropDownList: function (selectBoxCountryId, hiddenCountryId, hiddenCountryName,
+                    selectBoxProvinceId, hiddenProvinceId, hiddenProvinceName, selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName) {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCountryName)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblCountry")';
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBoxCountryId);
+                    var hiddenId = $("input[name=" + hiddenCountryId + "]");
+                    var hiddenName = $("input[name=" + hiddenCountryName + "]");
+                    var _hiddenProvinceId = $("input[name=" + hiddenProvinceId + "]");
+                    var _hiddenDistrictId = $("input[name=" + hiddenDistrictId + "]");
+
+                    selectBox.select2({
+                        placeholder: placeholder,
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        ajax: {
+                            url: requestUrl,
+                            dataType: 'json',
+                            params: {
+                                contentType: 'application/json; charset=utf-8'
+                            },
+                            quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                            data: function (term, page) {
+                                return {
+                                    pageSize: pageSize,
+                                    pageNum: page,
+                                    searchTerm: term
+                                };
+                            },
+                            results: function (data, page) {
+                                //Used to determine whether or not there are more results available,
+                                //and if requests for more data should be sent in the infinite scrolling
+                                var more = (page * pageSize) < data.Total;
+                                return { results: data.Results, more: more };
+                            }
+                        },
+                        //Chọn xong => làm gì đó
+                        formatSelection: function (result) {
+                            hiddenId.val(result.id)
+                            if (LanguageId == 124) {
+                                hiddenName.val(result.name)
+                                return result.name;
+                            } else {
+                                hiddenName.val(result.text)
+                                return result.text;
+                            }
+                        },
+                        //Chọn xong => return kết quả hiển thị
+                        formatResult: function (result) {
+                            if (LanguageId == 124) {
+                                return result.name;
+                            } else {
+                                return result.text;
+                            }
+                        },
+                        //Đầu tiên gán vào từ đầu
+                        initSelection: function (element, callback) {
+                            var selected_id = hiddenId.val();
+                            var selected_name = hiddenName.val();
+                            var data = { id: selected_id, name: selected_name, text: selected_name };
+                            callback(data);
+                        }
+                    });
+
+                    selectBox.select2('val', hiddenId.val());
+                    selectBox.on('select2-removed', function (e) {
+                        hiddenId.val('');
+                        _hiddenProvinceId.val('');
+                        _hiddenDistrictId.val('');
+                    });
+                    DataMgr.PopulateProvincesIntoDropDownList(selectBoxProvinceId, hiddenProvinceId, hiddenProvinceName, hiddenCountryId,
+                        selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName);
+
+                    DataMgr.PopulateDistrictsIntoDropDownList(selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName, hiddenProvinceId);
+                },
+                PopulateProvincesIntoDropDownList: function (selectBoxProvinceId, hiddenProvinceId, hiddenProvinceName, hiddenCountryId,
+                        selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName) {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputProvinceName)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblProvince")';
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBoxProvinceId);
+                    var hiddenId = $("input[name=" + hiddenProvinceId + "]");
+                    var hiddenName = $("input[name=" + hiddenProvinceName + "]");
+                    var requestParams = { "CountryID": $("input[name=" + hiddenCountryId + "]").val() };
+
+                    var _hiddenDistrictId = $("input[name=" + hiddenDistrictId + "]");
+
+                    if ($("input[name=" + hiddenCountryId + "]").val() == '') {
+                        selectBox.select2("val", "");
+                        selectBox.attr('disabled', 'disabled');
+                    }
+                    else {
+                        selectBox.removeAttr('disabled');
+                        selectBox.select2({
+                            placeholder: placeholder,
+                            minimumInputLength: 0,
+                            allowClear: true,
+                            ajax: {
+                                url: requestUrl,
+                                dataType: 'json',
+                                quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                data: function (term, page) {
+                                    var params = {
+                                        pageSize: pageSize,
+                                        pageNum: page,
+                                        searchTerm: term
+                                    };
+                                    var objParams = $.extend({}, params, requestParams);
+                                    return objParams;
+                                },
+                                results: function (data, page) {
+                                    //Used to determine whether or not there are more results available,
+                                    //and if requests for more data should be sent in the infinite scrolling
+                                    var more = (page * pageSize) < data.Total;
+                                    return { results: data.Results, more: more };
+                                }
+                            },
+                            formatSelection: function (result) {
+                                hiddenId.val(result.id);
+                                if (LanguageId == 124) {
+                                    hiddenName.val(result.name);
+                                    return result.name;
+                                } else {
+                                    hiddenName.val(result.text);
+                                    return result.text;
+                                }
+                            },
+                            formatResult: function (result) {
+                                if (LanguageId == 124) {
+                                    return result.name;
+                                } else {
+                                    return result.text;
+                                }
+                            },
+                            initSelection: function (element, callback) {
+                                var selected_id = hiddenId.val();
+                                var selected_name = hiddenName.val();
+                                var data = { id: selected_id, name: selected_name, text: selected_name };
+                                callback(data);
+                            }
+                        });
+                        selectBox.select2('val', hiddenId.val());
+                        selectBox.on('select2-removed', function (e) {
+                            hiddenId.val('');
+                            _hiddenDistrictId.val('');
+                        });
+                        DataMgr.PopulateDistrictsIntoDropDownList(selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName, hiddenProvinceId);
+                    }
+
+                },
+                PopulateDistrictsIntoDropDownList: function (selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName, hiddenProvinceId) {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputDistrictName)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblDistrict")';
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBoxDistrictId);
+                    var hiddenId = $("input[name=" + hiddenDistrictId + "]");
+                    var hiddenName = $("input[name=" + hiddenDistrictName + "]");
+                    var requestParams = { "ProvinceID": $("input[name=" + hiddenProvinceId + "]").val() };
+                    if ($("input[name=" + hiddenProvinceId + "]").val() == '') {
+                        selectBox.select2("val", "");
+                        selectBox.attr('disabled', 'disabled');
+                    }
+                    else {
+                        selectBox.removeAttr('disabled');
+                        selectBox.select2({
+                            placeholder: placeholder,
+                            minimumInputLength: 0,
+                            allowClear: true,
+                            ajax: {
+                                url: requestUrl,
+                                dataType: 'json',
+                                quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                data: function (term, page) {
+                                    var params = {
+                                        pageSize: pageSize,
+                                        pageNum: page,
+                                        searchTerm: term
+                                    };
+                                    var objParams = $.extend({}, params, requestParams);
+                                    return objParams;
+                                },
+                                results: function (data, page) {
+                                    //Used to determine whether or not there are more results available,
+                                    //and if requests for more data should be sent in the infinite scrolling
+                                    var more = (page * pageSize) < data.Total;
+                                    return { results: data.Results, more: more };
+                                }
+                            },
+                            formatSelection: function (result) {
+                                hiddenId.val(result.id);
+                                if (LanguageId == 124) {
+                                    hiddenName.val(result.name);
+                                    return result.name;
+                                } else {
+                                    hiddenName.val(result.text);
+                                    return result.text;
+                                }
+                            },
+                            formatResult: function (result) {
+                                if (LanguageId == 124) {
+                                    return result.name;
+                                } else {
+                                    return result.text;
+                                }
+                            },
+                            initSelection: function (element, callback) {
+                                var selected_id = hiddenId.val();
+                                var selected_name = hiddenName.val();
+                                var data = { id: selected_id, name: selected_name, text: selected_name };
+                                callback(data);
+                            }
+                        });
+                        selectBox.select2('val', hiddenId.val());
+                        selectBox.on('select2-removed', function (e) {
+                            hiddenId.val('');
+                        });
+                    }
+                },
+                HandleCheckBoxEventIsYOB: function (checkFieldId, chkStatus, divBox1, divBox2) {
+                    var name = $("#" + checkFieldId).attr("name");
+                    var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+                    var hiddenSelector = $("input:hidden[name=" + name + "]");
+                    var divContainer1 = $("#" + divBox1);
+                    var divContainer2 = $("#" + divBox2);
+
+                    checkBoxSelector.attr("checked", chkStatus);
+                    checkBoxSelector.val(chkStatus);
+                    hiddenSelector.val(chkStatus);
+
+                    if (chkStatus == true) {
+                        divContainer1.css("display", "none");
+                        divContainer2.css("display", "block");
+                    } else {
+                        divContainer1.css("display", "block");
+                        divContainer2.css("display", "none");
+                    }
+
+                    checkBoxSelector.click(function () {
+                        var checkBoxStatus = $(this).is(":checked");
+                        checkBoxSelector.attr("checked", checkBoxStatus);
+                        checkBoxSelector.val(checkBoxStatus);
+                        hiddenSelector.val(checkBoxStatus);
+                        if (checkBoxStatus == true) {
+                            divContainer1.css("display", "none");
+                            divContainer2.css("display", "block");
+                        } else {
+                            divContainer1.css("display", "block");
+                            divContainer2.css("display", "none");
+                        }
+                    });
+                },
+                HandleCheckBoxEvent: function (checkFieldId, chkStatus) {
+                    var name = $("#" + checkFieldId).attr("name");
+                    var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+                    var hiddenSelector = $("input:hidden[name=" + name + "]");
+
+                    checkBoxSelector.attr("checked", chkStatus);
+                    checkBoxSelector.val(chkStatus);
+                    hiddenSelector.val(chkStatus);
+
+                    checkBoxSelector.click(function () {
+                        var checkBoxStatus = $(this).is(":checked");
+                        checkBoxSelector.attr("checked", checkBoxStatus);
+                        checkBoxSelector.val(checkBoxStatus);
+                        hiddenSelector.val(checkBoxStatus);
+                    });
+                },
+                PreviewImage: function (id, width, height) {
+                    var f = document.getElementById(id).files[0];
+                    var output_container = document.getElementById("ImagePreviewBox");
+                    output_container.innerHTML = "";
+
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(f);
+
+                    oFReader.onload = (function (theFile) {
+                        return function (e) {
+                            var span = document.createElement('span');
+                            span.innerHTML = '<img class="thumb" src="' + e.target.result + '" title="' + escape(theFile.name) + '" width="' + width + '" height="' + height + '"/>';
+                            output_container.insertBefore(span, null);
+                        };
+                    })(f);
+                },
+                UploadFile: function (fileInputId, folderKey, creater, width, height, fileId) {
+                    var formData = new FormData();
+                    formData.append('fileKey', fileInputId);
+                    formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                    formData.append('folderKey', folderKey);
+                    formData.append('creater', creater);
+                    if (width != null && width > 0)
+                        formData.append('width', width);
+                    if (height != null && height > 0)
+                        formData.append('height', height);
+                    if (fileId != null && fileId > 0)
+                        formData.append('fileId', fileId);
+                    var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''); var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+                    $.ajax({
+                        type: "POST",
+                        url: baseUrl + "/Handlers/UploadFile.ashx",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (result) {
+                            $("#FileId").val(result);
+                        },
+                        error: function () {
+                            showMessageWithTitle('error', '@Html.Raw(Eagle.Resource.LanguageResource.UploadFileError)', "error", 3000);
+                        }
+                    });
+                },
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                GetDetails: function () {
+                    var EmpID = $('input[type=hidden][name=EmpID]').val();
+                    var data = JSON.stringify({ ID: EmpID });
+                    this.config.method = "GetDetails";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (response) {
+                    var entity = JSON.parse(response);
+
+                    // show the popup window.
+                    $.ajax({
+                        type: "GET",
+                        url: '/Admin/Employee/Edit/' + entity.EmpID,
+                        statusCode: {
+                            401: function () {
+                                window.location.reload();
+                            },
+                            403: function () {
+                                window.location.reload();
+                            },
+                            590: function () {
+                                window.location.reload();
+                            }
+                        },
+                        success: function (data, statusCode, xhr) {
+                            //bind data
+                            $('#divEdit').html(data, statusCode, xhr);
+                            DataMgr.InitializeCotrols();
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                LoadData: function (actionUrl, empID) {
+                    var data = { "EmpID": empID };
+                    $.ajax({
+                        type: "GET",
+                        url: actionUrl,
+                        data: data,
+                        statusCode: {
+                            401: function () {
+                                window.location.reload();
+                            },
+                            403: function () {
+                                window.location.reload();
+                            },
+                            590: function () {
+                                window.location.reload();
+                            }
+                        },
+                        success: function (data, statusCode, xhr) {
+                            if (data.message == "timeout")
+                                window.location.reload();
+                            else {
+                                $('#divEdit').html(data);
+                                DataMgr.InitializeCotrols();
+                            }
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                UpdateData: function () {
+                    if ($('input[type="file"]').val() != '') {
+                        var fileInputId = 'FileUpload';
+                        var folderKey = 'UPLOAD_EMPLOYEE_IMAGE_DIR';
+                        var width = null;
+                        var height = null;
+                        var fileId = null;
+
+                        var formData = new FormData();
+                        formData.append('fileKey', fileInputId);
+                        formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                        formData.append('folderKey', folderKey);
+                        if (width != null && width > 0)
+                            formData.append('width', width);
+                        if (height != null && height > 0)
+                            formData.append('height', height);
+                        if (fileId != null && fileId > 0)
+                            formData.append('fileId', fileId);
+
+                        var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+                        $.ajax({
+                            type: "POST",
+                            url: baseUrl + "/Handlers/UploadFile.ashx",
+                            contentType: false,
+                            processData: false,
+                            data: formData,
+                            success: function (result) {
+                                $("input[name=FileId]:hidden").val(result);
+                                DataMgr.Update();
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        DataMgr.Update();
+                    }
+                },
+                Update: function () {
+                    var data = DataMgr.ConvertFormToJSON("myform");
+                    this.config.method = "Update";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                    titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+
+                    var result = JSON.parse(data);
+                    if (result.flag == 'true') {
+                        showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                        //Reload page after success
+                        //this.config.method = "Edit";
+                        //var params = { "ID": $('input[type=hidden][name="EmpID"]').val() };
+                        //$.ajax({
+                        //    type: "GET",
+                        //    dataType: "html",
+                        //    url: DataMgr.config.baseURL + this.config.method,
+                        //    data: params,
+                        //    success: function (data) {
+                        //        $('#MainBody').html(data);
+                        //        DataMgr.InitializeCotrols();
+                        //    }, error: function (xhr, status, exception) {
+                        //        if (0 == xhr.status) {
+                        //            showMessageWithTitle("Network Error [0]\n", "Not connect.n Verify Network.", "error", 50000);
+                        //        } else if (404 == xhr.status) {
+                        //            console.log('Requested page not found. [404]');
+                        //        } else if (500 == xhr.status) {
+                        //            showMessageWithTitle("Internal Server Error [500] \n", "Internal Server Error", "error", 50000);
+                        //        }
+                        //        else if (503 == xhr.status) {
+                        //            showMessageWithTitle("Service Unavailable [503] \n", "Service Unavailable", "error", 50000);
+                        //        }
+                        //        else if (590 == xhr.status) {
+                        //            return document.location = document.location;
+                        //        } else if ('parsererror' == exception) {
+                        //            showMessageWithTitle("JSON PARSE ERROR \n", "Requested JSON parse failed.", "error", 50000);
+                        //        } else if ('timeout' == exception) {
+                        //            showMessageWithTitle("TIME OUT \n", "Time out error.", "error", 1000);
+                        //            window.location.href = '@Request.Url.AbsoluteUri';
+                        //        } else if ('abort' == exception) {
+                        //            showMessageWithTitle("Abort Exception \n", "Ajax request aborted", "error", 50000);
+                        //        } else {
+                        //            showMessageWithTitle("Uncaught Ajax Error (" + xhr.status + ") \n", xhr.responseText, "error", 50000);
+                        //        }
+                        //    }
+                        //});
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error", 20000);
+                    }
+                },
+                ResetControls: function () {
+                    var validateObj = $('#myform');
+                    //validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                    // validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                    //validateObj.reset();
+                    // validateObj.resetForm();
+                    //$('#myform').get(0).reset();
+                    //$('#myform').clearForm();
+                    //$('#myform .specialFields').clearFields();
+                    // $(':input', '#myform').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+                    //$('select option:selected').prop('selected', false);
+
+                    validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                    validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                    validateObj.find('input[type="number"]').val(0);
+                    validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                    DataMgr.InitializeCotrols();
+                },
+                HandleBootstrapAccordionEvent: function () {
+                    $('#collapse1').collapse('show');
+                    $(document).on('click', 'div.accordion-heading a', function () {
+                        var next_element = $(this).parent('.accordion-heading').parent('.accordion-group').siblings();
+                        next_element.find('.accordion-body').removeClass("in").css("height", "0");
+                        next_element.find('.accordion-heading').find(".icon-chevron-up").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+                    });
+
+                    $('div.accordion-body').on('shown', function () {
+
+                        $(this).parent("div").find(".icon-chevron-down")
+                                .removeClass("icon-chevron-down").addClass("icon-chevron-up");
+                    });
+
+                    $('div.accordion-body').on('hidden', function () {
+                        $(this).parent("div").find(".icon-chevron-up")
+                                .removeClass("icon-chevron-up").addClass("icon-chevron-down");
+                    });
+
+                    function toggleChevron(e) {
+                        $(e.target)
+                            .prev('.panel-heading')
+                            .find("i.indicator")
+                            .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+                    }
+                    $('#accordion_panel').on('hidden.bs.collapse', toggleChevron);
+                    $('#accordion_panel').on('shown.bs.collapse', toggleChevron);
+                },
+                ValidateForm: function () {
+                    //******************************************************************************************************
+                    //VALIDATION FORM **************************************************************************************
+                    //******************************************************************************************************
+                    //Set border color when text class getting focus or remove border color when lost focus from textbox.
+                    $('.text').focus(function () { $('.text').removeClass('focused'); $(this).addClass('focused'); })
+                    .blur(function () { $(this).removeClass('focused'); });
+                    @*$.validator.addMethod("EMAIL", function (value, element) {
+                    return this.optional(element) || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i.test(value);
+                }, "Email Address is invalid: Please enter a valid email address.");
+
+                $.validator.addMethod("PASSWORD", function (value, element) {
+                    return this.optional(element) || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/i.test(value);
+                }, "Passwords are 8-16 characters with uppercase letters, lowercase letters and at least one number.");
+
+                $.validator.addMethod("SUBMIT", function (value, element) {
+                    return this.optional(element) || /[^ ]/i.test(value);
+                }, "You did not click the submit button.");*@
+
+                    $.validator.addMethod("acceptAlphabet", function (value, element) {
+                        return value.match(new RegExp(".[a-zA-Z]+$"));
+                    }, "Please just input alphabet ");
+
+                    $.validator.addMethod("acceptName", function (value, element) {
+                        //var isValid = true;
+                        //var matches = value.match(/^[\d+\ \'\.\*\+\-\?\^\=\!\:\$\%\&\#\{\}\(\)\<\>\|\[\]\/\\]+$/);
+                        //if (matches != null) {
+                        //    isValid = false;
+                        //}
+
+                        var patt = new RegExp("/^[\d+/g\ \'\.\*\+\-\?\^\=\!\:\$\%\&\#\{\}\(\)\<\>\|\[\]\/\\]+$/");
+                        var isValid = patt.test(value);
+
+                        return isValid;
+                    }, "Please just input unicode alphabet ");
+
+
+                    $.validator.addMethod("acceptNumber", function (value, element) {
+                        return value.match(new RegExp(".[0-9]+$"));
+                    }, "Please just input number ");
+
+                    $.validator.addMethod("accept", function (value, element, param) {
+                        return value.match(new RegExp("." + param + "$"));
+                    });
+
+                    $.validator.addMethod("regex", function (value, element, regexp) {
+                        var check = false;
+                        return this.optional(element) || regexp.test(value);
+                    }, "Please check your input.");
+
+                    $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+                        return arg != value;
+                    }, "Please select an item");
+
+                    $.validator.addMethod("validatePhoneOrMobile", function (value, element) {
+                        var check = false;
+                        var Telephone = $('#Telephone').val();
+                        var Mobile = $('#Mobile').val();
+
+                        if (Telephone == "" && Mobile == "") {
+                            check = false;
+                        }
+                        else {
+                            check = true;
+                        }
+                        return check;
+                    }, "Please input telephone or mobile");
+
+
+                    $.validator.addMethod("validateCompareDate", function (value, element) {
+                        var isValid = false;
+                        if ($("#StartDate").val() != null && $("#StartDate").val() != "") {
+                            var StartDate = $("#StartDate").val();
+                            var _StartDate = new Date(StartDate);
+                            //var arrStartDate = StartDate.split('/');
+                            //dtMonth = arrStartDate[0];
+                            //dtDay = arrStartDate[1];
+                            //dtYear = arrStartDate[2];
+                            //var _StartDate = new Date();
+                            //_StartDate.setFullYear(dtYear, dtMonth - 1, dtDay);
+
+                            var JoinDate = $("#JoinDate").val();
+                            var _JoinDate = new Date(JoinDate);
+                            //var arrJoinDate = JoinDate.split('/');
+                            //dtJoinDateMonth = arrJoinDate[0];
+                            //dtJoinDateDay = arrJoinDate[1];
+                            //dtJoinDateYear = arrJoinDate[2];
+                            //var _JoinDate = new Date();
+                            //_JoinDate.setFullYear(dtJoinDateYear, dtJoinDateMonth - 1, dtJoinDateDay);
+
+                            if (_StartDate > _JoinDate)
+                                isValid = true;
+                            else
+                                isValid = false;
+                        }
+                        return isValid;
+                    }, "Please pick JoinedDate less than StartDate");
+
+                    $.validator.addMethod("validateDateOfBirth", function (value, element) {
+                        var isValid = false;
+                        if (value == "")
+                            isValid = false;
+                        else {
+                            var strDOB = $("#DOB").val();
+                            var objDate = strDOB.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+                            if (objDate != null) {
+                                var arr = objDate.toString().split('/');
+                                dtMonth = arr[0];
+                                dtDay = arr[1];
+                                dtYear = arr[2];
+
+                                if (dtMonth < 1 || dtMonth > 12)
+                                    isValid = false;
+                                else if (dtDay < 1 || dtDay > 31)
+                                    isValid = false;
+                                else if ((dtMonth == 4 || dtMonth == 6 || dtMonth == 9 || dtMonth == 11) && dtDay == 31)
+                                    isValid = false;
+                                else if (dtMonth == 2) {
+                                    var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+                                    if (dtDay > 29 || (dtDay == 29 && !isleap))
+                                        isValid = true;
+                                }
+
+                                //Compare ========================================
+                                //var minDate = new Date(1990,1,1);
+                                var age = 18;
+                                var currdate = new Date();
+                                currdate.setFullYear(currdate.getFullYear() - age);
+
+                                //var DOB = new Date(arr[2], arr[1], arr[0]);
+                                var DOB = new Date();
+                                DOB.setFullYear(dtYear, dtMonth - 1, dtDay);
+
+                                if ((currdate - DOB) > 0)
+                                    isValid = true;
+                                else
+                                    isValid = false;
+
+                                //===============================================
+                            }
+                        }
+                        return isValid;
+                    }, "Invalid");
+                    $('#myform').validate(
+                    {
+                        rules: {
+                            EmpCode: {
+                                required: true,
+                                minlength: 1
+                            },
+                            FirstName: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 100,
+                                acceptName: true
+                            },
+                            LastName: {
+                                required: true,
+                                minlength: 2,
+                                maxlength: 100,
+                                acceptName: true
+                            },
+                            Gender: {
+                                required: true
+                            },
+                            Email: {
+                                required: true,
+                                email: true
+                            },
+                            Telephone: {
+                                minlength: 5,
+                                required: false,
+                                regex: /^[\d\s\-\(\)\-\+\.]+$/,
+                                validatePhoneOrMobile: true
+                            },
+                            Mobile: {
+                                minlength: 9,
+                                required: false,
+                                regex: /^[\d\s\-\(\)\-\+\.]+$/,
+                                validatePhoneOrMobile: true
+                                //digits: true, maxlength: 10
+                            },
+                            LSCompanyID: {
+                                required: true,
+                                valueNotEquals: "0"
+                            },
+                            AccountNumber: {
+                                minlength: 5,
+                                required: false
+                                //accept: "[0-9]+"
+                            },
+                            DOBPicker: {
+                                minlength: 10,
+                                required: true,
+                                validateDateOfBirth: true
+                            },
+                            IDIssuedDatePicker: {
+                                minlength: 10,
+                                required: true
+                            },
+                            StartDatePicker: {
+                                minlength: 10,
+                                required: false,
+                                validateCompareDate: true
+                            },
+                            JoinDatePicker: {
+                                minlength: 10,
+                                required: false,
+                                validateCompareDate: true
+                            },
+                            message: {
+                                EmpCode: "Please specify employee code",
+                                FirstName: {
+                                    required: "[FirstName] - Please specify first name",
+                                    minlength: "[FirstName] - It must consist of at least 2 characters"
+
+                                },
+                                LastName: {
+                                    required: "[LastName] - Please specify last name",
+                                    minlength: "[LastName] - It must consist of at least 2 characters"
+                                },
+                                Gender: "[Gender] - Please specify the gender",
+                                Email: {
+                                    required: "[Email] - Please specify email address",
+                                    email: "[Email] - Please enter a valid address"
+                                },
+                                Telephone: {
+                                    minlength: "[Telephone] - It must consist of at least 5 characters",
+                                    regex: "[Telephone] - Please input valid telephone",
+                                    validatePhoneOrMobile: "[Telephone] - Please input telephone or mobile"
+                                },
+                                Mobile: {
+                                    minlength: "[Mobile] - It must consist of at least 5 characters",
+                                    regex: "[Mobile] - Please input valid telephone",
+                                    validatePhoneOrMobile: "[Mobile] - Please input telephone or mobile"
+                                },
+                                LSCompanyID: "[Gender] - Please specify the Company",
+                                DOBPicker: {
+                                    required: "[Date Of Birth]- Please specify birth date",
+                                    minlength: "[Date Of Birth] - It must consist of at least 10 characters",
+                                    validateDateOfBirth: "[Date Of Birth] - Please input valid birth date"
+                                },
+                                IDIssuedDatePicker: {
+                                    minlength: "[Issued Date] - It must consist of at least 10 characters",
+                                    required: "[Issued Date]- Please specify Issued Date",
+                                },
+                                StartDatePicker: {
+                                    minlength: "[Start Date] - It must consist of at least 10 characters",
+                                    validateCompareDate: true
+                                },
+                                JoinDatePicker: {
+                                    minlength: "[Join Date] - It must consist of at least 10 characters",
+                                    validateCompareDate: true
+                                }
+                            }
+                        },
+                        highlight: function (element) {
+                            $(element).closest('.control-group').removeClass('success').addClass('error');
+                        },
+                        unhighlight: function (element) {
+                            $(element).closest('.control-group').removeClass('error').addClass('success');
+                        },
+                        success: function (element) {
+                            element
+                            .addClass('valid')
+                            .closest('.control-group').removeClass('error').addClass('success');
+                        },
+                        errorPlacement: function (error, element) {
+                            if (element.attr("name") == "DOBPicker"
+                                || element.attr("name") == "StartDatePicker"
+                                || element.attr("name") == "JoinDatePicker"
+                                || element.attr("name") == "IDIssuedDatePicker") {
+                                error.appendTo(element.parent().parent("div"));
+                            } else {
+                                error.insertAfter(element);
+                            }
+                        },
+                        //All error labels are displayed inside an unordered list with the ID "validationSummary"
+                        //Additonal container for error messages. The elements given as the "errorContainer" are all shown and hidden when errors occur.
+                        //errorContainer: "#validationSummary",
+                        ////But the error labels themselve are added to the element(s) given as errorLabelContainer, here an unordered list.
+                        //errorLabelContainer: "#validationSummary ul",
+                        ////Therefore the error labels are also wrapped into li elements (wrapper option).
+                        //wrapper: "li",
+                        ////A custom message display handler. Gets the map of errors as the first argument and and array of errors as the second,
+                        ////called in the context of the validator object.
+                        //showErrors: function (errorMap, errorList) {
+                        //    $('.errorList').hide();
+                        //    $('.inlineMessage').hide();
+                        //    $('#validationSummary').hide();
+                        //    var messages = "";
+                        //    $.each(errorList, function (index, value) {
+                        //        var id = $(value.element).attr('id');
+                        //        messages += "<span>" + (index + 1) + ". <a title='click to view field' href='javascript:setFocus(" + id + ");'>[" + $(value.element).attr('name') + "]</a> " + value.message + "</span><br/>";
+                        //    });
+                        //    if (errorList.length > 0)
+                        //        messages = "<div class='errorWrapper'><h5>Please correct following errors:</h5>" + messages + "</div>";
+                        //    //Showing validation summary in list of the same page
+                        //    $('#summary-validation').html(messages);
+                        //    $('#summary-validation').show("fast");
+                        //    ////this.defaultShowErrors();
+                        //}
+                        //If all validations are successfully validate then execute submitHandler function
+                        //submitHandler: function () {
+                        //    //$('#myform').ajaxSubmit();
+                        //    return false;
+                        //}
+                    });
+                }
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'Employee';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "divEdit",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+    //If validation errors are occured in any field, it will display field name with link, clicking on link it will set focus of perticular field.
+    function setFocus(ele) {
+        $(ele).focus();
+    }
+</script>

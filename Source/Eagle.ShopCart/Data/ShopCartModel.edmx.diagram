@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4157bfb482e743e2983054194eee8c71" Name="Diagram1">
+        <EntityTypeShape EntityType="Eagle.ShopCart.Gallery_Collections" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Gallery_Files" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Gallery_Topics" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Manufacturer_Categories" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Manufacturer" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_AttributeOptions" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Attributes" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Categories" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Comments" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Coupons" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Discounts" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Files" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_GalleryCollections" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_HostServers" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Ranges" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_TaxRates" Width="1.5" PointX="6.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_TypeParameters" Width="1.5" PointX="8.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Types" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product_Votes" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Product" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Address" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Articles" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Banners" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Classification" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Contact" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_CreditCards" Width="1.5" PointX="6.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Currency" Width="1.5" PointX="8.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Customers" Width="1.5" PointX="14.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_ManufacturerCategories" Width="1.5" PointX="10.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Manufacturers" Width="1.5" PointX="14.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_OrderPromotions" Width="1.5" PointX="12.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Portals" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_ProductCategories" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_ProductDiscounts" Width="1.5" PointX="2.75" PointY="16.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Products" Width="1.5" PointX="16.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_ProductTypes" Width="1.5" PointX="16.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Temp" Width="1.5" PointX="16.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor" Width="1.5" PointX="16.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Report_Templates" Width="1.5" PointX="4.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Report_Types" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Classification" Width="1.5" PointX="18.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Currency" Width="1.5" PointX="6.75" PointY="18.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.CurrencyRate" Width="1.5" PointX="18.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Customer" Width="1.5" PointX="8.75" PointY="18.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.CustomerType" Width="1.5" PointX="18.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Employee" Width="1.5" PointX="18.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Order_Payment" Width="1.5" PointX="10.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Order_Products" Width="1.5" PointX="12.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Order_Shipment" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Order" Width="1.5" PointX="0.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Payment_Methods" Width="1.5" PointX="2.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Promotion" Width="1.5" PointX="20.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingCarrier" Width="1.5" PointX="20.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingCity" Width="1.5" PointX="20.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingCountry" Width="1.5" PointX="20.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingDistrict" Width="1.5" PointX="20.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingMethod" Width="1.5" PointX="18.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingRate" Width="1.5" PointX="20.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShoppingCart" Width="1.5" PointX="4.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.StatisticExpens" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Branches" Width="1.5" PointX="22.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Vendor_Departments" Width="1.5" PointX="22.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.Order_Product_Options" Width="1.5" PointX="22.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.ShopCart.ShippingRegion" Width="1.5" PointX="22.75" PointY="13.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

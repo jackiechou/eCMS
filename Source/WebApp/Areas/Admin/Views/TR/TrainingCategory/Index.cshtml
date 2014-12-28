@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingCategory;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../TR/TrainingCategory/_Reset")
+</div>
+
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    var Controller = 'TrainingCategory';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/_Delete/';
+</script>
+
+<script src="~/Scripts/plugins/common/AddUpdateDelete.js"></script>

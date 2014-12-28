@@ -1,0 +1,149 @@
+﻿@model List<TrainingRequestViewModel>
+
+<style>
+    table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 10px;
+    }
+</style>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:3%">@Eagle.Resource.LanguageResource.No</th>
+                <th style="width:20%" class="text_center">
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th style="width:20%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingRequestDuration
+                </th>
+                <th style="width:10%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingCode
+                </th>                                                
+                <th class="text_center" style="width:15%">
+                    @Eagle.Resource.LanguageResource.TrainingCourseName
+                </th>                                                
+                <th style="width:15%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingEvaluationTemplate
+                </th>
+                <th style="width:15%" class="text_center">                    
+                    @Eagle.Resource.LanguageResource.TrainingRequestStatus
+                </th>                                                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingRequestEmployeeEvaluation_Evaluate
+                </th>                                
+                <th class="table-actions text_center no-sort" style="width:3%">@Eagle.Resource.LanguageResource.Actions</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeEvaluation)
+                    </td>
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.DurationInfo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingCode)
+                    </td>                                        
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingCourseName)
+                    </td>     
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EvaluationTemplateName)
+                    </td>               
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusInfo)
+                    </td>                                        
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.IsEvaluatedInfo)
+                    </td>                    
+                    <td class="table-actions text_left no-sort">     
+                        <a data-id="@item.TrainingRequestID"  title="Content of TrainingRequest" class="ico editItem " href="/Admin/TrainingRequest/Index?TrainingRequestID=@item.TrainingRequestID&ModuleID=3" >&nbsp;&nbsp;&nbsp;</a>                                  
+                        @if (item.EvaluationRequired)
+                        {
+                            if (item.IsMaxLevelApproval && item.CourseCompleteStatus == false)
+                            {
+                                if (item.AllowEvaluationByDuraionEnded)
+                                {
+                                    if (item.IsEvaluated == false && item.EmployeeEvaluationID == @ViewBag.EmpId)
+                                    {
+                                        <a data-id="@item.TrainingRequestID"  title="Evaluation of TrainingRequest" class="ico updateStatusItem" href="/Admin/TrainingEvaluationForEmployee/Index?TrainingRequestID=@item.TrainingRequestID&Mode=Evaluation">&nbsp;&nbsp;&nbsp;</a>                                 
+                                    }
+                                    else if (item.IsEvaluated == true)
+                                    {
+                                        <a data-id="@item.TrainingRequestID"  title="This Request is evaluated" class="ico closeItem" href="/Admin/TrainingEvaluationForEmployee/Index?TrainingEvaluationID=@item.TrainingEvaluationID&Mode=Evaluation">&nbsp;&nbsp;&nbsp;</a>                                 
+                                    }
+                                    else if (item.EmpIDCreate != @ViewBag.EmpId)
+                                    {
+                                        <a data-id="@item.TrainingRequestID"  title="Training Request is waiting for evaluation" class="ico updateStatusItem_disable" >&nbsp;&nbsp;&nbsp;</a>                                 
+                                    }
+
+                                }
+                                else
+                                {
+                                    <a data-id="@item.TrainingRequestID"  title="Duration of Request is not ended" class="ico updateStatusItem_disable" >&nbsp;&nbsp;&nbsp;</a>                                 
+                                }
+                            }
+                            else
+                            {
+                                <a data-id="@item.TrainingRequestID"  title="No is max level approval" class="ico updateStatusItem_disable">&nbsp;&nbsp;&nbsp;</a>                                 
+                            }
+                        }                                                                 
+                    </td> 
+                </tr>
+            }
+        </tbody>        
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();
+</script>
+<script>    
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading2");        
+    });
+      
+    var urlReset = areas + "/TrainingRequestList/_List"
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var urlRedirect = areas + "/TrainingRequestList/_Delete?id=" + lsID; 
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: urlRedirect,
+                        success: function (data) {
+                            alert(urlSearch);
+                            if (data == 'success') {
+                                $("body").addClass("loading");
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlSearch,
+                                    data: $("#frmAdd").serialize(),
+                                    success: function (data) {
+                                        $('#divList').html(data);
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

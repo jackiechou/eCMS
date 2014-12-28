@@ -1,0 +1,219 @@
+﻿@model RecruitmentDemandViewModel
+@{
+    int LanguageId = 10001;
+    if (Session["LanguageId"] != null)
+    {
+        int.TryParse(Session["LanguageId"].ToString(), out LanguageId);
+    }
+}
+<form id="frmAdd" class="form-horizontal">
+    @Html.HiddenFor(model => model.DemandID)
+    @Html.HiddenFor(model => model.InitialDemandCode)
+    
+    @Html.HiddenFor(model => model.LevelApprove)
+    
+
+    @*Dùng Cho Edit*@
+    @if (ViewBag.IsStart != null)
+    {
+        @Html.Hidden("IsStart", (int)ViewBag.IsStart)  
+        @Html.Hidden("ReturnLevelApprove", 0)  
+        @Html.Action("_popupUnapprove", new { @LevelApprove = Model.LevelApprove })
+    }
+ 
+
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(ViewBag.Message)
+                </div>
+            </div>
+        }
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.DemandCode)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.DemandCode, new { @class = "span12" })
+        </div>
+         <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.DemandQuantityAlowNull)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.DemandQuantityAlowNull, new { @class = "span12" })
+        </div>  
+    </div>
+
+
+    <div class="row @ViewBag.ShowStatus">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.StatusProcess)
+        </div>
+        <div class="col-md-4">
+            <label class="reset-label">@Model.StatusProcessName</label>
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.StatusDemand)
+        </div>
+        <div class="col-md-4">
+            <label class="reset-label">@Model.StatusDemandName</label>
+        </div>
+    </div>
+    <div class="row isAdhocAvailable @ViewBag.isAdhocAvailable">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.Year)
+        </div>
+         <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Year, new { @class = "span3 text-center", @data_val = "true", @data_val_number = string.Format(Eagle.Resource.LanguageResource.NumberInvalid, Eagle.Resource.LanguageResource.Year), @data_val_required = string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.Year) })
+            @Html.ValidationMessageFor(model => model.Year)
+        </div>
+    </div>
+    <div class="row isAdhocAvailable @ViewBag.isAdhocAvailable">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.LSCompanyID)
+        </div>
+        <div class="col-md-4">
+            <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+            @Html.ValidationMessageFor(model => model.LSCompanyID)    
+            @{ 
+                string LSCompanyID = Model.LSCompanyID == 0 ? "" : Model.LSCompanyID.ToString();
+                }                                                                
+            <script>
+                $(document).ready(function () {
+                    LoadComboTreeWithActionWithRequired('LSCompanyID', 'GetAllWithPlease', '@string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.LastCompanyDefine)', '@LSCompanyID')
+                });
+            </script>
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.LSPositionID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectLSPositionID", null, new { @class = "span12" })
+            
+            @Html.HiddenFor(model => model.LSPositionID)
+            @Html.HiddenFor(model => model.LSPositionName)
+            <script>
+                PopulateDropDownListAutoComplete("SelectLSPositionID", "LSPositionID", "LSPositionName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)', areas + '/LS_tblPosition/DropdownList');
+            </script>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.DemandDateAlowNull)
+        </div>
+        <div class="col-md-4">
+            @Html.DatepickerFor(model => model.DemandDateAlowNull, null, null, LanguageId)
+        </div>
+         <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.EffectiveDateAlowNull)
+        </div>
+        <div class="col-md-4">
+            @Html.DatepickerFor(model => model.EffectiveDateAlowNull, null, null, LanguageId)
+        </div>
+    </div>
+     
+    
+        <div class="row isAdhocAvailable @ViewBag.isAdhocAvailable">
+        <div class="col-md-2">
+            <label>@Eagle.Resource.LanguageResource.RecruitmentSource</label>
+        </div>
+        <div class="col-md-10">
+            <style>
+                    #reset-firt-div div {
+                        margin-left: 2.564102564102564%;
+                    }
+
+                        #reset-firt-div div input {
+                            margin-top: -1px;
+                        }
+                </style>
+            <div class="row" id="reset-firt-div">
+                @foreach (var source in ViewBag.DemandRecruitmentSources as List<RecruitmentSourceSelectedViewModel>)
+                {
+                    <div class="col-md-5">
+                        <label class="reset-label">
+                            @{
+                    string radChecked = "";
+                    if (source.isSelected)
+                    {
+                        radChecked = "checked=\"checked\"";
+                    }
+                            }
+                            <input id="sourceSelected" name="sourceSelected" type="checkbox" value="@source.LSRecruitmentSourceID" @radChecked >
+                            @source.LSRecruitmentSourceName
+                        </label>
+                    </div>  
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.OtherDemand)
+        </div>
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.OtherDemand, new { @class = "span12" })
+        </div>
+    </div>
+    <div>
+        @if (ViewBag.CommentList != null)
+        {
+            foreach (var commentItem in ViewBag.CommentList as List<CommentViewModel>)
+            {
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.ImageByFileId("Photo", commentItem.AvatarId, commentItem.EmpComment, new { width = "45", height = "60", @class = "media-object img-thumbnail user-img img-rounded", @style = "float:right;" })
+                    </div>
+                    <div class="col-md-10">
+                        <div>
+                            <div class="col-md-9"><b>@commentItem.EmpComment</b></div> <div class="col-md-3"><i>@commentItem.Time</i></div>
+                        </div>
+                        <div>
+                            <div class="col-md-9"> @Html.Raw(Server.HtmlDecode(commentItem.Comment))</div> <div class="col-md-3"><i>@commentItem.StatusName</i></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        
+    </div>
+    <!--end row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Comment)
+        </div>
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })
+        </div>
+    </div>
+    
+    <!--/row-->
+    <div class="row">
+        <div class="footbar">
+            @if (Model.LevelApprove == 0)
+            {
+                <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" @ViewBag.DisabledSaveAndSend />
+                <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" @ViewBag.DisabledSaveAndSend />
+                <input type="button" id="btnSendForApproval" value="@Eagle.Resource.LanguageResource.btnSendForApproval" class="btn btn-info" @ViewBag.DisabledSaveAndSend />
+            }else
+            {
+                <input type="button" id="btnApprove" value="@Eagle.Resource.LanguageResource.btnApprove" class="btn btn-info" @ViewBag.DisabledApproveAndUnapprove />
+                <input type="button" id="btnUnapprove" value="@Eagle.Resource.LanguageResource.btnUnapprove" class="btn btn-info" @ViewBag.DisabledApproveAndUnapprove />
+            }
+        </div>
+    </div>
+    <!--End.row-->
+</form>
+<script>
+    InvokeDateTimePicker();
+</script>
+@Html.Action("jqueryval", "Common", null)

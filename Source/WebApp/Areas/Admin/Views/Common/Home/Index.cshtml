@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.Home;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+
+@section TitleSection {
+    <h4>@Eagle.Resource.LanguageResource.Home</h4>
+}
+
+@section ContentSection 
+{  
+    <div class="content-wrapper">
+        <div id="ChartContainer">
+            @Html.Partial("../DashBoard/_ChartPartial")
+        </div>
+
+        <div id="TerminationContainer">
+            @Html.Partial("../DashBoard/_TerminationPartial")
+        </div>
+    </div>
+}

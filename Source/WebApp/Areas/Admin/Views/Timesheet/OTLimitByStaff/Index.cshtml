@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_OTLimitByStaff;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<form id="frmAdd" class="form-horizontal user-group-management">
+<div id="alertMessageBox">
+</div>
+    <div id="divHeader">
+        @Html.Action("_SearchHeaderEmp","OTLimitByStaff",null)
+    </div>
+    <hr />
+    <!--/row-->
+    <div class="row">
+        <div class="footbar">
+            <input type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.btnSearch" class="btn" />
+            <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" />
+        </div>
+    </div>
+    <!--End.row-->
+    <div id="divContent">
+        @Html.Action("_List","OTLimitByStaff",null)
+    </div>
+</form>
+    }
+<script type="text/javascript">
+
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        if ($(".chkActive:checked").val() != 'True')
+        {
+            //Add => Edit
+            $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+        }
+        //Search danh sach nhan vien 
+        var moduleId = getParameterByName("ModuleID");
+        var url = areas + '/OTLimitByStaff/_Search?Status=' + $(".chkActive:checked").val() + "&ModuleID=" + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divContent').html(data);
+            }
+        });
+        
+    });
+    // save and update
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        if ($(".chkActive:checked").val() != 'False') {
+            //Add => Edit
+            $('#btnAdd').removeClass("EditModel").addClass("AddModel");
+        }
+        var moduleId = getParameterByName("ModuleID");
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/OTLimitByStaff/Save';
+            var urlCreate = areas + '/OTLimitByStaff/_Search?Status=' + $(".chkActive:checked").val() + "&ModuleID=" + moduleId;
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlCreate,
+                            success: function (data) {
+                                $('#divContent').html(data);
+                                AlterAddSuccess();
+                                return false;
+                            }
+                        });
+                    } else {
+                        $('#frmAdd').html(data);
+                        return false;
+                    }
+                }
+            });
+        } else {
+            // Update Account
+            var url = '@Url.Action("Update", "OTLimitByStaff")';
+            var urlCreate = areas + '/OTLimitByStaff/_Search?Status=' + $(".chkActive:checked").val() + "&ModuleID=" + moduleId;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlCreate,
+                            success: function (data) {
+                                $('#divContent').html(data);
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } else if (data == 'error') {
+
+                        AlterUpdateError();
+                    }
+
+                    return false;
+                }
+            });
+        };
+    });
+
+    
+</script>

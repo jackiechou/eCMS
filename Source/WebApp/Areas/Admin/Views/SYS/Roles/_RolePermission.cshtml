@@ -1,0 +1,191 @@
+﻿@model  List<Eagle.Model.SYS.Roles.RoleModulePermissionViewModel>
+
+<div>
+    <table class="table table-bordered table-condensed table-hover tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="center">@Eagle.Resource.LanguageResource.No</th>
+                <th class="center">@Eagle.Resource.LanguageResource.Role</th>
+                <th class="center">@Html.CheckBox("chkAllView", new { @class = "chkAllView cursor-pointer" })  @Eagle.Resource.LanguageResource.View</th>
+                <th class="center">@Html.CheckBox("chkAllAdd", new { @class = "chkAllAdd cursor-pointer" })   @Eagle.Resource.LanguageResource.Add</th>
+                <th class="center">@Html.CheckBox("chkAllEdit", new { @class = "chkAllEdit cursor-pointer" })  @Eagle.Resource.LanguageResource.Edit</th>
+                <th class="center">@Html.CheckBox("chkAllDelete", new { @class = "chkAllDelete cursor-pointer" })  @Eagle.Resource.LanguageResource.Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{  int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="corlor_td center">
+                        @i
+                        @Html.Hidden("AllItem", item.ModuleCode)
+                    </td>
+                    <td>@item.RoleName</td>
+
+                    <td class="corlor_td center">@Html.CheckBox("chkView_" + @i, item.View, new { @num = @i, @class = "chkView", @value = item.ModuleCode })</td>
+                    <td class="corlor_td center">@Html.CheckBox("chkAdd_" + @i, item.Add, new { @num = @i, @class = "chkAdd", @value = item.ModuleCode })</td>
+                    <td class="corlor_td center">@Html.CheckBox("chkEdit_" + @i, item.Edit, new { @num = @i, @class = "chkEdit", @value = item.ModuleCode })</td>
+                    <td class="corlor_td center">@Html.CheckBox("chkDelete_" + @i, item.Delete, new { @num = @i, @class = "chkDelete", @value = item.ModuleCode })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    handleCheckBox("chkAllView");
+    handleCheckBox("chkAllAdd");
+    handleCheckBox("chkAllEdit");
+    handleCheckBox("chkAllDelete");
+    SetDefaultDisabledCheckBoxes();
+
+    function SetDefaultDisabledCheckBoxes() {
+        $("#chkView_1").attr({ checked: true, disabled: true });
+        $("#chkAdd_1").attr({ checked: true, disabled: true });
+        $("#chkEdit_1").attr({ checked: true, disabled: true });
+        $("#chkDelete_1").attr({ checked: true, disabled: true });
+    }
+
+    function SetDefaultEnableCheckBoxes() {
+        $("#chkView_1").attr({ checked: true, disabled: false });
+        $("#chkAdd_1").attr({ checked: true, disabled: false });
+        $("#chkEdit_1").attr({ checked: true, disabled: false });
+        $("#chkDelete_1").attr({ checked: true, disabled: false });
+    }
+
+
+    $(".chkView").click(function () {
+        var name = $(this).attr("name");
+        var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+        var hiddenSelector = $("input:hidden[name=" + name + "]");
+        var chkStatus = checkBoxSelector.is(":checked");
+
+        var checkBoxStatus = $(this).is(":checked");
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        hiddenSelector.val(checkBoxStatus);
+
+        if (checkBoxStatus == false) {
+            var num = $(this).attr("num");
+            $("input:checkbox[name=chkAdd_" + num + "]").prop("checked", false);
+            $("input:checkbox[name=chkEdit_" + num + "]").prop("checked", false);
+            $("input:checkbox[name=chkDelete_" + num + "]").prop("checked", false);
+        }
+
+        //SetDefaultCheckBoxes();
+    });
+
+    $(".chkAdd").click(function () {
+        var name = $(this).attr("name");
+        var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+        var hiddenSelector = $("input:hidden[name=" + name + "]");
+        var chkStatus = checkBoxSelector.is(":checked");
+
+        var checkBoxStatus = $(this).is(":checked");
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        hiddenSelector.val(checkBoxStatus);
+
+        if (checkBoxStatus == true) {
+            var num = $(this).attr("num");
+            $("input:checkbox[name=chkView_" + num + "]").prop("checked", true);
+        }
+    });
+
+
+    $(".chkEdit").click(function () {
+        var name = $(this).attr("name");
+        var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+        var hiddenSelector = $("input:hidden[name=" + name + "]");
+        var chkStatus = checkBoxSelector.is(":checked");
+
+        var checkBoxStatus = $(this).is(":checked");
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        hiddenSelector.val(checkBoxStatus);
+
+        if (checkBoxStatus == true) {
+            var num = $(this).attr("num");
+            $("input:checkbox[name=chkAdd_" + num + "]").prop("checked", true);
+            $("input:checkbox[name=chkView_" + num + "]").prop("checked", true);
+        }
+    });
+
+    $(".chkDelete").click(function () {
+        var name = $(this).attr("name");
+        var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+        var hiddenSelector = $("input:hidden[name=" + name + "]");
+        var chkStatus = checkBoxSelector.is(":checked");
+
+        var checkBoxStatus = $(this).is(":checked");
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        hiddenSelector.val(checkBoxStatus);
+
+        if (checkBoxStatus == true) {
+            var num = $(this).attr("num");
+            $("input:checkbox[name=chkAdd_" + num + "]").prop("checked", true);
+            $("input:checkbox[name=chkEdit_" + num + "]").prop("checked", true);
+            $("input:checkbox[name=chkView_" + num + "]").prop("checked", true);
+        }
+    });
+
+
+    // Xu ly All Select Checkbox =======================================
+
+    $("input[name='chkAllView']").click(function () {
+        var chkAllViewStatus = $(this).is(":checked");
+        $(this).attr("checked", chkAllViewStatus);
+        if (chkAllViewStatus) {
+            $("input[class='chkView']").prop("checked", true);
+        } else {
+            $("input[class='chkView']").not(':first').prop("checked", false);
+            $("input[class='chkAdd']").not(':first').prop("checked", false);
+            $("input[class='chkEdit']").not(':first').prop("checked", false);
+            $("input[class='chkDelete']").not(':first').prop("checked", false);
+
+            $("input[name='chkAllAdd']").attr("checked", false);
+            $("input[name='chkAllEdit']").attr("checked", false);
+            $("input[name='chkAllDelete']").attr("checked", false);
+        }
+    })
+
+    $("input[name='chkAllAdd']").click(function () {
+        var chkAllAddStatus = $(this).is(":checked");
+        $(this).attr("checked", chkAllAddStatus);
+        if (chkAllAddStatus) {
+            $("input[class='chkAdd']").not(':first').prop("checked", true);
+            $("input[class='chkView']").not(':first').prop("checked", true);
+            $("input[name='chkAllView']").attr("checked", true);
+        } else {
+            $("input[class='chkAdd']").not(':first').prop("checked", false);
+        }
+    })
+
+    $("input[name='chkAllEdit']").click(function () {
+        var chkAllEditStatus = $(this).is(":checked");
+        $(this).attr("checked", chkAllEditStatus);
+        if (chkAllEditStatus) {
+            $("input[class='chkEdit']").not(':first').prop("checked", true);
+            $("input[class='chkView']").not(':first').prop("checked", true);
+            $("input[name='chkAllView']").attr("checked", true);
+        } else {
+            $("input[class='chkEdit']").not(':first').prop("checked", false);
+        }
+    })
+
+    $("input[name='chkAllDelete']").click(function () {
+        var chkAllDeleteStatus = $(this).is(":checked");
+        $(this).attr("checked", chkAllDeleteStatus);
+        if (chkAllDeleteStatus) {
+            $("input[class='chkDelete']").not(':first').prop("checked", true);
+            $("input[class='chkView']").not(':first').prop("checked", true);
+            $("input[name='chkAllView']").attr("checked", true);
+        } else {
+            $("input[class='chkDelete']").not(':first').prop("checked", false);
+        }
+    })
+
+</script>

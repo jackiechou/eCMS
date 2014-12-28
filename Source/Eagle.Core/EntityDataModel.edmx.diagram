@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9a7942ac7124d918e021244d23eca80" Name="Diagram1">
+        <EntityTypeShape EntityType="Eagle.Core.ApplicationFile" Width="1.5" PointX="12.75" PointY="31.625" />
+        <EntityTypeShape EntityType="Eagle.Core.ApplicationFolderPermission" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ApplicationFolder" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ApplicationLanguage" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Application" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ApplicationSetting" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Eagle.Core.BannerPosition" Width="1.5" PointX="6.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Banner" Width="1.5" PointX="8.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.Core.BannerType" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ContentItem" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ContentType" Width="1.5" PointX="14.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Country" Width="1.5" PointX="14.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Event" Width="1.5" PointX="14.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Eagle.Core.HostSetting" Width="1.5" PointX="16.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Language" Width="1.5" PointX="16.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Menu" Width="1.5" PointX="16.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Eagle.Core.MenuPermission" Width="1.5" PointX="17.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.MenuRoute" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.MenuType" Width="1.5" PointX="2.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ModuleControl" Width="1.5" PointX="4.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ModuleFunctionPermission" Width="1.5" PointX="6.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ModuleFunction" Width="1.5" PointX="8.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ModuleHtmlText" Width="1.5" PointX="18.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ModulePermission" Width="1.5" PointX="18.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Module" Width="1.5" PointX="18.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ModuleSetting" Width="1.5" PointX="18.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.Core.News" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.NewsCategory" Width="1.5" PointX="20.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.Core.NewsComment" Width="1.5" PointX="20.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageBanner" Width="1.5" PointX="17.75" PointY="18.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageGroup" Width="1.5" PointX="20.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageMeta" Width="1.5" PointX="4.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageModule" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageModuleSetting" Width="1.5" PointX="6.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageOption" Width="1.5" PointX="8.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PagePermission" Width="1.5" PointX="0.75" PointY="22.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Page" Width="1.5" PointX="22.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PageSetting" Width="1.5" PointX="22.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Permission" Width="1.5" PointX="22.75" PointY="16.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PermissionGroup" Width="1.5" PointX="22.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.Core.RoleGroup" Width="1.5" PointX="22.75" PointY="22.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Role" Width="1.5" PointX="24.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ScopeType" Width="1.5" PointX="2.75" PointY="24.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SkinPackageBackground" Width="1.5" PointX="24.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SkinPackage" Width="1.5" PointX="4.75" PointY="24.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SkinPackageTemplate" Width="1.5" PointX="24.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SkinPackageType" Width="1.5" PointX="24.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Skin" Width="1.5" PointX="24.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Eagle.Core.UserAuthentication" Width="1.5" PointX="24.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.UserEmployee" Width="1.5" PointX="24.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.Core.UserRole" Width="1.5" PointX="24.75" PointY="23.75" />
+        <EntityTypeShape EntityType="Eagle.Core.User" Width="1.5" PointX="20.75" PointY="25.75" />
+        <EntityTypeShape EntityType="Eagle.Core.VisitorStatistic" Width="1.5" PointX="26.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.DOC_tblDocument" Width="1.5" PointX="12.75" PointY="43.875" />
+        <EntityTypeShape EntityType="Eagle.Core.DOC_tblDocumentReference" Width="1.5" PointX="10.5" PointY="44.875" />
+        <EntityTypeShape EntityType="Eagle.Core.DOC_tblKeywords" Width="1.5" PointX="26.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblContract" Width="1.5" PointX="26.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblEmp" Width="1.5" PointX="0.75" PointY="67" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblProject" Width="1.5" PointX="3" PointY="91.25" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblQualification" Width="1.5" PointX="18" PointY="21.875" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblRelationship" Width="1.5" PointX="9" PointY="67.125" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblReward" Width="1.5" PointX="12" PointY="83.875" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblWorking" Width="1.5" PointX="26.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Eagle.Core.HR_tblWorkingHistory" Width="1.5" PointX="3" PointY="169" />
+        <EntityTypeShape EntityType="Eagle.Core.LanguageModel" Width="1.5" PointX="26.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblAnswerType" Width="1.5" PointX="15" PointY="55.625" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblBank" Width="1.5" PointX="12.75" PointY="2" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblBankBranch" Width="1.5" PointX="15" PointY="2.125" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblChangeStatus" Width="1.5" PointX="26.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblCompany" Width="1.5" PointX="6.75" PointY="43" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblCompanyDefine" Width="1.5" PointX="4.5" PointY="45" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblContractType" Width="1.5" PointX="22.75" PointY="26.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblCountry" Width="1.5" PointX="12.75" PointY="17.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblCurrency" Width="1.5" PointX="9.75" PointY="57.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblDistrict" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblEducation" Width="1.5" PointX="12.75" PointY="28.375" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblEthnic" Width="1.5" PointX="12.75" PointY="36.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblFaculty" Width="1.5" PointX="15" PointY="51.625" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblGender" Width="1.5" PointX="26.75" PointY="24.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblGrade" Width="1.5" PointX="0.75" PointY="27.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblHospital" Width="1.5" PointX="2.75" PointY="27.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblLanguages123" Width="1.5" PointX="4.75" PointY="27.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblLeaveType" Width="1.5" PointX="1.5" PointY="99.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblLocation" Width="1.5" PointX="18" PointY="44.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblMajor" Width="1.5" PointX="12.75" PointY="10.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblMarital" Width="1.5" PointX="12.75" PointY="25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblMasterData" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblMultiLevel" Width="1.5" PointX="28.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblNationality" Width="1.5" PointX="12.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblNguonBaoBH" Width="1.5" PointX="8" PointY="1" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblNguonBaoBH_Type" Width="1.5" PointX="5.75" PointY="1.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblOnlineProcess" Width="1.5" PointX="3.75" PointY="56.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblOnlineProcessMailBcc" Width="1.5" PointX="3" PointY="71.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblOnlineProcessMailCc" Width="1.5" PointX="6" PointY="64.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblPosition" Width="1.5" PointX="6.75" PointY="90.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblProvince" Width="1.5" PointX="10.5" PointY="5.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblQualification" Width="1.5" PointX="12.75" PointY="40.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblRecruitmentFee" Width="1.5" PointX="17.25" PointY="62.625" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblRecruitmentSource" Width="1.5" PointX="6.75" PointY="86.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblRecruitmentTournament" Width="1.5" PointX="28.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblRecruitmentType" Width="1.5" PointX="6.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblRelationship" Width="1.5" PointX="6.75" PointY="59.625" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblReligion" Width="1.5" PointX="12.75" PointY="14" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblReward" Width="1.5" PointX="9.75" PointY="111.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblRewardLevel" Width="1.5" PointX="9.75" PointY="115.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblSalaryAdjust" Width="1.5" PointX="3.75" PointY="104" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblSalaryDeduction" Width="1.5" PointX="0.75" PointY="88.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblSchool" Width="1.5" PointX="15" PointY="48.125" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTerminationReason" Width="1.5" PointX="0.75" PointY="63" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTerminationType" Width="1.5" PointX="0.75" PointY="59.25" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingAnswerType" Width="1.5" PointX="19.5" PointY="62.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingApprisalItem" Width="1.5" PointX="17.25" PointY="56.875" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingApprisalPart" Width="1.5" PointX="15" PointY="58.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingCategory" Width="1.5" PointX="9.75" PointY="93" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingCode" Width="1.5" PointX="9.75" PointY="104.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingCourse" Width="1.5" PointX="9.75" PointY="96.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingExpense" Width="1.5" PointX="18" PointY="90.75" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingForm" Width="1.5" PointX="9.75" PointY="101.125" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingLocation" Width="1.5" PointX="9.75" PointY="108" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingProvider" Width="1.5" PointX="7.5" PointY="96.5" />
+        <EntityTypeShape EntityType="Eagle.Core.LS_tblTrainingType" Width="1.5" PointX="9.75" PointY="89.25" />
+        <EntityTypeShape EntityType="Eagle.Core.Mail_SendMailCalendar" Width="1.5" PointX="3" PointY="60.375" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblAddition_201407" Width="1.5" PointX="8.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblAddition_201408" Width="1.5" PointX="28.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblAddition_201409" Width="1.5" PointX="28.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblAddition_YYYYMM" Width="1.5" PointX="28.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblAdditionSalary" Width="1.5" PointX="6" PointY="82.125" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblAddSalaryByPosition" Width="1.5" PointX="15" PointY="87.125" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblDeductionSalary" Width="1.5" PointX="3" PointY="75.125" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblIncomeTaxGROSS" Width="1.5" PointX="28.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblIncometaxNET" Width="1.5" PointX="24.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblInsuranceExchangeRate" Width="1.5" PointX="12" PointY="57.5" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblPayrollExchangeRate" Width="1.5" PointX="12" PointY="60.375" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblSalary" Width="1.5" PointX="12" PointY="63.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblSalary13" Width="1.5" PointX="28.75" PointY="26.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblSalary13Coef" Width="1.5" PointX="17.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblSalaryGrade" Width="1.5" PointX="9.75" PointY="49.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblSalaryRank" Width="1.5" PointX="9.75" PointY="53.875" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblSalaryScale" Width="1.5" PointX="7.5" PointY="50" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblCandidate" Width="1.5" PointX="15" PointY="19.25" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblCandidateTournament" Width="1.5" PointX="24.75" PointY="76.5" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblCandidateTournament_InterviewCriteria" Width="1.5" PointX="27" PointY="73.625" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblDemand" Width="1.5" PointX="9" PointY="74" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblDemandComment" Width="1.5" PointX="14.25" PointY="67.625" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblInterviewCalendar" Width="1.5" PointX="27.75" PointY="76.625" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblInterviewCriteria" Width="1.5" PointX="20.25" PointY="87.25" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblInterviewCriteriaType" Width="1.5" PointX="18" PointY="87.625" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblPlan" Width="1.5" PointX="9" PointY="81.375" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblPlanComment" Width="1.5" PointX="20.25" PointY="83.5" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblProject" Width="1.5" PointX="17.25" PointY="66.625" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblProjectFee" Width="1.5" PointX="19.5" PointY="67.75" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblProjectTournament" Width="1.5" PointX="22.5" PointY="76.125" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblQualification" Width="1.5" PointX="17.25" PointY="48.25" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblQuota" Width="1.5" PointX="30.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblWorkingBackground" Width="1.5" PointX="17.25" PointY="31.75" />
+        <EntityTypeShape EntityType="Eagle.Core.REC_tblWorkingExpectation" Width="1.5" PointX="20.25" PointY="56.25" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblConvalescence" Width="1.5" PointX="12.25" PointY="100.25" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblHICard" Width="1.5" PointX="30.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblInsNoticeData" Width="1.5" PointX="30.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblInsNoticeData_Temp" Width="1.5" PointX="30.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblInsuranceInformation" Width="1.5" PointX="26.75" PointY="30.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblInsuranceLeave" Width="1.5" PointX="6" PointY="101.625" />
+        <EntityTypeShape EntityType="Eagle.Core.SI_tblPreviousRecord" Width="1.5" PointX="28.75" PointY="30.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblDataPermission" Width="1.5" PointX="9" PointY="24.875" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblDelegate" Width="1.5" PointX="30.75" PointY="30.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblFunctionList" Width="1.5" PointX="0.75" PointY="11.375" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblFunctionPermission" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblGroup" Width="1.5" PointX="0.75" PointY="3.125" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblModules123" Width="1.5" PointX="0.75" PointY="31.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblOnlineProcessEmp" Width="1.5" PointX="3" PointY="80.125" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblParameter" Width="1.5" PointX="2.75" PointY="31.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblParameters" Width="1.5" PointX="32.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblPayrollParameter" Width="1.5" PointX="32.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblProcessOnlineMaster" Width="1.5" PointX="0.75" PointY="93" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblUserAccount" Width="1.5" PointX="3" PointY="173.625" />
+        <EntityTypeShape EntityType="Eagle.Core.SYS_tblUserGroup" Width="1.5" PointX="4.75" PointY="32.75" />
+        <EntityTypeShape EntityType="Eagle.Core.sysdiagram" Width="1.5" PointX="6.75" PointY="32.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TER_tblParameters" Width="1.5" PointX="32.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TER_tblTermination" Width="1.5" PointX="3" PointY="66.625" />
+        <EntityTypeShape EntityType="Eagle.Core.TimeSheet_tblAssignEmpSchedule" Width="1.5" PointX="6" PointY="68.5" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblCyclic" Width="1.5" PointX="8.75" PointY="32.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblCyclicEmp" Width="1.5" PointX="32.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tbLeaveDayType" Width="1.5" PointX="3.75" PointY="99" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblHolidays" Width="1.5" PointX="32.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblLeaveApplicationDetail" Width="1.5" PointX="8.25" PointY="63.875" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblLeaveApplicationMaster" Width="1.5" PointX="6" PointY="72.875" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblMTLChild" Width="1.5" PointX="32.75" PointY="18.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblOTLimit" Width="1.5" PointX="3" PointY="95.25" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblOTLimitByStaff" Width="1.5" PointX="3" PointY="178.375" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblOTRecordDetail" Width="1.5" PointX="5.25" PointY="184.375" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblOTRecordMaster" Width="1.5" PointX="3" PointY="184.5" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblReconciliation" Width="1.5" PointX="3" PointY="180.875" />
+        <EntityTypeShape EntityType="Eagle.Core.TimeSheet_tblSchedule" Width="1.5" PointX="3.75" PointY="52.5" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblScheduleChange" Width="1.5" PointX="6" PointY="55.625" />
+        <EntityTypeShape EntityType="Eagle.Core.TimeSheet_tblScheduleDetail" Width="1.5" PointX="12" PointY="52.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblShift" Width="1.5" PointX="9.75" PointY="39.875" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblStandAnualLeaveDays" Width="1.5" PointX="3" PointY="166.5" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201404" Width="1.5" PointX="32.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201405" Width="1.5" PointX="32.75" PointY="26.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201406" Width="1.5" PointX="32.75" PointY="31.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201407" Width="1.5" PointX="34.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201408" Width="1.5" PointX="34.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201409" Width="1.5" PointX="34.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_201410" Width="1.5" PointX="34.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Timesheet_tblTimeKeeping_YYYYMM" Width="1.5" PointX="34.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TimeSheet_tblTimeKeepingMachine" Width="1.5" PointX="34.75" PointY="25.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TimeSheet_tblTimeKeepingMachineLastScanning" Width="1.5" PointX="34.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblDurationUser" Width="1.5" PointX="3" PointY="84.875" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblEvaluationTemplate" Width="1.5" PointX="20.25" PointY="52.25" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblEvaluationTemplateDetail" Width="1.5" PointX="22.25" PointY="62.25" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblPlan" Width="1.5" PointX="12" PointY="71.625" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblPlanComment" Width="1.5" PointX="14.25" PointY="83.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTemplateItem" Width="1.5" PointX="22.5" PointY="57.5" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingEvaluation" Width="1.5" PointX="17.25" PointY="72" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingEvaluationDetail" Width="1.5" PointX="19.5" PointY="71.25" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingEvaluationPart" Width="1.5" PointX="22.5" PointY="72.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingPlanExpense" Width="1.5" PointX="20.25" PointY="75.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingRequest" Width="1.5" PointX="15" PointY="71.25" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingRequestComment" Width="1.5" PointX="17.25" PointY="76.25" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingRequestCost" Width="1.5" PointX="20.25" PointY="79.75" />
+        <EntityTypeShape EntityType="Eagle.Core.TR_tblTrainingRequestDuration" Width="1.5" PointX="17.25" PointY="82.5" />
+        <EntityTypeShape EntityType="Eagle.Core.Gallery_Collections" Width="1.5" PointX="28.75" PointY="34.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Gallery_Files" Width="1.5" PointX="34.75" PointY="31.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Gallery_Topics" Width="1.5" PointX="0.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Mail_Accounts" Width="1.5" PointX="2.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Mail_Server_Providers" Width="1.5" PointX="4.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Mail_Templates" Width="1.5" PointX="6.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Mail_Types" Width="1.5" PointX="8.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_Albums" Width="1.5" PointX="19.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_Artists" Width="1.5" PointX="21.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_Composers" Width="1.5" PointX="23.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_FileRefs" Width="1.5" PointX="25.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_Files" Width="1.5" PointX="34.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_PlayLists" Width="1.5" PointX="36.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_Topics" Width="1.5" PointX="36.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Media_Types" Width="1.5" PointX="36.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Manufacturer_Categories" Width="1.5" PointX="14.75" PointY="36.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Manufacturer" Width="1.5" PointX="36.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_AttributeOptions" Width="1.5" PointX="16.75" PointY="36.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Attributes" Width="1.5" PointX="36.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Categories" Width="1.5" PointX="36.75" PointY="22.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Comments" Width="1.5" PointX="36.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Coupons" Width="1.5" PointX="30.75" PointY="36.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Discounts" Width="1.5" PointX="36.75" PointY="33.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Files" Width="1.5" PointX="36.75" PointY="37.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_GalleryCollections" Width="1.5" PointX="38.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_HostServers" Width="1.5" PointX="38.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Ranges" Width="1.5" PointX="38.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_TaxRates" Width="1.5" PointX="38.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_TypeParameters" Width="1.5" PointX="38.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Types" Width="1.5" PointX="38.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product_Votes" Width="1.5" PointX="38.75" PointY="22.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Product" Width="1.5" PointX="38.75" PointY="25.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Address" Width="1.5" PointX="38.75" PointY="36.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Articles" Width="1.5" PointX="2.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Banners" Width="1.5" PointX="4.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Classification" Width="1.5" PointX="6.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Contact" Width="1.5" PointX="14.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_CreditCards" Width="1.5" PointX="16.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Currency" Width="1.5" PointX="25.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Customers" Width="1.5" PointX="27.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_ManufacturerCategories" Width="1.5" PointX="38.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Manufacturers" Width="1.5" PointX="40.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_OrderPromotions" Width="1.5" PointX="40.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Portals" Width="1.5" PointX="40.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_ProductCategories" Width="1.5" PointX="40.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_ProductDiscounts" Width="1.5" PointX="40.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Products" Width="1.5" PointX="40.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_ProductTypes" Width="1.5" PointX="18.75" PointY="40.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Temp" Width="1.5" PointX="40.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor" Width="1.5" PointX="20.75" PointY="40.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Report_Templates" Width="1.5" PointX="22.75" PointY="40.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Report_Types" Width="1.5" PointX="40.75" PointY="26.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Classification" Width="1.5" PointX="40.75" PointY="30.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Currency" Width="1.5" PointX="40.75" PointY="33.75" />
+        <EntityTypeShape EntityType="Eagle.Core.CurrencyRate" Width="1.5" PointX="40.75" PointY="36.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Customer" Width="1.5" PointX="40.75" PointY="40.75" />
+        <EntityTypeShape EntityType="Eagle.Core.CustomerType" Width="1.5" PointX="29.75" PointY="41.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Employee" Width="1.5" PointX="31.75" PointY="41.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Order_Payment" Width="1.5" PointX="33.75" PointY="41.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Order_Products" Width="1.5" PointX="42.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Order_Shipment" Width="1.5" PointX="0.75" PointY="42.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Order" Width="1.5" PointX="42.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Payment_Methods" Width="1.5" PointX="42.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Promotion" Width="1.5" PointX="42.75" PointY="13.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingCarrier" Width="1.5" PointX="14.75" PointY="42.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingCity" Width="1.5" PointX="42.75" PointY="16.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingCountry" Width="1.5" PointX="42.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingDistrict" Width="1.5" PointX="42.75" PointY="22.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingMethod" Width="1.5" PointX="42.75" PointY="25.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingRate" Width="1.5" PointX="42.75" PointY="28.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShoppingCart" Width="1.5" PointX="42.75" PointY="33.75" />
+        <EntityTypeShape EntityType="Eagle.Core.StatisticExpens" Width="1.5" PointX="35.75" PointY="42.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Log" Width="1.5" PointX="42.75" PointY="37.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblDeduction_201407" Width="1.5" PointX="37.75" PointY="42.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblDeduction_201408" Width="1.5" PointX="42.75" PointY="41.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblDeduction_201409" Width="1.5" PointX="22.75" PointY="43.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblDeduction_YYYYMM" Width="1.5" PointX="24.75" PointY="43.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblPayroll_201407" Width="1.5" PointX="26.75" PointY="43.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblPayroll_201408" Width="1.5" PointX="44.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_tblPayroll_YYYYMM" Width="1.5" PointX="44.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Branches" Width="1.5" PointX="44.75" PointY="22.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Vendor_Departments" Width="1.5" PointX="44.75" PointY="26.75" />
+        <EntityTypeShape EntityType="Eagle.Core.Order_Product_Options" Width="1.5" PointX="44.75" PointY="29.75" />
+        <EntityTypeShape EntityType="Eagle.Core.ShippingRegion" Width="1.5" PointX="44.75" PointY="32.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_vAddition" Width="1.5" PointX="44.75" PointY="35.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_vDeduction" Width="1.5" PointX="44.75" PointY="39.75" />
+        <EntityTypeShape EntityType="Eagle.Core.PR_vPayRoll" Width="1.5" PointX="44.75" PointY="43.75" />
+        <EntityTypeShape EntityType="Eagle.Core.View_1" Width="1.5" PointX="28.75" PointY="45.75" />
+        <EntityTypeShape EntityType="Eagle.Core.vTimeKeeping" Width="1.5" PointX="33.75" PointY="45.75" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_Files" />
+        <AssociationConnector Association="Eagle.Core.FK_DOC_tblDocument_DOC_tblDocumentReference" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblProject_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblRelation_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblReward_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblWorkingHistory_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblOnlineProcessMailBcc_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblOnlineProcessMailCc_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Mail_SendMailCalendar_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblAdditionSalary_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblDeductionSalary_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalary_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblDemand_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblPlan_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblPlanComment_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblProjectTournament_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblComment_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblOnlineProcessEmp_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblUserAccount_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_TER_tblTermination_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_TimeSheet_tblAssignEmpSchedule_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_HR_tblEmp1" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_HR_tblEmp2" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_HR_tblEmp3" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_HR_tblEmp4" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_HR_tblEmp5" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblOTLimit_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblOTLimitByStaff_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblOTRecordMaster_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblReconciliation_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblStandAnualLeaveDays_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblDurationUser_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_HR_tblEmp" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblQualification_LS_tblCountry" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblQualification_LS_tblFaculty" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblQualification_LS_tblMajor" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblQualification_LS_tblQualification" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblQualification_LS_tblSchool" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblRelation_LS_tblRelationship" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblReward_LS_tblReward" />
+        <AssociationConnector Association="Eagle.Core.FK_HR_tblReward_LS_tblRewardLevel" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblTrainingApprisalItem_LS_tblAnswerType" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblBank_LS_tblProvince" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblBankBranch_LS_tblBank" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblCompany_LS_tblCompanyDefine" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblDemand_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblPlan_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblDataPermission_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblOnlineProcessEmp_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblCompany" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblProvince_LS_tblCountry" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblCountry" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblCountry2" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblCountry3" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblNativeCountry" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_LS_tblCountry" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblAdditionSalary_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblAddSalaryByPositiob_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblDeductionSalary_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblInsuranceExchangeRate_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblPayrollExchangeRate_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalary_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalary_LS_tblCurrencyInsurance" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblProjectFee_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingExpectation_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingPlanExpense_LS_tblCurrency" />
+        <AssociationConnector Association="Eagle.Core.FK__LS_tblDis__LSPro__00DF2177" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblDistrict" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblDistrict1" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblDistrict2" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblDistrict3" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblEducation" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblEthnic" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_LS_tblFaculty" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tbLeaveDayType_LS_tblLeaveType" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingExpectation_LS_tblLocation" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblMajor" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_LS_tblMajor" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblMarital" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblFunctionPermission_LS_tblMasterData" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblNationality" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblNguonBaoBH_LS_tblNguonBaoBH_Type" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblOnlineProcessMailBcc_LS_tblOnlineProcess" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblOnlineProcessMailCc_LS_tblOnlineProcess" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblProcessOnlineMaster_LS_tblOnlineProcess" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblAddSalaryByPositiob_LS_tblPosition" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblDemand_LS_tblPosition" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblPlan_LS_tblPosition" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingExpectation_LS_tblPosition" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingExpectation_LS_tblPosition1" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingExpectation_LS_tblPosition2" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblProvince" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblProvince1" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblProvince2" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblProvince3" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblProvince4" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblQualification" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_LS_tblQualification" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblProjectFee_LS_tblRecruitmentFee" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidate_LS_tblReligion" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblAdditionSalary_LS_tblSalaryAdjust" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblAddSalaryByPositiob_LS_tblSalaryAdjust" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblDeductionSalary_LS_tblSalaryDeduction" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_LS_tblSchool" />
+        <AssociationConnector Association="Eagle.Core.FK_TER_tblTermination_LS_tblTerminationReason" />
+        <AssociationConnector Association="Eagle.Core.FK_TER_tblTermination_LS_tblTerminationType1" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblTrainingAnswerType_LS_tblTrainingApprisalItem" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblTrainingApprisalItem_LS_tblTrainingApprisalItem" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTemplateItem_LS_tblTrainingApprisalItem" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingEvaluationDetail_LS_tblTrainingApprisalItem" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblEvaluationTemplateDetail_LS_tblTrainingApprisalPart" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingEvaluationDetail_LS_tblTrainingApprisalPart" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingEvaluationPart_LS_tblTrainingApprisalPart" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblTrainingCourse_LS_tblTrainingCategory" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingCategory" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingCategory" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblTrainingCourse_LS_tblTrainingCode" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingCode" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingCode" />
+        <AssociationConnector Association="Eagle.Core.FK_LS_tblTrainingCourse_LS_tblTrainingProvider" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingCourse" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingCourse" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequestCost_LS_tblTrainingExpense" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingForm" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingForm" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingLocation" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingLocation" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingProvider" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingProvider" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_LS_tblTrainingType" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlan_LS_tblTrainingType" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequest_LS_tblTrainingType" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalary_PR_tblSalaryGrade" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalary_PR_tblSalaryRank" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalary_PR_tblSalaryScale" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalaryGrade_PR_tblSalaryScale" />
+        <AssociationConnector Association="Eagle.Core.FK_PR_tblSalaryRank_PR_tblSalaryGrade" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidateTournament_REC_tblCandidate" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblInterviewCalendar_REC_tblCandidate" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblQualification_REC_tblCandidate" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingBackground_REC_tblCandidate" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblWorkingExpectation_REC_tblCandidate" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidateTournament_InterviewCriteria_REC_tblCandidateTournament" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidateTournament_REC_tblProjectTournament" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblCandidateTournament_InterviewCriteria_REC_tblInterviewCriteria" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblDemandComment_REC_tblDemand" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblInterviewCalendar_REC_tblProjectTournament" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblInterviewCriteria_REC_tblInterviewCriteriaType" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblPlanComment_REC_tblPlan" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblProjectFee_REC_tblProject" />
+        <AssociationConnector Association="Eagle.Core.FK_REC_tblProjectTournament_REC_tblProject" />
+        <AssociationConnector Association="Eagle.Core.FK_SI_tblConvalescence_SI_tblInsuranceLeave" />
+        <AssociationConnector Association="Eagle.Core.FK_SI_tblConvalescence_Timesheet_tbLeaveDayType" />
+        <AssociationConnector Association="Eagle.Core.FK_SI_tblInsuranceLeave_Timesheet_tbLeaveDayType" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblDataPermission_SYS_tblFunctionList" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblDataPermission_SYS_tblGroup" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblFunctionPermission_SYS_tblFunctionList" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblFunctionPermission_SYS_tblGroup" />
+        <AssociationConnector Association="Eagle.Core.FK_SYS_tblOnlineProcessEmp_SYS_tblProcessOnlineMaster" />
+        <AssociationConnector Association="Eagle.Core.FK_TimeSheet_tblAssignEmpSchedule_TimeSheet_tblSchedule" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationMaster_Timesheet_tbLeaveDayType" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblLeaveApplicationDetail_Timesheet_tblLeaveApplicationMaster" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblOTRecordDetail_Timesheet_tblOTRecordMaster" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblScheduleChange_TimeSheet_tblSchedule" />
+        <AssociationConnector Association="Eagle.Core.FK_Timesheet_tblScheduleChange_TimeSheet_tblSchedule1" />
+        <AssociationConnector Association="Eagle.Core.FK_TimeSheet_tblScheduleDetail_TimeSheet_tblSchedule" />
+        <AssociationConnector Association="Eagle.Core.FK_TimeSheet_tblScheduleDetail_Timesheet_tblShift" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblDurationUser_TR_tblTrainingRequestDuration" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblEvaluationTemplateDetail_TR_tblEvaluationTemplate" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTemplateItem_TR_tblEvaluationTemplate" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblPlanComment_TR_tblPlan" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingPlanExpense_TR_tblPlan" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingEvaluation_TR_tblTrainingRequest" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingEvaluationDetail_TR_tblTrainingEvaluation" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingEvaluationPart_TR_tblTrainingEvaluation" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequestComment_TR_tblTrainingRequest" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequestCost_TR_tblTrainingRequest" />
+        <AssociationConnector Association="Eagle.Core.FK_TR_tblTrainingRequestDuration_TR_tblTrainingRequest" />
+        <AssociationConnector Association="Eagle.Core.REC_tblCandidateDocument" />
+        <AssociationConnector Association="Eagle.Core.REC_tblDemand_LSRecruimentSources" />
+        <AssociationConnector Association="Eagle.Core.REC_tblPlanRecruitmentSource" />
+        <AssociationConnector Association="Eagle.Core.REC_tblProject_LS_tblRecruitmentSource" />
+        <AssociationConnector Association="Eagle.Core.REC_tblProjectCandidate" />
+        <AssociationConnector Association="Eagle.Core.REC_tblProjectDemand" />
+        <AssociationConnector Association="Eagle.Core.REC_tblProjectTournament_InterviewCiteria" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

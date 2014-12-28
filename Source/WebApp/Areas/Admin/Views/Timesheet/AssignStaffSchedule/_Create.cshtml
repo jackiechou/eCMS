@@ -1,0 +1,75 @@
+﻿@model Eagle.Model.AssignEmpScheduleCreateViewModel
+
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+            @Html.LabelFor(model => model.ScheduleID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectScheduleID", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.ScheduleName)
+            @Html.HiddenFor(model => model.ScheduleID)
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-1">
+            @Html.LabelFor(model => model.Year)
+        </div>
+        <div class="col-md-4">
+
+            @Html.TextBoxFor(model => model.Year, new { @class = "span12", @placeholder = @Eagle.Resource.LanguageResource.Year })
+            @Html.ValidationMessageFor(model => model.Year)
+
+        </div>
+    </div>
+    <div class="row">
+
+                <div class="col-md-5">
+                    <div class="user-style">
+                         <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "span12" })</h5>
+                        <div class="control-group">
+                           @Html.ListBox("lstBox", ViewData["lstBox"] as MultiSelectList, new { @id = "lstBox" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">                    
+                    <div id="btnUpdateGroup" class="control-group">
+                        <p style="text-align:center;">
+                            <input type="button" id="btnAdd" value=">" class="direct_bt btn btn-larg1e row-fluid AddModel" />
+                            <input type="button" id="btnAddAll" value=">>" class="direct_bt btn btn-info btn-larg1e row-fluid AddModel" />
+                        </p>
+                        <p style="text-align:center;">
+                            <input type="button" id="btnDeleteAll" value="<<" class="direct_bt btn btn-info btn-larg1e row-fluid DeleteModel launchConfirmAll" />
+                            <input type="button" id="btnDelete" value="<" class="direct_bt btn btn-larg1e row-fluid DeleteModel launchConfirm" />
+                            
+                        </p>
+                    </div>
+                </div>                
+                
+                <div class="col-md-5">
+                    <div class="user-style">
+                       <h5> @Eagle.Resource.LanguageResource.EmplistAssigned  @Html.TextBox("FilterEmplistAssigned", null, new { @class = "span12" })</h5>
+                        <div class="control-group">
+                              @Html.ListBox("lstBoxAssigned",ViewData["lstBoxAssigned"] as MultiSelectList, new { @id = "lstBoxAssigned" })
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+@Html.Action("ConfirmPopup","Common",null)       
+@Html.Action("jqueryval", "Common", null)    
+
+<script>
+    var strInputSchedule = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputScheduleName)';
+    PopulateDropDownListAutoComplete("SelectScheduleID", "ScheduleID", "ScheduleName", strInputSchedule, areas + '/Schedule/DropdownList');
+</script>

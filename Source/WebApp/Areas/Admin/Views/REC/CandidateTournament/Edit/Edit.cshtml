@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.ResultsRecord;   
+}
+<div id="MainBody">
+    @Html.Action("_ModifiCandidateTournament", new { CandidateID = ViewBag.CandidateID, ProjectTournamentID = ViewBag.ProjectTournamentID })
+</div>
+<div id="divPopup">
+
+</div>
+
+<script type="text/javascript">
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) {
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            loading();
+            //Cập nhật Thông tin Skill
+            $.ajax({
+                type: "POST",
+                url: "UpdateCandidate?Skill=" + $("textarea[name='Skill']").val() + "&CandidateId=" + getParameterByName('CandidateID'),
+                success: function (data) {
+
+                }
+            });
+
+            //Save modifi
+            $.ajax({
+                type: "POST",
+                url: "SaveModifi?model.Result=" + $("#Result").val(),
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        loading();
+                        var url = '/Admin/CandidateTournament/Index?ModuleID=8';
+                        url = url + "&ProjectTournamentID=" + getParameterByName("ProjectTournamentID");
+                        url = url + "&ProjectID=" + getParameterByName("ProjectID");
+                        url = url + "&Result=" + getParameterByName("Result");
+                        url = url + "&FullName=" + getParameterByName("FullName");
+                        window.location.href = url;
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    } else {
+                        $('#MainBody').html(data);
+                        setTournamentName();
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        }
+    });
+    $(document).ready(function () {
+        setTournamentName();
+    });
+    function setTournamentName() {
+        $("#ProjectTournamentName").html(getParameterByName("ProjectTournamentName"));
+    }
+    $(document).on("click", "#btnReset", function () {
+        loading();
+        var url = '/Admin/CandidateTournament/Index?ModuleID=8';
+        url = url + "&ProjectTournamentID=" + getParameterByName("ProjectTournamentID");
+        url = url + "&ProjectID=" + getParameterByName("ProjectID");
+        url = url + "&Result=" + getParameterByName("Result");
+        url = url + "&FullName=" + getParameterByName("FullName");
+        window.location.href = url;
+    });
+
+    /*Nhấn nút xem kinh nghiệm*/
+    $(document).on("click", ".editItemBackgroundWorking", function () {
+        loading();
+        $.ajax({
+            type: "GET",
+            url: "_popupWorkingBackground?WorkingBackgroundId=" + $(this).data('id'),
+            success: function (data) {
+                $('#divPopup').html(data);
+                $(".popupWorkingBackground").modal("show");
+            }
+        });
+    });
+    /*Nhấn nút xem Bằng cấp*/
+    $(document).on("click", ".editItemQualification", function () {
+        loading();
+        $.ajax({
+            type: "GET",
+            url: "_popupQualification?QualificationId=" + $(this).data('id'),
+            success: function (data) {
+                $('#divPopup').html(data);
+                $(".popupQualification").modal("show");
+            }
+        });
+    });
+    /*Nhấn nút xem file đính kèm*/
+    $(document).on("click", ".editItemDocument", function () {       
+        loading();
+        $.ajax({
+            type: "GET",
+            url: "_popupAttachFile?DocumentId=" + $(this).data('id'),
+            success: function (data) {
+                $('#divPopup').html(data);
+                $(".popupAttachFile").modal("show");
+            }
+        });
+        
+    });
+    
+</script>

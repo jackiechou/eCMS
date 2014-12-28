@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.WorkingScheduleReport;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+   @Html.DevExpress().GetStyleSheets( 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+    @Html.DevExpress().GetScripts( 
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new Script { ExtensionSuite = ExtensionSuite.GridView }, 
+        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new Script { ExtensionSuite = ExtensionSuite.Editors }, 
+        new Script { ExtensionSuite = ExtensionSuite.Chart },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+	    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new Script { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+
+@section Button{
+    <input id="btnReport" type="image" value="@Eagle.Resource.LanguageResource.btnReport" src="@Eagle.Resource.LanguageResource.srcBtnViewReport" />    
+}
+
+@section ContentSection
+{
+<div id="MainBody">              
+    @Html.Partial("../Timesheet/WorkingSchedule/Reset")
+</div>
+    }
+
+<script>
+    $('#changeSidebarPos').trigger('click');
+
+    var urlSearch = areas + "/WorkingSchedule/Report"
+
+    $(document).on("click", "#btnReport", function () {
+        
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: urlSearch,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divReport').html(data);
+            }
+        });
+        var dxo = new ClientReportToolbar('ReportToolbar');
+        window['ReportToolbar'] = dxo;
+        dxo.menuID = 'ReportToolbar_Menu';
+        dxo.reportViewerID = 'reportViewer1';
+        dxo.InlineInitialize();
+    });
+</script>

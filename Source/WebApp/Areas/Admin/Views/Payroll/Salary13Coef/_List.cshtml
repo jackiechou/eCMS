@@ -1,0 +1,90 @@
+﻿@model List<Salary13CoefViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:3px">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefEmpCode
+                </th>
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefEmployee
+                </th>
+                <th style="min-width:100px;" class="text_center">
+                    @Eagle.Resource.LanguageResource.LastCompanyDefine
+                </th>                                                
+                <th class="text_center" style="width:15%">
+                    @Eagle.Resource.LanguageResource.Position
+                </th>                                                
+                <th class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.StartDate
+                </th>
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefYear
+                </th>                                                
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefCalMonth
+                </th>             
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Coef
+                </th>                   
+                <th class="table-actions text_center no-sort">
+                    @Html.CheckBox("CheckAll", true) 
+                </th>                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0; int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++; k++;        
+                <input type="hidden" name="[@k].SalaryCoefID" value="@item.SalaryCoefID" />
+                <input type="hidden" name="[@k].EmpID" value="@item.EmpID" />
+                <input type="hidden" name="[@k].Year" value="@item.Year" />
+                <input type="hidden" name="[@k].CalMonth" value="@item.CalMonth" />                         
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmloyeepName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>                                        
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PositionName)
+                    </td>     
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.StartDateInfo)
+                    </td>     
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>               
+                    <td>                        
+                        @Html.DropDownListFor(modelItem => item.CalMonth, new SelectList(item.ListOfCalMonths(10001), "Key", "Text", item.CalMonth))
+                    </td>   
+                    <td>
+                        <input type="text" name="[@k].Coef" value="@item.Coef" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);" onkeyup="CheckNumber(this);"/>                                                            
+                    </td>                                     
+                    <td class="text_center">          
+                        @Html.CheckBox(String.Format("[{0}].Checked", @k), item.Checked)                         
+                    </td> 
+                </tr>                 
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    //InvokeDataTables();
+    function CheckNumber(obj) {        
+        if (validateNumeric($(obj).val()) == false) {
+            $(obj).val('');            
+        }        
+    }    
+</script>

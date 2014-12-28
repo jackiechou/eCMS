@@ -1,0 +1,213 @@
+﻿@model List<SI_spfrmInsNoticeData_Search_Result>
+<div class="table" style="width:100%;overflow-x:scroll;">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                
+                <th style="width:100px;">
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.AriseDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ToDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.SourceName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.InsNoticeDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.RightNoticeDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.IncNoticeDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.NoteInc
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.NoteDec
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.OldSalaryCoef
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.OldSalary
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.NewSalaryCoef
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.NewSalary
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Percent
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.PercentSI
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.PercentHI
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.PercentUI
+                </th>
+
+                <th>
+                    @Eagle.Resource.LanguageResource.FromMonth
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ToMonth
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.TotalMonth
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Stage
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ReturnHICard
+                </th>
+
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td >
+                        @item.FullName
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.AriseDate" name="[@k].AriseDate" />
+                        @item.AriseDate
+                    </td>
+                    <td>
+                        @item.ToDate
+                        <input type="hidden" value="@item.ToDate" name="[@k].ToDate" />
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.SourceID" name="[@k].SourceID" />
+                        @item.SourceID
+                    </td>
+                    <td>                     
+                        @item.InsNoticeDate   
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.RightNoticeDate" name="[@k].RightNoticeDate" />
+                        @item.RightNoticeDate
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.IncNoticeDate" name="[@k].IncNoticeDate" />
+                        @item.IncNoticeDate
+                    </td>
+                    <td>
+                        @item.NoteInc
+                    </td>
+                    <td>
+                         @item.NoteDesc
+                    </td>
+                    <td>
+                         <input type="hidden" value="@item.OldSalaryCoef" name="[@k].OldSalaryCoef" />
+                        @item.OldSalaryCoef
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.OldSalary" name="[@k].OldSalary" />
+                        @item.strOldSalary
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.NewSalaryCoef" name="[@k].NewSalaryCoef" />
+                        @item.NewSalaryCoef
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.NewSalary" name="[@k].NewSalary" />
+                        @item.strNewSalary
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.Percent" name="[@k].Percent" />
+                        @item.Percent
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.PercentSI" name="[@k].PercentSI" />
+                        @item.PercentSI
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.PercentHI" name="[@k].PercentHI" />
+                        @item.PercentHI
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.PercentUI" name="[@k].PercentUI" />
+                        @item.PercentUI
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.FromMonth" name="[@k].FromMonth" />
+                        @item.FromMonth
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.ToMonth" name="[@k].ToMonth" />
+                        @item.ToMonth
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.TotalMonth" name="[@k].TotalMonth" />
+                        @item.TotalMonth
+                    </td>
+                    <td>
+                       <input type="hidden" value="@item.Stage" name="[@k].Stage" />
+                        @item.Stage
+                    </td>
+                    <td>
+                        <input type="hidden" value="@item.ReturnHICard" name="[@k].ReturnHICard" />
+                        @item.ReturnHICard
+                    </td>
+                    <td  class="center">
+                        <a  data-id="@item.ID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.Action("ConfirmPopup","Common",null)
+<script>
+    //InvokeDataTables();
+    InvokeDateTimePicker();
+</script>
+<script type="text/javascript">
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var urlCreate = '/InsNoticeData/_ListSearch';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/InsNoticeData/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $('#btnSearch').trigger('click');
+                                AlterDeleteSuccess();
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

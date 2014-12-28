@@ -1,0 +1,98 @@
+﻿@model IEnumerable<CandidateResultViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CandidateCode)
+                </th>
+                <th style="min-width:100px">
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplyDate)
+                </th>
+                <th style="min-width:100px;">
+                    @Html.DisplayNameFor(model => model.ResultName)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+                <th class="table-actions text_center no-sort">@Html.CheckBox("chkAll")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @if (Model != null)
+	        {
+                foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CandidateCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplyDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ResultName)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                          <a data-id="@item.CandidateID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                           @if (item.Result == 4)
+                           {
+                                <a data-id="@item.CandidateID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>    
+                           }else
+                           {
+                               <a title="Delete" class="ico deleteItemDisable">&nbsp;&nbsp;&nbsp;</a> 
+                           }
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            @if (item.Result == 4)
+                            {
+                                @Html.CheckBox("chkDelete", false, new { @value = item.CandidateID }) 
+                            }else
+                            {
+                                @Html.CheckBox("chkDelete2", false, new { @disabled="disabled"})
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading2");
+        var lsID = $(this).data('id');  // ID cua dong du lieu        
+        var urlChangeCandidate = areas + "/Candidate/ChangeCandidateID?CandidateID=" + lsID;
+        $.ajax({
+            type: "POST",
+            url: urlChangeCandidate,
+            success: function (data) {
+                if (data = "success") {
+                    var urlRedirect = '/Admin/CandidateInformation/Index?ModuleID=8';
+                    window.location.replace(urlRedirect);
+                }
+            }
+        });
+
+        $("body").addClass("loading");
+    });
+</script>

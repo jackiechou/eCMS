@@ -1,0 +1,82 @@
+﻿@model InsNoticeDataCreateViewModels
+<!--Begin search -->
+<div class="row">
+    <div class="col-md-2">
+        <label>
+            @Eagle.Resource.LanguageResource.LastCompanyDefine
+        </label>
+    </div>
+    <div class="col-md-4">
+        <select id="SearchLSCompanyID" name="SearchLSCompanyID" class="easyui-combotree span2"></select>
+        <script type="text/javascript">
+            LoadComboTree('SearchLSCompanyID');
+            function LoadComboTree(controlId) {
+                $('#' + controlId).combotree({
+                    url: '/CommonCompany/GetAll',
+                    textField: 'title',
+                    valueField: 'id',
+                    onLoadSuccess: function (row, data) {
+                        $(this).tree("collapseAll");
+                    },
+                    onSelect: function (node) {
+                    }
+                });
+            }
+        </script>
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+        <label style="display: inline; margin-left: 10px;">@Eagle.Resource.LanguageResource.NotNotice @Html.RadioButton("Searchactive1", true, true, new { @id = "NotYet", @class = "chkActive" })</label>
+        <label style="display: inline; margin-left: 10px;">@Eagle.Resource.LanguageResource.Noticed @Html.RadioButton("Searchactive1", false, false, new { @id = "Yet", @class = "chkActive" })</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.EmpCode)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "span12" })
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.FullName)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "span12" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.strAriseFromDate)
+    </div>
+    <div class="col-md-4">
+        @Html.Datepicker2For(model => model.strAriseFromDate) - @Html.Datepicker2For(model => model.strAriseToDate)
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.strInsNoticeFromDate)
+    </div>
+    <div class="col-md-4">
+         @Html.Datepicker2For(model => model.strInsNoticeFromDate) - @Html.Datepicker2For(model => model.strInsNoticeToDate)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.SourceName)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBox("SelectSourceID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.SourceName)
+        @Html.HiddenFor(model => model.SourceID)
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.Stage)
+    </div>
+    <div class="col-md-4">
+        @Html.DropDownList("Stage")
+    </div>
+</div>
+<!--End search -->
+<script>
+    var strInput = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputSourceName)';
+    PopulateDropDownListAutoComplete("SelectSourceID", "SourceID", "SourceName", strInput, areas + '/InsNoticeData/DropdownList');
+</script>

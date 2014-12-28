@@ -1,0 +1,10 @@
+﻿@{
+    PivotGridSettings pivotSettings = Eagle.WebApp.Areas.Admin.Controllers.Report.HR.ContractReportController.Contract_PivotGridHelper.CreateGeneralSettings();
+    pivotSettings.CallbackRouteValues = new
+    {
+        Controller = "ContractReport",
+        Action = "LoadPivotGrid",
+       // Quarterly = Request["Quarterly"] != null ? Request["Quarterly"] : ViewBag.Param
+    };
+}
+@Html.DevExpress().PivotGrid(pivotSettings).Bind(Model).GetHtml()

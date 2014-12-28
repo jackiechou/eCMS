@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_OTRequestRecord;   
+}
+<div id="main-data">
+    <form id="frmAdd">
+        <div id="divSearch">
+            @Html.Action("_Search", "OTRequest", null)
+        </div>
+    </form>
+    <div id="divList">
+        @Html.Action("_ListRecord", "OTRequest", null)
+    </div>
+</div>
+@section Scripts{
+
+    <script type="text/javascript">
+        $('#changeSidebarPos').trigger('click');
+        // region click edit
+        $(document).on("click", ".editItem", function () {
+            loading();
+        });
+        // region khi click nut search
+        $(document).on("click", "#btnSearch", function () {
+            $("body").addClass("loading");
+            //Search danh sach nhan vien 
+            var moduleId = 9;
+            var url = areas + '/OTRequest/_ListRecord?ModuleID=' + moduleId;
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $('#divList').html(data);
+                }
+            });
+
+        });
+        // region click delete
+        $(document).on("click",".launchConfirm", function (e) {
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+            $('#confirm')
+                .modal({ backdrop: 'static', keyboard: false })
+                .one('click', '[data-value]', function (e) {
+                    if ($(this).data('value')) {
+                        var urlCreate = '/OTRequest/_ListRecord?ModuleID=9';
+                        $.ajax({
+                            type: "POST",
+                            url: areas + '/OTRequest/_Delete' + '/' + lsID,
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: areas + urlCreate,
+                                        success: function (data) {
+                                            $('#divList').html(data);
+                                            AlterUpdateSuccess();
+                                        }
+                                    });
+                                } else {
+                                    $('#"main-data').html(data);
+                                }
+                            }
+                        })
+                        return false;
+                    }
+                });
+        });
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Eagle.Model.Mail.MailTemplateViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mail_Type_Name)
+                </th>               
+                <th>
+                    @Html.DisplayNameFor(model => model.Mail_Template_Name)
+                </th> 
+                <th>
+                    @Html.DisplayNameFor(model => model.Mail_Template_Discontinued)
+                </th>
+                <th class="table-actions center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail_Type_Name)
+                    </td>                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mail_Template_Name)
+                    </td>
+                    <td class="center">
+                        @Html.CheckBox("Discontinued", item.Mail_Template_Discontinued == true, new { @disable = "disable" })
+                    </td>
+                    <td class="table-actions center no-sort">
+                        <a data-id="@item.Mail_Template_Id" title="Edit" class="ico editItem">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.Mail_Template_Id" title="Delete" class="ico deleteItem">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

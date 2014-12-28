@@ -1,0 +1,80 @@
+﻿@model List<IndividualOTListViewModel>
+<style type="text/css">
+    #dataTable tbody tr td {
+        padding-top: 0px!important;
+        padding-bottom: 0px!important;
+    }
+</style>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.No</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.DateID</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.EmpCode</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.FullName</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.Department</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.Position</th>
+                <th colspan="2" style="text-align:center;">AM</th>
+                <th colspan="2" style="text-align:center;">PM</th>
+                <th rowspan="2"> Total hrs</th>
+                <th rowspan="2"> Night hrs</th>
+                <th rowspan="2"> Holidays hrs</th>
+            </tr>
+            <tr>
+                <th style="text-align:center;">From</th>
+                <th style="text-align:center;">To</th>
+                <th style="text-align:center;">From</th>
+                <th style="text-align:center;">To</th>
+            </tr>
+        </thead>
+        <tbody>
+             @{int i = 0;}
+              
+            @foreach (var item in Model)
+            {
+                i++;
+            <tr>
+                <td>@i</td>
+                <td> 
+                     @item.strDateID
+                </td>
+                <td>
+                    @item.EmpCode
+                </td>  
+                <td> 
+                    @item.FullName
+                </td>
+                <td> 
+                    @item.Department
+                </td>
+                <td> 
+                    @item.Position
+                </td>
+                <td>
+                    @item.strTimeInAM
+                </td>
+                <td>
+                    @item.strTimeOutAM
+                </td>
+                <td>
+                    @item.strTimeInPM
+                </td>
+                <td>
+                    @item.strTimeOutPM
+                </td>
+                <td>
+                    @item.TotalHours
+                </td>
+                <td> 
+                     @item.NightHours
+                </td>
+                <td>
+                     @item.HolidayHours
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

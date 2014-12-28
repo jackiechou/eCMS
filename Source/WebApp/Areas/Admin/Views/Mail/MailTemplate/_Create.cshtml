@@ -1,0 +1,93 @@
+﻿@model Eagle.Model.Mail.MailTemplateViewModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform", autocomplete = "off", @class = "form-horizontal" }))
+{
+    @*Click Button to pick data from grid in popup *@
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass    ">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Html.Raw(Eagle.Resource.LanguageResource.FormArea)</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Mail_Type_Id)
+                                </div>
+                                <div class="col-md-10">
+                                    <div id="BoxContainer" class="col-md-12">
+                                        <a id="hierarchy" tabindex="0" href="#DropDownDivContainer" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all">
+                                            <span class="ui-icon ui-icon-triangle-1-s"></span>
+                                            <span class="spanSelectedText">@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)</span>
+                                            @Html.HiddenFor(model => model.Mail_Type_Id, new { @class = "spanSelectedValue" })
+                                        </a>                                        
+                                        <div id="DropDownDivContainer" class="hidden">                                            
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Mail_Type_Id)
+                                </div>                               
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Mail_Template_Name)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.Mail_Template_Name, new { @class = "span12" })
+                                    @Html.ValidationMessageFor(model => model.Mail_Template_Name)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Mail_Template_Content)
+                                </div>
+                                <div class="col-md-10">
+                                    @*@Html.TextAreaFor(model => model.Mail_Template_Content, new { @class = "span12 ckeditor" })*@
+
+                                    @Html.TextArea("Contents", new { @id="Contents", @class = "ckeditor" })
+                                    @Html.HiddenFor(model => model.Mail_Template_Content)
+                                    @Html.ValidationMessageFor(model => model.Mail_Template_Content)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Mail_Template_Discontinued)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.Mail_Template_Discontinued, null, new { @class = "span12" })
+                                    @Html.ValidationMessageFor(model => model.Mail_Template_Discontinued)
+                                </div>
+                            </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="footbar">
+                                        <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info add" />
+                                        <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" />
+                                    </div>
+                                </div>
+                                <!--End.row-->
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

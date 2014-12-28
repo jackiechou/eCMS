@@ -1,0 +1,139 @@
+﻿/*=========================== Vui long viet theo template =====================*/
+
+#navigation li a {
+    height: 20px !important;
+    line-height: 20px !important;
+}
+
+#navigation .ui-icon-carat-1-s {
+    margin-top: 2px !important;
+}
+
+#header {
+    height: 100px !important;
+}
+
+#page-wrapper {
+    margin-top: 100px !important;
+}
+
+.ui-button-icon-primary.ui-icon.ui-icon-closethick {
+    display: none !important;
+}
+
+/*================================= Partial Header==============================*/
+.buttonaction {
+    clear: both;
+    float: right;
+    margin-top: 12px;
+    margin-right: 15px;
+    width: auto;
+}
+
+    .buttonaction div.ui-pg-div {
+        display: flex;
+        font-size: 10px;
+        font-weight: bold;
+        color: #2e6e9e;
+    }
+
+td.ui-pg-button.ui-corner-all:hover {
+    background: url("styles/default/images/ui-bg_glass_75_d0e5f5_1x400.png") repeat-x scroll 50% 50% #d0e5f5;
+    border: 1px solid #79b7e7;
+    color: #1d5987;
+    cursor: pointer;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+    white-space: nowrap;
+}
+
+/*---- Khi merge Column thi heigth set cao ----*/
+.ui-jqgrid-htable th, td {
+    vertical-align: top;
+}
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    font-size: 11px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    height: 88%;
+    overflow: auto;
+}
+/*---- fieldset Contract Form----*/
+legend {
+    display: block;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 12px;
+    color: #0E2D5F;
+    font-weight: bolder;
+    font-style: inherit;
+}
+
+fieldset {
+    display: block;
+    padding: 10px;
+    border: 1px solid #808080;
+}
+
+.child {
+    padding-left: 10px;
+}
+
+    .child fieldset {
+        border: 1px dotted #dcd7d7;
+    }
+
+
+.col-lg-4 {
+    width: 33.33333333333333%;
+}
+
+.col-lg-4 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-lg-4 {
+    float: left;
+}
+
+
+/*----start Custom control----*/
+ .control-label-lange {
+    float: left;
+    font-size: 13px;
+    margin: 0 10px -6px 0;
+    text-align: right;
+    width: 120px;
+}
+
+.control-label-large {
+    float: left;
+    font-size: 13px;
+    margin: 0 10px -6px 0;
+    text-align: right;
+    width: 120px;
+}
+
+ .btnsearch {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    margin: -8px 5px !important;
+}
+.custom-combobox {
+    margin-top:-5px;
+}
+/*----end Custom control----*/

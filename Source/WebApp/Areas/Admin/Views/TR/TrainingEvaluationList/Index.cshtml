@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingEvaluationList;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../TR/TrainingEvaluationList/_Reset")
+</div>
+}
+@Html.Action("ConfirmPopup","Common",null)
+
+<script type="text/javascript">
+    
+    var urlSearch = areas + "/TrainingEvaluationList/_List"
+    var urlCreate = areas + "/TrainingEvaluation/_Create"
+    var urlDelete = areas + "/TrainingEvaluationList/_Delete/"
+    var urlResetTemplate = areas + "/TrainingEvaluationList/Index"
+    
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: urlSearch,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnReset", function () {
+        alert(urlResetTemplate);
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlResetTemplate,
+            success: function (data) {
+                $('#MainBody').html(data);
+            }
+        });
+    });
+</script>

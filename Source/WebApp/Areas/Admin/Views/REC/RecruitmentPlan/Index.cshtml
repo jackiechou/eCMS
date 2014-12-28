@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.RecruitmentPlan;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+@section ContentSection
+{
+<div id="MainBody">
+   <div id="divEdit">
+        @Html.Action("_Create")
+    </div>
+</div>
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+}
+<script>
+    var Controller = 'RecruitmentPlan';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/_Delete/';
+
+</script>
+
+<script>
+
+    $(document).on('change', '#YearAlowNull', function () {
+        ChangeQuotaRecruitment();
+    });
+    $(document).on('change', "input[name='LSCompanyID']", function () {
+        ChangeQuotaRecruitment();
+    });
+    $(document).on('change', '#SelectLSPositionIDAlowNull', function () {
+        ChangeQuotaRecruitment();
+    });
+    $(document).ready(function () {
+        ChangeQuotaRecruitment();
+    });
+    function ChangeQuotaRecruitment() {
+        var Year = $('#YearAlowNull').val();
+        var LSCompanyID = $("input[name='LSCompanyID']").val();
+        var LSPositionID = $('#SelectLSPositionIDAlowNull').val();
+        if (LSCompanyID != null && LSCompanyID != '' && LSPositionID != '' && Year != '') {
+            $.ajax({
+                type: "GET",
+                url: areas + '/RecruitmentPlan/GetQuota?Year=' + Year + '&LSCompanyID=' + LSCompanyID + '&LSPosition=' + LSPositionID,
+                success: function (data) {
+                    $('#lblQuotaRecruitment').html(data);
+                    $('#QuotaRecruitment').val(data);
+                    if (data > 0) {
+                        $('#PlanQuantityAlowNull').prop('disabled', false);
+                    } else {
+                        $('#PlanQuantityAlowNull').val('');
+                        $('#PlanQuantityAlowNull').prop('disabled', true);
+                    }
+                }
+            });
+        }
+        else
+        {
+            $('#PlanQuantityAlowNull').prop('disabled', true);
+        }
+    }
+  
+
+    function AddNew(mode) {
+
+        var Year = $('#YearAlowNull').val();
+        var LSCompanyID = $("input[name='LSCompanyID']").val();
+        var LSPositionID = $('#SelectLSPositionIDAlowNull').val();
+        if (LSCompanyID == null || LSCompanyID == '' || LSPositionID == '' || Year == '') {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseEnterTheInformationMarked');
+            return false;
+        } else {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "POST",
+                url: urlAddNew + '?mode=' + mode,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        window.location.href = areas + '/PlanList/Index?ModuleID=8';
+                    } else if (data == 'timeout') {
+                        window.location.href = '/';
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        }
+    }
+    //Add and update post action
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid({
+            ignore: ".ignore, .select2-input"
+        })) { // Not Valid
+            return false;
+        } else {
+            AddNew('save');
+        }
+    });
+    $(document).on("click", "#btnSendForApproval", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            AddNew('sendforapproval');
+        }
+    });
+    $(document).on("click", "#btnReset", function () {
+        $.ajax({
+            type: "GET",
+            url: '_Create',
+            success: function (data) {
+                $('#divEdit').html(data);
+                ChangeQuotaRecruitment();
+            }
+        });
+    });
+
+</script>

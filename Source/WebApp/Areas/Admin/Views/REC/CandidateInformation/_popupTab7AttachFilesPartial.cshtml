@@ -1,0 +1,85 @@
+﻿@model DocumentViewModel
+<div class="modal hide fade popupTab7AttachFiles" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.AddAttachFile</h3>
+    </div>
+    <div class="modal-body">
+        <!--Begin button -->
+        <form id="frmAttachFiles">
+            @Html.HiddenFor(model => model.DocumentId)
+            
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSReferenceId)
+                </div>
+                <div class="col-md-8">
+                    @Html.DropDownList("LSReferenceId", Eagle.Resource.LanguageResource.NoClassificats)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.FileTitle)
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.FileTitle, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.FileTitle)
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.UploadFile)
+                </div>
+                <div class="col-md-8">
+                    @if (Model != null && Model.DocumentId != 0)
+                    {
+                        <a href="@Model.FilePath" target="_blank">@Model.FileNameVirtual</a> 
+                        <br />
+                    }
+                    <input type="file" id="UploadFile" name="UploadFile" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Keywords)
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.Keywords, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.Keywords)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.FileDescription)
+                </div>
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.FileDescription, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.FileDescription)
+                </div>
+            </div>
+            @*  <div class="group-control">
+            <div>
+                <h6>@Eagle.Resource.LanguageResource.DocumentInformation</h6>
+            </div>
+            <hr> </div>
+        <div class="group-control">
+            <div>
+                <h6>@Eagle.Resource.LanguageResource.ReferenceInformation</h6>
+            </div>
+            <hr>
+
+        </div>*@
+        </form>
+        <!--End button -->
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="btnATFCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+        <input type="button" id="btnATFSubmit" class="btn btn-info AddModel" value="@Eagle.Resource.LanguageResource.Save" />
+    </div>
+</div>
+
+<script>
+
+</script>

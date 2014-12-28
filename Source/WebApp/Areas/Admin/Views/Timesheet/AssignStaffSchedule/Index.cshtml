@@ -1,0 +1,405 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_AssignStaffSchedule;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<form id="frmAdd" class="form-horizontal user-group-management">
+    <div id="divContent">
+        @Html.Action("_Create","AssignStaffSchedule",null)
+    </div>
+</form>
+    }
+<script>
+    
+    $(document).on("keyup", "#FilterEmplist", function () {
+
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            if ($("#ScheduleID").val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                }
+                return false;
+            } else
+            if ($("#Year").val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please input year to assign staff", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Nhập vào  năm để gán nhân viên", 'warning');
+                }
+                return false;
+            }
+        }
+
+        var Year = $("#Year").val();
+        var strSearch = $(this).val();
+        $.getJSON("/Admin/AssignStaffSchedule/_Search?SearchTerm=" + strSearch + "&iYear=" + Year,
+               function (classesData) {
+                   var select = $("#lstBox");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+    });
+    $(document).on("keyup", "#FilterEmplistAssigned", function () {
+
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            if ($("#ScheduleID").val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                }
+                return false;
+            } else
+                if ($("#Year").val() == '') {
+                    if (LanguageId == 124) {
+                        showMessageWithTitle('warning!', "Please input year to assign staff", 'warning');
+                    } else {
+                        showMessageWithTitle('Error!', "Nhập vào  năm để gán nhân viên", 'warning');
+                    }
+                    return false;
+                }
+        }
+
+        var Year = $("#Year").val();
+        var ScheduleID = $("#ScheduleID").val();
+        var strSearch = $(this).val();
+        $.getJSON("/Admin/AssignStaffSchedule/_SearchInSchedule?SearchTerm=" + strSearch + "&iYear=" + Year + "&ScheduleID=" + ScheduleID,
+               function (classesData) {
+                   var select = $("#lstBoxAssigned");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+    });
+    // su kien keyup cua textbox Year
+    $(document).on("keyup", "#Year", function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            if ($("#ScheduleID").val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                }
+                return false;
+            }
+            var Year = $("#Year").val();
+            var ScheduleID = $("#ScheduleID").val();
+            $.getJSON("/Admin/AssignStaffSchedule/_ListUser?ScheduleID=" + ScheduleID + "&iYear=" + Year,
+                   function (classesData) {
+                       var select = $("#lstBox");
+                       select.empty();
+                       $.each(classesData, function (index, itemData) {
+                           select.append($('<option/>', {
+                               value: itemData.Value,
+                               text: itemData.Text
+                           }));
+                       });
+                   });
+
+            $.getJSON("/Admin/AssignStaffSchedule/_ListUserInSchedule?ScheduleID=" + ScheduleID + "&iYear=" + Year,
+                   function (classesData) {
+                       var select = $("#lstBoxAssigned");
+                       select.empty();
+                       $.each(classesData, function (index, itemData) {
+                           select.append($('<option/>', {
+                               value: itemData.Value,
+                               text: itemData.Text
+                           }));
+                       });
+                   });
+        }
+    });
+    $("#SelectScheduleID").change(function () {
+
+        if ($("#Year").val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please input year to assign staff", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Nhập vào  năm để gán nhân viên", 'warning');
+            }
+            return false;
+        }
+        var Year = $("#Year").val();
+        var ScheduleID = $(this).val();
+        $.getJSON("/Admin/AssignStaffSchedule/_ListUser?ScheduleID=" + ScheduleID + "&iYear=" + Year,
+               function (classesData) {
+                   var select = $("#lstBox");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+        
+        $.getJSON("/Admin/AssignStaffSchedule/_ListUserInSchedule?ScheduleID=" + ScheduleID + "&iYear=" + Year,
+               function (classesData) {
+                   var select = $("#lstBoxAssigned");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+    });
+    // su kien add all tat ca item trong list
+    $(document).on("click", "#btnAddAll", function () {
+
+        hideCustomAlter();
+
+        //Nếu không chọn group thì báo lỗi
+        if ($('#ScheduleID').val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+            }
+            return false;
+        } else if ($('#btnAddAll').hasClass("AddModel")) {
+
+            //Add new Account
+            var url = areas + '/AssignStaffSchedule/Save';
+            //Get sau khi action Save trong controller thuc hien
+            var urlCreate = '/AssignStaffSchedule/_Create';
+
+            var lstBoxname = $("#lstBox");
+            $("option", lstBoxname).attr('selected', true);
+
+            var selectedValue = $('#lstBox').val();
+            var request = { lstBox: selectedValue }
+            //alert(selectedValue);
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(request),
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                var userList = $('#lstBoxAssigned');
+                                $.each(request.lstBox, function (index, itemData) {
+
+                                    userList.append($('<option/>', {
+                                        value: itemData,
+                                        text: $("#lstBox option[value=" + itemData + "]").text()
+                                    }));
+                                    $("#lstBox option[value=" + itemData + "]").remove();
+                                });
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    }
+                }
+            }); // end ajax
+        }
+    });
+
+    // su kien add du lieu
+    $(document).on("click", "#btnAdd", function () {
+        //selectedValue : User list
+        var selectedValue = $('#lstBox').val();
+        var request = { lstBox: selectedValue }
+       
+        //Nếu không chọn group thì báo lỗi
+        if ($('#ScheduleID').val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+            }
+            return false;
+        }else if (selectedValue == null) {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose staff to assign", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn nhân viên để gán lịch làm việc", 'warning');
+            }
+            return false;
+         }else if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+             var url = areas + '/AssignStaffSchedule/Save';
+            //Get sau khi action Save trong controller thuc hien
+             var urlCreate = '/AssignStaffSchedule/_Create';
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(request),
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: areas + urlCreate,
+                            success: function (data) {
+                                var userList = $('#lstBoxAssigned');
+                                $.each(request.lstBox, function (index, itemData) {
+
+                                    userList.append($('<option/>', {
+                                        value: itemData,
+                                        text: $("#lstBox option[value=" + itemData + "]").text()
+                                    }));
+                                    $("#lstBox option[value=" + itemData + "]").remove();
+                                });
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } 
+                }
+            }); // end ajax
+        }
+
+    });
+
+    // confirm Delete 
+    $('.launchConfirm').on('click', function (e) {
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                hideCustomAlter();
+                if ($(this).data('value')) {
+
+                    var selectedValue = $('#lstBoxAssigned').val();
+                    var requestAssigned = { lstBoxAssigned: selectedValue }
+                    //Nếu không chọn schedule thì báo lỗi
+                    if ($('#ScheduleID').val() == '') {
+                        if (LanguageId == 124) {
+                            showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                        } else {
+                            showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                        }
+                        return false;
+                    }else if (selectedValue == null) {
+                        if (LanguageId == 124) {
+                            showMessageWithTitle('warning!', "Please choose staff to assign", 'warning');
+                        } else {
+                            showMessageWithTitle('Error!', "Chọn nhân viên để gán lịch làm việc", 'warning');
+                        }
+                        return false;
+                    }else if ($('#btnDelete').hasClass("DeleteModel")) {
+
+                        var ScheduleID = $('#ScheduleID').val();
+                        var Year = $("#Year").val();
+
+                        //Add new Account
+                        var url = areas + '/AssignStaffSchedule/Delete';
+                        // get sau khi action Save trong controller thuc hien
+                        var urlCreate = '/AssignStaffSchedule/_Create';
+
+
+                        $.ajax({
+                            type: "POST",
+                            data: JSON.stringify(requestAssigned),
+                            url: url,
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: areas + urlCreate,
+                                        success: function (data) {
+                                            var userList = $('#lstBox');
+                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                                userList.append($('<option/>', {
+                                                    value: itemData,
+                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                                }));
+                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                            });
+                                            AlterUpdateSuccess();
+                                        }
+                                    });
+                                }
+                            }
+                        }); // end ajax
+                    }
+                } else {
+                    
+                }
+            });
+    });
+
+    // su kien Delete  all  item duoc chon trong listbox
+    $('.launchConfirmAll').on('click', function (e) {
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                hideCustomAlter();
+                if ($(this).data('value')) {
+
+                    //Nếu không chọn group thì báo lỗi
+                    if ($('#ScheduleID').val() == '') {
+                        if (LanguageId == 124) {
+                            showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                        } else {
+                            showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                        }
+                        return false;
+                    } else if ($('#btnDeleteAll').hasClass("DeleteModel")) {
+                        //Add new Account
+                        var url = areas + '/AssignStaffSchedule/Delete';
+                        // get sau khi action Save trong controller thuc hien
+                        var urlCreate = '/AssignStaffSchedule/_Create';
+
+                        var lstBoxAssignedName = $("#lstBoxAssigned");
+                        $("option", lstBoxAssignedName).attr('selected', true);
+
+
+                        var selectedValue = $('#lstBoxAssigned').val();
+                        var requestAssigned = { lstBoxAssigned: selectedValue }
+
+                        $.ajax({
+                            type: "POST",
+                            data: JSON.stringify(requestAssigned),
+                            url: url,
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                if (data == 'success') {
+                                    $.ajax({
+                                        type: "GET",
+                                        url: areas + urlCreate,
+                                        success: function (data) {
+                                            var userList = $('#lstBox');
+                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                                userList.append($('<option/>', {
+                                                    value: itemData,
+                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                                }));
+                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                            });
+                                            AlterUpdateSuccess();
+                                        }
+                                    });
+                                }
+                            }
+                        }); // end ajax
+            }
+            } else {
+
+            }
+        });
+    });
+</script>

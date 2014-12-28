@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingAnswerType;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../TR/TrainingAnswerType/_Reset")
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    $('#changeSidebarPos').trigger('click');
+
+    var Controller = 'TrainingAnswerType';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/Delete/';
+</script>
+
+<script src="~/Scripts/plugins/common/AddUpdateDelete.js"></script>

@@ -1,0 +1,10 @@
+﻿@using Eagle.WebApp.Areas.Admin.Reports.SI.C70A
+
+@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer";
+    settings.Report = (C70AXtraReport)ViewData["Report"];
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "C70A", Action = "CallbackReportViewerPartial", FullName = ViewBag.FullName, MonthYear = ViewBag.MonthYear, Stage = ViewBag.Stage, LSCompanyID = ViewBag.LSCompanyID };
+    settings.ExportRouteValues = new { Controller = "C70A", Action = "ExportReportViewerPartial", FullName = ViewBag.FullName, MonthYear = ViewBag.MonthYear, Stage = ViewBag.Stage, LSCompanyID = ViewBag.LSCompanyID };
+}).GetHtml()

@@ -1,0 +1,81 @@
+﻿@model CandidateSearchViewModel
+
+@*<button class="btn btnPopupEmp" type="button">...</button>*@
+@*<button href="#myModal" id="btnPopupEmp" class="btn"  data-toggle="modal">...</button>*@
+
+<div class="modal hide fade popupCandidate" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.SearchCandidates</h3>
+    </div>
+    <div class="modal-body popup-empl-search">
+
+        @Html.Action("_SearchAreasPartial", "Candidate")
+        <!--Begin button -->
+        <div class="row">
+            <div class="footbar">
+                <input type="button" id="btnCancelpopupCandidate" value="Cancel" class="btn" />
+                <input type="button" id="btnSearch" value="Search" class="btn btn-info default">
+            </div>
+        </div>
+
+        <div class="popup-empl-button">
+            <div class="row center">
+            </div>
+        </div>
+        <!--End button -->
+
+        <!--Begin results grid -->
+
+        <div class="popup-empl-results-grid">
+          @*  @Html.Action("_SearchResultsForPopup", "Candidate")*@
+        </div>
+        <!--End results grid -->
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">@Eagle.Resource.LanguageResource.Close</button>
+    </div>
+</div>
+<script>
+    /*Dùng để phân biệt khi sử dụng nhiều
+    Partial này
+    */
+    var controlId = 0;
+
+    /*Nút cancel ẩn popup*/
+    $('#btnCancelpopupCandidate').click(function () {
+        $('.popupCandidate').modal('hide');
+    })
+    /*Nút search*/
+    $('#btnSearch').click(function () {
+        /*Search params*/
+        var CandidateCodeSearch = $('.popup-empl-search #CandidateCodeSearch').val();
+        var FullNameSearch = $('.popup-empl-search #FullNameSearch').val();
+        var IDNoSearch = $('.popup-empl-search #IDNoSearch').val();
+        var ResultSearch = $('.popup-empl-search #ResultSearch').val();
+        var GenderSearch = $('.popup-empl-search #GenderSearch').val();
+        var LSLocationSearchID = $('.popup-empl-search #LSLocationSearchID').val();
+
+        /*url get result*/
+        var url = '/Admin/Candidate/_SearchResultsForPopup?CandidateCodeSearch=' + CandidateCodeSearch + '&FullNameSearch=' + FullNameSearch + '&IDNoSearch=' + IDNoSearch + '&ResultSearch=' + ResultSearch + '&GenderSearch=' + GenderSearch + '&LSLocationSearchID=' + LSLocationSearchID;
+        $.ajax({
+            url: url,
+            context: document.body
+        }).done(function (data) {
+            $('.popup-empl-results-grid').html(data);
+        });
+    })
+
+
+    $(function () {
+        $(".popup-empl-search input").keypress(function (e) {
+            if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+                $("#btnSearch").trigger("click");
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+
+</script>

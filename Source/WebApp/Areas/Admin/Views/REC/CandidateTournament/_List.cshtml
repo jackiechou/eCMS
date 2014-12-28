@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CandidateTournamentViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text-center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CandidateName)
+                </th> 
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.ResultName)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>              
+            </tr>
+        </thead>
+        <tbody>
+           
+            @if (Model != null)
+	        {
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td class="text-center">
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CandidateName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td  class="text_center">
+                            @{
+                                string result = "";
+                                switch (item.Result)
+                                {
+                                    case null:
+                                        result = "";
+                                        break;
+                                    case true:
+                                        result = Eagle.Resource.LanguageResource.Pass;
+                                        break;
+                                    case false:
+                                        result = Eagle.Resource.LanguageResource.NotPass;
+                                        break;
+                                }
+                            }
+                            @if (ViewBag.IsFirstRound == true)
+                            {
+                                if (string.IsNullOrEmpty(result))
+                                {
+                                    result = Eagle.Resource.LanguageResource.NotReached;
+                                }
+                            }else
+                            {
+                                if (string.IsNullOrEmpty(result))
+                                {
+                                    result = Eagle.Resource.LanguageResource.SurpassedPreviousRound;
+                                }
+                            }
+
+                            @result
+
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            <a data-id="/Admin/CandidateTournament/Index?ModuleID=8&ProjectTournamentID=@item.ProjectTournamentID&CandidateID=@item.CandidateID&mode=edit"  
+                                title="@Eagle.Resource.LanguageResource.Edit" 
+                                class="ico editItem " 
+                                >&nbsp;&nbsp;&nbsp;</a>
+                        </td>                       
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();   
+</script>

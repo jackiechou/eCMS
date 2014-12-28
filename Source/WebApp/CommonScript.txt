@@ -1,0 +1,4 @@
+﻿/*Call Scalar Functions*/
+string sqlQuery = "SELECT [dbo].[SI_fnGetBasicSalarySI] ({0},{1})";
+Object[] parameters = { 24,"09/2014" };
+decimal activityCount = db.Database.SqlQuery<decimal>(sqlQuery, parameters).FirstOrDefault();

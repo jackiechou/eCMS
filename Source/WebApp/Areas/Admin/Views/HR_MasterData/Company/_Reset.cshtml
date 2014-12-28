@@ -1,0 +1,25 @@
+﻿<div class="col-md-3" style="overflow-x: scroll;">
+    <table class="table table-bordered table-hover" style="padding-top: 5px;">
+        <thead>
+            <tr>
+                <th>Tree</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                   @* <ul id="companyTree" class="easyui-tree" url="http://localhost:14035/CommonCompany/Getall"></ul>*@
+                     <ul id="companyTree" class="easyui-tree"></ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-md-9">
+    <div id="divEdit">
+        @Html.Action("_Create")
+    </div>
+   @* <div id="divList">
+        @Html.Action("_List")
+    </div>*@
+</div>

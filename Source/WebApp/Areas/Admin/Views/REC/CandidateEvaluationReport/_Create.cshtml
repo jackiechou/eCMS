@@ -1,0 +1,51 @@
+﻿@model  ResultsRecordSearchViewModel
+<div id="right_accordion" class="accordion-group">
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="padding-left:20px;">
+            <label class="reset-label" style="margin-right:20px;">
+                <input type="radio" value="1" name="ViewMode"  checked="checked"/> @Eagle.Resource.LanguageResource.ViewByRecruitmentProject
+            </label>
+            <label class="reset-label">
+                <input type="radio" value="2" name="ViewMode" /> @Eagle.Resource.LanguageResource.ViewByRecruitmentTournament
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.ProjectID)
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownList("ProjectID", null, new { @class = "span12" })
+        </div>
+
+        <div class="col-md-2 divProjectTournamentID">
+            @Html.RequiredLabelFor(model => model.ProjectTournamentID)
+        </div>
+        <div class="col-md-4 divProjectTournamentID">
+            @Html.DropDownList("ProjectTournamentID", null, new { @class = "span12" })
+        </div>
+    </div>
+
+    @*<div class="row">
+        <div class="col-md-12" style="text-align: center">
+            <input type="button" id="btnReport" value="@Eagle.Resource.LanguageResource.btnReport" class="btn btn-info AddModel"/>
+        </div>
+    </div>*@
+    <hr />
+</div>
+
+@Html.Action("jqueryval", "Common", null)

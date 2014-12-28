@@ -1,0 +1,475 @@
+﻿@model Eagle.Model.HR.EmployeeEditModel
+
+<div id="divBasicContainer">
+
+    <div id="GeneralInfo">
+        
+        <div class="heading-title">
+            <h6>@Eagle.Resource.LanguageResource.Organizational</h6>
+        </div>        
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.EmpCode)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("txtEmpCode", Model.EmpCode, new { @readonly = "true", @class = "span12" })               
+                @Html.HiddenFor(model => model.EmpCode)
+                @Html.ValidationMessageFor(model => model.EmpCode)
+            </div>
+             <div class="col-md-2">
+                @Html.LabelFor(model => model.UserMachineID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.UserMachineID, null, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.UserMachineID)
+            </div>
+        </div>
+        <!--end row-->
+
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">               
+                @Html.RequiredLabelFor(model => model.FirstName)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.FirstName, null, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+             <div class="col-md-2">
+                @Html.LabelFor(model => model.FileId)
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div id="ImagePreviewBox" style="float: left;overflow:hidden;display:none;" class="col-md-4">
+                        <span>
+                            @Html.ImageByFileId("Photo", Model.FileId, Model.EmpName, new { width = "50", height = "50", @class = "thumb" })
+                        </span>
+                    </div>
+                    <div style="float: left; overflow: hidden;" class="col-md-8">
+                        @Html.TextBox("FileUpload", null, new { id = "FileUpload", type = "file" })
+                        @Html.HiddenFor(model => model.FileId)
+                        @Html.Action("CreateDownloadLink", "FileManager", new { @FileId = Model.FileId })
+                    </div>
+                </div>
+            </div>      
+        </div>
+        <!--end row-->
+
+         <!--start row-->
+        <div class="row">
+             <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.LastName)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.LastName, null, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div> 
+             <div class="col-md-2">
+                @Html.RequiredLabelFor(m => m.DOB)
+            </div>
+            <div class="col-md-4">
+                @Html.CheckBox("IsYOB", false, new { @style = "float:left;margin:5px;" })
+                @Html.Label(@Eagle.Resource.LanguageResource.IsYOB, new { @style = "float:left;padding-right:10px;" })
+
+                <div id="dpDOB">
+                    @Html.DateTimePickerFor(model => model.DOB)                  
+                </div>
+                <div id="dpYOB" style="display: none">
+                    @Html.TextBoxFor(model => model.YOB, new { @style = "width: 130px" })
+                </div>
+            </div>
+                 
+        </div>
+        <!--end row-->
+
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.Gender)
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("Gender", null, new { @class = "span7" })
+                @Html.ValidationMessageFor(model => model.Gender)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.LSMaritalID)
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("LSMaritalID", null, new { @name = "LSMaritalID" })
+            </div>
+
+        </div>
+        <!--end row-->
+
+         <!--start row-->
+        <div class="row">            
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(m => m.Email)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("Email", null, new { @class = "span12", @name = "Email", @type = "email", @required = false, pattern = "[^ @]*@[^ @]*" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>     
+            <div class="col-md-2">
+	            @Html.LabelFor(model => model.BloodType)
+            </div>
+            <div class="col-md-4">
+	            @Html.DropDownListFor(model=>model.BloodType, null, new { @class = "span12" })
+            </div>
+        </div>
+        <!--end row-->
+        
+         <!--start row-->
+         <div class="row">
+            <div class="col-md-2">@Html.RequiredLabelFor(model => model.JoinDate)</div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.JoinDate)
+            </div>
+
+            <div class="col-md-2"><label>@Html.Raw(Eagle.Resource.LanguageResource.OfficialSignedDate)</label></div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.StartDate)
+            </div>
+        </div>
+         <!--end row-->
+
+        <!--start row-->
+        <div class="row">           
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.Telephone)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("Telephone", null, new { @class = "span12", @name = "Telephone", @type = "tel" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.Mobile)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("Mobile", null, new { @class = "span12", @name = "Mobile" })
+            </div>
+        </div>
+        <!--end row-->
+       
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.IDNo)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "span12" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.IDIssuedDate)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.IDIssuedDate)
+            </div>
+
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.IDIssuedPlace)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectIDIssuedPlace", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.IDIssuedPlaceName)
+                @Html.HiddenFor(model => model.IDIssuedPlace)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.LSNationalityID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSNationalityID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSNationalityID)
+                @Html.HiddenFor(model => model.LSNationalityName)
+            </div>
+
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.LSReligionID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSReligionID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSReligionID)
+                @Html.HiddenFor(model => model.LSReligionName)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.LSEthnicID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSEthnicID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSEthnicID)
+                @Html.HiddenFor(model => model.LSEthnicName)
+            </div>
+        </div>
+        <!--end row-->
+
+         <!--start row-->
+         <div class="row">
+            <div class="col-md-2">@Html.LabelFor(model => model.LSEducationID)</div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSEducationID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSEducationID)
+                @Html.HiddenFor(model => model.LSEducationName)
+            </div>
+            <div class="col-md-2">@Html.LabelFor(model => model.LSMajorID)</div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSMajorID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSMajorID)
+                @Html.HiddenFor(model => model.LSMajorName)
+            </div>
+        </div> 
+         <!--end row-->
+    </div>
+
+    <div id="Organizational">
+        
+        <!--start row-->
+        <div class="heading-title">
+            <h6>@Eagle.Resource.LanguageResource.Organizational</h6>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.LSCompanyID)
+            </div>
+            <div class="col-md-4">             
+                <input type="text" id="LSCompanyID" name="LSCompanyID" value="@Model.LSCompanyID" class="easyui-combotree span2" />
+                @Html.ValidationMessageFor(model => model.LSCompanyID)
+            </div>
+             <div class="col-md-2">@Html.LabelFor(model => model.LSPositionID)</div>
+            <div class="col-md-4">
+                @Html.DropDownList("LSPositionID", null, new { @class = "span12" })
+            </div>
+        </div>
+
+        <div class="row">          
+             <div class="col-md-2">@Html.LabelFor(model => model.LSLocationID)</div>
+            <div class="col-md-4">               
+                @Html.TextBox("selectLSLocationID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSLocationID)
+                @Html.HiddenFor(model => model.LSLocationName)
+            </div>
+            <div class="col-md-2">@Html.LabelFor(model => model.LineManagerID)</div>
+            <div class="col-md-4">
+                @*@Html.DropDownList("LineManagerID", null, new { @class = "span12" })*@
+                @Html.TextBox("selectManager", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LineManagerID)
+                @Html.HiddenFor(model => model.LineManagerName)
+            </div>
+        </div>
+         
+    </div>
+
+    <div id="PermanentAddress">
+        
+        <div class="heading-title">
+            <h6>@Eagle.Resource.LanguageResource.PermanentAddress</h6>
+        </div>
+        
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.PLSCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectPLSCountryID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PLSCountryID)
+                @Html.HiddenFor(model => model.PLSCountryName)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.PLSProvinceID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectPLSProvinceID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PLSProvinceID)
+                @Html.HiddenFor(model => model.PLSProvinceName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.PLSDistrictID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectPLSDistrictID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PLSDistrictID)
+                @Html.HiddenFor(model => model.PLSDistrictName)
+            </div>
+        </div>
+        <!--end row-->
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.PAddress)
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.PAddress, 2, 1, new { @class = "span12" })
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+
+    <div id="TemporaryAddress">
+        
+        <div class="heading-title">
+            <h6>@Eagle.Resource.LanguageResource.TemporaryAddress</h6>
+        </div>
+        
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.TLSCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectTLSCountryID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.TLSCountryID)
+                @Html.HiddenFor(model => model.TLSCountryName)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.TLSProvinceID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectTLSProvinceID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.TLSProvinceID)
+                @Html.HiddenFor(model => model.TLSProvinceName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.TLSDistrictID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectTLSDistrictID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.TLSDistrictID)
+                @Html.HiddenFor(model => model.TLSDistrictName)
+            </div>
+        </div>
+        <!--end row-->
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.TAddress)
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.TAddress, 2, 1, new { @name = "TAddress", @class = "span12" })
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+
+    <div id="NaitivePlaceContainer">
+        
+        <div class="heading-title">
+            <h6>@Eagle.Resource.LanguageResource.NativePlace</h6>
+        </div>
+        
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.BornLSCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectBornLSCountryID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.BornLSCountryID)
+                @Html.HiddenFor(model => model.BornLSCountryName)
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.NativeCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectNativeCountryID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.NativeCountryID)
+                @Html.HiddenFor(model => model.NativeCountryName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.BornLSProvinceID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectBornLSProvinceID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.BornLSProvinceID)
+                @Html.HiddenFor(model => model.BornLSProvinceName)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.NativeProvinceID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectNativeProvinceID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.NativeProvinceID)
+                @Html.HiddenFor(model => model.NativeProvinceName)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.BornLSDistrictID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectBornLSDistrictID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.BornLSDistrictID)
+                @Html.HiddenFor(model => model.BornLSDistrictName)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.NativeDistrictID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectNativeDistrictID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.NativeDistrictID)
+                @Html.HiddenFor(model => model.NativeDistrictName)
+            </div>
+
+        </div>
+        <!--end row-->
+    </div>
+
+     <div>
+        <h6>@Eagle.Resource.LanguageResource.EmergencyInfo</h6>
+    </div>
+    <hr />
+
+     <div class="row">
+            <div class="col-md-2">@Html.LabelFor(model => model.EmergencyContact)</div>
+            <div class="col-md-4">
+                @Html.TextBox("EmergencyContact", null, new { @class = "input_full", @name = "EmergencyContact" })
+            </div>
+
+            <div class="col-md-2">@Html.LabelFor(model => model.EmergencyAddess)</div>
+            <div class="col-md-4">
+                @Html.TextBox("EmergencyAddess", null, new { @class = "input_full", @name = "EmergencyAddess" })
+            </div>
+        </div>
+
+         <!--start row-->
+        <div class="row">
+            <div class="col-md-2">@Html.LabelFor(model => model.EmergencyMobile)</div>
+            <div class="col-md-4">
+                @Html.TextBox("EmergencyMobile", null, new { @class = "input_full", @name = "EmergencyMobile" })
+            </div>
+
+            <div class="col-md-2">@Html.LabelFor(model => model.EmergencyPhone)</div>
+            <div class="col-md-4">
+                @Html.TextBox("EmergencyPhone", null, new { @class = "input_full", @name = "EmergencyPhone" })
+            </div>
+        </div>       
+        <!--end row-->
+</div>

@@ -1,0 +1,223 @@
+﻿@using MvcPaging
+@model List<ShiftViewModel>
+
+<div id="divEdit">
+    @Html.Action("_Create", "Shift", null)
+</div>
+<style>
+    .table thead tr th {
+        padding-left:2px;
+        padding-right:5px;
+    }
+</style>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+         <thead>
+            <tr>
+                <th class="text_center" style="width:20px;">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LSShiftCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ShiftName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.WorkingTime
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.BreakTime
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.WorkHour
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.TimeLate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.TimeEarly
+                </th>  
+                @*<th>
+                    @Eagle.Resource.LanguageResource.OTNight
+                </th>   *@
+               
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.LSShiftCode
+                    </td>
+                    <td>
+                        @item.ShiftName
+                    </td>
+                    <td>
+                        @item.strWorkTimeBegin
+                    </td>
+                    <td>
+                        @item.strBreakTimeBegin
+                    </td>
+                    <td>
+                        @item.WorkHour
+                    </td>
+                    <td>
+                        @item.strTimeLate
+                    </td>
+                    <td>
+                        @item.strTimeEarly
+                    </td>
+                   @* <td>
+                        @item.strOTNightBegin
+                    </td>*@
+                    <td class="text-center action">
+                        <a href="javascript:void(0);" data-id="@item.LSShiftID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a href="javascript:void(0);" data-id="@item.LSShiftID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+<div id="confirm" class="modal hide fade" style="width:300px">
+        <div class="modal-body">
+        Do you want to continue?
+        </div>
+        <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+        </div>
+</div>
+<script>
+ 
+
+    $(document).on("click", "#btnAdd", function () {
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Account
+            var url = areas + '/Shift/Save';
+            var urlCreate = '/Shift/_List';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lai
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    $('#main-data').html(data);
+                                    AlterAddSuccess();
+                                }
+                            });
+                        } else {
+                            $('#divEdit').html(data);
+                        }
+                    }
+                });
+            } else {
+            // Update Account
+            alert('dsadasd');
+                var url = '@Url.Action("Update", "Shift")';
+                var urlCreate = '/Shift/_List';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    $('#main-data').html(data);
+                                    //
+                                    InvokeDateTimePicker();
+                                    AlterUpdateSuccess();
+                                }
+                            });
+                        } else if (data = 'timeout')
+                        {
+                            window.location.href = '/';
+                        }
+                        else{
+                            $('#divEdit').html(data);
+                        }
+                    }
+                });
+            }
+     });
+    // reset form
+    $(document).on("click", "#btnReset", function () {
+        var urlCreate = '/Shift/_List';
+        $.ajax({
+            type: "GET",
+            url: areas + urlCreate,
+            success: function (data) {
+                $('#main-data').html(data);
+                //
+                InvokeDateTimePicker();
+            }
+        });
+    });
+    // region click edit
+    $(document).on("click", ".editItem", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $.ajax({
+            type: "GET",
+            url: areas + '/Shift/_Edit' + '/' + lsID,
+            success: function (data) {
+                //Create edit form
+                $('#divEdit').html(data);
+                //Add => Edit
+                $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                //
+                InvokeDateTimePicker();
+            }
+        })
+        return false;
+    });
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    
+                    var urlCreate = '/Shift/_List';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/Shift/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        $('#main-data').html(data);
+                                        //
+                                        InvokeDateTimePicker();
+                                        AlterUpdateSuccess();
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+        });
+</script>
+<script>
+    //InvokeDataTables();
+</script>

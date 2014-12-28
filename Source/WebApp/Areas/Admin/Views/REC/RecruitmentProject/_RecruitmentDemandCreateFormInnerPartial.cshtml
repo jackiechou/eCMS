@@ -1,0 +1,59 @@
+﻿@model RecruitmentDemandResultViewModel
+
+<!--Begin button -->
+<div>
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong>
+            <div class="padding-left">
+                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+            </div>
+        </div>
+    }
+</div>
+
+<form id="frmRecruitmentDemand">
+    @Html.Hidden("DemandSelectedList")
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.Year)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Year, new { @class = "span3 text_center" })
+        </div>
+    </div>
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.LSCompanyID)
+        </div>
+        <div class="col-md-4">
+            <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+            @Html.ValidationMessageFor(model => model.LSCompanyID)
+            @{ 
+                string LSCompanyID = Model.LSCompanyID == 0 ? "" : Model.LSCompanyID.ToString();
+            }
+            <script>
+                $(document).ready(function () {
+                    LoadComboTreeWithAction('LSCompanyID', 'GetAll')
+                });
+            </script>
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.LSPositionID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectLSPositionID", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.LSPositionID)
+            @Html.HiddenFor(model => model.LSPositionName)
+        </div>
+    </div>
+</form>
+@Html.Action("jqueryval", "Common", null)
+<script>
+    PopulateDropDownListAutoComplete("SelectLSPositionID", "LSPositionID", "LSPositionName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)', areas + '/LS_tblPosition/DropdownList');
+</script>
+
+

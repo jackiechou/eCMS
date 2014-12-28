@@ -1,0 +1,62 @@
+﻿@model List<TrainingAnswerTypeViewModel>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:5px">@Eagle.Resource.LanguageResource.No</th>
+                <th  class="text_center" style="width:20%">
+                    @Eagle.Resource.LanguageResource.TrainingAnswerTypeCode
+                </th>
+                <th class="text_center" style="width:30%">
+                    @Eagle.Resource.LanguageResource.TrainingAnswerTypeName
+                </th>
+                <th class="text_center" style="width:20%">
+                    @Eagle.Resource.LanguageResource.AnswerTypeName
+                </th>
+                <th class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.Used
+                </th>
+                 <th class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.Rank
+                </th>                
+                <th class="table-actions text_center no-sort" style="width:5px">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @item.LSTrainingAnswerTypeCode
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.AnswerTypeName
+                    </td>
+                    
+                    <td class="text_center">
+                        @item.UsedInfo
+                    </td>
+                    <td>
+                        @item.Rank
+                    </td>                    
+                    <td class="table-actions text_center no-sort">
+                        <a data-id="@item.LSTrainingAnswerTypeID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.LSTrainingAnswerTypeID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    InvokeDataTables();
+</script>

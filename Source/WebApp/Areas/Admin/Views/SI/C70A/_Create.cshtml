@@ -1,0 +1,40 @@
+﻿@model  C66ASearchViewModel
+
+<form id="frmSearch">
+<div id="right_accordion" class="accordion-group">
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.LSCompanyID, new { @class="reset-label" })
+            @Html.DropDownList("LSCompanyID",null,new {@class = "span8", @style="margin-top: 8px;margin-left:4px;"})
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.MonthYear, new { @class="reset-label" })
+            @Html.MonthPickerNullFor(model => model.MonthYear, null, new { @class="mtz-monthpicker-widgetcontainer monthPicker span8", @style="margin-top: 8px;margin-left:0px;" })
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Stage, new { @class="reset-label" })
+            @Html.DropDownList("Stage", null, new { @style = "margin-top: 8px;margin-left:4px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.FullName, new { @class="reset-label" })
+            @Html.TextBoxFor(model => model.FullName, new { @class="col-md-8", @style="margin-top: 8px;margin-left:4px;" })
+        </div>
+    </div>
+    <hr />
+</div>
+</form>
+<script>
+    InvokeMonthPicker();
+</script>

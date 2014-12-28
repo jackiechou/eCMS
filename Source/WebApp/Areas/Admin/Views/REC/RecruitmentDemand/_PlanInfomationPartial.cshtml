@@ -1,0 +1,107 @@
+﻿@model RecruitmentPlanViewModel
+@if (Model != null)
+{
+    @Html.Hidden("PlanYear",Model.Year)
+    @Html.Hidden("PlanLSPositionID",Model.LSPositionID)
+    @Html.Hidden("PlanLSCompanyID",Model.LSCompanyID)
+    @Html.HiddenFor(model => model.PlanID)
+    <div class="box labelBox">
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.EmpIDPlan)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@Model.EmpIDFullName</label>
+                @Html.HiddenFor(model => model.EmpIDPlanName)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CreateDate)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@System.DateTime.Now.ToString("dd/MM/yyyy")</label>
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.StatusProcess)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@Model.StatusProcessName</label>
+            </div>
+        </div>
+        <div  class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Year)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@Model.Year</label>
+                @Html.HiddenFor(model => model.Year)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.PlanQuantityAlowNull)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@Model.PlanQuantityAlowNull</label>
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.RecruitedQuantity)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@Model.RecruitedQuantity</label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSPositionID)
+            </div>
+            <div class="col-md-2">
+                <label class="reset-label">@Model.LSPositionName</label>
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSCompanyID)
+            </div>
+            <div class="col-md-6">
+                <label class="reset-label">@Model.LSCompanyName</label>
+            </div>
+            
+        </div>
+        <div class="row">
+             <div class="col-md-2">
+                 <label>@Eagle.Resource.LanguageResource.RecruitmentSource</label>
+            </div>
+            <div class="col-md-10">
+                <style>
+                    #reset-firt2-div div {
+                        margin-left: -0.435897%;
+                    }
+
+                        #reset-firt-div div input {
+                            margin-top: -1px;
+                        }
+                </style>
+                <div class="row" id="reset-firt2-div">
+                    @foreach (var source in ViewBag.RecruitmentSources as List<RecruitmentSourceSelectedViewModel>)
+                    {
+                        <div class="col-md-5">
+                            <label class="reset-label">
+                                @{
+                                            string radChecked = "";
+                                            if (source.isSelected)
+                                            {
+                                                radChecked = "checked=\"checked\"";
+                                            }
+                                }
+                                <input id="sourceSelected" name="sourceSelected" type="checkbox" value="@source.LSRecruitmentSourceID" @radChecked disabled>
+                                @source.LSRecruitmentSourceName
+                            </label>
+                        </div>  
+                                        }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".labelBox .span2 label").not('.reset-label').append(':');
+    </script>
+    
+}

@@ -1,0 +1,79 @@
+﻿@model List<StandardAnnualLeaveCreateViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Code
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.StartDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Position
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.StandardAnnualLeave
+                </th>
+                @if(ViewBag.Display == "1")
+                {
+                <th class="text_center no-sort">
+                    @Eagle.Resource.LanguageResource.AdjustAL
+                </th>
+                }
+
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.strStartDate
+                    </td>
+                    <td>
+                        @item.strPositonName
+                    </td>
+                    <td class="center action">
+                        <input type="text" class="TypeDate" value="@item.StandardALDays" name="[@k].StandardALDays" style="width:50px;" />
+                    </td>
+                     @if(ViewBag.Display == "1")
+                     {
+                         <td  class="center">
+                             <a  data-id="@item.EmpID" data-name="@item.FullName"  title="Edit" class="viewItem viewDetail" >&nbsp;&nbsp;&nbsp;</a>
+                         </td>
+                    }
+                    <td  class="center">
+                        <input type="hidden" value="@item.EmpID" name="[@k].EmpID" />
+                        <input type="hidden" value="@item.StandardALID" name="[@k].StandardALID" />
+                        <input type="checkbox"  name="[@k].chkCheck"  value="true"/>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="divPopupDetail">
+    @Html.Action("_PopupDetail", "StandardAnnualLeave", null)
+</div>
+<script>
+    InvokeDataTables();
+</script>

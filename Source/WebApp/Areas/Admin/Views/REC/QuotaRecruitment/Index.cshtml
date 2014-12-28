@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.QuotaRecruitment;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../REC/QuotaRecruitment/_Reset")
+</div>
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+}
+<script>
+    var Controller = 'QuotaRecruitment';
+  /*add to list*/
+    $(document).on("click", "#btnCancel", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip('show');
+            return false;
+        } else {
+            //Kiểm tra đã chọn company chưa
+            var LSCompanyID = $("input[name='LSCompanyIDSearch']").val();
+            if (isNaN(LSCompanyID)) {
+                return false;
+            } else {
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "GET",
+                    url: areas + "/Validation/CheckValidCompany?LSCompanyID=" + LSCompanyID,
+                    success: function (data) {
+                        if (data != true) {
+                            AlterWarning(data);
+                            return false;
+                        }
+                        else //Kiểm tra đã chọn Position chưa
+                            if ($('#LSPositionIDSearch').val() == '') {
+                                AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)');
+                                    return false;
+                            } else {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "AddToGrid?YearSearch=" + $('#YearSearch').val() + '&LSCompanyNameSearch=' + $('#LSCompanyNameSearch').val(),
+                                        data: $("#frmAdd").serialize(),
+                                        success: function (data) {
+                                            if (data == "IsExists") {
+                                                AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.DataIsExists)');
+                                        } else if (data == "Invalid") {
+                                            AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.DataIsInvalid)');
+                                        } else {
+                                            hideMessageWithTitle(0);
+                                            $('#divList').html(data);
+                                            $('#YearSearch').prop('disabled', true)
+                                        }
+                                    }
+                                });
+                        } 
+                    }
+                 });
+            }
+        }
+    });
+    //cập nhật lại csdl
+    $(document).on("click", "#btnAdd", function () {
+        if ($('#divList').html() == '') {
+            AlterWarning('@Html.Raw(Eagle.Resource.LanguageResource.NoItemsToUpdate)');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "Save",
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        AlterUpdateSuccess();
+                    } else {
+                        AlterWarning(data);
+                    }
+                    
+                }
+            });
+        }
+    });
+    /*Delete item*/
+    $(document).on("click", ".deleteItem", function () {
+
+        var param = $(this).data('id');  // ID cua dong du lieu
+        $.ajax({
+            type: "POST",
+            url: "_Delete?" + param,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                hideMessageWithTitle(0);
+                $('#divList').html(data);
+            }
+        });
+    });
+    /*thay đổi năm*/
+    $(document).on("change", "#YearSearch", function () {
+        var YearSearch = $('#YearSearch').val();
+        if (YearSearch != '' && !isNaN(YearSearch)) {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "GET",
+                url: "GetListByYear?year=" + $(this).val(),
+                success: function (data) {
+                    $('#divList').html(data);
+                }
+            });
+        }
+    });
+    /*Reset*/
+    $(document).on("click", "#btnReset", function () {
+        $.ajax({
+            type: "GET",
+            url: "_Create",
+            success: function (data) {
+                $('#divEdit').html(data);
+                $('#divList').html('');
+            }
+        });
+        
+    });
+</script>

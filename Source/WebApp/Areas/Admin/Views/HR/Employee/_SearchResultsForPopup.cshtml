@@ -1,0 +1,70 @@
+﻿@model List<Eagle.Model.HR.EmployeeViewModel>
+@if (Model.Count > 0)
+{
+    <div class="table datatable">
+        @*<table id="tblResults" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">*@
+        <table id="tblResults" class="pagedTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        @Html.LabelFor(model => model.First().EmpCode, new { @class = "center" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.First().FullName, new { @class = "center" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.First().CompanyName, new { @class = "center" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.First().Position, new { @class = "center" })
+                    </th>
+                    @*<th style="display:none">*@
+                    <th>
+                        @Html.LabelFor(model => model.First().JoinDate, new { @class = "center" })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var employee in Model)
+                {
+                    i++;
+                    <tr id="@i">
+                        <td>
+                            @i
+                        </td>
+                        <td id="@employee.EmpID">
+                            <a onclick="ChooseEmployee('@employee.EmpID','@employee.EmpCode','@employee.FullName','@employee.CompanyName','@employee.Department','@employee.Section','@employee.Position','@employee.JoinDate',controlId)" class="cursor-pointer">@employee.EmpCode</a>
+                        </td>
+                        <td>
+                            @employee.FullName
+                        </td>
+                        <td>
+                            @employee.CompanyName
+                        </td>
+                        <td>
+                            @employee.Position
+                        </td>                      
+                        <td>
+                            @Html.DisplayFor(modelItem => employee.JoinDate)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    if (ViewBag.FirstRequest != true)
+    {
+        <p style="text-align:center">Không có kết quả nào phù hợp!</p>
+    }
+}
+
+<script type="text/javascript">
+    (function ($) {  
+        ShowDataTable("#tblResults");
+    })(jQuery);
+</script>

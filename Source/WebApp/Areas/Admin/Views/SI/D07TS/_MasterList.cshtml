@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ChangingInsuranceInformationMasterViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+        <tr>
+            <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th class="text_center">@Html.DisplayNameFor(model => model.Month)</th>
+            <th class="text_center">@Html.DisplayNameFor(model => model.Year)</th>
+            <th class="text_center">@Html.DisplayNameFor(model => model.CreateUser)</th>
+            <th class="text_center">@Html.DisplayNameFor(model => model.isNotified)</th>
+            <th class="text_center">@Eagle.Resource.LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            int i = 0;
+            foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">@i</td>
+                    <td>@Html.DisplayFor(model => item.Name)</td>
+                    <td class="text_center">@Html.DisplayFor(model => item.Month)</td>
+                    <td class="text_center">@Html.DisplayFor(model => item.Year)</td>
+                    <td class="text_center">@Html.DisplayFor(model => item.CreateUser)</td>
+                    <td class="text_center">@Html.DisplayFor(model => item.strIsNotified)</td>
+                    <td class="text_center">
+                        @if (item.isNotified == false)
+                        {
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.MarkNotified" class="ico checkItem " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.ViewReport" class="ico viewItem " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.Delete" class="ico deleteItem " >&nbsp;&nbsp;&nbsp;</a>    
+                        }
+                        else
+                        {
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.MarkNotified" class="ico checkItemDisable " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.ViewReport" class="ico viewItem " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.Edit" class="ico editItemDisable " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.MasterID"  title="@Eagle.Resource.LanguageResource.Delete" class="ico deleteItemDisable " >&nbsp;&nbsp;&nbsp;</a>
+                        }
+                    </td>
+                </tr>                
+            }
+        }
+    </tbody>
+</table>
+</div>
+
+<script>
+    InvokeDataTables();
+</script>

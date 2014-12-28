@@ -1,0 +1,521 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.RewardDiscipline;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+}
+@model List<Eagle.Model.HR.RewardDisciplineViewModel>
+@section ContentSection
+{
+<div id="MainBody" class="main_box">
+    @Html.Partial("../Hr/RewardDiscipline/_Reset")
+</div>
+}
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+@Html.Action("jqueryval", "Common", null)
+
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    InvokeDataTables();
+
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                            //case 0:
+                            //    DataMgr.GetList();
+                            case 1:
+                                DataMgr.BindDetails(data);
+                                break;
+                            case 2:
+                                DataMgr.ReloadData(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+
+                    ShowDateTimePicker();
+                    $.validator.methods["date"] = function (value, element) { return true; }
+
+                    DataMgr.RemoveQtip();
+                    //Xu ly collapse div with checkbox Decision
+                    DataMgr.HandleDecisionCheckBoxEvent("Decision", false);
+
+                    $("input[name=LSRewardID]").val('');
+                    DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblReward", new {@Type=1 })',
+                        'selectLSRewardID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRewardID', 'LSRewardName');
+
+                    $("#modalEdit").draggable({ handle: ".modal-header" });
+                },
+                RemoveQtip: function () {
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                BindEvents: function () {
+                    $('#Note').keypress(function () {
+                        if (this.value.length >= 150)
+                            return false;
+                    });
+
+                    $(document).on('change', '#Type', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        var TypeId = $(this).val();
+                        DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblReward")?Type=' + TypeId,
+                       'selectLSRewardID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRewardID', 'LSRewardName');
+                        DataMgr.PopulateRewardLevelsToDropDownList(TypeId);
+                    });
+
+                    //Add and update post action
+                    $(document).on("click", "#btnAdd", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            if ($('#LSRewardID').val() == '')
+                                ShowToolTip("LSRewardID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else
+                                CloseToolTip("LSRewardID");
+                            return false;
+                        } else {
+                            DataMgr.RemoveQtip();
+                            if ($('#LSRewardID').val() == '')
+                                ShowToolTip("LSRewardID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else {
+                                CloseToolTip("LSRewardID");
+                                //Add new Item
+                                if ($('input[type="file"]').val() != '') {
+                                    //DataMgr.UploadFile('FileUpload', 'UPLOAD_DOCUMENT_DIR', null, null, null);
+                                    var fileInputId = 'FileUpload';
+                                    var folderKey = 'UPLOAD_DOCUMENT_DIR';
+                                    var width = null;
+                                    var height = null;
+                                    var fileId = null;
+
+                                    var formData = new FormData();
+                                    formData.append('fileKey', fileInputId);
+                                    formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                                    formData.append('folderKey', folderKey);
+                                    if (width != null && width > 0)
+                                        formData.append('width', width);
+                                    if (height != null && height > 0)
+                                        formData.append('height', height);
+                                    if (fileId != null && fileId > 0)
+                                        formData.append('fileId', fileId);
+
+                                    var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: baseUrl + "/Handlers/UploadFile.ashx",
+                                        contentType: false,
+                                        processData: false,
+                                        data: formData,
+                                        success: function (result) {
+                                            $("input[name=FileId]:hidden").val(result);
+                                            var data = DataMgr.ConvertFormToJSON("myform");
+                                            DataMgr.AddData(data);
+                                        },
+                                        error: function () {
+                                            showMessageWithTitle('error', '@Html.Raw(Eagle.Resource.LanguageResource.UploadFileError)', "error", 3000);
+                                        }
+                                    });
+                                } else {
+                                    var data = DataMgr.ConvertFormToJSON("myform");
+                                    DataMgr.AddData(data);
+                                }
+                            }
+                        }
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            if ($('#LSRewardID').val() == '')
+                                ShowToolTip("LSRewardID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else
+                                CloseToolTip("LSRewardID");
+                            return false;
+                        } else {
+                            if ($('#LSRewardID').val() == '')
+                                ShowToolTip("LSRewardID", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)');
+                            else {
+                                CloseToolTip("LSRewardID");
+                                //DataMgr.RemoveQtip();
+                                // Update Item
+                                if ($('input[type="file"]').val() != '') {
+                                    var fileInputId = 'FileUpload';
+                                    var folderKey = 'UPLOAD_DOCUMENT_DIR';
+                                    var width = null;
+                                    var height = null;
+                                    var fileId = $("#FileId").val();
+
+                                    var formData = new FormData();
+                                    formData.append('fileKey', fileInputId);
+                                    formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                                    formData.append('folderKey', folderKey);
+                                    if (width != null && width > 0)
+                                        formData.append('width', width);
+                                    if (height != null && height > 0)
+                                        formData.append('height', height);
+                                    if (fileId != null && fileId > 0)
+                                        formData.append('fileId', fileId);
+
+                                    var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: baseUrl + "/Handlers/UploadFile.ashx",
+                                        contentType: false,
+                                        processData: false,
+                                        data: formData,
+                                        success: function (result) {
+                                            if (result > 0) {
+                                                $("input[name=FileId]:hidden").val(result);
+                                                var data = DataMgr.ConvertFormToJSON("myform");
+                                                DataMgr.UpdateData(data);
+                                            }
+                                        },
+                                        error: function () {
+                                            showMessageWithTitle('error', '@Html.Raw(Eagle.Resource.LanguageResource.UploadFileError)', "error", 3000);
+                                        }
+                                    });
+                                } else {
+                                    var data = DataMgr.ConvertFormToJSON("myform");
+                                    DataMgr.UpdateData(data);
+                                }
+                            }
+                        }
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu                       
+                        DataMgr.GetDetails(ID);
+
+                        //Go to top
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {
+                                    DataMgr.config.mode = 2;
+                                    DataMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+                },
+                UploadFile: function (fileInputId, folderKey, width, height, fileId) {
+                    var formData = new FormData();
+                    formData.append('fileKey', fileInputId);
+                    formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                    formData.append('folderKey', folderKey);
+                    if (width != null && width > 0)
+                        formData.append('width', width);
+                    if (height != null && height > 0)
+                        formData.append('height', height);
+                    if (fileId != null && fileId > 0)
+                        formData.append('fileId', fileId);
+
+                    var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+                    $.ajax({
+                        type: "POST",
+                        url: baseUrl + "/Handlers/UploadFile.ashx",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (result) {
+                            $("#FileId").val(result);
+                        },
+                        error: function () {
+                            showMessageWithTitle('error', '@Html.Raw(Eagle.Resource.LanguageResource.UploadFileError)', "error", 3000);
+                        }
+                    });
+                },
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                HandleDecisionCheckBoxEvent: function (checkFieldId, chkStatus) {
+                    var name = $("#" + checkFieldId).attr("name");
+                    var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+                    var hiddenSelector = $("input:hidden[name=" + name + "]");
+
+                    if (chkStatus == true)
+                        $("div[id$=pnlCollapsable]").slideDown('slow');
+                    else
+                        $("div[id$=pnlCollapsable]").slideUp('slow');
+                    checkBoxSelector.attr("checked", chkStatus);
+                    checkBoxSelector.val(chkStatus);
+                    hiddenSelector.val(chkStatus);
+
+                    checkBoxSelector.click(function () {
+                        var checkBoxStatus = $(this).is(":checked");
+                        if (checkBoxStatus == true)
+                            $("div[id$=pnlCollapsable]").slideDown('slow');
+                        else
+                            $("div[id$=pnlCollapsable]").slideUp('slow');
+
+                        checkBoxSelector.attr("checked", checkBoxStatus);
+                        checkBoxSelector.val(checkBoxStatus);
+                        hiddenSelector.val(checkBoxStatus);
+                    });
+                },
+                PopulateRewardLevelsToDropDownList: function (TypeId) {
+                    var select = $("#LSRewardLevelID");
+                    select.empty();
+                    $.getJSON("/Admin/LS_tblRewardLevel/GetRewardLevels?Type=" + TypeId,
+                        function (classesData) {
+                            if (classesData.length > 0) {
+                                select.append($('<option/>', { value: '', text: " --- @Html.Raw(Eagle.Resource.LanguageResource.Select) --- " }));
+                                $.each(classesData, function (index, itemData) {
+                                    select.append($('<option/>', {
+                                        value: itemData.Value,
+                                        text: itemData.Text
+                                    }));
+                                });
+                                //select.find('option:first').attr("selected", "selected");
+                            } else
+                                select.append($('<option/>', { value: '', text: " --- @Html.Raw(Eagle.Resource.LanguageResource.None) --- " }));
+                        });
+                },
+                BindAutoCompleteSelect2: function (requestUrl, selectBox, placeholder, hiddenID, hiddenName) {
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBox);
+                    selectBox.select2({
+                        placeholder: placeholder,
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        multiple: false,
+                        ajax: {
+                            url: requestUrl,
+                            dataType: 'json',
+                            quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                            data: function (term, page) {
+                                return {
+                                    pageSize: pageSize,
+                                    pageNum: page,
+                                    searchTerm: term
+                                };
+                            },
+                            results: function (data, page) {
+                                //Used to determine whether or not there are more results available,
+                                //and if requests for more data should be sent in the infinite scrolling
+                                var more = (page * pageSize) < data.Total;
+                                return { results: data.Results, more: more };
+                            }
+                        },
+                        formatSelection: function (result) {
+                            if (result.id != undefined && result.id != null)
+                                CloseToolTip(hiddenID);
+                            $("input[name=" + hiddenID + "]").val(result.id);
+                            $("input[name=" + hiddenName + "]").val(result.name);
+
+                            return result.name;
+                        },
+                        formatResult: function (result) {
+                            return result.name;
+                        },
+                        initSelection: function (element, callback) {
+                            var selected_id = $("input[name=" + hiddenID + "]").val();
+                            var selected_name = $("input[name=" + hiddenName + "]").val();
+                            var data = { id: selected_id, name: selected_name };
+                            callback(data);
+                        }
+                    });
+
+                    selectBox.select2('val', $("input[name=" + hiddenID + "]").val());
+
+                    selectBox.on("change", function (e) {
+                        if (e.removed) {
+                            $("input[name=" + hiddenID + "]").val('');
+                        }
+                    });
+                },
+                AddData: function (data) {
+                    this.config.method = "Create";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                GetDetails: function (id) {
+                    DataMgr.config.mode = 1;
+                    DataMgr.config.key = id;
+                    var data = { "id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+
+                    var TypeId = $("#Type").val();
+                    DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblReward")?Type=' + TypeId,
+                   'selectLSRewardID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRewardID', 'LSRewardName');
+
+                    var chkDecisonStatus = $("input[name=Decision]").is(":checked");
+                    DataMgr.HandleDecisionCheckBoxEvent("Decision", chkDecisonStatus);
+                    ShowDateTimePicker();
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }else{
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    }               
+
+                    var result = JSON.parse(data);                   
+                    if (result.flag == 'true') {                     
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            dataType: "html",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            statusCode: {
+                                401: function () {
+                                    window.location.reload();
+                                },
+                                403: function () {
+                                    window.location.reload();
+                                },
+                                590: function () {
+                                    window.location.reload();
+                                }
+                            },
+                            success: function (data) {
+                                if (data.message == "timeout")
+                                    window.location.reload();
+                                else {
+                                    $('#' + DataMgr.config.ContainerClientID).html(data);
+                                    DataMgr.InitializeCotrols();
+                                    showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    }
+                    else {
+                        showMessageWithTitle(titleFailure, result.message, "error", 20000);
+                    }
+                },
+                ResetControls: function () {
+                    var mode = DataMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#myform');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();                       
+                    } else {
+                        var key = DataMgr.config.key;
+                        DataMgr.GetDetails(key);
+                    }
+                    DataMgr.InitializeCotrols();
+                },
+            };
+    DataMgr.init();
+    }
+
+    var Controller = 'RewardDiscipline';
+    var BaseURL = areas + "/" + Controller + "/";
+    var base_settings = {
+        ContainerClientID: "MainBody",
+        BaseURL: BaseURL
+    };
+    $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

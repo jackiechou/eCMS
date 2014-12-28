@@ -1,0 +1,35 @@
+﻿<div id="SiteMap" class="navbar-header"></div>
+
+<div id="headings" class="headings">
+    
+    <div class="row">
+        <div class="col-md-10">            
+             <h4>@ViewBag.Title</h4>                         
+        </div>
+        <div class="col-md-2" style="padding:0px;margin:0px;">
+            <div class="button-toolbar" style="margin:10px 0px 0px 0px;">
+                @if (IsSectionDefined("TopActionButtons"))
+                {
+                    @RenderSection("TopActionButtons", required: false)
+                }
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<div id="MainContainer">    
+    @RenderSection("MessageSection")
+    
+    @RenderSection("ContentSection")
+</div>
+
+<div class="row">
+    @if (IsSectionDefined("BottomActionButtons"))
+    {
+        <div class="button-toolbar" style="margin:10px 0px 0px 0px;">
+            @RenderSection("BottomActionButtons", required: false)
+        </div>
+    }
+</div>
+

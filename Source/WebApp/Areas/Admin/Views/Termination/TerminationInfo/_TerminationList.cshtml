@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Eagle.Model.TER.TerminationViewModel>
+@{
+    var groups = Model.GroupBy(r => Model.ToList().IndexOf(r) / 2).ToList();
+}
+@foreach (var parentItem in groups)
+{
+    <ul class="rowItem">
+       @foreach (var item in parentItem)
+        { 
+            <li class="column">
+                <div class="col-md-6">  
+                    <div class="col-md-12">                     
+                    <div class="col-md-3">
+                        <a id="@item.EmpID" data-id="@item.EmpCode"  class="user-link" href="#">
+                            @Html.ImageByFileId("eAvatar", item.FileId, item.FullName, new { width = "80", height = "80", @class = "media-object img-thumbnail user-img img-rounded avatar", @style = "width:80px; height=80px;overflow-x:hidden;border:1px solid #CCC;" })
+                            @Html.HiddenFor(model => item.FileId, new { @value = @item.FileId })
+                        </a>
+                    </div>
+                    <div class="col-md-9">                       
+                        <div class="col-md-12">
+                            <h5 class="dotted"><strong>@Html.DisplayFor(model => item.FullName)</strong></h5>
+                        </div>                      
+                        <div class="clearboth"></div>                      
+                        <div class="col-md-12">
+                            <div class="col-md-5">@Html.DisplayNameFor(model => model.LastWorkingDate)</div>
+                            <div class="col-md-7">@Html.DisplayFor(model => item.LastWorkingDate)</div>
+                        </div>                        
+                        <div class="clearboth"></div>   
+                        <div class="col-md-12">
+                            <div class="col-md-5">@Html.DisplayNameFor(model => model.Department)</div>
+                            <div class="col-md-7">@Html.DisplayFor(model => item.Department)</div>
+                        </div>
+                                  
+                        <div class="clearboth"></div>
+                    </div>   
+                    </div>  
+                </div>
+            </li>
+        }
+        @for (int i = parentItem.Count(); i < 2; i++)
+        { 
+            <li class="column"></li>
+        }
+    </ul>
+}

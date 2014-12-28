@@ -1,0 +1,113 @@
+﻿@model List<PR_sprptPaySlipReport_Result>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:2%">@Eagle.Resource.LanguageResource.No</th>
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.Month
+                </th>                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.Year
+                </th>                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.WorkDays
+                </th>                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.BasicSalary
+                </th>                
+                <th style="width:5%" class="text_center" >
+                    @Eagle.Resource.LanguageResource.PayslipOTIncome
+                </th>                                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipSocialInsurance
+                </th>                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipHealthInsurance
+                </th>                
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipUnEmployeeInsurance
+                </th>                             
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipDependant
+                </th>                       
+                <th style="width:5%" class="text_center" >
+                    @Eagle.Resource.LanguageResource.PayslipPersonalRelief
+                </th>        
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipDependantRelief
+                </th>         
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipPIT
+                </th>
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipEmployeeIncome
+                </th>                      
+                <th style="width:5%" class="text_center">
+                    @Eagle.Resource.LanguageResource.PayslipNetTakeHome
+                </th> 
+                <th class="table-actions text_center no-sort" style="width:3%">@Eagle.Resource.LanguageResource.Actions</th>        
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="table-actions text_center no-sort">
+                        @i
+                    </td>
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.Month)
+                    </td>       
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>  
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.ActualWorkINfo)
+                    </td>           
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.SalaryInfo)
+                    </td>                    
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.OTIncomeInfo)
+                    </td>                          
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.SocialInsuranceInfo)
+                    </td>
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.HealthInsucreanceInfo)
+                    </td>
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.UnEmployeeInsuranceInfo)
+                    </td>
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.Dependent)
+                    </td>          
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.PersonalRelief)
+                    </td>
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.DependantRelief)
+                    </td>              
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.PITInfo)
+                    </td>       
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.EmployeeIncome)
+                    </td>                    
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.Nettakehome)
+                    </td>                        
+                    <td class="table-actions text_center no-sort">
+                        <a title="Save" class="ico downloadItem" onclick="ReportForSaving(@item.EmpID, @item.Month, @item.Year)" ></a> 
+                        <a title="Open" class="ico viewItem" onclick="ReportForOpenning(@item.EmpID, @item.Month, @item.Year)" ></a> 
+                    </td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</form>

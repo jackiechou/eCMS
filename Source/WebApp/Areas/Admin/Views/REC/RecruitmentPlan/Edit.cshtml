@@ -1,0 +1,145 @@
+﻿@model int
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.RecruitmentPlan;   
+}
+
+<div id="MainBody">
+   <div id="divEdit">
+        @Html.Action("_Edit", new { @PlanId = Model })
+    </div>
+</div>
+
+
+
+<script>
+    var urlReset = '_Edit?PlanId=' + $('#PlanID').val();
+
+    $(document).on('change', '#YearAlowNull', function () {
+        ChangeQuotaRecruitment();
+    });
+    $(document).on('change', "input[name='LSCompanyID']", function () {
+        ChangeQuotaRecruitment();
+    });
+   
+    $(document).on('change', '#SelectLSPositionIDAlowNull', function () {
+        ChangeQuotaRecruitment();
+    });
+    $(document).ready(function () {
+        ChangeQuotaRecruitment();
+    });
+    
+    function ChangeQuotaRecruitment() {
+        var Year = $('#YearAlowNull').val();
+        var LSCompanyID = $("input[name='LSCompanyID']").val();
+        var LSPositionID = $('#SelectLSPositionIDAlowNull').val();
+        if (LSCompanyID != null && LSCompanyID != '' && LSPositionID != '' && Year != '') {
+            $.ajax({
+                type: "GET",
+                url: areas + '/RecruitmentPlan/GetQuota?Year=' + Year + '&LSCompanyID=' + LSCompanyID + '&LSPosition=' + LSPositionID,
+                success: function (data) {
+                    $('#lblQuotaRecruitment').html(data);
+                    $('#QuotaRecruitment').val(data);
+                    if (data > 0) {
+                        $('#PlanQuantityAlowNull').prop('disabled', false);
+                    } else {
+                        $('#PlanQuantityAlowNull').val('');
+                        $('#PlanQuantityAlowNull').prop('disabled', true);
+                    }
+                }
+            });
+        }
+        else
+        {
+            $('#PlanQuantityAlowNull').prop('disabled', true);
+        }
+    }
+  
+
+    function Update(mode) {
+        var Year = $('#YearAlowNull').val();
+        var LSCompanyID = $("input[name='LSCompanyID']").val();
+        var LSPositionID = $('#SelectLSPositionIDAlowNull').val();
+        if (LSCompanyID == null || LSCompanyID == '' || LSPositionID == '' || Year == '') {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseEnterTheInformationMarked');
+            return false;
+        } else {
+            $("body").addClass("loading");
+
+            $.ajax({
+                type: "POST",
+                url: 'Update?mode=' + mode,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        window.location.href = areas + '/PlanList/Index?ModuleID=8';
+                    } else {
+                        AlterWarning(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        }
+    }
+    
+    //Add and update post action
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            Update('save');
+        }
+    });
+    $(document).on("click", "#btnSendForApproval", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        } else {
+            Update('sendforapproval');
+        }
+    });
+    $(document).on("click", "#btnReset", function () {
+        $.ajax({
+            type: "GET",
+            url: urlReset,
+            success: function (data) {
+                $('#divEdit').html(data);
+                ChangeQuotaRecruitment();
+            }
+        });
+    });
+
+    function Approve(mode) {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: 'Approve?mode=' + mode,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    window.location.href = areas + '/PlanList/Index?ModuleID=8';
+                } else {
+                    AlterWarning(data);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            }
+        });
+
+    }
+    $(document).on("click", "#btnApprove", function () {
+        Approve("approve");
+    });
+    $(document).on("click", "#btnUnapprove", function () {
+        var IsStart = $("#IsStart").val();
+        var LevelApprove = $("#LevelApprove").val();
+        //nếu IsStart được set up trong System admin là : chọn cấp trả về và LevelApprove != 1
+        if (IsStart == 2 && LevelApprove != 1) {
+            $('.popupUnapprove').modal('show');
+        } else {
+            Approve("unapprove");
+        }
+    });
+
+    $(document).on("click", ".btnAccept", function () {
+        $("#ReturnLevelApprove").val($("#ReturnLevelApproveList").val());
+        Approve("unapprove");
+    });
+</script>

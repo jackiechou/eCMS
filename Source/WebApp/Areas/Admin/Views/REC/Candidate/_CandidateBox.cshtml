@@ -1,0 +1,107 @@
+﻿@model CandidatetmpViewModel
+
+<div id="choose-employee" class="box1 img-rounded">
+    @Html.HiddenFor(model => model.CandidatetmpID, new { @id = "CandidatetmpID" })   
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.CandidatetmpCode)
+        </div>
+        <div class="col-md-4">
+            <div class="input-append">
+                @Html.TextBoxFor(model => model.CandidatetmpCode, new { @placeholder = @Eagle.Resource.LanguageResource.EmpCode, @class = "span10" })
+                <button id="btnPopupCandidateCode" class="btn btnPopupCandidate" type="button">...</button>
+            </div>
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.FullNametmp)
+        </div>
+        <div class="col-md-4">
+            <div class="input-append">
+                @Html.TextBoxFor(model => model.FullNametmp, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span10" })
+                <button id="btnPopupCandidateName" class="btn btnPopupCandidate" type="button">...</button>
+            </div>
+        </div>
+                           
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.GenderName)
+        </div>
+        <div class="col-md-4 line_bottom">
+              <label id="GenderNametmp" class="reset-label">
+                  @Html.DisplayFor(model => model.GenderName)
+              </label>
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.DOBtmp)
+        </div>
+        <div class="col-md-4 line_bottom">
+            <label id="DOBtmp" class="reset-label">
+                @Html.DisplayFor(model => model.DOBtmp)
+            </label>
+        </div>
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.ApplyDatetmp)
+        </div>
+        <div class="col-md-4 line_bottom">
+            <label  id="ApplyDatetmp" class="reset-label">
+                @Html.DisplayFor(model => model.ApplyDatetmp)
+            </label>
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Result)
+        </div>
+        <div class="col-md-4 line_bottom">
+            <label  id="Resulttmp" class="reset-label">
+                @Html.DisplayFor(model => model.ResultName)
+            </label>
+        </div>
+    </div>
+    <!--end row-->
+</div>
+@Html.Action("_PopupCandidatePartial","Candidate", null)
+<script type="text/javascript">
+ 
+    $('#btnPopupCandidateCode').click(function () {
+        $('.qtip').qtip('hide');
+        controlId = '#btnPopupCandidateCode';
+        $('.popupCandidate').modal('show');
+    })
+    $('#btnPopupCandidateName').click(function () {
+        $('.qtip').qtip('hide');
+        controlId = '#btnPopupCandidateName';
+        $('.popupCandidate').modal('show');
+    })
+    function ChooseCandidate(CandidateID, CandidateCode, FullName, Gender, ResultName, DOB, ApplyDate, controlId) {
+        $("body").addClass("loading");
+        $('#ApplyDatetmp').html(ApplyDate);
+        $('#DOBtmp').html(DOB);
+
+        $('#GenderNametmp').html(Gender);
+        $('#Resulttmp').html(ResultName);
+        
+        $('#CandidatetmpCode').val(CandidateCode);
+        $('#CandidatetmpID').val(CandidateID);
+        $('#FullNametmp').val(FullName);
+
+        var urlChangeSesionCandidate = areas + '/Candidate/ChangeCandidateID?CandidateID=' + CandidateID;
+
+        $.ajax({
+            type: "POST",
+            url: urlChangeSesionCandidate,
+            success: function (data) {
+                $('.popupCandidate').modal('hide');
+                ChooseCandidateCompleted();
+            }
+        });
+
+        
+    }
+</script>

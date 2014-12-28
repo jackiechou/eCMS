@@ -1,0 +1,23 @@
+﻿@model AdditionSalaryViewModels
+
+
+<div class="modal hide fade popupEditAdditionSalary" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="min-width: 245px">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.Edit</h3>
+        
+    </div>
+    <div class="modal-body">
+        @Html.Partial("../Payroll/AdditionSalary/_PopupEditAdditionSalaryFormInterPartial")
+    </div>
+<div class="modal-footer">
+    <input type="button" id="btnStaffCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Cancel" />
+    <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" />
+</div>
+</div>
+
+<script>
+    if (FEdit != 1) {
+        $("#btnAdd").prop("disabled", true);
+    } 
+</script>

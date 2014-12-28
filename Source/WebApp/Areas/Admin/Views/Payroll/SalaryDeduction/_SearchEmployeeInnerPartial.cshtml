@@ -1,0 +1,57 @@
+﻿@model EmployeeForPayrollViewModels
+<!--Begin search -->
+@Html.Hidden("StaffList")
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.EmpCode)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "span12" })
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.FullName)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "span12" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <label>
+            @Eagle.Resource.LanguageResource.LastCompanyDefine
+        </label>
+    </div>
+    <div class="col-md-4">
+        <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+        <script type="text/javascript">
+            LoadComboTree('LSCompanyID');
+            function LoadComboTree(controlId) {
+                $('#' + controlId).combotree({
+                    url: '/CommonCompany/GetAll',
+                    textField: 'title',
+                    valueField: 'id',
+                    onLoadSuccess: function (row, data) {
+                        $(this).tree("collapseAll");
+                    },
+                    onSelect: function (node) {
+                    }
+                });
+            }
+        </script>
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.LSPositionID)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBox("selectLSPositionID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.LSPositionID)
+        @Html.HiddenFor(model => model.LSPositionName)
+    </div>
+</div>
+<!--End search -->
+
+<script>
+    var strInputPosition = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)';
+    PopulateDropDownListAutoComplete("selectLSPositionID", "LSPositionID", "LSPositionName", strInputPosition, areas + '/LS_tblPosition/DropdownList');
+</script>

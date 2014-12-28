@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.ChangePassword;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+    <div id="divEdit">
+        @Html.Action("_Create")
+    </div>
+}
+
+<script>
+    $(document).on("click", "#btnResetS", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            url: areas + "/ChangePassword/_Create",
+            type: "GET",
+            success: function (data) {
+                $("#divEdit").html(data);
+            }
+        });
+    });
+    $(document).on("click", "#btnAddS", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            $.ajax({
+                url: areas + "/ChangePassword/Save",
+                type: "POST",
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == "success") {
+                        $.ajax({
+                            url: areas + "/ChangePassword/_Create",
+                            type: "GET",
+                            success: function (data) {
+                                $("#divEdit").html(data);
+                                AlterUpdateSuccess();
+                            }
+                        });
+                    } else {
+                        $("#divEdit").html(data);
+                    }
+                }
+            });
+        }
+    });
+</script>

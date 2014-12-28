@@ -1,0 +1,230 @@
+﻿@model RecruitmentPlanViewModel
+
+<form id="frmAdd" class="form-horizontal">
+    @Html.HiddenFor(model => model.PlanID)
+    @Html.HiddenFor(model => model.LevelApprove)
+    @Html.Hidden("LSPositionIDAlowNull")       
+    @Html.Hidden("LSPositionName")
+    
+    @*Dùng Cho Edit*@
+    @if (ViewBag.IsStart != null)
+    {
+        @Html.Hidden("IsStart", (int)ViewBag.IsStart)  
+        @Html.Hidden("ReturnLevelApprove", 0)  
+        @Html.Action("_popupUnapprove", new { @LevelApprove = Model.LevelApprove })
+    }
+ 
+    
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                  @Html.Raw(ViewBag.Message)
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                             <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.EmpIDPlan)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">@Model.EmpIDPlanName</label>
+                                    @Html.HiddenFor(model => model.EmpIDPlanName)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.CreateDate)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">@System.DateTime.Now.ToString("dd/MM/yyyy")</label>
+                                </div>
+                            </div>
+                            
+                           <div class="row @ViewBag.ShowStatus">
+                                 <div class="col-md-2">
+                                    @Html.LabelFor(model => model.StatusProcess)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">@Model.StatusProcessName</label>  
+                                </div>
+                                
+                               <div class="col-md-2">
+                                    @Html.LabelFor(model => model.StatusPlan)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">@Model.StatusPlanName</label>
+                                </div>
+                            </div>
+                           <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.YearAlowNull)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.YearAlowNull, new { @class = "span3 text-center" })
+                                </div>
+                               
+                               <div class="col-md-2">
+                                    @Html.LabelFor(model => model.RecruitedQuantity)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">@Model.RecruitedQuantity</label>
+                                </div>
+                               
+                            </div>
+                           <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSCompanyID)
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+                                    @Html.ValidationMessageFor(model => model.LSCompanyID)    
+                                    @{ 
+                                        string LSCompanyID = Model.LSCompanyID == 0 ? "" : Model.LSCompanyID.ToString();
+                                        }                                                                
+                                    <script>                
+                                        $(document).ready(function () {
+                                            LoadComboTreeWithActionWithRequired('LSCompanyID', 'GetAllWithPlease', '@string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.LastCompanyDefine)', '@LSCompanyID')
+                                        });
+                                    </script>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSPositionID)
+                                </div>
+                                <div class="col-md-4">  
+                                    @Html.TextBox("SelectLSPositionIDAlowNull", null, new { @class = "span12" })
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                 <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.PlanQuantityAlowNull)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.PlanQuantityAlowNull, new { @class = "span12" })
+                                </div>
+
+                                   <div class="col-md-2">
+                                    @Html.LabelFor(model => model.QuotaRecruitment)
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lblQuotaRecruitment" class="reset-label">@Model.QuotaRecruitment</label>
+                                    @Html.HiddenFor(model => model.QuotaRecruitment)
+                                </div>
+                            </div>
+                           <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.RecruitmentSource</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <style>
+                                        #reset-firt-div div {
+                                            margin-left: 2.564102564102564%;
+                                        }
+                                        #reset-firt-div div input{
+                                            margin-top: -1px;
+                                        }
+                                    </style>
+                                    <div class="row" id="reset-firt-div">
+                                        @foreach (var source in ViewBag.RecruitmentSources as List<RecruitmentSourceSelectedViewModel>)
+                                        {
+                                            <div class="col-md-5">
+                                                <label class="reset-label">
+                                                    @{
+                                            string radChecked = "";
+                                            if (source.isSelected)
+                                            {
+                                                radChecked = "checked=\"checked\"";
+                                            }
+                                                    }
+                                                    <input id="sourceSelected" name="sourceSelected" type="checkbox" value="@source.LSRecruitmentSourceID" @radChecked>
+                                                    @source.LSRecruitmentSourceName
+                                                </label>
+                                            </div>  
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <!--end row-->
+                           <div>
+                                @if (ViewBag.CommentList != null)
+                                {
+                                    foreach (var commentItem in ViewBag.CommentList as List<CommentViewModel>)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                @Html.ImageByFileId("Photo", commentItem.AvatarId, commentItem.EmpComment, new { width = "45", height = "60", @class = "media-object img-thumbnail user-img img-rounded", @style = "float:right;" })
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div>
+                                                    <div class="col-md-9"><b>@commentItem.EmpComment</b></div> <div class="col-md-3"><i>@commentItem.Time</i></div>
+                                                </div>
+                                                <div>
+                                                    <div class="col-md-9"> @Html.Raw(Server.HtmlDecode(commentItem.Comment))</div> <div class="col-md-3"><i>@commentItem.StatusName</i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+        
+                            </div>
+
+                            <!--end row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Comment)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })
+                                </div>
+                            </div>
+    
+                            <!--/row-->
+                            <div class="row">
+                                <div class="footbar">
+                                    @if (Model.LevelApprove == 0)
+                                    {
+                                        <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" @ViewBag.DisabledSaveAndSend />                                
+                                        <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" @ViewBag.DisabledSaveAndSend />
+                                        <input type="button" id="btnSendForApproval" value="@Eagle.Resource.LanguageResource.btnSendForApproval" class="btn btn-info" @ViewBag.DisabledSaveAndSend />
+                                    }
+                                    else
+                                    {
+                                        <input type="button" id="btnApprove" value="@Eagle.Resource.LanguageResource.btnApprove" class="btn btn-info" @ViewBag.DisabledApproveAndUnapprove />
+                                        <input type="button" id="btnUnapprove" value="@Eagle.Resource.LanguageResource.btnUnapprove" class="btn btn-info" @ViewBag.DisabledApproveAndUnapprove />    
+                                    }
+                                </div>
+                            </div>
+                            <!--End.row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@Html.Action("jqueryval", "Common", null)
+
+<script>
+    PopulateDropDownListAutoComplete("SelectLSPositionIDAlowNull", "LSPositionIDAlowNull", "LSPositionName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)', areas + '/LS_tblPosition/DropdownList');
+    //PopulateDropDownListAutoComplete("SelectLSRecruitmentSourceIDAlowNull", "LSRecruitmentSourceIDAlowNull", "LSRecruitmentSourceName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputRecruitmentSource)', areas + '/RecruitmentSource/DropdownList');
+</script>
+    

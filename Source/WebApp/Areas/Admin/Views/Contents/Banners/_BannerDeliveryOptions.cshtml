@@ -1,0 +1,11 @@
+﻿@model Eagle.Model.Contents.Banners.BannerViewModel
+
+<h2 class="StepTitle">@Html.Raw(Eagle.Resource.LanguageResource.DeliveryOptions)</h2>
+<div class="row">
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.PageBannerList)
+    </div>
+    <div class="col-md-10">   
+        @Html.ListBoxFor(model => model.PageList, Model.PageList.Select(p => new SelectListItem { Text = p.PageTitle, Value = p.PageCode.ToString() }), new { Multiple = "multiple" })
+    </div>
+</div>

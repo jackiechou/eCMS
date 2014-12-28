@@ -1,0 +1,1679 @@
+﻿@{
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;   
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.ProfileManagement);
+}
+@model Eagle.Model.HR.EmployeeEditModel
+
+<div id="divEdit" class="box">   
+    @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform" }))
+    { 
+        <div id="right_accordion" class="accordion-group">
+            <div class="accordion-heading toolbar">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                    <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                    <span class="heading-tite">@Eagle.Resource.LanguageResource.FormArea</span>
+                </a>
+            </div>
+            <div id="form_accordion" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    <div class="accordion-content">                          
+                        <div class="row">
+                            <div id="alertMessageBox" aria-hidden="true" aria-labelledby="alertMessage" role="dialog" class="modal hide fade">
+                                <div class="modal-body">
+                                    <div id="alertMessage">
+                                        @if (ViewBag.DisplayErrorMessage == true)
+                                    {
+                                    <div class="@ViewBag.CssClass">
+                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                        <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message
+                                    </div>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="collapsedContent">
+                                <div class="row">
+                                    @*<div class="lead">Please fill in the blanks with requirement which is marked by asterisk</div>*@
+                                    <ul class="nav nav-tabs" id="myTab">
+                                        <li id="tab-1" class="active"><a href="#pane-1" data-toggle="tab">@Eagle.Resource.LanguageResource.GeneralInfo</a></li>
+                                        <li id="tab-2"><a href="#pane-2" data-toggle="tab">@Eagle.Resource.LanguageResource.Contact</a></li>
+                                        <li id="tab-3"><a href="#pane-3" data-toggle="tab">@Eagle.Resource.LanguageResource.CompanyUnit</a></li>
+                                        <li id="tab-4"><a href="#pane-4" data-toggle="tab">@Eagle.Resource.LanguageResource.CultureEducationStudies</a></li>
+                                        <li id="tab-5"><a href="#pane-5" data-toggle="tab">@Eagle.Resource.LanguageResource.AccountInfo</a></li>
+                                        <li id="tab-6"><a href="#pane-6" data-toggle="tab">@Eagle.Resource.LanguageResource.Tax</a></li>
+                                        <li id="tab-7"><a href="#pane-7" data-toggle="tab">@Eagle.Resource.LanguageResource.Insurance</a></li>
+                                    </ul>
+
+                                    <div id="myTabContent" class="tab-content responsive">
+                                        @*---------------------------------------------General--------------------------------------------*@
+                                        <div class="tab-pane  fade in active" id="pane-1">
+                                            <div class="accordion" id="accordion1">
+                                                <div class="accordion-group">
+                                                    <!-- Element Group Heading -->
+
+                                                    <div class="accordion-heading toolbar">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapse1">
+                                                            <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                                                            <span class="heading-tite">@Eagle.Resource.LanguageResource.Basics</span>
+
+                                                        </a>
+                                                    </div>
+                                                    <!-- Elements -->
+                                                    <div id="collapse1" class="accordion-body collapse in">
+                                                        <div class="accordion-inner">
+                                                            <div class="accordion-content">
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">                                                                   
+                                                                        @Html.RequiredLabelFor(model => model.EmpCode)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("txtEmpCode", Model.EmpCode, new { @readonly = "true", @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.EmpID)
+                                                                        @Html.HiddenFor(model => model.EmpCode)
+                                                                        @Html.ValidationMessageFor(model => model.EmpCode)
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                            @Html.LabelFor(model => model.FileId)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="col-md-12">
+                                                                            <div id="ImagePreviewBox" style="float:left" class="col-md-4">
+                                                                                <span>                                                             
+                                                                                    @Html.ImageByFileId("Photo", Model.FileId, Model.EmpName, new { width = "80", height = "80", @class="thumb" })
+                                                                                </span>
+                                                                            </div>
+                                                                            <div style="float:left" class="col-md-8">
+                                                                                @Html.TextBox("FileUpload", null, new { id = "FileUpload", type = "file" })
+                                                                                @Html.HiddenFor(model => model.FileId)
+                                                                                @Html.Action("CreateDownloadLink", "FileManager", new { @FileId = Model.FileId })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @* <span style="float:right;padding:5px">(*)</span>*@
+                                                                        @Html.RequiredLabelFor(model => model.FirstName)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBoxFor(model => model.FirstName, null, new { @class = "span12" })
+                                                                        @Html.ValidationMessageFor(model => model.FirstName)
+                                                                    </div>
+                                                                    <div class="col-md-2">                                                                  
+                                                                        @Html.RequiredLabelFor(model => model.LastName)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBoxFor(model => model.LastName, null, new { @class = "span12" })
+                                                                        @Html.ValidationMessageFor(model => model.LastName)
+                                                                    </div>
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">                                                                   
+                                                                        @Html.RequiredLabelFor(model => model.Gender)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.DropDownList("Gender", null, new { @class = "span7" })
+                                                                        @Html.ValidationMessageFor(model => model.Gender)
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.LSMaritalID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.DropDownList("LSMaritalID", null, new { @name = "LSMaritalID" })
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.Email)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("Email", null, new { @class = "span12", @name = "Email", @type = "email", @required = false, pattern = "[^ @]*@[^ @]*" })
+                                                                        @Html.ValidationMessageFor(model => model.Email)
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.Telephone)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("Telephone", null, new { @class = "span12", @name = "Telephone", @type = "tel" })
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.Mobile)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("Mobile", null, new { @class = "span12", @name = "Mobile" })
+                                                                        @*@Html.ValidationMessageFor(model => model.Mobile)*@
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.RequiredLabelFor(m => m.DOB)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.CheckBox("IsYOB", false, new { @style = "float:left;margin:5px;" })
+                                                                        @Html.Label(@Eagle.Resource.LanguageResource.IsYOB, new { @style = "float:left;padding-right:10px;" })
+
+                                                                        <div id="dpDOB">
+                                                                            @Html.DateTimePickerFor(model => model.DOB)        
+                                                                            @*  @Html.ValidationMessageFor(model => model.DOB)*@
+                                                                        </div>
+                                                                        <div id="dpYOB" style="display:none">
+                                                                            @Html.TextBoxFor(model => model.YOB, new { @style = "width: 130px" })
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.IDNo)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "span12" })
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.IDIssuedDate)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.DateTimePickerFor(model => model.IDIssuedDate)
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.IDIssuedPlace)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectIDIssuedPlace", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.IDIssuedPlaceName)
+                                                                        @Html.HiddenFor(model => model.IDIssuedPlace)
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.LSNationalityID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectLSNationalityID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.LSNationalityID)
+                                                                        @Html.Hidden("LSNationalityName")
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.LSReligionID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectLSReligionID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.LSReligionID)
+                                                                        @Html.Hidden("LSReligionName")
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.LSEthnicID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectLSEthnicID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.LSEthnicID)
+                                                                        @Html.Hidden("LSEthnicName")
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                @*<div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.Active)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.CheckBox("Active", Model.Active == true, new { @style = "float:left;margin:5px;" })
+                                                                    </div>
+                                                                </div>*@
+                                                                <!--end row-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="accordion-group">
+                                                    <!-- Element Group Heading -->
+                                                    <div class="accordion-heading toolbar">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+                                                            <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                                                            <span class="heading-tite">@Eagle.Resource.LanguageResource.Location</span>
+
+                                                        </a>
+                                                    </div>
+
+                                                    <!-- Elements -->
+                                                    <div id="collapse2" class="accordion-body collapse">
+                                                        <div class="accordion-inner">
+                                                            <div class="accordion-content">
+                                                                <!--start row-->
+                                                                <div id="cascadingDropdownNativeLocation" class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.BornLSCountryID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectBornLSCountryID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.BornLSCountryID)
+                                                                        @Html.Hidden("BornLSCountryName")
+                                                                    </div>
+
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.NativeCountryID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectNativeCountryID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.NativeCountryID)
+                                                                        @Html.Hidden("NativeCountryName")
+                                                                    </div>
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.BornLSProvinceID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectBornLSProvinceID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.BornLSProvinceID)
+                                                                        @Html.Hidden("BornLSProvinceName")
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        @Html.LabelFor(m => m.NativeProvinceID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectNativeProvinceID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.NativeProvinceID)
+                                                                        @Html.Hidden("NativeProvinceName")
+                                                                    </div>
+                                                                </div>
+                                                                <!--end row-->
+                                                                <!--start row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-2">
+                                                                            @Html.LabelFor(m => m.BornLSDistrictID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectBornLSDistrictID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.BornLSDistrictID)
+                                                                        @Html.Hidden("BornLSDistrictName")
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                            @Html.LabelFor(m => m.NativeDistrictID)
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        @Html.TextBox("selectNativeDistrictID", null, new { @class = "span12" })
+                                                                        @Html.HiddenFor(model => model.NativeDistrictID)
+                                                                        @Html.Hidden("NativeDistrictName")
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--end row-->
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*---------------------------------------------Address Contact------------------------------------*@
+                                        <div class="tab-pane fade" id="pane-2">
+                                            <div class="accordion-inner">
+                                                <div class="accordion-content">
+                                                    <div>
+                                                        <h6>@Eagle.Resource.LanguageResource.PermanentAddress</h6>
+                                                    </div>
+                                                    <hr />
+                                                    <!--start row-->
+                                                    <div class="row">  
+                                                        <div class="col-md-2">
+                                                            @Html.LabelFor(m => m.PLSCountryID)
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectPLSCountryID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.PLSCountryID)
+                                                            @Html.Hidden("PLSCountryName")
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            @Html.LabelFor(m => m.PLSProvinceID)
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectPLSProvinceID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.PLSProvinceID)
+                                                            @Html.Hidden("PLSProvinceName")
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+                                                    <!--start row-->
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                                @Html.LabelFor(m => m.PLSDistrictID)
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectPLSDistrictID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.PLSDistrictID)
+                                                            @Html.Hidden("PLSDistrictName")
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+
+                                                    <!--start row-->
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            @Html.LabelFor(m => m.PAddress)
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            @Html.TextAreaFor(model => model.PAddress, 2, 1, new { @class = "span12" })
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+
+                                                    <div>
+                                                        <h6>@Eagle.Resource.LanguageResource.TemporaryAddress</h6>
+                                                    </div>
+                                                    <hr />                                              
+                                                    <!--start row-->
+                                                    <div class="row">                                                   
+                                                        <div class="col-md-2">
+                                                                @Html.LabelFor(m => m.TLSCountryID)
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectTLSCountryID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.TLSCountryID)
+                                                            @Html.Hidden("TLSCountryName")
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            @Html.LabelFor(m => m.TLSProvinceID)
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectTLSProvinceID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.TLSProvinceID)
+                                                            @Html.Hidden("TLSProvinceName")
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+                                                    <!--start row-->
+                                                    <div class="row">                                                    
+                                                        <div class="col-md-2">
+                                                                @Html.LabelFor(m => m.TLSDistrictID)
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectTLSDistrictID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.TLSDistrictID)
+                                                            @Html.Hidden("TLSDistrictName")
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+
+                                                    <!--start row-->
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            @Html.LabelFor(m => m.TAddress)
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            @Html.TextAreaFor(model => model.TAddress, 2, 1, new { @name = "TAddress", @class = "span12" })
+                                                        </div>
+                                                    </div>
+                                                    <!--end row-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+
+                                                <div id="cascadingDropdownBornLocation" class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-4"> </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-4">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-4">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-4">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*---------------------------------------------Company--------------------------------------------*@
+                                        <div class="tab-pane fade" id="pane-3">
+                                                <div class="accordion-inner">
+                                                <div class="accordion-content">
+                                               
+                                                            <div class="row"> 
+                                                                <div class="col-md-2">
+                                                                    @Html.RequiredLabelFor(model => model.LSCompanyID)      
+                                                                </div>                                         
+                                                                <div class="col-md-4"> 
+                                                                    @* @Html.TextBox("LSCompanyID", Model.LSCompanyID.ToString(), new { @class = "easyui-combotree span2" }) *@     
+                                                                    <input id="LSCompanyID" name="LSCompanyID" type="text" value="@Model.LSCompanyID" class="easyui-combotree span2" />                                   
+                                                                    @Html.ValidationMessageFor(model => model.LSCompanyID)
+                                                                </div>
+                                                                <div class="col-md-2">@Html.LabelFor(model => model.LSLocationID)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.DropDownList("LSLocationID", null, new { @class = "span12" })
+                                                                </div>
+                                                            </div>                                                      
+                                                     
+                                                            <div class="row">
+                                                                <div class="col-md-2"> @Html.LabelFor(model => model.LSPositionID)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.DropDownList("LSPositionID", null, new { @class = "span12" })
+                                                                </div>
+
+                                                                <div class="col-md-2"> @Html.LabelFor(model => model.LineManagerID)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.DropDownList("LineManagerID", null, new { @class = "span12" })
+                                                                </div>
+                                                            </div>                                                       
+                                                  
+                                                   
+                                                            <div class="row">
+                                                                    <div class="col-md-2">@Html.LabelFor(model => model.JoinDate)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.DateTimePickerFor(model => model.JoinDate)
+                                                                </div>
+
+                                                                    <div class="col-md-2">@Html.LabelFor(model => model.StartDate)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.DateTimePickerFor(model => model.StartDate)
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                    <div class="col-md-2">@Html.LabelFor(model => model.EmergencyContact)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.TextBox("EmergencyContact", null, new { @class = "input_full", @name = "EmergencyContact" })
+                                                                </div>
+
+                                                                    <div class="col-md-2">@Html.LabelFor(model => model.EmergencyAddess)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.TextBox("EmergencyAddess", null, new { @class = "input_full", @name = "EmergencyAddess" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                    <div class="col-md-2">@Html.LabelFor(model => model.EmergencyMobile)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.TextBox("EmergencyMobile", null, new { @class = "input_full", @name = "EmergencyMobile" })
+                                                                </div>
+
+                                                                    <div class="col-md-2">@Html.LabelFor(model => model.EmergencyPhone)</div>
+                                                                <div class="col-md-4">
+                                                                    @Html.TextBox("EmergencyPhone", null, new { @class = "input_full", @name = "EmergencyPhone" })
+                                                                </div>
+                                                            </div>
+
+                                                       
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*---------------------------------------------CultureEducationStudies----------------------------*@
+                                        <div class="tab-pane fade" id="pane-4">
+                                            <div class="accordion-inner">
+                                                <div class="accordion-content">
+                                                        <div class="row">
+                                                            <div class="col-md-2">@Html.LabelFor(model => model.LSEducationID)</div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectLSEducationID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.LSEducationID)
+                                                            @Html.Hidden("LSEducationName")
+                                                        </div>
+                                                        <div class="col-md-2">@Html.LabelFor(model => model.LSQualificationID)</div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectLSQualificationID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.LSQualificationID)
+                                                            @Html.Hidden("LSQualificationName")
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                     
+                                                    </div>
+                                                    <div class="row">
+                                                            <div class="col-md-2">@Html.LabelFor(model => model.LSMajorID)</div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("selectLSMajorID", null, new { @class = "span12" })
+                                                            @Html.HiddenFor(model => model.LSMajorID)
+                                                            @Html.Hidden("LSMajorName")
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*---------------------------------------------AccountInfo----------------------------------------*@
+                                        <div class="tab-pane fade" id="pane-5">
+                                                <div class="accordion-inner">
+                                                <div class="accordion-content">
+
+                                                    <div class="row">
+                                                            <div class="col-md-2">@Html.LabelFor(model => model.AccountNumber)</div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("AccountNumber", null, new { @class = "span12", @name = "AccountNumber" })
+                                                        </div>
+
+                                                            <div class="col-md-2">@Html.LabelFor(model => model.AccountName)</div>
+                                                        <div class="col-md-4">
+                                                            @Html.TextBox("AccountName", null, new { @class = "span12", @name = "AccountName" })
+                                                        </div>
+                                                    </div>
+                                       
+                                                    <div class="row">
+                                                        <div class="col-md-2">@Html.LabelFor(model => model.LSBankID)</div>
+                                                        <div class="col-md-4">
+                                                            <select id="LSBankID" name="LSBankID" class="step1d span12 selectpicker"></select>
+                                                            @Html.HiddenFor(model => model.LSBankID, new { @id = "selectedLSBankID", name = "selectedLSBankID" })
+                                                        </div>
+
+                                                            <div class="col-md-2">@Html.LabelFor(model => model.LSBankBranchID)</div>
+                                                        <div class="col-md-4">
+                                                            <select id="LSBankBranchID" name="LSBankBranchID" class="step2d span12 selectpicker"></select>
+                                                            @Html.HiddenFor(model => model.LSBankBranchID, new { @id = "selectedLSBankBranchID", name = "selectedLSBankBranchID" })
+                                                        </div>
+                                                    </div>                                               
+                                                    <div class="row">
+                                                            <div class="col-md-2"> @Html.LabelFor(model => model.PayByBank)</div>
+                                                        <div class="col-md-4">
+                                                            @Html.CheckBox("PayByBank", Model.PayByBank == true, new { @style = "float:left;margin:5px;" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*---------------------------------------------TAX----------------------------------------------*@
+                                        <div class="tab-pane fade" id="pane-6">
+                                                <div class="accordion-inner">
+                                                <div class="accordion-content">
+                                       
+                                                <div class="row">
+                                                        <div class="col-md-2">@Html.LabelFor(model => model.TaxNo)</div>
+                                                    <div class="col-md-4">
+                                                        @Html.TextBox("TaxNo", null, new { @class = "input_full", @name = "TaxNo" })
+                                                    </div>
+                                                        <div class="col-md-2"> @Html.LabelFor(model => model.NoOfDependent)</div>
+                                                    <div class="col-md-4">
+                                                        @Html.TextBox("NoOfDependent", null, new { @class = "input_full", @name = "NoOfDependent", @type = "number", @min = "0", @max = "100", @value = "0" })
+                                                    </div>
+                                                </div>
+                                       
+                                                <div class="row">
+                                                        <div class="col-md-2"> @Html.LabelFor(model => model.SelfDeduction)</div>
+                                                    <div class="col-md-4">
+                                                        @Html.CheckBox("SelfDeduction", Model.SelfDeduction == true, new { @style = "float:left;margin:5px;" })
+                                                    </div>
+                                                        <div class="col-md-2"> @Html.LabelFor(model => model.DependDeduction)</div>
+                                                    <div class="col-md-4">
+                                                        @Html.CheckBox("DependDeduction", Model.SelfDeduction == true, new { @style = "float:left;margin:5px;" })
+                                                    </div>
+                                                </div>
+                                           
+                                       
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*---------------------------------------------Insurance----------------------------------------*@
+                                        <div class="tab-pane fade" id="pane-7">
+                                            <div class="accordion-inner">
+                                                <div class="accordion-content">
+                                                        <div class="row">
+                                                    <div class="col-md-4">@Html.LabelFor(model => model.SIBook)</div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("SIBook", null, new { @class = "input_full", @name = "SIBook" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    <div class="col-md-4"> @Html.LabelFor(model => model.HIBook)</div>
+                                                <div class="col-md-4">
+                                                    @Html.TextBox("HIBook", null, new { @class = "input_full", @name = "HIBook" })
+                                                </div>
+                                            </div>
+                                                </div>
+                                            </div>
+                                     
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+
+                        <div class="row">
+                            <div class="footbar">
+                                <input type="button" id="btnClose" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+                                <input type="button" id="btnEdit" class="btn btn-info" value="@Eagle.Resource.LanguageResource.Save" />
+                            </div>
+                        </div>
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+  
+    (function ($) {
+      
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                            case 1:
+                                DataMgr.ReloadData(data);
+                                break;
+                            case 2:
+                                DataMgr.ResetControls();
+                                break;
+                            case 3:
+                                DataMgr.BindDetails(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+                    // Hide the "busy" Gif at load:
+                    // $("#divProcessing").hide();
+                    //$('#IDIssuedPlace').find('option:first').attr("selected", "selected");
+
+                    ShowDateTimePicker();
+                    //$("form").data("validator").settings.ignore = ".data-val-ignore, .ignore, :hidden, :disabled";
+                    $.validator.methods["date"] = function (value, element) { return true; }
+
+                    DataMgr.RemoveQtip();
+                    DataMgr.HandleTabEvent();
+                    //start handling checkbox event ==================================================================================
+                    DataMgr.HandleCheckBoxEventIsYOB("IsYOB", false, "dpDOB", "dpYOB");
+                    DataMgr.HandleCheckBoxEvent("PayByBank", $("input[id=PayByBank]").is(":checked"));
+                    DataMgr.HandleCheckBoxEvent("SelfDeduction", $("input[id=SelfDeduction]").is(":checked"));
+                    DataMgr.HandleCheckBoxEvent("DependDeduction", $("input[id=DependDeduction]").is(":checked"));
+                    //end handling checkbox event ====================================================================================
+
+                    DataMgr.LoadComboTree('LSCompanyID', '@Url.Action("GetHierachicalList", "LS_tblCompany")', true); 
+
+                    //START SELECT2 EVENTS -----------------------------------------------------------------------------------------------------------------------------------
+                    //Born Country - Province - District---------------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectBornLSCountryID', 'BornLSCountryID', 'BornLSCountryName',
+                        "selectBornLSProvinceID", "BornLSProvinceID", "BornLSProvinceName", "selectBornLSDistrictID", "BornLSDistrictID", "BornLSDistrictName");
+
+                    //Permanent Country - Province - District----------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectPLSCountryID', 'PLSCountryID', 'PLSCountryName',
+                        "selectPLSProvinceID", "PLSProvinceID", "PLSProvinceName", "selectPLSDistrictID", "PLSDistrictID", "PLSDistrictName");
+
+                    //Temporary Country - Province - District----------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectTLSCountryID', 'TLSCountryID', 'TLSCountryName',
+                        "selectTLSProvinceID", "TLSProvinceID", "TLSProvinceName", "selectTLSDistrictID", "TLSDistrictID", "TLSDistrictName");
+
+                    //Native Country - Province - District ----------------------------------------------------------------------------------------------------
+                    DataMgr.PopulateCountriesIntoDropDownList('selectNativeCountryID', 'NativeCountryID', 'NativeCountryName',
+                        "selectNativeProvinceID", "NativeProvinceID", "NativeProvinceName", "selectNativeDistrictID", "NativeDistrictID", "NativeDistrictName");
+
+                    //Company Deparment Section ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblProvince")', 'selectIDIssuedPlace', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputIDIssuedPlaceName)', 'IDIssuedPlace', 'IDIssuedPlaceName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblNationality")', 'selectLSNationalityID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputNationalityName)', 'LSNationalityID', 'LSNationalityName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblReligion")', 'selectLSReligionID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputReligionName)', 'LSReligionID', 'LSReligionName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblEthnic")', 'selectLSEthnicID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEthnicName)', 'LSEthnicID', 'LSEthnicName');
+
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblEducation")', 'selectLSEducationID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEducationName)', 'LSEducationID', 'LSEducationName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblQualification")', 'selectLSQualificationID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputQualificationName)', 'LSQualificationID', 'LSQualificationName');
+
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblMajor")', 'selectLSMajorID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputMajorName)', 'LSMajorID', 'LSMajorName');
+
+
+                    //END SELECT2 EVENTS -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                    $("#modalEdit").draggable({ handle: ".modal-header" });
+                },
+                RemoveQtip: function () {
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                HandleTabEvent: function () {
+                    $('.tab-content').children().removeClass('fade');
+                    $('.nav-tabs a').click(function (e) {
+                        if ($(this).parent('li').hasClass('active')) {
+                            //$($(this).attr('href')).hide();
+                            $(this).removeClass('active'); // remove active class from tabs
+                        }
+                        else {
+                            e.preventDefault();
+                            $(this).tab('show');
+                            //$('.nav-tabs a[href="#myTab"]').tab('show');
+                        }
+                    });
+                },
+                BindEvents: function () {
+                    //START SELECT2 EVENTS -------------------------------------------------------------------------------------------------------------------------------------
+                    //BORNLS Country - Province - District
+                    $('#selectBornLSCountryID').on("change", function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectBornLSProvinceID', 'BornLSProvinceID', 'BornLSProvinceName', 'BornLSCountryID', 'selectBornLSDistrictID', 'BornLSDistrictID', 'BornLSDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectBornLSDistrictID', 'BornLSDistrictID', 'BornLSDistrictName', 'BornLSProvinceID');
+                    });
+                    $('#selectBornLSProvinceID').on("change", function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectBornLSDistrictID', 'BornLSDistrictID', 'BornLSDistrictName', 'BornLSProvinceID');
+                    });
+
+                    //PLS Country - Province - District
+                    $('#selectPLSCountryID').on("change", function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectPLSProvinceID', 'PLSProvinceID', 'PLSProvinceName', 'PLSCountryID', 'selectPLSDistrictID', 'PLSDistrictID', 'PLSDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectPLSDistrictID', 'PLSDistrictID', 'PLSDistrictName', 'PLSProvinceID');
+                    });
+                    $('#selectPLSProvinceID').on("change", function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectPLSDistrictID', 'PLSDistrictID', 'PLSDistrictName', 'PLSProvinceID');
+                    });
+
+                    //TLS Country - Province - District
+                    $('#selectTLSCountryID').on("change", function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectTLSProvinceID', 'TLSProvinceID', 'TLSProvinceName', 'TLSCountryID', 'selectTLSDistrictID', 'TLSDistrictID', 'TLSDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectTLSDistrictID', 'TLSDistrictID', 'TLSDistrictName', 'TLSProvinceID');
+                    });
+                    $('#selectTLSProvinceID').on("change", function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectTLSDistrictID', 'TLSDistrictID', 'TLSDistrictName', 'TLSProvinceID');
+                    });
+
+                    //Native Country - Province - District ===============================================================================================================================
+                    $(document).on('change', '#selectNativeCountryID', function () {
+                        DataMgr.PopulateProvincesIntoDropDownList('selectNativeProvinceID', 'NativeProvinceID', 'NativeProvinceName', 'NativeCountryID', 'selectNativeDistrictID', 'NativeDistrictID', 'NativeDistrictName');
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectNativeDistrictID', 'NativeDistrictID', 'NativeDistrictName', 'NativeProvinceID');
+                    });
+
+                    $(document).on('change', '#selectNativeProvinceID', function () {
+                        DataMgr.PopulateDistrictsIntoDropDownList('selectNativeDistrictID', 'NativeDistrictID', 'NativeDistrictName', 'NativeProvinceID');
+                    });
+
+                    //****************************************************************************************************************
+                    //Begin BANK - BRANCH *******************************************************************************************
+                    //****************************************************************************************************************
+                    DataMgr.PopulateBanksToDropDownList();
+                    $(document).on('change', '#LSBankID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        PopulateBankBranchesToDropDownList();
+                    });
+                    //****************************************************************************************************************
+                    //End BANK - BRANCH *********************************************************************************************
+                    //****************************************************************************************************************
+
+                    $(document).on("keyup keydown", "#IDNo", function () {
+                        $(this).val($(this).val().toUpperCase());
+                    });
+
+                    $(document).on("keyup keydown", "#FirstName", function () {
+                        DataMgr.FormatString(this);
+                        var first_name = $(this).val();
+                        var last_name = $("#LastName").val();
+                        var full_name = last_name + " " + first_name;
+                        setTimeout(function () {
+                            $('#EmergencyContact').val('');
+                            $('#AccountName').val('');
+
+                            $('#EmergencyContact').val(full_name);
+                            $('#AccountName').val(full_name);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#LastName", function () {
+                        DataMgr.FormatString(this);
+                        var first_name = $("#FirstName").val();
+                        var last_name = $(this).val();
+                        var full_name = last_name + " " + first_name;
+                        setTimeout(function () {
+                            $('#EmergencyContact').val('');
+                            $('#AccountName').val('');
+
+                            $('#EmergencyContact').val(full_name);
+                            $('#AccountName').val(full_name);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#PAddress", function () {
+                        var text = $(this).val();
+                        setTimeout(function () {
+                            $('#EmergencyAddess').val('');
+                            $('#EmergencyAddess').val(text);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#Telephone", function () {
+                        var text = $(this).val();
+                        setTimeout(function () {
+                            $('#EmergencyPhone').val(text);
+                        }, 50);
+                    });
+
+                    $(document).on("keyup keydown", "#Mobile", function () {
+                        var text = $(this).val();
+                        setTimeout(function () {
+                            $('#EmergencyMobile').val(text);
+                        }, 50);
+                    });
+
+                    $('input[type="number"]').returnPressNumber();
+
+                    $("#FileUpload").change(function () {
+                        DataMgr.PreviewImage("FileUpload", 80, 80);
+                    });
+                   
+                    $('div[data-id="DOB"]').datetimepicker().on('changeDate', function (e) {
+                        var flag = validateBirthDate($(this).find('input[type=text]').attr("id"));
+                        if (flag == false)
+                            ShowToolTip("DOB", '@Html.Raw(Eagle.Resource.LanguageResource.BirthDateInvalid)');
+                                else
+                                    CloseToolTip("DOB");
+                    });
+
+                    //Add and update post action
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$('#myform').valid()) { // Not Valid      
+                            var flag = DataMgr.ValidateLSCompanyID("LSCompanyID");
+                            if (flag == false)
+                                DataMgr.SetTabActive('tab-3', 'pane-3');
+                            DataMgr.ValidateDOBYOB();
+                            return false;
+                        } else {                           
+                            DataMgr.RemoveQtip();
+                            var flag = DataMgr.ValidateDOBYOB();
+                            if (flag == true)
+                            {                                
+                                flag = DataMgr.ValidateLSCompanyID("LSCompanyID");
+                                if (flag == false)
+                                    DataMgr.SetTabActive('tab-3', 'pane-3');
+                                else
+                                {
+                                    if ($('input[type="file"]').val() != '') {
+                                        var fileInputId = 'FileUpload';
+                                        var folderKey = 'UPLOAD_EMPLOYEE_IMAGE_DIR';
+                                        var width = null;
+                                        var height = null;
+                                        var fileId = null;
+
+                                        var formData = new FormData();
+                                        formData.append('fileKey', fileInputId);
+                                        formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                                        formData.append('folderKey', folderKey);
+                                        if (width != null && width > 0)
+                                            formData.append('width', width);
+                                        if (height != null && height > 0)
+                                            formData.append('height', height);
+                                        if (fileId != null && fileId > 0)
+                                            formData.append('fileId', fileId);
+
+                                        var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: baseUrl + "/Handlers/UploadFile.ashx",
+                                            contentType: false,
+                                            processData: false,
+                                            data: formData,
+                                            success: function (result) {
+                                                $("input[name=FileId]:hidden").val(result);
+                                                var data = DataMgr.ConvertFormToJSON("myform");
+                                                DataMgr.UpdateData(data);
+                                            },
+                                            error: function () {
+                                                showMessageWithTitle('error', '@Html.Raw(Eagle.Resource.LanguageResource.UploadFileError)', "error", 3000);
+                                        }
+                                    });
+                                } else {
+                                    var data = DataMgr.ConvertFormToJSON("myform");
+                                    DataMgr.UpdateData(data);
+                                }
+                            }
+                          }                           
+                        }
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+                },
+                ValidateDOBYOB: function () {
+                    var result = false;
+                    if ($("#IsYOB").is(":checked") == false)
+                    {
+                        if ($("#DOB").val() != '')
+                        {
+                            result = true;
+                        }                           
+                        else
+                            ShowToolTip("DOB", '@Html.Raw(Eagle.Resource.LanguageResource.Required)');
+                    } else {
+                        CloseToolTip("DOB");
+                        if ($("#YOB").val() != '')
+                            result = true;
+                        else
+                            ShowToolTip("YOB", '@Html.Raw(Eagle.Resource.LanguageResource.Required)');
+                    }
+                    return result;
+                },
+                FormatString: function (obj) {
+                    var strvalue;
+                    if (eval(obj))
+                        strvalue = eval(obj).value;
+                    else
+                        strvalue = obj;
+                    var str;
+                    str = strvalue.toString().replace(/\$|\,/g, '');
+
+                    if (!isNaN(str))
+                        str = "";
+
+                    eval(obj).value = str;
+                },             
+                LoadComboTree: function (selectId, actionUrl, isRequired) {
+                    var selectBox = $('#' + selectId);
+
+                    var hiddenBox = $('input[type=hidden][name="' + selectId + '"]');
+                    var selectedValue = selectBox.val();
+
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            hiddenBox.val(selectedValue);
+                            DataMgr.ValidateLSCompanyID(selectId);
+
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },
+                SetTabActive: function (tabId, panelId) {
+                    var tabPanel = $('li[id="' + tabId + '"]');
+                    var panel = $('div[id="' + panelId + '"]');
+
+                    if (!tabPanel.hasClass('active'))
+                        tabPanel.addClass('active').siblings().removeClass('active');
+                   
+                    if (!panel.hasClass('active'))
+                        panel.addClass('active in').siblings().removeClass('active');
+                },
+                ValidateLSCompanyID: function (elementId) {
+                    // nếu mà là note cuối cùng cho qua
+                    // note cấp trên thì báo lỗi    
+                    var flag = false;
+                    if (elementId != undefined && elementId != null) {
+                        var selectedValue = $('input[type=hidden][name="' + elementId + '"]').val();
+                        if (selectedValue != undefined && selectedValue != null) {
+                            var error_message = '';
+                            if (selectedValue == '0') {
+                                error_message = '@Eagle.Resource.LanguageResource.PleaseChooseCompany';
+                                DataMgr.AddTooltip(elementId, error_message);                               
+                            } else {
+                                var selectedNode = $('div[node-id=' + selectedValue + ']');
+                                if (!$(selectedNode).children("span.tree-icon").hasClass("tree-file")) {
+                                    error_message = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectADepartment)';
+                                    DataMgr.AddTooltip(elementId, error_message);
+                                }
+                                else {
+                                    DataMgr.RemoveTooltip(elementId);
+                                    flag = true;
+                                }
+                            }
+                        } else {
+                            error_message = '@Eagle.Resource.LanguageResource.InValid';
+                            DataMgr.AddTooltip(elementId, error_message);
+                        }
+                    }
+                    return flag;
+                },
+                AddTooltip: function (elementId, message) {
+                    if (elementId != undefined && elementId != null) {
+                        var qtipId = 'qtip-' + elementId;
+                        var element = $('input[type=hidden][name="' + elementId + '"]');
+
+                        if (element.hasClass('input-validation-error'))
+                            element.addClass('input-validation-error');
+                        element.attr({ 'data-hasqtip': elementId, 'aria-describedby': qtipId });
+
+                        var valSpan = element.parents().siblings('span[data-valmsg-for="' + elementId + '"]');
+                        valSpan.addClass('field-validation-error').removeClass('field-validation-valid');
+
+                        var divContent = $('<div/>', {
+                            id: qtipId + '-content',
+                            // 'class': 'qtip qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            'class': 'ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: { 'aria-atomic': "true" },
+                            html: '<span id="' + qtipId + '-content-span" for="' + elementId + '"></span>'
+                        });
+
+                        var divWrapper = $('<div/>', {
+                            id: qtipId,
+                            'class': 'qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: {
+                                style: "z-index: 15003; display: block; top: 375px; left: 737.467px;",
+                                tracking: "false", role: "alert", "aria-live": "polite", "aria-atomic": "false",
+                                "aria-describedby": "qtip-1-content", "aria-hidden": "false", "data-qtip-id": "1",
+                            }
+                        });
+
+                        if (valSpan.siblings('#' + qtipId).length == 0) {
+                            divWrapper.append(divContent);
+                            divWrapper.insertAfter(valSpan);
+                        }
+                        showMessageWithTitle('warning', message, "warning", 3000);
+                        $('#' + qtipId + '-content-span').html(message);
+                        element.show();
+                    }
+                },
+                RemoveTooltip: function (elementId) {
+                    var qtipId = $('#qtip-' + elementId);
+                    qtipId.remove();
+                },               
+                PopulateBanksToDropDownList: function () {
+                    var select = $("#LSBankID");
+                    select.empty();
+                    $.getJSON("/Admin/LS_tblBank/GetBanks",
+                        function (classesData) {
+                            if (classesData.length > 0) {
+                                $.each(classesData, function (index, itemData) {
+                                    select.append($('<option/>', {
+                                        value: itemData.Value,
+                                        text: itemData.Text
+                                    }));
+                                });
+                                @*var selected_value = @Model.LSBankID;*@
+                                var selected_value = $("input[name=selectedLSBankID]").val();
+                                if (selected_value != null && selected_value != '')
+                                    select.find('option[value="' + selected_value + '"]').attr('selected', true).siblings().attr('selected', false);
+                                else
+                                    select.find('option:first').attr("selected", "selected");
+                                DataMgr.PopulateBankBranchesToDropDownList();
+                            } else
+                                select.append($('<option/>', { value: '', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                        });
+                },
+                PopulateBankBranchesToDropDownList: function () {
+                    var select = $("#LSBankBranchID");
+                    select.empty();
+                    var id = parseInt($("#LSBankID").val());
+
+                    var param_data = { "id": id };
+                    if (id > 0) {
+                        $.getJSON("/Admin/LS_tblBankBranch/GetBankBranchesByBankId", param_data,
+                         function (classesData) {
+                             if (classesData.length > 0) {
+                                 $.each(classesData, function (index, itemData) {
+                                     select.append($('<option/>', {
+                                         value: itemData.Value,
+                                         text: itemData.Text
+                                     }));
+                                 });
+                                 @*var selected_value = @Model.LSBankBranchID;*@
+                                 var selected_value = $("input[name=selectedLSBankBranchID]").val();
+                                 if (selected_value != null && selected_value != '')
+                                     select.find('option[value="' + selected_value + '"]').attr("selected", "selected");
+                                 else
+                                     select.find('option:first').attr('selected', true).siblings().attr('selected', false);
+                             } else {
+                                 select.append($('<option/>', { value: '', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                             }
+                         });
+                    } else {
+                        select.append($('<option/>', { value: '', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                        select.attr('disabled', 'disabled');
+                    }
+                },
+                PopulateCountriesIntoDropDownList: function (selectBoxCountryId, hiddenCountryId, hiddenCountryName,
+                    selectBoxProvinceId, hiddenProvinceId, hiddenProvinceName, selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName) {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCountryName)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblCountry")';
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBoxCountryId);
+                    var hiddenId = $("input[name=" + hiddenCountryId + "]");
+                    var hiddenName = $("input[name=" + hiddenCountryName + "]");
+                    var _hiddenProvinceId = $("input[name=" + hiddenProvinceId + "]");
+                    var _hiddenDistrictId = $("input[name=" + hiddenDistrictId + "]");
+
+                    selectBox.select2({
+                        placeholder: placeholder,
+                        minimumInputLength: 0,
+                        allowClear: true,
+                        ajax: {
+                            url: requestUrl,
+                            dataType: 'json',
+                            params: {
+                                contentType: 'application/json; charset=utf-8'
+                            },
+                            quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                            data: function (term, page) {
+                                return {
+                                    pageSize: pageSize,
+                                    pageNum: page,
+                                    searchTerm: term
+                                };
+                            },
+                            results: function (data, page) {
+                                //Used to determine whether or not there are more results available,
+                                //and if requests for more data should be sent in the infinite scrolling
+                                var more = (page * pageSize) < data.Total;
+                                return { results: data.Results, more: more };
+                            }
+                        },
+                        //Chọn xong => làm gì đó
+                        formatSelection: function (result) {
+                            hiddenId.val(result.id)
+                            if (LanguageId == 124) {
+                                hiddenName.val(result.name)
+                                return result.name;
+                            } else {
+                                hiddenName.val(result.text)
+                                return result.text;
+                            }
+                        },
+                        //Chọn xong => return kết quả hiển thị
+                        formatResult: function (result) {
+                            if (LanguageId == 124) {
+                                return result.name;
+                            } else {
+                                return result.text;
+                            }
+                        },
+                        //Đầu tiên gán vào từ đầu
+                        initSelection: function (element, callback) {
+                            var selected_id = hiddenId.val();
+                            var selected_name = hiddenName.val();
+                            var data = { id: selected_id, name: selected_name, text: selected_name };
+                            callback(data);
+                        }
+                    });
+
+                    selectBox.select2('val', hiddenId.val());
+                    selectBox.on('select2-removed', function (e) {
+                        hiddenId.val('');
+                        _hiddenProvinceId.val('');
+                        _hiddenDistrictId.val('');
+                    });
+                    DataMgr.PopulateProvincesIntoDropDownList(selectBoxProvinceId, hiddenProvinceId, hiddenProvinceName, hiddenCountryId,
+                        selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName);
+
+                    DataMgr.PopulateDistrictsIntoDropDownList(selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName, hiddenProvinceId);
+                },
+                PopulateProvincesIntoDropDownList: function (selectBoxProvinceId, hiddenProvinceId, hiddenProvinceName, hiddenCountryId,
+                        selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName) {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputProvinceName)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblProvince")';
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBoxProvinceId);
+                    var hiddenId = $("input[name=" + hiddenProvinceId + "]");
+                    var hiddenName = $("input[name=" + hiddenProvinceName + "]");
+                    var requestParams = { "CountryID": $("input[name=" + hiddenCountryId + "]").val() };
+
+                    var _hiddenDistrictId = $("input[name=" + hiddenDistrictId + "]");
+
+                    if ($("input[name=" + hiddenCountryId + "]").val() == '') {
+                        selectBox.select2("val", "");
+                        selectBox.attr('disabled', 'disabled');
+                    }
+                    else {
+                        selectBox.removeAttr('disabled');
+                        selectBox.select2({
+                            placeholder: placeholder,
+                            minimumInputLength: 0,
+                            allowClear: true,
+                            ajax: {
+                                url: requestUrl,
+                                dataType: 'json',
+                                quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                data: function (term, page) {
+                                    var params = {
+                                        pageSize: pageSize,
+                                        pageNum: page,
+                                        searchTerm: term
+                                    };
+                                    var objParams = $.extend({}, params, requestParams);
+                                    return objParams;
+                                },
+                                results: function (data, page) {
+                                    //Used to determine whether or not there are more results available,
+                                    //and if requests for more data should be sent in the infinite scrolling
+                                    var more = (page * pageSize) < data.Total;
+                                    return { results: data.Results, more: more };
+                                }
+                            },
+                            formatSelection: function (result) {
+                                hiddenId.val(result.id);
+                                if (LanguageId == 124) {
+                                    hiddenName.val(result.name);
+                                    return result.name;
+                                } else {
+                                    hiddenName.val(result.text);
+                                    return result.text;
+                                }
+                            },
+                            formatResult: function (result) {
+                                if (LanguageId == 124) {
+                                    return result.name;
+                                } else {
+                                    return result.text;
+                                }
+                            },
+                            initSelection: function (element, callback) {
+                                var selected_id = hiddenId.val();
+                                var selected_name = hiddenName.val();
+                                var data = { id: selected_id, name: selected_name, text: selected_name };
+                                callback(data);
+                            }
+                        });
+                        selectBox.select2('val', hiddenId.val());
+                        selectBox.on('select2-removed', function (e) {
+                            hiddenId.val('');
+                            _hiddenDistrictId.val('');
+                        });
+                        DataMgr.PopulateDistrictsIntoDropDownList(selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName, hiddenProvinceId);
+                    }
+
+                },
+                PopulateDistrictsIntoDropDownList: function (selectBoxDistrictId, hiddenDistrictId, hiddenDistrictName, hiddenProvinceId) {
+                    var placeholder = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputDistrictName)';
+                    var requestUrl = '@Url.Action("DropdownList", "LS_tblDistrict")';
+                    var pageSize = 20;
+                    var selectBox = $('#' + selectBoxDistrictId);
+                    var hiddenId = $("input[name=" + hiddenDistrictId + "]");
+                    var hiddenName = $("input[name=" + hiddenDistrictName + "]");
+                    var requestParams = { "ProvinceID": $("input[name=" + hiddenProvinceId + "]").val() };
+                    if ($("input[name=" + hiddenProvinceId + "]").val() == '') {
+                        selectBox.select2("val", "");
+                        selectBox.attr('disabled', 'disabled');
+                    }
+                    else {
+                        selectBox.removeAttr('disabled');
+                        selectBox.select2({
+                            placeholder: placeholder,
+                            minimumInputLength: 0,
+                            allowClear: true,
+                            ajax: {
+                                url: requestUrl,
+                                dataType: 'json',
+                                quietMillis: 100,  //How long the user has to pause their typing before sending the next request
+                                data: function (term, page) {
+                                    var params = {
+                                        pageSize: pageSize,
+                                        pageNum: page,
+                                        searchTerm: term
+                                    };
+                                    var objParams = $.extend({}, params, requestParams);
+                                    return objParams;
+                                },
+                                results: function (data, page) {
+                                    //Used to determine whether or not there are more results available,
+                                    //and if requests for more data should be sent in the infinite scrolling
+                                    var more = (page * pageSize) < data.Total;
+                                    return { results: data.Results, more: more };
+                                }
+                            },
+                            formatSelection: function (result) {
+                                hiddenId.val(result.id);
+                                if (LanguageId == 124) {
+                                    hiddenName.val(result.name);
+                                    return result.name;
+                                } else {
+                                    hiddenName.val(result.text);
+                                    return result.text;
+                                }
+                            },
+                            formatResult: function (result) {
+                                if (LanguageId == 124) {
+                                    return result.name;
+                                } else {
+                                    return result.text;
+                                }
+                            },
+                            initSelection: function (element, callback) {
+                                var selected_id = hiddenId.val();
+                                var selected_name = hiddenName.val();
+                                var data = { id: selected_id, name: selected_name, text: selected_name };
+                                callback(data);
+                            }
+                        });
+                        selectBox.select2('val', hiddenId.val());
+                        selectBox.on('select2-removed', function (e) {
+                            hiddenId.val('');
+                        });
+                    }
+                },
+
+                HandleCheckBoxEventIsYOB: function (checkFieldId, chkStatus, divBox1, divBox2) {
+                    var name = $("#" + checkFieldId).attr("name");
+                    var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+                    var hiddenSelector = $("input:hidden[name=" + name + "]");
+                    var divContainer1 = $("#" + divBox1);
+                    var divContainer2 = $("#" + divBox2);
+
+                    checkBoxSelector.attr("checked", chkStatus);
+                    checkBoxSelector.val(chkStatus);
+                    hiddenSelector.val(chkStatus);
+
+                    if (chkStatus == true) {
+                        divContainer1.css("display", "none");
+                        divContainer2.css("display", "block");
+                    } else {
+                        divContainer1.css("display", "block");
+                        divContainer2.css("display", "none");
+                    }
+
+                    checkBoxSelector.click(function () {
+                        var checkBoxStatus = $(this).is(":checked");
+                        checkBoxSelector.attr("checked", checkBoxStatus);
+                        checkBoxSelector.val(checkBoxStatus);
+                        hiddenSelector.val(checkBoxStatus);
+                        if (checkBoxStatus == true) {
+                            divContainer1.css("display", "none");
+                            divContainer2.css("display", "block");
+                        } else {
+                            divContainer1.css("display", "block");
+                            divContainer2.css("display", "none");
+                        }
+                    });
+                },
+                HandleCheckBoxEvent: function (checkFieldId, chkStatus) {
+                    var name = $("#" + checkFieldId).attr("name");
+                    var checkBoxSelector = $("input:checkbox[name=" + name + "]");
+                    var hiddenSelector = $("input:hidden[name=" + name + "]");
+
+                    checkBoxSelector.attr("checked", chkStatus);
+                    checkBoxSelector.val(chkStatus);
+                    hiddenSelector.val(chkStatus);
+
+                    checkBoxSelector.click(function () {
+                        var checkBoxStatus = $(this).is(":checked");
+                        checkBoxSelector.attr("checked", checkBoxStatus);
+                        checkBoxSelector.val(checkBoxStatus);
+                        hiddenSelector.val(checkBoxStatus);
+                    });
+                },
+                PreviewImage: function (id, width, height) {
+                    var f = document.getElementById(id).files[0];
+                    var output_container = document.getElementById("ImagePreviewBox");
+                    output_container.innerHTML = "";
+
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(f);
+
+                    oFReader.onload = (function (theFile) {
+                        return function (e) {
+                            var span = document.createElement('span');
+                            span.innerHTML = '<img class="thumb" src="' + e.target.result + '" title="' + escape(theFile.name) + '" width="' + width + '" height="' + height + '"/>';
+                            output_container.insertBefore(span, null);
+                        };
+                    })(f);
+                },
+                UploadFile: function (fileInputId, folderKey, creater, width, height, fileId) {
+                    var formData = new FormData();
+                    formData.append('fileKey', fileInputId);
+                    formData.append('FileUpload', $('input[type=file]')[0].files[0]);
+                    formData.append('folderKey', folderKey);
+                    formData.append('creater', creater);
+                    if (width != null && width > 0)
+                        formData.append('width', width);
+                    if (height != null && height > 0)
+                        formData.append('height', height);
+                    if (fileId != null && fileId > 0)
+                        formData.append('fileId', fileId);
+                    var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : ''); var baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+                    $.ajax({
+                        type: "POST",
+                        url: baseUrl + "/Handlers/UploadFile.ashx",
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (result) {
+                            $("#FileId").val(result);
+                        },
+                        error: function () {
+                            showMessageWithTitle('error', '@Html.Raw(Eagle.Resource.LanguageResource.UploadFileError)', "error", 3000);
+                        }
+                    });
+                },
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                GetDetails: function (id) {
+                    var data = JSON.stringify({ "ID": id });
+                    this.config.method = "GetDetails";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (response) {
+                    var entity = JSON.parse(response);
+
+                    // show the popup window.
+                    $.ajax({
+                        type: "GET",
+                        url: '/Admin/Employee/Edit/' + entity.EmpID,
+                        statusCode: {
+                            401: function () {
+                                window.location.reload();
+                            },
+                            403: function () {
+                                window.location.reload();
+                            },
+                            590: function () {
+                                window.location.reload();
+                            }
+                        },
+                        success: function (data, statusCode, xhr) {
+                            if (data.message == "timeout")
+                                window.location.reload();
+                            else {
+                                //bind data
+                                $('#divEdit').html(data);
+                                DataMgr.InitializeCotrols();
+                            }
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Update";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                     titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                    titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+
+                    var result = JSON.parse(data);
+                    if (result.flag == 'true') {
+                        showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            statusCode: {
+                                401: function () {
+                                    window.location.reload();
+                                },
+                                403: function () {
+                                    window.location.reload();
+                                },
+                                590: function () {
+                                    window.location.reload();
+                                }
+                            },
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout")
+                                    window.location.reload();
+                                else {
+                                    $('#MainBody').html(data);
+                                    showMessageWithTitle(titleSuccess, result.message, "success", 3000);
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error", 20000);
+                    }
+                },
+                ResetControls: function () {
+                    var validateObj = $('#myform');
+                    //validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                    // validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                    //validateObj.reset();
+                    // validateObj.resetForm();
+                    //$('#myform').get(0).reset();
+                    //$('#myform').clearForm();
+                    //$('#myform .specialFields').clearFields();
+                    // $(':input', '#myform').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+                    //$('select option:selected').prop('selected', false);
+
+                    validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                    validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                    validateObj.find('input[type="number"]').val(0);
+                    validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                    DataMgr.InitializeCotrols();
+                },
+                HandleBootstrapAccordionEvent: function () {
+                    $('#collapse1').collapse('show');
+                    $(document).on('click', 'div.accordion-heading a', function () {
+                        var next_element = $(this).parent('.accordion-heading').parent('.accordion-group').siblings();
+                        next_element.find('.accordion-body').removeClass("in").css("height", "0");
+                        next_element.find('.accordion-heading').find(".icon-chevron-up").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+                    });
+
+                    $('div.accordion-body').on('shown', function () {
+
+                        $(this).parent("div").find(".icon-chevron-down")
+                                .removeClass("icon-chevron-down").addClass("icon-chevron-up");
+                    });
+
+                    $('div.accordion-body').on('hidden', function () {
+                        $(this).parent("div").find(".icon-chevron-up")
+                                .removeClass("icon-chevron-up").addClass("icon-chevron-down");
+                    });
+
+                    function toggleChevron(e) {
+                        $(e.target)
+                            .prev('.panel-heading')
+                            .find("i.indicator")
+                            .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
+                    }
+                    $('#accordion_panel').on('hidden.bs.collapse', toggleChevron);
+                    $('#accordion_panel').on('shown.bs.collapse', toggleChevron);
+                }               
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'Employee';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "divEdit",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+    //If validation errors are occured in any field, it will display field name with link, clicking on link it will set focus of perticular field.
+    function setFocus(ele) {
+        $(ele).focus();
+    }
+</script>

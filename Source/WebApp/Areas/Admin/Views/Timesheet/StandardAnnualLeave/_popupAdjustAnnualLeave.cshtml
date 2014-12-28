@@ -1,0 +1,28 @@
+﻿@model int?
+<div class="modal hide fade popupDetail" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width: 600px; margin-left: -200px;">
+    <div class="modal-header">
+        <h3 id="myModalLabel">Adjust Annual Leave</h3>
+    </div>
+    <div class="modal-body" style="height: 600px;">
+        <!--Begin body -->
+        <div class="input-area">
+            <form id="frmCreateAdjust">
+                <div id="divCreate">
+                      @Html.Action("_ReloadInput", "StandardAnnualLeave")
+                </div>
+                <hr />
+                <div id="divList">
+                    @Html.Action("_ListAdjust", "StandardAnnualLeave", new { EmpID = Model})
+                </div>
+            </form>
+        </div>
+        <!--End body -->
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="btnReset" value=" @Eagle.Resource.LanguageResource.btnReset" class="direct_bt btn btn-info btn-larg1e row-fluid" />
+        <input type="button" id="btnSave" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info default AddModel">
+        <input type="button" id="btnClose" value="@Eagle.Resource.LanguageResource.btnClose" data-dismiss="modal" class="btn" />
+    </div>
+</div>
+
+

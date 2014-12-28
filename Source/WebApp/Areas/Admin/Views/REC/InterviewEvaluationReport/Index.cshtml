@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.InterviewEvaluationReport;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+
+@section Button{
+    <input id="btnReport" type="image" value="@Eagle.Resource.LanguageResource.btnReport" src="@Eagle.Resource.LanguageResource.srcBtnViewReport" />    
+}
+@section ContentSection
+{
+<div id="MainBody">
+    <div id="divEdit">
+        @Html.Action("_Create")
+    </div>
+   
+    <div id="divList">  
+        @Html.DevExpress().ReportToolbar(settings =>
+        {
+            settings.Name = "ReportViewerToolbar";
+            settings.ReportViewerName = "reportViewer";
+        }).GetHtml()
+
+        <div id="divReport">   
+           @* @Html.Partial("../REC/InterviewEvaluationReport/InterviewEvaluationReportViewer")*@
+            <div style="text-align:center">@Eagle.Resource.LanguageResource.lblViewReport</div>
+        </div>
+        
+    </div>
+
+</div>
+    }
+<script>
+    //Project thay đổi => thay đổi ProjectTournamentID
+    $(document).on("change", "#ProjectID", function () {
+        var options = {};
+        options.url = areas + "/CandidateTournament/GetTournaments";
+        options.type = "POST";
+        options.data = JSON.stringify({ ProjectID: $(this).val() });
+        options.dataType = "json";
+        options.contentType = "application/json";
+        options.success = function (data) {
+            $("#ProjectTournamentID").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#ProjectTournamentID").append("<option value='" + data[i].Value + "'>" + data[i].Text + "</option>");
+            }
+            $("#ProjectTournamentID").prop("disabled", false);
+            $("#ProjectTournamentID").trigger("change");
+        };
+        options.error = function () { alert("Error retrieving states!"); };
+        $.ajax(options);
+    });
+
+    $(document).on("change", "#ProjectTournamentID", function () {
+    });
+
+    $(document).on("click", "#btnReport", function () {
+     
+        var check = true;
+        //Kiểm tra hợp lệ
+        if ($("input[name='ViewMode']").prop("checked") == 1) {
+            //Theo phương án tuyển dụng
+            if ($("#ProjectID").val() == 0) {
+                AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseRecruitmentProject');
+                hideMessageWithTitle(5000);
+                check = false;
+            }
+        }
+        else
+        {
+            //Theo Vòng tuyển dụng
+            if ($("#ProjectTournamentID").val() == 0) {
+                AlterWarning('@Eagle.Resource.LanguageResource.PleaseChooseRecruitmentProjectAndRecruitmentTournament');
+                hideMessageWithTitle(5000);
+                check = false;
+            }
+        }
+        //Tạo url Get report
+        var urlReport = 'ReportViewerPartial?ProjectID=' + $("#ProjectID").val() + '&strProject=' + $("#ProjectID  option:selected").text() + '&Mode=' + $("input[name='ViewMode']").prop("checked") + '&isCallBack=false';
+        if ($("input[name='ViewMode']").prop("checked") == 1) {
+            urlReport +=  '&ProjectTournamentID=0&strProjectTournament=';
+        }
+        else
+        {
+            urlReport +=  '&ProjectTournamentID=' + $("#ProjectTournamentID").val() + '&strProjectTournament=' + $("#ProjectTournamentID  option:selected").text();
+        }
+        if (check) {
+            loading();
+            call();
+            $.ajax({
+                type: 'GET',
+                url: urlReport, 
+                async: false,
+                success: function (data) {
+                    $('#divReport').html(data);
+                    call();
+                }
+            });
+
+          
+            
+        }
+
+    });
+    function call() {
+        var dxo = new ClientReportToolbar('ReportViewerToolbar');
+        window['ReportViewerToolbar'] = dxo;
+        dxo.menuID = 'ReportViewerToolbar_Menu';
+        dxo.reportViewerID = 'reportViewer';
+        dxo.InlineInitialize();
+    }
+    $(document).ready(function () {
+        setVisDivProjectTournamentID();
+    })
+    $(document).on("change", "input[name='ViewMode']", function () {
+        setVisDivProjectTournamentID();
+    });
+    function setVisDivProjectTournamentID() {
+        if ($("input[name='ViewMode']").prop("checked") == 1) {
+            //ẩn div
+            if (!$(".divProjectTournamentID").hasClass("hidden")) {
+                $(".divProjectTournamentID").addClass("hidden")
+            }
+        } else {
+            //hiện div
+            if ($(".divProjectTournamentID").hasClass("hidden")) {
+                $(".divProjectTournamentID").removeClass("hidden")
+            }
+        }
+        
+    }
+    
+</script>
+
+@section DevScripts{
+   @Html.DevExpress().GetStyleSheets( 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }, 
+        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+    @Html.DevExpress().GetScripts( 
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout }, 
+        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor }, 
+        new Script { ExtensionSuite = ExtensionSuite.GridView }, 
+        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+        new Script { ExtensionSuite = ExtensionSuite.Editors }, 
+        new Script { ExtensionSuite = ExtensionSuite.Chart },
+        new Script { ExtensionSuite = ExtensionSuite.Report },
+	    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+	    new Script { ExtensionSuite = ExtensionSuite.TreeList }
+    )    
+}

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<CandidateResultViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Code
+                </th>
+                <th style="min-width:100px">
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ApplyDate)
+                </th>
+                <th class="text_center">
+                    @Html.DisplayNameFor(model => model.ResultName)
+                </th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.Deny</th>
+                @*Nếu là ứng viên đã Pass mới cho chuyển thành ứng viên tiềm năng*@
+                @if (ViewBag.Status == 1 || ViewBag.Status == 2)
+                {
+                    <th class="text_center" style="max-width: 155px;">@Eagle.Resource.LanguageResource.TransferToPotentialCandidate</th>    
+                }
+                @if (ViewBag.Status == 1 || ViewBag.Status == 5)
+                {
+                    <th class="text_center">@Eagle.Resource.LanguageResource.Result_2</th>    
+                }else
+                {
+                    <th class="text_center">@Eagle.Resource.LanguageResource.TransferToStaff</th>
+                }
+
+                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @if (Model != null)
+	        {
+                foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CandidateCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplyDate)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.ResultName)
+                        </td>
+                        <td class="text_center">
+                            <input type="button" class="btn btnDeny" data-id="@item.CandidateID" value="@Eagle.Resource.LanguageResource.Deny" />
+                        </td>
+                        @if (ViewBag.Status == 1 || ViewBag.Status == 2)
+                        {
+                            <td class="text_center">
+                                <input type="button" class="btn btnPotentialCandidate" data-id="@item.CandidateID" value="@Eagle.Resource.LanguageResource.PotentialCandidate" />
+                            </td>
+                        }
+                         @if (ViewBag.Status == 1 || ViewBag.Status == 5)
+                        {
+                             <td class="text_center">
+                                <input type="button" class="btn btnWaitingForTransferToStaff btn-info" data-id="@item.CandidateID" value="@Eagle.Resource.LanguageResource.Result_2" />
+                            </td>
+                        }
+                        else
+                         {
+                            <td class="text_center">
+                                <input type="button" class="btn btnTransferToStaff btn-info" data-id="@item.CandidateID" value="@Eagle.Resource.LanguageResource.TransferToStaff" />
+                            </td>
+                         }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</form>

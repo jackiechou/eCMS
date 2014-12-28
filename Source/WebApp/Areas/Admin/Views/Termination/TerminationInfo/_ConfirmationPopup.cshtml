@@ -1,0 +1,13 @@
+﻿<div id="confirm" class="modal hide fade" style="width: 300px;margin: auto auto;">
+    <div class="modal-body">
+        <div class="alert alert-success">
+            <a data-dismiss="alert" class="close" href="#">×</a>
+            <strong>@Html.Raw(Eagle.Resource.LanguageResource.Success):</strong>
+            @Html.Raw(Eagle.Resource.LanguageResource.CreateSuccess + ". " + Eagle.Resource.LanguageResource.IsContinuedToCreate) 
+        </div>      
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Ok</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+    </div>
+</div>

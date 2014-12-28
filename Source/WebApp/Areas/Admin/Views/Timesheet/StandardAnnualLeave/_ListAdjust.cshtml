@@ -1,0 +1,95 @@
+﻿@model List<StandardAnnualLeaveAdjustViewModel>
+<div class="table">
+    <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Date
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Year
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Days
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Note
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.strDateAdjust
+                    </td>
+                    
+                    <td>
+                        @item.Year
+                    </td>
+                    <td>
+                        @item.Days
+                    </td>
+                    <td>
+                        @item.Note
+                    </td> 
+                    <td class="center action">                        
+                        <a  data-id="@item.ALAdjustID"  title="Edit" class="ico editItem editItemAdjust" >&nbsp;&nbsp;&nbsp;</a>
+                        <a  data-id="@item.ALAdjustID"  title="Edit" class="ico deleteItem launchConfirmAdjust">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+<!--Hien popup Confirm khi delete-->
+@Html.Action("ConfirmPopup","Common",null)
+<script>
+    // region click delete
+    $('.launchConfirmAdjust').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var EmpID = $(".popupDetail input[name='EmpID']").val();
+                    var url = areas + '/StandardAnnualLeave/_DeletePopup?ALAdjustID=' + lsID;
+                    var urlCreate = '/StandardAnnualLeave/_ListAdjust?EmpID=' + EmpID;
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        $('#divList').html(data);
+                                        AlterUpdateSuccessWithErrorID("alertMessageBox2");
+                                        return false;
+                                    }
+                                });
+                            } else {
+                                $('#divList').html(data);
+                                return false;
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+
+  
+</script>

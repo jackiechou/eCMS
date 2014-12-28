@@ -1,0 +1,220 @@
+﻿<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="~/Scripts/plugins/flot/excanvas.min.js"></script><![endif]-->
+<link href="~/Scripts/plugins/flot/examples.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/flot/jquery.flot.js"></script>
+<script src="~/Scripts/plugins/flot/jquery.flot.pie.js"></script>
+<script src="~/Scripts/tableScroll.1.0.1.js"></script>
+<style>
+    #thetable tbody table {
+        width: 100% !important;
+        border-bottom: solid 1px #eee !important;
+        border-right: solid 1px #eee !important;
+    }
+</style>
+<div id="divCompany">
+    @if (ViewBag.CompanyList != null)
+    {
+        int i = 0;
+        foreach (var item in ViewBag.CompanyList as List<CompanyViewModel>)
+        {
+            i++;
+            if (i == 1)
+            {
+                <label class="reset-label">
+                    <input type="radio" name="company" value="@item.LSCompanyID" checked="checked" /> @item.Name
+                </label>
+            }
+            else
+            {
+                <label class="reset-label">
+                    <input type="radio" name="company" value="@item.LSCompanyID" /> @item.Name
+                </label>
+            }
+
+        }
+    }
+</div>
+
+<div class="row pie">
+    <div class="col-md-4 offset1">
+        <div class="demo-container">
+            <div id="pie1" class="demo-placeholder">
+            </div>
+        </div>
+        <div class="center span11 chart-description">Biểu đồ cơ cấu nhân viên.</div>
+    </div>
+    <div class="col-md-4 offset2">
+        <table id="thetable" class="table table-condensed table-hover table-striped" style="border-collapse: separate;border: 1px solid #ddd;">
+            <thead>
+                <tr>
+                    <th style="width: 90%;">@Eagle.Resource.LanguageResource.LastCompanyDefine</th>
+                    <th>
+                        @Eagle.Resource.LanguageResource.SLNV
+                    @Html.Hidden("sumTotal")
+                </th>
+            </tr>
+        </thead>
+        <tbody id="ThongKe"></tbody>
+    </table>
+</div>
+</div>
+<div class="row selectionchart">
+    <div class="col-md-12">
+        <div class="demo-container">
+            <div id="selection1" class="demo-placeholder"></div>
+        </div>
+        <div class="center span8">Biểu đồ tăng giảm nhân viên năm @DateTime.Now.Year.</div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+	$(function() {
+	    var pie1 = $("#pie1");
+	    var pie2 = $("#pie2");
+	    var selection1 = $("#selection1");
+
+		function BindPieChart() {
+		    $.ajax({
+		        url: '/Admin/Home/PieChart?LSCompanyID=' + $("input[name=company]:checked").val(),
+		        type: "GET",
+		        context: this,
+		        error: function () { },
+		        dataType: 'json',
+		        contentType: 'application/json; charset=utf-8',
+		        success: function (response) {
+		            var data = [];
+		            var i = 1;
+		            var html = "";
+		            var sumTotal = $("#sumTotal").val(0);
+
+		            $.each(response, function (index, article) {
+		                //Đổ dữ liệu vàng mảng json
+		                data[index] = {
+		                    label: article.label,
+		                    data: article.data
+		                };
+		                //Tạo lại bảng giá trị cho tabel thống kê
+		                if (i == 1) {
+		                    html += "<tr class='first'>";
+		                } else {
+		                    html += "<tr>";
+		                }
+		                html += "<td>" + article.label + "</td>";
+		                html += "<td>"+ article.total +"</td>";
+		                html += "</tr>";
+		                i++;
+		                $("#sumTotal").val( parseInt($("#sumTotal").val()) +  parseInt(article.total));
+		            });
+
+		            html += "<tr>";
+		            html += "<td> @Html.Raw(Eagle.Resource.LanguageResource.Total) </td>";
+		            html += "<td>" + $("#sumTotal").val() + "</td>";
+                    html += "</tr>";
+
+		            $("#ThongKe").html(html);
+
+		            //Bind Char
+		            pie1.unbind();
+		            $.plot(pie1, data, {
+		                series: {
+		                    pie: {
+		                        show: true,
+		                        radius: 1,
+		                        label: {
+		                            show: true,
+		                            radius: 3 / 4,
+		                            formatter: function (label, series) {
+		                                return '<div style="font-size:11px; padding:0px 2px 0px 2px; color: #FFFFFF;">' + series.percent.toFixed(1) + '%</div>';
+		                            },
+		                            background: {
+		                                opacity: 0.5,
+		                                color: '#000'
+		                            }
+		                        }
+		                    }
+		                },
+		                legend: {
+		                    //show: false
+		                }
+		            });
+		        }
+		    });
+		}
+
+		function BindSelectionChart() {
+
+		    $.ajax({
+		        url: '/Admin/Home/LineChart?LSCompanyID=' + $("input[name=company]:checked").val(),
+		        type: "GET",
+		        context: this,
+		        error: function () { },
+		        dataType: 'json',
+		        contentType: 'application/json; charset=utf-8',
+		        success: function (response) {
+		            var data = [];
+		            data = response;
+
+		            var options = {
+		                series: {
+		                    lines: {
+		                        show: true
+		                    },
+		                    points: {
+		                        show: true
+		                    },
+		                    label: {
+		                        show: true,
+		                        radius: 3 / 4
+		                    }
+		                },
+		                legend: {
+		                    noColumns: 1
+		                },
+		                xaxis: {
+		                    tickDecimals: 0
+		                },
+		                yaxis: {
+		                    min: 0
+		                },
+		                selection: {
+		                    mode: "x"
+		                }
+		            };
+		            var plot = $.plot(selection1, data, options);
+		        }
+		    });
+
+
+
+
+
+		}
+
+		$(document).on("change", "input[name='company']", function () {
+		    BindPieChart();
+		});
+
+		jQuery(document).ready(function ($) {
+		    $(".content-header").remove();
+		    BindPieChart();
+		    BindSelectionChart();
+
+		   // $('#thetable').tableScroll({ height: 200 });
+
+		    // other examples
+
+		    // sets the table to have a scrollable area of 200px
+		    $('#thetable').tableScroll({ height: 200 });
+
+		    // sets a hard width limit for the table, setting this too small
+		    // may not always work
+		    //$('#thetable').tableScroll({ width: 400 });
+
+		    // by default the plugin will wrap everything in a div with this
+		    // css class, if it finds that you have manually wrapped the
+		    // table with a custom element using this same css class it
+		    // will forgo creating a container DIV element
+		   // $('#thetable').tableScroll({ containerClass: 'myCustomClass' });
+		});
+	});
+</script>

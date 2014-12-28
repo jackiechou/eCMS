@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Eagle.Model.HR.WorkingRecordViewModel>
+<div class="table datatable">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>               
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpID)
+                </th>   
+                  <th>
+                    @Html.DisplayNameFor(model => model.LSGradeName)                    
+                </th>             
+                <th>
+                    @Html.DisplayNameFor(model => model.LSCompanyID)
+                </th>    
+                 <th>
+                    @Html.DisplayNameFor(model => model.LSPositionName)                    
+                </th>    
+                 <th>
+                    @Html.DisplayNameFor(model => model.LSLocationName)                    
+                </th>  
+               @*  <th>
+                    @Html.DisplayNameFor(model => model.EffectiveDate)                    
+                </th>*@
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpName)
+                    </td>
+                     <td>
+                       @Html.DisplayFor(modelItem => item.LSGradeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSCompanyName)
+                    </td>                     
+                      <td>
+                       @Html.DisplayFor(modelItem => item.LSPositionName)
+                    </td>
+                     <td>
+                       @Html.DisplayFor(modelItem => item.LSLocationName)
+                    </td>   
+                   @*  <td>
+                       @Html.DisplayFor(modelItem => item.EffectiveDate)
+                    </td> *@                                  
+                    <td class="table-actions center no-sort">
+                        @if(@i==1){
+                            <a data-id="@item.WorkingID" title="Edit" class="ico editItem ">&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.WorkingID" title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
+                        }
+                        else
+                        {
+                            <a data-id="@item.WorkingID" title="Detail" class="ico viewItem ">&nbsp;&nbsp;&nbsp;</a>
+                        }                      
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style type="text/css">
+    .viewItem {
+        background: url("/Content/Admin/images/icon_view.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        cursor: pointer;
+        display: inline-block;
+        height: 22px;
+        text-decoration: none !important;
+        width: 24px;
+    }
+</style>

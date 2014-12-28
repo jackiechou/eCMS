@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.SystemParameter;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+@section ContentSection
+{
+<div id="MainBody">
+     <div id="divEdit">
+        @Html.Action("_Edit")
+    </div>
+</div>
+}
+<script type="text/javascript">
+    $(document).on("click", "#btnAdd", function () {
+
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $("body").addClass("loading");
+            var url = areas + '/SystemParameter/_Edit';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(), // serializes the form's elements.
+                success: function (data) {
+                    if (data == 'success') {
+                        AlterUpdateSuccess();
+                    } else if (data == 'error') {
+                        AlterUpdateError();
+                    } else {
+                        AlterWarning(data);
+                    }
+                }
+            });
+        }
+    });
+</script>

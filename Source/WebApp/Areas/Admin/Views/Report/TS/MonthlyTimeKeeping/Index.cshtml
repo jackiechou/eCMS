@@ -1,0 +1,245 @@
+﻿@{   
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.MonthlyTimeKeepingReport);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.ReportLayout;
+}
+
+@model Eagle.Model.Report.TS.MonthlyOTReportModel
+<form id = "myform_report" method="post" name = "myform_report" class="form-horizontal" enctype = "multipart/form-data" autocomplete = "off">  
+@section Button{
+    <input id="btnSearch" type="image" value="@Eagle.Resource.LanguageResource.btnReport" src="@Eagle.Resource.LanguageResource.srcBtnViewReport" />    
+}    
+<!--start box-->
+<div id="MainBody" class="box form-search">       
+    <div class="form-horizontal">       
+        <div id="alertMessageBox">
+            @if (ViewBag.DisplayErrorMessage == true)
+            {
+                <div class="@ViewBag.CssClass">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>@ViewBag.SortMessage !</strong>
+                    <div class="padding-left">
+                        @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                    </div>
+                </div>
+            }
+        </div>       
+        <div class="box">
+            <div class="row">
+                <div id="right_accordion" class="accordion-group">
+                    <div class="accordion-heading toolbar">
+                        <a href="#form_accordion" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle">
+                            <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                            <span class="heading-tite">@Html.Raw(@Eagle.Resource.LanguageResource.FormArea)</span>
+                        </a>
+                    </div>
+                    <div id="form_accordion" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="accordion-content">
+                   
+                                <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="LSCompanyID">@Html.Raw(Eagle.Resource.LanguageResource.Company)</label>
+                                    </div>
+                                    <div class="col-md-4">              
+                                        @Html.TextBoxFor(model=>model.LSCompanyID, new { @class = "easyui-combotree span2", @data_val = "false" }) 
+                                        @Html.Hidden("LSCompanyName")                                                         
+                                    </div>  
+                                    <div class="col-md-2">
+                                        <label for="Month">@Html.Raw(Eagle.Resource.LanguageResource.Month)</label>
+                                    </div>
+                                    <div class="col-md-4">                  
+                                         @Html.MonthPickerFor(model => model.Month)
+                                    </div>
+                                </div>
+                                <!--end row-->
+
+                                <!--start row-->
+                                <div class="row">               
+                                     <div class="col-md-2">
+                                        <label for="FullName">@Html.Raw(Eagle.Resource.LanguageResource.FullName)</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                         @Html.TextBoxFor(model=>model.FullName, null, new { @class = "span12" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="Code">@Html.Raw(Eagle.Resource.LanguageResource.EmpCode)</label>
+                                    </div>
+                                    <div class="col-md-4">  
+                                         @Html.TextBoxFor(model=>model.EmpCode, null, new { @class = "span12" })   
+                                    </div>    
+                                </div>
+                                <!--end row-->   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>              
+    </div>
+    <div id="divList" class="row">
+          <div class="ReportArea">
+            @Html.DevExpress().ReportToolbar(settings =>
+            {
+                // The following settings are necessary for a Report Toolbar.
+                settings.Name = "ReportToolbar";
+                settings.ReportViewerName = "reportViewer1";
+            }).GetHtml()
+            <div id="ReportContainer" class="report_container">
+                @*@Html.Action("LoadReportViewer", "MonthlyTimeKeepingReport", new { @Month = DateTime.Now.Month , @Year = DateTime.Now.Year, LanguageId = Session["LanguageId"].ToString()}) *@
+            </div>
+        </div>
+    </div>     
+ </div>
+<!--end box-->
+</form>
+
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    InvokeMonthPicker();
+                    ShowDateTimePicker();
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                        case 1:
+                            DataMgr.BindDataToReportContainer(data);
+                            break;                        
+                        //case 3:
+                        //    DataMgr.ReloadData();
+                        //    break;
+                        default:
+                            break;
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },              
+                InitializeCotrols: function () {
+                    removeQtip();
+                    $('#changeSidebarPos').trigger('click');
+                    DataMgr.LoadComboTree('LSCompanyID', '@Url.Action("GetHierachicalList", "LS_tblCompany")', false); 
+                },
+                BindEvents: function () {
+                    $(document).on('click', '#btnSearch', function () {
+                        DataMgr.LoadReportViewer();
+                    });  
+                },              
+                LoadComboTree: function (selectId, actionUrl, isRequired) {
+                    var selectBox = $('#' + selectId);
+
+                    var hiddenBox = $('input[type=hidden][name="' + selectId + '"]');
+                    var selectedValue = selectBox.val();
+
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            hiddenBox.val(selectedValue);                         
+                            //DataMgr.LoadReportViewer();
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },
+                LoadReportViewer: function () {
+                    var LSCompanyID = $('input[name=LSCompanyID]').val();                   
+                    var MonthYear = $('input[name=Month]').val();
+                    var arrMonthYear = MonthYear.split('/');
+                    var Month = arrMonthYear[0];
+                    var Year = arrMonthYear[2];
+                    var EmpCode = $('#EmpCode').val();
+                    var FullName = $('#FullName').val();
+                    var data = {
+                        "Month": Month,
+                        "Year": Year,
+                        "LSCompanyID": LSCompanyID,
+                        "EmpCode": EmpCode,
+                        "FullName": FullName
+                    };
+                   //alert(JSON.stringify(data));
+                    this.config.method = "LoadReportViewer";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },                
+                BindDataToReportContainer: function (data) {                   
+                    $('#ReportContainer').html(data);
+                    var dxo = new ClientReportToolbar('ReportToolbar');
+                    window['ReportToolbar'] = dxo;
+                    dxo.menuID = 'ReportToolbar_Menu';
+                    dxo.reportViewerID = 'reportViewer1';
+                    dxo.InlineInitialize();
+                },             
+                ResetControls: function () {
+                    var validateObj = $('#myform_report');
+                    validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                    validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                    validateObj.find('input[type="number"]').val(0);
+                    validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                    DataMgr.InitializeCotrols();
+                }
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'MonthlyTimeKeepingReport';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "divEdit",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

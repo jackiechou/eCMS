@@ -1,0 +1,31 @@
+﻿<div class="modal hide fade popupUnapprove" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width: 400px; margin: auto auto;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.ChoosingReturnLevel</h3>
+    </div>
+    <div class="modal-body popup-empl-search">
+        <!--Begin button -->
+        <div class="row">
+            <div class="col-md-7 offset1">
+                @Html.DropDownList("ReturnLevelApproveList",null , new { style="width:200px;" })
+            </div>
+            <div class="col-md-4">
+                <input type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.Accept" class="btn btn-info default btnAccept">
+            </div>
+        </div>
+        <div class="popup-empl-button">
+            <div class="row center">
+            </div>
+        </div>
+        <!--End button -->
+
+        <!--Begin results grid -->
+
+        <div class="popup-empl-results-grid">
+        </div>
+        <!--End results grid -->
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">@Eagle.Resource.LanguageResource.Close</button>
+    </div>
+</div>

@@ -1,0 +1,417 @@
+﻿@model TrainingRequestViewModel
+
+<form id="frmAdd" class="form-horizontal">       
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                   @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">            
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                     <div class="accordion-inner">
+                        <form id="frmAdd" class="accordion-content">   
+                            @Html.HiddenFor(model => model.TrainingRequestID)           
+                            @Html.HiddenFor(model => model.TrainingPlanID)
+                            @Html.HiddenFor(model => model.EmpIDCreate)
+                            @Html.HiddenFor(model => model.LevelApprove)
+
+                            @if (ViewBag.IsStart != null)
+                            {
+                                @Html.Hidden("IsStart",(int)ViewBag.IsStart)  
+                                @Html.Hidden("ReturnLevelApprove",0)  
+                                @Html.Action("_popupUnapprove", new { @LevelApprove = Model.LevelApprove })
+                            }                              
+                            <h6>@Eagle.Resource.LanguageResource.TrainingPlan</h6>
+                            <hr />                            
+                            <div class="row">     
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.TrainingType)
+                                </div>         
+                                <div class="col-md-4">
+                                    <label style="display: inline; margin-left: 10px;">@Html.RadioButton("optTrainingType", 1, (@ViewBag.TrainingPlanID != String.Empty ? true : false), new { id = "optTrainingType1", onclick="CheckingTrainingType()" }) @Eagle.Resource.LanguageResource.TrainingRequestPlanned </label>
+                                    <label style="display: inline; margin-left: 10px;">@Html.RadioButton("optTrainingType", 0, (@ViewBag.TrainingPlanID == String.Empty ? true : false), new { id = "optTrainingType0", onclick="CheckingTrainingType()" }) @Eagle.Resource.LanguageResource.TrainingRequestAdded </label>
+                                </div>     
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.LSCompanyID)                                    
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.HiddenFor(model => model.Company)
+                                    <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>    
+                                    <script>
+                                        $(document).ready(function () {
+                                            LoadComboTreeWithActionWithValue('LSCompanyID', 'GetAllWithPlease', '@Model.LSCompanyID');
+                                        });
+                                    </script>                                                                                                                                                
+                                </div>             
+                            </div>
+                            <div class="row">                                
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSTrainingCodeID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingCodeID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSTrainingCodeIDAllowNull)                                                         
+                                    @Html.HiddenFor(model => model.TrainingCodeName)                                                                                                                             
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSTrainingCourseID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingCourseID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSTrainingCourseIDAllowNull)   
+                                    @Html.HiddenFor(model => model.TrainingCourseName)                                                                                                                    
+                                </div>                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.LearningObjective)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.LearningObjective, new { @class = "span12" })                                        
+                                </div>
+                            </div>                                       
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSTrainingCategoryID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingCategoryID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSTrainingCategoryIDAllowNull)   
+                                    @Html.HiddenFor(model => model.TrainingCategoryName)                                         
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.LSProviderID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingProviderID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSProviderID)   
+                                    @Html.HiddenFor(model => model.TrainingProviderName)     
+                                </div>
+                            </div>                                                                                    
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSTrainingTypeID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingTypeID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSTrainingTypeIDAllowNull)   
+                                    @Html.HiddenFor(model => model.TrainingTypeName)                                             
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.LSTrainingFormID)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingFormID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSTrainingFormID)   
+                                    @Html.HiddenFor(model => model.TrainingFormName)         
+                                </div>
+                            </div>                                     
+                            <div class="row">   
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.EvaluationRequired)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.CheckBoxFor(model => model.EvaluationRequired, @Model.EvaluationRequired)
+                                </div>                              
+                                <div class="col-md-2">    
+                                    @Html.RequiredLabelFor(model => model.EvaluationTemplateID)                                                                  
+                                </div>
+                                <div class="col-md-4">  
+                                    @Html.TextBox("SelectEvaluationTemplateID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.EvaluationTemplateID)   
+                                    @Html.HiddenFor(model => model.EvaluationTemplateName)                                                                                                         
+                                </div>
+                            </div>                                                                                                                                                                                                            
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSTrainingLocationID)
+                                </div>
+                                <div class="col-md-4" onclick="CheckingLocation();">
+                                    <label style="display: inline; margin-left: 10px;">@Html.RadioButton("optLocation", 1, true, new { id = "optLocation1" }) @Eagle.Resource.LanguageResource.TrainingRequestLocationLocal </label>
+                                    <label style="display: inline; margin-left: 10px;">@Html.RadioButton("optLocation", 0, false, new { id = "optLocation0" }) @Eagle.Resource.LanguageResource.TrainingRequestLocationOversea </label>
+                                </div>    
+                                <div class="col-md-2">                                    
+                                    @Html.RequiredLabelFor(model => model.LocationInfo)
+                                </div>                            
+                                <div class="col-md-4">
+                                    @Html.TextBox("SelectLSTrainingLocationID", null, new { @class = "span12" })                                        
+                                    @Html.HiddenFor(model => model.LSTrainingLocationID)   
+                                    @Html.HiddenFor(model => model.TrainingLocationName)                                     
+                                </div>
+                            </div>                                                                                                                                                                                                                                              
+                            @if (Model.Status >= 1)
+                            {                                
+                                <h6>@Eagle.Resource.LanguageResource.TrainingProcessOfApproval</h6>       
+                                <hr />                                    
+                                <div class="row">                                    
+                                    <div class="col-md-12">
+                                    @if (ViewBag.CommentList != null)
+                                        {
+                                            foreach (var commentItem in ViewBag.CommentList as List<CommentViewModel>)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        @Html.ImageByFileId("Photo", commentItem.AvatarId, commentItem.EmpComment, new { width = "45", height = "60", @class = "media-object img-thumbnail user-img img-rounded", @style = "float:right;" })
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div>
+                                                            <div class="col-md-9"><b>@commentItem.EmpComment</b></div> <div class="col-md-3"><i>@commentItem.Time</i></div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="col-md-9"> @Html.Raw(Server.HtmlDecode(commentItem.Comment))</div> <div class="col-md-3"><i>@commentItem.StatusName</i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                      }
+                                    </div>
+                                </div>
+                            }           
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Comment)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })                                    
+                                </div>
+                            </div>                                                                                                                                                                                                                                                                                                                                                                                       
+                        </form>
+                        <div class="row">
+                            <div class="col-md-2"><h6>@Eagle.Resource.LanguageResource.TrainingRequestDuration</h6></div>                                 
+                            <div class="col-md-10" align="right">                                    
+                                <input id="btnAddRow" type="button" class="btn-custom-addrow" style="margin-right: 18px;" />
+                            </div>                                                                                                 
+                        </div>                            
+                        <hr />
+                        <form id="divListOfDuration"  class="row">
+                            @Html.Action("_ListOfDuration") 
+                        </form>           
+                        <form id="divListOfDurationUser">
+                            @Html.Action("_ListOfDurationUser")
+                        </form>
+                        <form id="divCreateOfCost"  class="row">
+                            @Html.Action("_CreateCost")
+                        </form>
+                        <form id="divListOfCost">
+                            @Html.Action("_ListOfCost")
+                        </form>   
+                         <hr />
+                        <div class="row">
+                            <div class="footbar">
+                                <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn"  @ViewBag.EnableSaveAndSendForApproval />                                                                        
+                                <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" @ViewBag.EnableSaveAndSendForApproval/>
+                                <input type="button" id="btnSendForApproval" value="@Eagle.Resource.LanguageResource.btnSendForApproval" class="btn btn-info AddModel" @ViewBag.EnableSaveAndSendForApproval />
+                                <input type="button" id="btnApproval" value="@Eagle.Resource.LanguageResource.btnApprove" class="btn btn-info AddModel" @ViewBag.EnableApprovalAndUnApproval />
+                                <input type="button" id="btnUnApproval" value="@Eagle.Resource.LanguageResource.btnUnapprove" class="btn btn-info AddModel" @ViewBag.EnableApprovalAndUnApproval />
+                                <input type="button" id="btnList" value="@Eagle.Resource.LanguageResource.btnListOfRequest" class="btn btn-info AddModel"  />
+                            </div>
+                        </div>                     
+                     </div>
+                </div>
+            </div>
+        </div>         
+    </div>        
+</form>
+@Html.Action("jqueryval", "Common", null)
+
+<script>
+    var strInputEvaluationTemplateName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputEvaluationTemplate)';
+    PopulateDropDownListAutoComplete("SelectEvaluationTemplateID", "EvaluationTemplateID", "EvaluationTemplateName", strInputEvaluationTemplateName, areas + '/EvaluationTemplate/DropdownList');    
+
+    // Loading data into ComboBox   
+    var strInputTrainingPlanExpenseName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseName)';
+    var strInputTrainingPlanCurrencyName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseCurrencyName)';
+
+    PopulateDropDownListAutoComplete("SelectLSTrainingExpenseID", "LSTrainingExpenseIDAllowNull", "TrainingExpenseName", strInputTrainingPlanExpenseName, areas + '/TrainingExpenses/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSTrainingCurrencyID", "LSCurrencyIDAllowNull", "TrainingCurrencyName", strInputTrainingPlanCurrencyName, areas + '/LS_tblCurrency/DropdownList');
+
+    var strInputTrainingCodeName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingCodeName)';
+    var strInputTrainingCourseName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingCourse)';
+
+    PopulateDropDownListAutoComplete("SelectLSTrainingCodeID", "LSTrainingCodeIDAllowNull", "TrainingCodeName", strInputTrainingCodeName, areas + '/TrainingCode/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSTrainingCourseID", "LSTrainingCourseIDAllowNull", "TrainingCourseName", strInputTrainingCourseName, areas + '/TrainingCourse/DropdownList?LSTrainingCodeID=' + 0);
+
+    var strInputTrainingCategoryName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingCategoryName)';
+    var strInputTrainingProviderName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingProviderName)';
+
+    PopulateDropDownListAutoComplete("SelectLSTrainingCategoryID", "LSTrainingCategoryIDAllowNull", "TrainingCategoryName", strInputTrainingCategoryName, areas + '/TrainingCategory/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSTrainingProviderID", "LSProviderID", "TrainingProviderName", strInputTrainingProviderName, areas + '/TrainingProvider/DropdownList');
+
+    var strInputTrainingTypeName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingTypeName)';
+    var strInputTrainingFormName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputTrainingFormName)';
+    var strInputTrainingLocationName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputLocationName)';
+
+    PopulateDropDownListAutoComplete("SelectLSTrainingTypeID", "LSTrainingTypeIDAllowNull", "TrainingTypeName", strInputTrainingTypeName, areas + '/TrainingType/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSTrainingFormID", "LSTrainingFormID", "TrainingFormName", strInputTrainingFormName, areas + '/TrainingForm/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSTrainingLocationID", "LSTrainingLocationID", "TrainingLocationName", strInputTrainingLocationName, areas + '/TrainingLocation/DropdownList');
+
+</script> 
+
+<script>    
+    // Add row of TrainingRequestDuration
+    $('#btnAddRow').on("click", function () {        
+        $("body").addClass("loading");
+        //Search danh sach nhan vien         
+        var url = areas + '/TrainingRequest/AddRowOfDuration';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#divListOfDuration").serialize(),
+            success: function (data) {
+                $('#divListOfDuration').html(data);
+            }
+        });
+
+    });
+    // Event of page
+    $(document).ready(function () {
+        
+        var TrainingPlanID = '@ViewBag.TrainingPlanID';
+        if (TrainingPlanID == '') {            
+            $('input:radio[id=optTrainingType1]:checked').val("1");
+        } else {            
+            $('input:radio[id=optTrainingType1]:checked').val("0")
+        }
+    });
+
+    // Event of Location radio
+    function CheckingLocation() {
+        var infoOfLocation = $('input:radio[name=optLocation]:checked').val(); alert(infoOfLocation);
+        if (infoOfLocation == 1) {
+            var strInputTrainingLocationName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputLocationName)';
+            PopulateDropDownListAutoComplete("SelectLSTrainingLocationID", "LSTrainingLocationID", "TrainingLocationName", strInputTrainingLocationName, areas + '/TrainingLocation/DropdownList');
+        }
+        else if (infoOfLocation == 0) {
+            var strInputTrainingProvinceName = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCountryName)';
+                PopulateDropDownListAutoComplete("SelectLSTrainingLocationID", "LSTrainingLocationID", "TrainingLocationName", strInputTrainingProvinceName, areas + '/LS_tblCountry/DropdownList');
+            }
+    }
+    function CheckingTrainingType() { 
+        var info = $('input:radio[name=optTrainingType]:checked').val();
+        if (info == "1") {
+            window.location.href = urlRedirectTrainingPlanList;
+        }
+        else if (info == "0") {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "GET",
+                url: urlResetRequest,
+                success: function (data) {
+                    $('#MainBody').html(data);
+                }
+            });
+        }                      
+    }
+    // Change item of TrainingCode
+    $('#SelectLSTrainingCodeID').on('change', function () {
+        var LSTrainingCodeID = $('#LSTrainingCodeIDAllowNull').val();
+        $("#LSTrainingCourseIDAllowNull").val("");
+        $('#LearningObjective').val("");
+        PopulateDropDownListAutoComplete("SelectLSTrainingCourseID", "LSTrainingCourseIDAllowNull", "TrainingCourseName", strInputTrainingCourseName, areas + '/TrainingCourse/DropdownList?LSTrainingCodeID=' + LSTrainingCodeID);
+    });
+
+    // Clear selected item of TrainingCode
+    $('#SelectLSTrainingCodeID').on("select2-removed", function (e) {
+        $('#LSTrainingCourseIDAllowNull').val('');
+        $('#TrainingCourseName').val('');
+    });
+
+    // Change item of TrainingCourse
+    $('#SelectLSTrainingCourseID').on('change', function () {
+        var LSTrainingCourseID = $("#LSTrainingCourseIDAllowNull").val();
+        $.ajax({
+            type: "GET",
+            url: areas + '/TrainingPlan/GetLearningObjective?LSTrainingCourseID=' + LSTrainingCourseID,
+            success: function (data) {
+                $('#LearningObjective').val(data);
+            }
+        });
+    });
+
+    // Clear selected item of TrainingCourse
+    $('#SelectLSTrainingCourseID').on("select2-removed", function (e) {
+        $('#LearningObjective').val('');
+    });
+    
+</script>
+<script>
+    // Delete row of TrainingRequestCost
+    function DeleteRowOfExpense(row) {
+
+        $("body").addClass("loading");
+        var lsID = $(row).data('id');  // ID cua dong du lieu      
+        var urlDelete = areas + "/TrainingRequest/DeleteRowOfCost?id=" + lsID;
+
+        $.ajax({
+            type: "POST",
+            url: urlDelete,
+            data: $("#divListOfCost").serialize(),
+            success: function (data) { $('#divListOfCost').html(data); }
+        });
+    }
+    // Add row of TrainingRequestCost
+    $('#btnAddExpense').on("click", function () {
+        
+        // Checking validation
+        if ($('#SelectLSTrainingExpenseID').val() == '') {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseName');
+            return;
+        }
+        if ($('#Cost').val() == '') {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseCost');
+            return;
+        }
+        if ($('#SelectLSTrainingCurrencyID').val() == '') {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingPlanExpenseCurrencyName');
+            return;
+        }
+        // Perform adding                
+        var LSTrainingExpenseID = $("#LSTrainingExpenseID").val();
+        var LSCurrencyID = $("#LSCurrencyID").val();
+        var Cost = $("#Cost").val();
+        var TrainingExpenseName = $("#TrainingExpenseName").val();
+        var TrainingCurrencyName = $("#TrainingCurrencyName").val();
+        var url = areas + '/TrainingRequest/AddRowOfCost';
+
+        hideMessageWithTitle(0);
+        $("body").addClass("loading");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#divCreateOfCost").serialize(),
+            success: function (data) {
+
+                if (data == "Existed") {
+                    AlterWarning('@Eagle.Resource.LanguageResource.TrainingExpenseExisted');
+                }
+                else {
+                    hideMessageWithTitle(0);
+                    $("body").addClass("loading");
+                    $('#divListOfCost').html(data);
+                }
+
+            }
+        });
+
+    });
+</script>
+
+
+
+

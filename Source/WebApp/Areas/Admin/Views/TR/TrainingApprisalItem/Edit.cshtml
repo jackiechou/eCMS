@@ -1,0 +1,33 @@
+﻿@model int
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TrainingApprisalItem;   
+}
+<div id="MainBody">
+    <div id="divEdit">
+        @Html.Action("_Edit",new {@id = @Model})
+    </div>
+</div>
+<!--Confirm box-->
+
+
+<script>
+
+    var Controller = 'TrainingApprisalItem';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/Index/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/Delete/';
+    
+</script>
+

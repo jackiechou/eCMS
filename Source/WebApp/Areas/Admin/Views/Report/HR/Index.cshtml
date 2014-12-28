@@ -1,0 +1,617 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.HRReport);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.ReportLayout;
+}
+@model Eagle.Model.Report.HR.PersonnelStatisticModel
+
+<div id="MainBody">      
+    <form id = "myform" method="post" name = "myform"  enctype = "multipart/form-data" autocomplete = "off">
+        <div class="form-horizontal detailViewContainer">
+            <div class="row">
+                <div id="alertMessageBox">
+                    @if (ViewBag.DisplayErrorMessage == true)
+                    {
+                        <div class="@ViewBag.CssClass">
+                            <a href="#" class="close" data-dismiss="alert">&times;</a>
+                            <strong>@ViewBag.SortMessage !</strong>
+                            <div class="padding-left">
+                                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>
+                            @Html.Raw(Eagle.Resource.LanguageResource.CompanyUnit)
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                      @*  <input id="LSCompanyID" name="LSCompanyID" type="text" value="0" class="easyui-combotree span2" />*@
+                        <select id="LSCompanyID" name="LSCompanyID" class="col-md-12 selectpicker"></select>
+                    </div>
+                    <div class="col-md-2">
+                         <label>@Html.Raw(Eagle.Resource.LanguageResource.StatisticDate)</label>
+                    </div>
+                    <div class="col-md-4">
+                       @* @Html.DropDownList("CareerStatus", null, new { @class = "span12" })*@
+                         @Html.DateTimePicker("StatisticDate", null, DateTime.Now.ToString("dd/MM/yyyy"), false, new { @readonly = "readonly" })
+                    </div>
+                </div>
+             
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="related span3">
+                         @*    <fieldset class="leftCotent">
+                            <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticTypes)</span></legend>
+                            <div class="fielsetContent">                               
+                                @Html.RadioButtonsForEnum("StatisticType", typeof(Eagle.Model.Report.Common.StatisticTypeEntity))
+                            </div>
+                        </fieldset>*@
+
+                        <fieldset class="leftCotent">
+                            <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticFocus)</span></legend>
+                            <div class="fielsetContent">
+                                @Html.ListBox("StatisticFocus", (MultiSelectList)ViewBag.StatisticFocus , new { @id = "StatisticFocus", @class = "span12", size = ((MultiSelectList)ViewBag.StatisticFocus).Count() })
+                            </div>
+                        </fieldset>
+
+                        </div>
+                        <div class="col-md-9 marginLeftZero">
+                            <ul class="nav nav-tabs" id="myTabs">
+                                <li id="tab-1" class="active"><a href="#pane-1" data-toggle="tab">@Eagle.Resource.LanguageResource.GeneralInfo</a></li>
+                                <li id="tab-2"><a href="#pane-2" data-toggle="tab">@Eagle.Resource.LanguageResource.Details</a></li>    
+                                <li id="tab-3"><a href="#pane-3" data-toggle="tab">@Eagle.Resource.LanguageResource.Chart</a></li>                       
+                            </ul>
+
+                            <div id="myTabContents" class="tab-content responsive">
+                                @*----------------------General--------------------------*@
+                                <div class="tab-pane fade in active" id="pane-1">
+                                    <div class="ReportArea">
+                                         @Html.DevExpress().ReportToolbar(settings =>
+                                       {
+                                           // The following settings are necessary for a Report Toolbar.
+                                           settings.Name = "ReportToolbar";
+                                           settings.ReportViewerName = "reportViewer1";
+                                       }).GetHtml()
+                                        <div id="ReportContainer" class="report_container">
+                                            @Html.Action("LoadReportViewer", "PersonnelReport", new { area = "Admin", @id = 1, @LSCompanyID = ViewData["LSCompanyID"] }) 
+                                        </div>
+                                    </div>
+                                </div>
+                                @*----------------------Details--------------------------*@
+                                <div class="tab-pane fade" id="pane-2">
+                                    <div class="DetailReportArea">
+                                          @Html.DevExpress().ReportToolbar(settings =>
+                                           {
+                                               // The following settings are necessary for a Report Toolbar.
+                                               settings.Name = "ReportToolbarDetail";
+                                               settings.ReportViewerName = "reportViewerDetail";
+                                           }).GetHtml()
+
+                                         <div id="DetailReportContainer" class="report_detail_container">                     
+                                            @*@Html.Action("LoadPivotGrid", "ContractReport", new { area = "Admin", @id = 1 })*@
+                                             @Html.Action("LoadDetailReportViewer", "PersonnelReport", new { area = "Admin", @id = 1, @LSCompanyID  = ViewData["LSCompanyID"] })
+                                        </div>
+                                    </div>
+                                 </div>
+                          
+                                @*----------------------Chart--------------------------*@
+                                <div class="tab-pane fade" id="pane-3">
+                                     <div id="ChartContainer" class="chart-container">
+                                          @*@Html.RadioButtonsForEnum("ChartType", typeof(Eagle.Model.Statistic.ChartTypeEntity),true)*@ 
+                                          <div id="ChartTypeButtons" class="btn-group pull-right" data-toggle="buttons-radio">
+                                            <button type="button" class="btn active" data-id="1">@Html.Raw(Eagle.Resource.LanguageResource.PieChart)</button>
+                                            <button type="button" class="btn" data-id="2">@Html.Raw(Eagle.Resource.LanguageResource.BarChart)</button>
+                                            <button type="button" class="btn" data-id="3">@Html.Raw(Eagle.Resource.LanguageResource.LineChart)</button>
+                                            </div>
+                                         <div class="clearboth"></div>
+                                         <div id="ChartPlaceholder" class="chart_placeholder">
+                                         </div>
+                                          <div class="clearboth"></div>
+                                         <div class="chart_label text-center"><h4 id="ChartLabel"></h4></div>
+                                    </div>
+                                </div>
+                             </div>                       
+                        </div>
+                    </div>
+                     <div class="clearboth"></div>
+                </div>               
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    ShowDateTimePicker();
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                        case 1:
+                            DataMgr.BindDataToReportContainer(data);
+                            break;
+                        case 2:
+                            DataMgr.BindDataToDetailReportContainer(data);
+                            break;
+                        case 3:
+                            DataMgr.ReloadData();
+                            break;
+                        default:
+                            break;
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                LoadJavaScriptFile: function (jsFile) {
+                    var filePath = "/Scripts/app/chart/" + jsFile;   
+                    $.ajax({
+                        url: filePath,
+                        dataType: "script",
+                        cache: true
+                    }).done(function () {
+                        var scriptChart = $("#scriptChart");
+                        scriptChart.attr("src", filePath);
+                    }).fail(function () {
+                        console.log("fail");
+                    });
+                },
+                InitializeCotrols: function () {
+                    //$.validator.methods["date"] = function (value, element) { return true; }  
+                    //DataMgr.RemoveQtip();                   
+                    // DataMgr.LoadComboTree('LSCompanyID', '@Url.Action("GetHierachicalList", "LS_tblCompany")', true);
+                    $('#changeSidebarPos').trigger('click');
+                                        
+                    DataMgr.PopulateCompaniesToDropDownList();
+                    $(document).on('change', '#LSCompanyID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        DataMgr.LoadReportViewer();
+                        DataMgr.LoadDetailReportViewer();
+                    });
+
+                    $("#StatisticFocus").find('option:first').attr("selected", "selected");
+                    $('select').removeAttr('multiple');
+                    DataMgr.BindDepartmentChartData(1);                   
+                },               
+                BindEvents: function () {
+                    DataMgr.HandleTabEvent();
+
+                    $("#ChartTypeButtons > .btn[data-id=3]").hide();
+                    $("#ChartTypeButtons > .btn").click(function () {
+                        $(this).addClass("active").siblings().removeClass("active");
+                        var chartType = $(this).attr("data-id");
+                        var chartPlaceholder = 'ChartPlaceholder';
+                        var StatisticFocusId = $("#StatisticFocus").val();
+                        switch (StatisticFocusId) {
+                            case '1':   
+                                DataMgr.BindDepartmentChartData(chartType);
+                                break;
+                            case '2':
+                                DataMgr.BindQualificationChartData(chartType);
+                                break;
+                            case '3':                               
+                                DataMgr.BindPositionChartData(chartType);                               
+                                break;
+                            case '4':
+                                DataMgr.BindContractChartData(chartType);
+                                break;
+                            default:
+                                DataMgr.BindDepartmentChartData(chartType);
+                                break;
+                        }
+                    });
+
+                   
+                    $(document).on("click", "#StatisticFocus", function () {                                             
+                        var chartType = $("#ChartTypeButtons > .active").attr("data-id");                       
+                        var StatisticFocusId = $(this).val();
+                        switch (StatisticFocusId) {
+                            case '1':
+                                //hide button 3 -> hide chart Line
+                                $("#ChartTypeButtons > .btn[data-id=3]").hide();
+                                DataMgr.BindDepartmentChartData(chartType);                                
+                                break;
+                            case '2':
+                                //hide button 3 -> hide chart Line
+                                $("#ChartTypeButtons > .btn[data-id=3]").hide();
+                                DataMgr.BindQualificationChartData(chartType);
+                                break;
+                            case '3':
+                                //hide button 3 -> hide chart Line
+                                $("#ChartTypeButtons > .btn[data-id=3]").hide();                                
+                                DataMgr.BindPositionChartData(chartType);
+                                break;
+                            case '4':
+                                //hide button 3 -> hide chart Line
+                                $("#ChartTypeButtons > .btn[data-id=3]").show();
+                                DataMgr.BindContractChartData(chartType);
+                                break;                           
+                            default:
+                                //hide button 3 -> hide chart Line
+                                $("#ChartTypeButtons > .btn[data-id=3]").show();
+                                DataMgr.BindContractChartData(chartType);
+                                break;
+                        } 
+                      
+                        DataMgr.LoadReportViewer();
+                        DataMgr.LoadDetailReportViewer();
+                    });
+             
+                    //$(document).on("change", 'input[type=radio][name= "StatisticType"]', function () {
+                    //    $(this).parent('li').addClass('selected').siblings().removeClass('selected');
+                    //    $(this).attr('checked', true).parent('li').siblings().find('input[type=radio]').attr('checked', false);
+                    //});
+                },
+                RemoveQtip: function () {
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                HandleTabEvent: function () {
+                    $('.nav-tabs a').click(function (e) {
+                        var tab_pane_id = $(this).attr("href");
+                        $(tab_pane_id).addClass("in").siblings().remove("in");
+                        $(this).tab('show');
+
+                        var StatisticFocusId = $("#StatisticFocus").val();
+                        $('#StatisticFocus').val(StatisticFocusId).trigger('click');
+                    });
+                },               
+                BindDepartmentChartData: function (chartType) {
+                    //DataMgr.LoadJavaScriptFile("deparment_chart.js");
+                    var chartPlaceholder = 'ChartPlaceholder';   
+                    var LSCompanyID = $("#LSCompanyID").val();
+                    var actionUrl = '', xAxisLabel = '', yAxisLabel = '';
+                    switch (chartType) {
+                        case '1':                            
+                            actionUrl = '@Url.Action("Department_GetChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;                            
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Percentage)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Department)';
+                            break;
+                        case '2':
+                            actionUrl = '@Url.Action("Department_GetChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Totals)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Department)';
+                            break;
+                        case '3':
+                            chartType = 1;
+                            $("#ChartTypeButtons > .btn[data-id=1]").addClass("active").siblings().removeClass("active");
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Totals)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Department)';
+                            break;
+                        default:
+                            actionUrl = '@Url.Action("Department_GetChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Percentage)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Department)';
+                            break;
+                    }
+                    var chartLabel = '@Html.Raw(Eagle.Resource.LanguageResource.HRStatisticChartByDepartment)';
+                    $("#ChartLabel").html(chartLabel);
+                    BindChart(chartPlaceholder, chartType, actionUrl, chartLabel, xAxisLabel, yAxisLabel);
+                 },
+                BindContractChartData: function (chartType) {
+                    //DataMgr.LoadJavaScriptFile("contract_chart.js");
+                    var chartPlaceholder = 'ChartPlaceholder';                   
+                    var LSCompanyID = $("#LSCompanyID").val();
+                    var actionUrl = '', xAxisLabel = '', yAxisLabel = '';
+                   
+                    switch (chartType) {
+                        case '1':
+                            var _chartPlaceholder = document.getElementById(chartPlaceholder);
+                            //_chartPlaceholder.style.width = "570px";
+                            actionUrl = '@Url.Action("Contract_GetPieChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PercentRate)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.ContractTypes)';
+                            break;
+                        case '2':
+                            actionUrl = '@Url.Action("Contract_GetPieChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Totals)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.ContractTypes)';
+                            break;
+                        case '3':
+                            actionUrl = '@Url.Action("Contract_GetPieChartDataAllMonths", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Months)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Totals)';
+                            break;
+                        default:
+                            actionUrl = '@Url.Action("Contract_GetPieChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PercentRate)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.ContractTypes)';
+                            break;
+                    }
+                    var chartLabel = '@Html.Raw(Eagle.Resource.LanguageResource.HRStatisticChartByContractType)';
+                    $("#ChartLabel").html(chartLabel);
+                    BindChart(chartPlaceholder, chartType, actionUrl, chartLabel, xAxisLabel, yAxisLabel);
+                },               
+                BindPositionChartData: function (chartType) {
+                    //DataMgr.LoadJavaScriptFile("position_chart.js");
+                    var chartPlaceholder = 'ChartPlaceholder';
+                    var chartLabel = '@Html.Raw(Eagle.Resource.LanguageResource.HRStatisticChartByPosition)';
+                    var actionUrl = '', xAxisLabel = '', yAxisLabel = '';
+                    var LSCompanyID = $("#LSCompanyID").val();
+                    switch (chartType) {
+                        case '1':
+                            actionUrl = '@Url.Action("Position_GetChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PercentRate)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PositionTypes)';
+                            break;
+                        case '2':
+                            actionUrl = '@Url.Action("Position_GetChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Totals)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PositionTypes)';
+                            break;
+                        case '3':
+                            chartType = 1;
+                            $("#ChartTypeButtons > .btn[data-id=1]").addClass("active").siblings().removeClass("active");
+
+                            actionUrl = '@Url.Action("Position_GetChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Totals)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.ContractTypes)';
+                            break;
+                        default:
+                            actionUrl = '@Url.Action("Position_GetChartDataByPercent", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PercentRate)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.PositionTypes)';
+                            break;
+                    }
+                    $("#ChartLabel").html(chartLabel);
+                    BindChart(chartPlaceholder, chartType, actionUrl, chartLabel, xAxisLabel, yAxisLabel);
+                },              
+                BindQualificationChartData: function (chartType) {
+                    //DataMgr.LoadJavaScriptFile("qualification_chart.js");
+                    var chartPlaceholder = 'ChartPlaceholder';       
+                    var actionUrl = '', xAxisLabel = '', yAxisLabel = '';
+                    var LSCompanyID = $("#LSCompanyID").val();
+                    switch (chartType) {
+                        case '1':
+                            actionUrl = '@Url.Action("Qualification_GetPercentChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Percentage)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.QualificationType)';
+                            break;
+                        case '2':
+                            actionUrl = '@Url.Action("Qualification_GetChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Percentage)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.QualificationType)';
+                            break;
+                        case '3':
+                            chartType = 1;
+                            $("#ChartTypeButtons > .btn[data-id=1]").addClass("active").siblings().removeClass("active");
+                            actionUrl = '@Url.Action("Qualification_GetPercentChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Percentage)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.QualificationType)';
+                            break;
+                        default:
+                            actionUrl = '@Url.Action("Qualification_GetPercentChartData", "Chart")?LSCompanyID=' + LSCompanyID;
+                            xAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.Percentage)';
+                            yAxisLabel = '@Html.Raw(Eagle.Resource.LanguageResource.QualificationType)';
+                            break;
+                    }
+                    var chartLabel = '@Html.Raw(Eagle.Resource.LanguageResource.HRStatisticChartByQualification)';
+                    $("#ChartLabel").html(chartLabel);
+                    BindChart(chartPlaceholder, chartType, actionUrl, chartLabel, xAxisLabel, yAxisLabel);
+                },              
+                PopulateCompaniesToDropDownList: function () {
+                    var select = $("#LSCompanyID");
+                    select.empty();
+                    $.getJSON("/Admin/LS_tblCompany/GetParentList",
+                        function (classesData) {
+                            if (classesData.length > 0) {
+                                select.append($('<option/>', { value: 'Null', text: " --- @Eagle.Resource.LanguageResource.Select --- " }));
+                                $.each(classesData, function (index, itemData) {
+                                    select.append($('<option/>', {
+                                        value: itemData.Value,
+                                        text: itemData.Text
+                                    }));
+                                });
+                                //select.find('option:first').attr("selected", "selected");
+                            } else
+                                select.append($('<option/>', { value: 'Null', text: " --- @Eagle.Resource.LanguageResource.None --- " }));
+                        });
+                },
+                LoadComboTree: function (selectId, actionUrl, isRequired) {
+                    var selectBox = $('#' + selectId);
+
+                    var hiddenBox = $('input[type=hidden][name="' + selectId + '"]');
+                    var selectedValue = selectBox.val();
+
+                    if (isRequired == undefined || isRequired == null)
+                        isRequired = false;
+
+                    selectBox.combotree({
+                        url: actionUrl,
+                        textField: 'text',
+                        valueField: 'id',
+                        required: isRequired,
+                        editable: false,
+                        onLoadSuccess: function (row, data) {
+                            $(this).tree("collapseAll");
+                        },
+                        onClick: function (node) {
+                            selectedValue = node.id;
+                            $(this).val(selectedValue);
+                            hiddenBox.val(selectedValue);
+
+                            //Load REPORT
+                            DataMgr.LoadReportViewer();
+                            DataMgr.LoadDetailReportViewer();
+                        }
+                    });
+                    selectBox.combotree('setValue', selectedValue);
+                },
+                AddTooltip: function (elementId, message) {
+                    if (elementId != undefined && elementId != null) {
+                        var qtipId = 'qtip-' + elementId;
+                        var element = $('input[type=hidden][name="' + elementId + '"]');
+
+                        if (element.hasClass('input-validation-error'))
+                            element.addClass('input-validation-error');
+                        element.attr({ 'data-hasqtip': elementId, 'aria-describedby': qtipId });
+
+                        var valSpan = element.parents().siblings('span[data-valmsg-for="' + elementId + '"]');
+                        valSpan.addClass('field-validation-error').removeClass('field-validation-valid');
+
+                        var divContent = $('<div/>', {
+                            id: qtipId + '-content',
+                            // 'class': 'qtip qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            'class': 'ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: { 'aria-atomic': "true" },
+                            html: '<span id="' + qtipId + '-content-span" for="' + elementId + '"></span>'
+                        });
+
+                        var divWrapper = $('<div/>', {
+                            id: qtipId,
+                            'class': 'qtip-default ui-tooltip-red qtip-pos-rc qtip-focus',
+                            attr: {
+                                style: "z-index: 15003; display: block; top: 375px; left: 737.467px;",
+                                tracking: "false", role: "alert", "aria-live": "polite", "aria-atomic": "false",
+                                "aria-describedby": "qtip-1-content", "aria-hidden": "false", "data-qtip-id": "1",
+                            }
+                        });
+
+                        if (valSpan.siblings('#' + qtipId).length == 0) {
+                            divWrapper.append(divContent);
+                            divWrapper.insertAfter(valSpan);
+                        }
+                        showMessageWithTitle('warning', message, "warning", 3000);
+                        $('#' + qtipId + '-content-span').html(message);
+                        element.show();
+                    }
+                },
+                RemoveTooltip: function (elementId) {
+                    var qtipId = $('#qtip-' + elementId);
+                    qtipId.remove();
+                },
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },
+                LoadReportViewer: function () {
+                    var StatisticFocusId = $("#StatisticFocus").val();
+                    //var LSCompanyID = $('input[type=hidden][name="LSCompanyID"]').val();
+                    var LSCompanyID = $("#LSCompanyID").val();
+                    var data = { "Id": StatisticFocusId, "LSCompanyID": LSCompanyID };
+                    this.config.method = "LoadReportViewer";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },                
+                BindDataToReportContainer: function (data) {
+                    $('#ReportContainer').html(data);         
+                },
+                LoadDetailReportViewer: function () {
+                    var StatisticFocusId = $("#StatisticFocus").val();
+                    //var LSCompanyID = $('input[type=hidden][name="LSCompanyID"]').val();
+                    var LSCompanyID = $("#LSCompanyID").val();
+                    var data = { "Id": StatisticFocusId, "LSCompanyID": LSCompanyID };
+                    this.config.method = "LoadDetailReportViewer";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                BindDataToDetailReportContainer: function (data) {                   
+                    $('#DetailReportContainer').html(data);
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Update";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                    titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+
+                    var result = JSON.parse(data);
+                    if (result.flag == 'true') {
+                        showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            success: function (data) {
+                                $('#MainBody').html(data);
+                                showMessageWithTitle(titleSuccess, result.message, "success", 3000);
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error", 20000);
+                    }
+                },
+                ResetControls: function () {
+                    var validateObj = $('#myform');
+                    validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                    validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                    validateObj.find('input[type="number"]').val(0);
+                    validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                    DataMgr.InitializeCotrols();
+                }
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'PersonnelReport';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "divEdit",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

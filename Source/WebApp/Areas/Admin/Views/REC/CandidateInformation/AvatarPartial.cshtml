@@ -1,0 +1,13 @@
+﻿@model CandidateViewModel
+
+<div class="col-md-12">
+    <div id="ImagePreviewBox" style="float: left" class="col-md-4">
+        <span>
+            @Html.ImageByFileId("Photo", Model.FileId, Model.LastName + " " + Model.FirstName, new { width = "80", height = "80", @class = "thumb" })
+        </span>
+    </div>
+    <div style="float: left" class="col-md-8">
+        @Html.TextBox("FileUpload", null, new { id = "FileUpload", type = "file" })
+        @Html.HiddenFor(model => model.FileId)
+    </div>
+</div>

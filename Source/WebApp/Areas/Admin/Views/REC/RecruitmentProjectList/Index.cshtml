@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.RecruitmentProjectList;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../REC/RecruitmentProjectList/_Reset")
+</div>
+
+@Html.Action("ConfirmPopup","Common",null)
+}
+<script type="text/javascript">
+    var urlDelete = "_Delete?Id=";
+    var urlReset = "_List";
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) {
+            return false;
+        } else {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "POST",
+                url: '_List',
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $('#divList').html(data);
+                }
+            });
+        }
+    });
+ 
+
+    // Click delete (get)
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: urlDelete + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlReset,
+                                    data: $("#frmAdd").serialize(),
+                                    success: function (data) {
+                                        $('#divList').html(data);
+                                        AlterDeleteSuccess();
+                                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                                    }
+                                });
+                            } else {
+                                AlterWarning(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+       
+</script>

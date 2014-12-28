@@ -1,0 +1,66 @@
+﻿@model CandidateViewModel
+
+<div class="tab-pane fade in" id="pane-3">
+
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.LSEducationID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectLSEducationID", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.LSEducationName)
+            @Html.HiddenFor(model => model.LSEducationID)
+        </div>
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.LSQualificationID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectLSQualificationID", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.LSQualificationName)
+            @Html.HiddenFor(model => model.LSQualificationID)
+        </div>
+
+    </div>
+    <!--end row-->
+
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.LSMajorID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectLSMajorID", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.LSMajorName)
+            @Html.HiddenFor(model => model.LSMajorID)
+        </div>
+
+    </div>
+    <!--end row-->
+    <div class="row">
+
+        <div class="group-control span6">
+            <div>
+                <h6>@Html.LabelFor(model => model.Favourite, new { @class = "reset-label" })</h6>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Favourite, 12, 500, new { @class = "span12" })
+                </div>
+            </div>
+        </div>
+
+        <div class="group-control span6">
+            <div>
+                <h6>@Html.LabelFor(model => model.Skill, new { @class = "reset-label" })</h6>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.Skill, 12, 500, new { @class = "span12" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

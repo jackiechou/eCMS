@@ -1,0 +1,13 @@
+﻿@using Eagle.WebApp.Areas.Admin.Reports.REC.InterviewEvaluationReport
+
+@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer";
+    settings.Report = (rptInterviewEvaluation)ViewData["Report"];
+    settings.AutoSize = false;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = 1000;    
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "InterviewEvaluationReport", Action = "ReportViewerPartial", ProjectID = ViewBag.ProjectID, strProject = ViewBag.strProject, ProjectTournamentID = ViewBag.ProjectTournamentID, strProjectTournament = ViewBag.strProjectTournament, Mode = ViewBag.Mode, isCallBack = true };
+    settings.ExportRouteValues = new { Controller = "InterviewEvaluationReport", Action = "ExportReportViewerPartial", ProjectID = ViewBag.ProjectID, strProject = ViewBag.strProject, ProjectTournamentID = ViewBag.ProjectTournamentID, strProjectTournament = ViewBag.strProjectTournament, Mode = ViewBag.Mode, isCallBack = true };
+}).GetHtml()

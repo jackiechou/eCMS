@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CAFRDataSet" targetNamespace="http://tempuri.org/CAFRDataSet.xsd" xmlns:mstns="http://tempuri.org/CAFRDataSet.xsd" xmlns="http://tempuri.org/CAFRDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.ConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CAFRDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="CAFRDataSet" msprop:Generator_UserDSName="CAFRDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="HR_sprptEmployee_CreateCAFR_Master" msprop:Generator_TableClassName="HR_sprptEmployee_CreateCAFR_MasterDataTable" msprop:Generator_TableVarName="tableHR_sprptEmployee_CreateCAFR_Master" msprop:Generator_TablePropName="HR_sprptEmployee_CreateCAFR_Master" msprop:Generator_RowDeletingName="HR_sprptEmployee_CreateCAFR_MasterRowDeleting" msprop:Generator_RowChangingName="HR_sprptEmployee_CreateCAFR_MasterRowChanging" msprop:Generator_RowEvHandlerName="HR_sprptEmployee_CreateCAFR_MasterRowChangeEventHandler" msprop:Generator_RowDeletedName="HR_sprptEmployee_CreateCAFR_MasterRowDeleted" msprop:Generator_UserTableName="HR_sprptEmployee_CreateCAFR_Master" msprop:Generator_RowChangedName="HR_sprptEmployee_CreateCAFR_MasterRowChanged" msprop:Generator_RowEvArgName="HR_sprptEmployee_CreateCAFR_MasterRowChangeEvent" msprop:Generator_RowClassName="HR_sprptEmployee_CreateCAFR_MasterRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Seq" msprop:Generator_ColumnVarNameInTable="columnSeq" msprop:Generator_ColumnPropNameInRow="Seq" msprop:Generator_ColumnPropNameInTable="SeqColumn" msprop:Generator_UserColumnName="Seq" type="xs:string" minOccurs="0" />
+              <xs:element name="LSCompanyID" msprop:Generator_ColumnVarNameInTable="columnLSCompanyID" msprop:Generator_ColumnPropNameInRow="LSCompanyID" msprop:Generator_ColumnPropNameInTable="LSCompanyIDColumn" msprop:Generator_UserColumnName="LSCompanyID" type="xs:string" />
+              <xs:element name="LSCompanyCode" msprop:Generator_ColumnVarNameInTable="columnLSCompanyCode" msprop:Generator_ColumnPropNameInRow="LSCompanyCode" msprop:Generator_ColumnPropNameInTable="LSCompanyCodeColumn" msprop:Generator_UserColumnName="LSCompanyCode" type="xs:string" minOccurs="0" />
+              <xs:element name="Department" msprop:Generator_ColumnVarNameInTable="columnDepartment" msprop:Generator_ColumnPropNameInRow="Department" msprop:Generator_ColumnPropNameInTable="DepartmentColumn" msprop:Generator_UserColumnName="Department" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalGROSSBasicSalaryByDept" msprop:Generator_ColumnVarNameInTable="columnTotalGROSSBasicSalaryByDept" msprop:Generator_ColumnPropNameInRow="TotalGROSSBasicSalaryByDept" msprop:Generator_ColumnPropNameInTable="TotalGROSSBasicSalaryByDeptColumn" msprop:Generator_UserColumnName="TotalGROSSBasicSalaryByDept" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalInsuranceFeeByDeptPaidByIndividual" msprop:Generator_ColumnVarNameInTable="columnTotalInsuranceFeeByDeptPaidByIndividual" msprop:Generator_ColumnPropNameInRow="TotalInsuranceFeeByDeptPaidByIndividual" msprop:Generator_ColumnPropNameInTable="TotalInsuranceFeeByDeptPaidByIndividualColumn" msprop:Generator_UserColumnName="TotalInsuranceFeeByDeptPaidByIndividual" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalInsuranceFeeByDeptPaidByCompany" msprop:Generator_ColumnVarNameInTable="columnTotalInsuranceFeeByDeptPaidByCompany" msprop:Generator_ColumnPropNameInRow="TotalInsuranceFeeByDeptPaidByCompany" msprop:Generator_ColumnPropNameInTable="TotalInsuranceFeeByDeptPaidByCompanyColumn" msprop:Generator_UserColumnName="TotalInsuranceFeeByDeptPaidByCompany" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="HR_sprptEmployee_CreateCAFR_Summary" msprop:Generator_TableClassName="HR_sprptEmployee_CreateCAFR_SummaryDataTable" msprop:Generator_TableVarName="tableHR_sprptEmployee_CreateCAFR_Summary" msprop:Generator_TablePropName="HR_sprptEmployee_CreateCAFR_Summary" msprop:Generator_RowDeletingName="HR_sprptEmployee_CreateCAFR_SummaryRowDeleting" msprop:Generator_RowChangingName="HR_sprptEmployee_CreateCAFR_SummaryRowChanging" msprop:Generator_RowEvHandlerName="HR_sprptEmployee_CreateCAFR_SummaryRowChangeEventHandler" msprop:Generator_RowDeletedName="HR_sprptEmployee_CreateCAFR_SummaryRowDeleted" msprop:Generator_UserTableName="HR_sprptEmployee_CreateCAFR_Summary" msprop:Generator_RowChangedName="HR_sprptEmployee_CreateCAFR_SummaryRowChanged" msprop:Generator_RowEvArgName="HR_sprptEmployee_CreateCAFR_SummaryRowChangeEvent" msprop:Generator_RowClassName="HR_sprptEmployee_CreateCAFR_SummaryRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TotalBasicSalaryGROSS" msprop:Generator_ColumnVarNameInTable="columnTotalBasicSalaryGROSS" msprop:Generator_ColumnPropNameInRow="TotalBasicSalaryGROSS" msprop:Generator_ColumnPropNameInTable="TotalBasicSalaryGROSSColumn" msprop:Generator_UserColumnName="TotalBasicSalaryGROSS" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalInsuranceFeePaidByIndividual" msprop:Generator_ColumnVarNameInTable="columnTotalInsuranceFeePaidByIndividual" msprop:Generator_ColumnPropNameInRow="TotalInsuranceFeePaidByIndividual" msprop:Generator_ColumnPropNameInTable="TotalInsuranceFeePaidByIndividualColumn" msprop:Generator_UserColumnName="TotalInsuranceFeePaidByIndividual" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalInsuranceFeePaidByCompany" msprop:Generator_ColumnVarNameInTable="columnTotalInsuranceFeePaidByCompany" msprop:Generator_ColumnPropNameInRow="TotalInsuranceFeePaidByCompany" msprop:Generator_ColumnPropNameInTable="TotalInsuranceFeePaidByCompanyColumn" msprop:Generator_UserColumnName="TotalInsuranceFeePaidByCompany" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:HR_sprptEmployee_CreateCAFR_Master" />
+      <xs:field xpath="mstns:LSCompanyID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

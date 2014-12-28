@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ReportSettings>
+  <ReportSetting>   
+    <HeaderText>UnitCorp</HeaderText>    
+    <PageHeaderText>UnitCorp</PageHeaderText>
+    <PageFooterText>Copyright by UnitCorp</PageFooterText>    
+    <CompanyName>Unit Corp</CompanyName>
+    <Logo>~/Content/Admin/images/logo_report.png</Logo>
+    <Address>157 Nguyen Thi Thap, Tan Phu Ward , District 7, HCM City, Vietnam</Address>
+    <Tel>(84-8) 37 402 388 – 37 402 908</Tel>
+    <Fax>(84-8) 37 402 385</Fax>
+    <Email>info@unit.com.vn</Email>
+  </ReportSetting>
+</ReportSettings>

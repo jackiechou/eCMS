@@ -1,0 +1,62 @@
+﻿@model List<LS_tblTrainingForm>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.TrainingFormCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.TrainingFormName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Used
+                </th>
+                 <th>
+                    @Eagle.Resource.LanguageResource.Rank
+                </th>
+                <th class="no-sort">
+                    @Eagle.Resource.LanguageResource.Note
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.Code
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td class="text_center">
+                        @item.UsedInfo
+                    </td>
+                    <td>
+                        @item.Rank
+                    </td>
+                    <td>
+                        @item.Note
+                    </td>
+                    <td class="table-actions text_center no-sort">
+                        <a data-id="@item.LSTrainingFormID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.LSTrainingFormID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    InvokeDataTables();
+</script>

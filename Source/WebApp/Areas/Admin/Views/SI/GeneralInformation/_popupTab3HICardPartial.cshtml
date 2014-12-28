@@ -1,0 +1,90 @@
+﻿@model HICardViewModel
+<div class="modal hide fade popupTab3HICard" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.InsuranceProcessBefore</h3>
+    </div>
+    <div class="modal-body">
+
+    <div id="alertMessageBoxPopup">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+        <!--Begin button -->
+        <form id="frmHICard">
+            @Html.HiddenFor(model => model.HICardID)
+            @Html.HiddenFor(model => model.oldHospitalName)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.FromDateAllowNull)
+                </div>
+                <div class="col-md-4">
+                    @Html.DatepickerFor(model => model.FromDateAllowNull, null,null, (int)ViewBag.LanguageId)
+                    @Html.ValidationMessageFor(model => model.FromDateAllowNull)
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ToDateAllowNull)
+                </div>
+                <div class="col-md-4">
+                    @Html.DatepickerFor(model => model.ToDateAllowNull, null, null, (int)ViewBag.LanguageId)
+                    @Html.ValidationMessageFor(model => model.ToDateAllowNull)
+                </div>
+            </div>
+           <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSHospitalID)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("SelectLSHospitalID", null, new { @class = "span10" })
+                    @Html.HiddenFor(model => model.LSHospitalID)
+                    @Html.HiddenFor(model => model.LSHospitalName)
+                    @Html.CheckBox("ChangePlace", false, new { style="margin: 7px 0px 0px 7px;" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, new { @class = "span10", @style="margin-top: 7px;" })
+                </div>
+            </div>
+        </form>
+        
+    </div>
+    <!--Begin button -->
+    <div class="modal-footer">
+        <input type="button" id="btnHICancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+        <input type="button" id="btnHISubmit" class="btn btn-info AddModel" value="@Eagle.Resource.LanguageResource.Save" />
+    </div>
+    <!--End button -->
+</div>
+<script>
+    InvokeDateTimePicker();
+    PopulateDropDownListAutoComplete("SelectLSHospitalID", "LSHospitalID", "LSHospitalName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputHospitalName)', areas + '/Hospital/DropdownList');
+    $(document).ready(function () {
+        $("#SelectLSHospitalID").select2("enable", false);
+        $("#SelectLSHospitalID").select2("val", "@Model.LSHospitalID");
+    });
+    $(document).on("change", "#ChangePlace", function () {
+        if ($(this).prop("checked") == true) {
+            $("#SelectLSHospitalID").select2("enable", true);
+        } else {
+            $("#SelectLSHospitalID").select2("val", "@Model.LSHospitalID");
+            $("#SelectLSHospitalID").select2("enable", false);
+        }
+    });
+
+</script>

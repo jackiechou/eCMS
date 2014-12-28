@@ -1,0 +1,74 @@
+﻿@model IEnumerable<GeneralInformation_InsNoticeDataViewModel>
+
+
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.TypeName)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.AriseDate)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.ToDate)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.OldSalaryCoef)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.OldSalary)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.NewSalaryCoef)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.NewSalary)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Percent)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td class="text_center">
+                            @i
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.TypeName)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.AriseDate)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.ToDate)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.OldSalaryCoef)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.OldSalary)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.NewSalaryCoef)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.NewSalary)
+                        </td>
+                        <td class="text_center">
+                            @Html.DisplayFor(modelItem => item.Percent)
+                        </td>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+

@@ -1,0 +1,80 @@
+﻿@model List<TrainingRequestDurationUserViewModel>
+
+<table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+        <tr>
+            <th class="text_center" style="width:10px">@Eagle.Resource.LanguageResource.No</th>
+            <th class="text_center" style="width:20%">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationName
+            </th>
+            <th class="text_center" style="width:20%">
+                @Eagle.Resource.LanguageResource.LastCompanyDefine
+            </th>
+            <th class="text_center" style="width:35%">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationPosition
+            </th>                 
+            <th class="text_center" style="width:15%">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationInfo
+            </th>                                  
+            <th class="table-actions text_center no-sort" style="width:10px">@Eagle.Resource.LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+            var k = -1;
+        }
+        @foreach (var item in Model)
+        {
+            i++;
+            k++;            
+            <input type="hidden" name="[@k].TrainingDurationID" value="@item.TrainingDurationID" />            
+            <input type="hidden" name="[@k].EmpID" value="@item.EmpID" />            
+            <input type="hidden" name="[@k].EmployeeName" value="@item.EmployeeName" />
+            <input type="hidden" name="[@k].CompanyName" value="@item.CompanyName" />
+            <input type="hidden" name="[@k].PositionName" value="@item.PositionName" /> 
+            <input type="hidden" name="[@k].TotalDays" value="@item.TotalDays" />
+            <input type="hidden" name="[@k].TotalHours" value="@item.TotalHours" /> 
+            <tr>
+                <td class="text_center">
+                    @i
+                </td>
+                <td>
+                    @item.EmployeeName
+                </td>
+                <td>
+                    @item.CompanyName                     
+                </td>
+                <td>
+                    @item.PositionName                     
+                </td>  
+                <td class="text_center">
+                    @item.DurationInfo                     
+                </td>                                 
+                <td class="table-actions text_center no-sort">                        
+                    <a data-id="@item.TrainingDurationID"  title="Delete" class="ico deleteItem " onclick="DeleteRowOfDurationUser(this);">&nbsp;&nbsp;&nbsp;</a>                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function DeleteRowOfDurationUser(row) {        
+        $("body").addClass("loading");
+        var lsID = $(row).data('id');  // ID cua dong du lieu      
+        var urlDelete = areas + "/TrainingRequest/DeleteRowOfDurationUser?id=" + lsID;
+
+        $.ajax({
+            type: "POST",
+            url: urlDelete,
+            data: $("#divListOfDurationUser").serialize(),
+            success: function (data) {
+                hideMessageWithTitle(0);
+                $('#divListOfDurationUser').html(data);
+                
+            }
+        });
+    }
+    
+</script>

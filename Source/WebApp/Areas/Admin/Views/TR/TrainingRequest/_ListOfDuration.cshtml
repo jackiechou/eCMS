@@ -1,0 +1,245 @@
+﻿@model List<TrainingRequestDurationViewModel>
+
+<table id="dataTableDuration" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+        <tr>
+            <th class="text_center" style="width:10px">@Eagle.Resource.LanguageResource.No</th>
+            <th class="text_center" style="width:75px">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationFrom&nbsp;&nbsp;(*)
+            </th>
+            <th class="text_center" style="width:75px">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationTo&nbsp;&nbsp;(*)
+            </th>            
+            <th class="text_center" style="width:30%">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationDays&nbsp;&nbsp;(*)
+            </th>            
+            <th class="text_center" style="width:30%">
+                @Eagle.Resource.LanguageResource.TrainingRequestDurationHour&nbsp;&nbsp;(*)
+            </th>      
+            <th class="text_center" style="width:10%">
+                @Eagle.Resource.LanguageResource.TrainingRequestParticipant
+            </th>
+            <th class="table-actions text_center no-sort" style="width:10px">@Eagle.Resource.LanguageResource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            int k = -1;
+        }
+        @foreach (var item in Model)
+        {
+            i++;
+            k++;       
+            <input type="hidden" name="[@k].TrainingDurationID" value="@item.TrainingDurationID" />                                                                            
+            <input type="hidden" name="[@k].Key" value="@item.Key" />                                                                            
+            <tr id="@k">
+                <td class="text_center">
+                    @i
+                </td>                
+                <td> 
+                    @Html.Datepicker3For(modelItem => item.FromDateInfo, null, new { @name = "[" + k.ToString() + "].FromDateInfo", @style = "width:75px;" })
+                    
+                </td>  
+                <td> 
+                     @Html.Datepicker3For(modelItem => item.ToDateInfo, null, new { @name = "[" + k.ToString() + "].ToDateInfo", @style = "width:75px;" })
+                </td>                 
+                <td>
+                    <input type="text" name="[@k].TotalDaysAllowNull" value="@item.TotalDaysAllowNull" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);" onkeyup="CheckNumber(this);" onchange="UpdateOfTrainingDuration(this);" />                    
+                </td>
+                <td>
+                    <input type="text" name="[@k].TotalHours" value="@item.TotalHours" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);" onkeyup="CheckNumber(this);" onchange="UpdateOfTrainingDuration(this);"/>                                                            
+                </td>
+                <td>
+                    <input data-id="@k" type="button" id="btnAddEmployee" value="@Eagle.Resource.LanguageResource.TrainingRequestParticipant" class="btn btn-info AddModel"  @ViewBag.EnableSaveAndSendForApproval/>
+                </td>
+                <td class="table-actions text_center no-sort">                        
+                    <a data-id="@item.Key"  title="Delete" class="ico deleteItem " onclick="DeleteRowOfDuration(this);">&nbsp;&nbsp;&nbsp;</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>    
+
+<script type="text/javascript">
+    InvokeDateTimePicker();
+    InvokeDateTimePicker();
+</script>
+
+@Html.Action("jqueryval", "Common", null)
+
+<script>    
+    var TotalDays, TotalHours, FromDate, ToDate;
+    function ChooseEmployee(id, code, fullName, companyName, department, section, position, controlId) {
+        
+        var lsID = $(this).data('id');
+        
+        if (controlId == "strEmpName") {
+            //Gán các thông số
+            $('#strEmpName').val(fullName);
+            
+            $('#EmpID').trigger('change');
+
+            //Ẩn popup
+            $('.popupEmp').modal('hide');
+
+            /*remove qtip nếu có*/
+            var qtip = $('#strEmpName').attr('aria-describedby');
+            $('#' + qtip).remove();
+            // bỏ ẩn các qtip khác
+            $('.qtip').removeClass('hidden');
+            $('.qtip-content').removeClass('hidden');
+
+            // Adding a item of TrainingRequestDuration 
+            var EmpID = $("#EmpID").val();
+            if (EmpID == "") {
+                return;
+            }
+           
+            // Adding a new TrainingRequestDuration   
+            var urlChooseEmployee = areas + "/TrainingRequest/AddRowOfDurationUser?EmpID=" + id + "&FromDateInfo=" + FromDate + "&ToDateInfo=" + ToDate + "&TotalDaysInfo=" + TotalDays + "&TotalHoursInfo=" + TotalHours;
+                     
+            $.ajax({
+                type: "POST",
+                url: urlChooseEmployee,
+                data : $('#divListOfDuration').serialize(),
+                success: function (data) {                    
+                    if (data == 'Existed') {
+                        AlterWarning('@Eagle.Resource.LanguageResource.TrainingRequestDurationUserExists');                        
+                    }
+                    else if (data == 'ExistedDuration') {
+                        AlterWarning('@Eagle.Resource.LanguageResource.TrainingRequestDurationExists');                        
+                    }
+                    else {
+                        hideMessageWithTitle(0);
+                        $("body").addClass("loading");
+                        $('#divListOfDurationUser').html(data);
+                    }
+
+                }
+            });
+
+        }
+    }
+    function GetListOfEmployee(itemselected) {
+        
+        $('.popupEmp').modal('hide');
+        var urlAddListOfEmployee = areas + "/TrainingRequest/" + "AddingListOfEmployee?ListOfEmpIDInfo=" + itemselected + "&FromDateInfo=" + FromDate + "&ToDateInfo=" + ToDate + "&TotalDaysInfo=" + TotalDays + "&TotalHoursInfo=" + TotalHours;
+        
+        $.ajax({
+            type: "POST",
+            url: urlAddListOfEmployee,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'Existed') {
+                    AlterWarning('@Eagle.Resource.LanguageResource.TrainingRequestDurationUserExists');
+                }
+                else if (data == 'ExistedDuration') {
+                    AlterWarning('@Eagle.Resource.LanguageResource.TrainingRequestDurationExists');
+                }
+                else {
+                    $('#divListOfDurationUser').html(data);
+                    $(".popupEmp").modal("hide");
+                }                
+            }
+        });
+    }
+   
+    // Add a participants
+    $(document).on("click", "#btnAddEmployee", function () {
+
+        // TrainingRequestDurationUser
+        var lsID = $(this).data('id'); 
+        TotalDays = $("input[name='[" + lsID + "].TotalDaysAllowNull']").val();
+        TotalHours = $("input[name='[" + lsID + "].TotalHours']").val();
+        FromDate = $("input[name='[" + lsID + "].FromDateInfo']").val();
+        ToDate = $("input[name='[" + lsID + "].ToDateInfo']").val();                
+
+        if (FromDate == "") {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingRequestFromDate');
+            return;
+        }
+        if (ToDate == "") {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingRequestToDate');
+            return;
+        }
+        if (CompareDate(FromDate, ToDate) == false) {
+            AlterWarning('@Eagle.Resource.LanguageResource.TrainingRequestInvalidFromToDate');
+            return;
+        }
+        if (TotalDays == "") {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingRequestTotalDays');
+            return;
+        }
+        if (TotalHours == "") {
+            AlterWarning('@Eagle.Resource.LanguageResource.PleaseInputTrainingRequestTotalHours');
+            return;
+        }
+        if (validateNumeric(TotalDays) == false) {
+            AlterWarning('@Eagle.Resource.LanguageResource.DataIsInvalid');
+            return;
+        }
+        if (validateNumeric(TotalHours) == false) {
+            AlterWarning('@Eagle.Resource.LanguageResource.DataIsInvalid');
+            return;
+        }
+        hideMessageWithTitle(0);
+        // TrainingRequestDurationUser
+
+        //hidden qtip nếu có
+        $('.qtip').addClass('hidden');
+        $('.qtip-content').addClass('hidden');
+
+
+        //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+        controlId = "strEmpName";
+        $('.popupEmp').modal('show');
+
+        // Nếu có nhập thì search, còn không nhập thì xóa bỏ lưới search
+        $('.popup-empl-search #btnSearch').trigger("click");
+
+        return false;
+    });
+
+    // Delete row of TrainingRequestDuration
+    function DeleteRowOfDuration(row) {
+      
+        var lsID = $(row).data('id');  // ID cua dong du lieu            
+        var FromDateInfo = $("input[name='[" + lsID + "].FromDateInfo']").val();
+        var ToDateInfo = $("input[name='[" + lsID + "].ToDateInfo']").val();
+        var urlDelete = areas + "/TrainingRequest/DeleteRowOfDuration?id=" + lsID + "&FromDateInfo=" + FromDateInfo + "&ToDateInfo=" + ToDateInfo;
+        
+        $.ajax({
+            type: "POST",
+            url: urlDelete,
+            data: $("#divListOfDuration").serialize(),
+            success: function (data) {
+
+                if (data == "Existed") {
+                    AlterWarning('@Eagle.Resource.LanguageResource.TrainingRequestDurationExistsForDelete');
+                }
+                else {
+                    hideMessageWithTitle(0);
+                    $('#divListOfDuration').html(data);
+
+                    var urlListOfDurationUser = areas + "/TrainingRequest/_ListOfDurationUser";
+
+                    $.ajax({
+                        type: "POST",
+                        url: urlListOfDurationUser,                        
+                        success: function (data) {
+                            hideMessageWithTitle(0);
+                            $('#divListOfDurationUser').html(data);
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+    function CheckNumber(obj) {        
+        if (validateNumeric($(obj).val()) == false) {
+            $(obj).val('');
+        }
+    }
+</script>

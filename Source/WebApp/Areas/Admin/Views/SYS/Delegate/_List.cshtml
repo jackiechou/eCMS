@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DelegateViewModel>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameProcessOnline)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Account_delegate)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.FromDate)
+                </th>
+                
+                <th>
+                    @Html.DisplayNameFor(model => model.ToDate)
+                </th>
+                <th class="table-actions center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameProcessOnline)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Account_delegate)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.FromDate)
+                    </td class="center">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToDate)
+                    </td>
+                    <td class="table-actions center no-sort">
+                        <a data-id="@item.DelegateID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.DelegateID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    InvokeDataTables();
+</script>

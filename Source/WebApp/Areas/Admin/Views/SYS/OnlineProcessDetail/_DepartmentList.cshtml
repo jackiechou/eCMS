@@ -1,0 +1,49 @@
+﻿@model List<OnlineProcessEmpMiniViewModel>
+
+@if (Model != null)
+{
+    <div class="col-md-2">
+        <label style="margin-top:5px;">@Eagle.Resource.LanguageResource.LastCompanyDefine (<span class="color-red">*</span>)</label>
+    </div>
+    <div class="col-md-10">
+        <div class="row" id="reset-firt-div">
+            <style>
+                #reset-firt-div div {
+                    margin-left: 2.564102564102564%;
+                }
+
+                #reset-firt-div div input {
+                    margin-top: -1px;
+                }
+            </style>
+            @{int i = -1;}
+            @if (ViewBag.strDisabled == "")
+            {
+                foreach (var item in Model)
+                {
+                    i++;
+                    <div class="col-md-5">
+                        <label class="reset-label">
+                        
+                            @Html.CheckBox("DepartmentChecked", item.Checked, new { @value = item.LSCompanyID })
+                            @item.LSCompanyName
+                        </label>
+                    </div>
+                }
+            }else
+            {
+                foreach (var item in Model)
+                {
+                    i++;
+                    <div class="col-md-5">
+                        <label class="reset-label">
+                        
+                            @Html.CheckBox("DepartmentChecked", item.Checked, new { @value = item.LSCompanyID, @disabled="disabled" })
+                            @item.LSCompanyName
+                        </label>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<AccountViewModel>
+
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th style="min-width:100px">
+                    @Html.DisplayNameFor(model => model.strEmpName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToDate)
+                </th>
+                <th style="max-width:30px">
+                    @Html.DisplayNameFor(model => model.FLock)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.UserName
+                    </td>
+                    <td>
+                        @item.strEmpName
+                    </td>
+                    <td>
+                        @item.strFromDate
+                    </td>
+                    <td>
+                        @item.strToDate
+                    </td>
+                    <td class="text-center">@item.strFLock
+                    </td>
+                    <td class="text-center">
+                        <a data-id="@item.UserID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.UserID"  title="Delete" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+<script>
+    InvokeDataTables();
+</script>

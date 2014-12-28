@@ -1,0 +1,57 @@
+﻿@model ProjectFeeViewModel
+
+ <!--Begin button -->
+<div>
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong>
+            <div class="padding-left">
+                @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+            </div>
+        </div>
+    }
+</div>
+<form id="frmFee">
+    @Html.HiddenFor(model => model.ProjectID)
+    @Html.Hidden("OldLSRecruitmentFeeID")
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.LSRecruitmentFeeIDAlowNull)
+        </div>
+        <div class="col-md-4"> 
+            @Html.TextBox("SelectLSRecruitmentFeeIDAlowNull", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.LSRecruitmentFeeIDAlowNull)
+            @Html.HiddenFor(model => model.LSRecruitmentFeeName)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.AmountAlowNull)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.AmountAlowNull, new { @class = "span12" })
+        </div>
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.CurrencyID)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("SelectCurrencyIDAlowNull", null, new { @class = "span12" })
+            @Html.HiddenFor(model => model.CurrencyIDAlowNull)
+            @Html.HiddenFor(model => model.CurrencyName)
+        </div>
+    </div>
+</form>
+@Html.Action("jqueryval", "Common", null)
+<script>
+    InvokeDateTimePicker();
+
+    PopulateDropDownListAutoComplete("SelectCurrencyIDAlowNull", "CurrencyIDAlowNull", "CurrencyName",
+        '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputCurrencyName)', areas + '/LS_tblCurrency/DropdownList');
+    PopulateDropDownListAutoComplete("SelectLSRecruitmentFeeIDAlowNull", "LSRecruitmentFeeIDAlowNull", "LSRecruitmentFeeName",
+        '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputRecruitmentFee)', areas + '/RecruitmentFee/DropdownList');
+           
+</script>
+<!--End button -->

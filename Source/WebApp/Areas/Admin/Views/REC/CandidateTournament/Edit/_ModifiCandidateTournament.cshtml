@@ -1,0 +1,107 @@
+﻿@model CandidateTournamentViewModel
+
+<form id="frmAdd" class="form-horizontal">
+
+    @Html.Hidden("model.CandidateTournamentID", Model.CandidateTournamentID)
+    @Html.Hidden("model.ProjectTournamentID", Model.ProjectTournamentID)
+    @Html.Hidden("model.CandidateID", Model.CandidateID)
+    @Html.Hidden("model.CandidateName", Model.CandidateName)
+    @Html.Hidden("model.DOB", Model.DOB)
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+
+            <div id="right_accordion" class="accordion-group">
+                @Html.Action("_CandidateInfomation", new { CandidateID = Model.CandidateID })
+
+                @Html.Action("_PreviousRoundInfo", new { CandidateID = Model.CandidateID, ProjectTournamentID = Model.ProjectTournamentID })
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">
+                            <label class="reset-label" id="ProjectTournamentName"></label>
+                        </span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            @if (Model.REC_tblCandidateTournament_InterviewCriteria != null && Model.REC_tblCandidateTournament_InterviewCriteria.Count > 0)
+                            {
+                                int i = 0;
+                                int k = -1;
+                                foreach (var item in Model.REC_tblCandidateTournament_InterviewCriteria)
+                                {
+                                    i++;
+                                    k++;
+                                <div>@i - @item.REC_tblInterviewCriteria.Name</div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>@Eagle.Resource.LanguageResource.Note</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Hidden("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].CandidateTournamentID", Model.CandidateTournamentID)
+                                        @Html.Hidden("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].InterviewCriteriaID", item.InterviewCriteriaID)
+                                        @Html.TextArea("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].Note", item.Note, new { @class = "span12" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>@Eagle.Resource.LanguageResource.Point</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.DropDownList("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].Rank", new SelectList(ViewBag.Rank, null, null, item.Rank))
+                                    </div>
+                                </div>
+                                }
+                            }
+
+                            <div>@Eagle.Resource.LanguageResource.Total</div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.Note</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextArea("model.Note", Model.Note, new { @class = "span12" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.Result</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="reset-label">@Html.DropDownList("Result", null, "--" + Eagle.Resource.LanguageResource.Select + "--", new { @class = "span12", @style = "margin-top: -6px;", @data_val = "true", @data_val_required = string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.Result) })</label>
+                                </div>
+                            </div>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="footbar">
+                                    <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.Close" class="btn" />
+                                    @if (ViewBag.SavePermission == true)
+                                    {
+                                        <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" />    
+                                    }
+                                    else
+                                    {
+                                        <input type="button" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" disabled="disabled" />    
+                                    }
+
+                                </div>
+                            </div>
+                            <!--End.row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@Html.Action("jqueryval", "Common", null)

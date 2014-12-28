@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C5C30F8F-BB95-4C91-B11C-9244E91915DF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eagle.Model</RootNamespace>
+    <AssemblyName>Eagle.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ActionModel.cs" />
+    <Compile Include="Common\AutoCompleteViewModel.cs" />
+    <Compile Include="Common\BaseModel.cs" />
+    <Compile Include="Common\BloodTypeModel.cs" />
+    <Compile Include="Common\StatusModel.cs" />
+    <Compile Include="Common\TreeModel.cs" />
+    <Compile Include="Contents\Banners\BannerTypeViewModel.cs" />
+    <Compile Include="Contents\Galleries\GalleryCollectionViewModel.cs" />
+    <Compile Include="Contents\Galleries\GalleryFileViewModel.cs" />
+    <Compile Include="Contents\Galleries\GalleryTopicViewModel.cs" />
+    <Compile Include="HR\Personnel\Employee\EmployeeInfo.cs" />
+    <Compile Include="Services\Logs\ErrorLogInfo.cs" />
+    <Compile Include="ShopCart\Customers\CustomerInfo.cs" />
+    <Compile Include="SYS\Application\ApplicationInfo.cs" />
+    <Compile Include="SYS\Menu\MenuInfo.cs" />
+    <Compile Include="SYS\Menu\MenuTypeViewModel.cs" />
+    <Compile Include="SYS\Pages\PageBannerViewModel.cs" />
+    <Compile Include="SYS\Permission\FolderPermissionViewModel.cs" />
+    <Compile Include="SYS\Roles\RoleModulePermissionViewModel.cs" />
+    <Compile Include="SYS\User\ChangePasswordViewModel.cs" />
+    <Compile Include="Common\CommonViewModel.cs" />
+    <Compile Include="Common\ConditionViewModel.cs" />
+    <Compile Include="Common\DocumentViewModel.cs" />
+    <Compile Include="Common\GenderModel.cs" />
+    <Compile Include="Common\ImageModel.cs" />
+    <Compile Include="Common\ImageViewModel.cs" />
+    <Compile Include="SYS\Languages\LanguageViewModel.cs" />
+    <Compile Include="SYS\User\LoginViewModel.cs" />
+    <Compile Include="Common\MasterDataViewModel.cs" />
+    <Compile Include="Common\MethodPITModel.cs" />
+    <Compile Include="Common\PageSelectViewModel.cs" />
+    <Compile Include="Common\Select2PagedResultViewModel.cs" />
+    <Compile Include="Common\Select2ResultViewModel.cs" />
+    <Compile Include="Common\SettingModes.cs" />
+    <Compile Include="Common\TreeNode.cs" />
+    <Compile Include="Contents\Banners\BannerPositionViewModel.cs" />
+    <Compile Include="Contents\Banners\BannerViewModel.cs" />
+    <Compile Include="Contents\News\NewsCategoryViewModel.cs" />
+    <Compile Include="Contents\News\NewsViewModel.cs" />
+    <Compile Include="HR\Personnel\ContractEditModel.cs" />
+    <Compile Include="HR\Personnel\ContractViewModel.cs" />
+    <Compile Include="HR\Personnel\EmployeeEditModel.cs" />
+    <Compile Include="HR\Personnel\EmployeeSearchViewModel.cs" />
+    <Compile Include="HR\Personnel\EmployeeViewModel.cs" />
+    <Compile Include="HR\Personnel\ProjectViewModel.cs" />
+    <Compile Include="HR\Personnel\QualificationCreateModel.cs" />
+    <Compile Include="HR\Personnel\QualificationEditModel.cs" />
+    <Compile Include="HR\Personnel\QualificationViewModel.cs" />
+    <Compile Include="HR\Personnel\RelationshipViewModel.cs" />
+    <Compile Include="HR\Personnel\RewardDisciplineViewModel.cs" />
+    <Compile Include="HR\Personnel\WorkingHistoryViewModel.cs" />
+    <Compile Include="HR\Personnel\WorkingRecordViewModel.cs" />
+    <Compile Include="LS\CompanyDefineViewModel.cs" />
+    <Compile Include="LS\CompanyViewModel.cs" />
+    <Compile Include="LS\LS_tblBankBranchEditModel.cs" />
+    <Compile Include="LS\LS_tblBankBranchViewModel.cs" />
+    <Compile Include="LS\LS_tblBankCreateModel.cs" />
+    <Compile Include="LS\LS_tblBankViewModel.cs" />
+    <Compile Include="LS\LS_tblChangeStatusViewModel.cs" />
+    <Compile Include="LS\LS_tblCompanyViewModel.cs" />
+    <Compile Include="LS\LS_tblContractTypeViewModel.cs" />
+    <Compile Include="LS\LS_tblCountryCreateModel.cs" />
+    <Compile Include="LS\LS_tblCountryViewModel.cs" />
+    <Compile Include="LS\LS_tblCurrencyViewModel.cs" />
+    <Compile Include="LS\LS_tblDistrictCreateModel.cs" />
+    <Compile Include="LS\LS_tblDistrictViewModel.cs" />
+    <Compile Include="LS\LS_tblEducationCreateModel.cs" />
+    <Compile Include="LS\LS_tblEducationViewModel.cs" />
+    <Compile Include="LS\LS_tblEthnicCreateModel.cs" />
+    <Compile Include="LS\LS_tblEthnicViewModel.cs" />
+    <Compile Include="LS\LS_tblFacultyCreateModel.cs" />
+    <Compile Include="LS\LS_tblFacultyViewModel.cs" />
+    <Compile Include="LS\LS_tblGradeViewModel.cs" />
+    <Compile Include="LS\LS_tblLocationCreateModel.cs" />
+    <Compile Include="LS\LS_tblLocationViewModel.cs" />
+    <Compile Include="LS\LS_tblMajorCreateModel.cs" />
+    <Compile Include="LS\LS_tblMajorViewModel.cs" />
+    <Compile Include="LS\LS_tblMaritalCreateModel.cs" />
+    <Compile Include="LS\LS_tblMaritalViewModel.cs" />
+    <Compile Include="LS\LS_tblNationalityCreateModel.cs" />
+    <Compile Include="LS\LS_tblNationalityViewModel.cs" />
+    <Compile Include="LS\LS_tblOnlineProcessMailBccViewModel.cs" />
+    <Compile Include="LS\LS_tblOnlineProcessMailCcViewModel.cs" />
+    <Compile Include="LS\LS_tblPositionCreateModel.cs" />
+    <Compile Include="LS\LS_tblPositionViewModel.cs" />
+    <Compile Include="LS\LS_tblProvinceCreateModel.cs" />
+    <Compile Include="LS\LS_tblProvinceViewModel.cs" />
+    <Compile Include="LS\LS_tblQualificationCreateModel.cs" />
+    <Compile Include="LS\LS_tblQualificationViewModel.cs" />
+    <Compile Include="LS\LS_tblRelationshipViewModel.cs" />
+    <Compile Include="LS\LS_tblReligionCreateModel.cs" />
+    <Compile Include="LS\LS_tblReligionViewModel.cs" />
+    <Compile Include="LS\LS_tblRewardLevelViewModel.cs" />
+    <Compile Include="LS\LS_tblRewardViewModel.cs" />
+    <Compile Include="LS\LS_tblSchoolCreateModel.cs" />
+    <Compile Include="LS\LS_tblSchoolViewModel.cs" />
+    <Compile Include="LS\LS_tblTerminationReasonViewModel.cs" />
+    <Compile Include="LS\LS_tblTerminationTypeViewModel.cs" />
+    <Compile Include="LS\LS_tblTrainingTypeViewModel.cs" />
+    <Compile Include="SYS\Mail\MailAccountViewModel.cs" />
+    <Compile Include="SYS\Mail\MailServerProviderAccountViewModel.cs" />
+    <Compile Include="SYS\Mail\MailServerProviderViewModel.cs" />
+    <Compile Include="SYS\Mail\MailTemplateViewModel.cs" />
+    <Compile Include="SYS\Mail\MailTypeViewModel.cs" />
+    <Compile Include="Common\MetaValidation.cs" />
+    <Compile Include="HR\Payroll\AdditionSalaryViewModels.cs" />
+    <Compile Include="HR\Payroll\AddSalaryByPositionViewModels.cs" />
+    <Compile Include="HR\Payroll\DeductionSalaryViewModels.cs" />
+    <Compile Include="HR\Payroll\EmployeeForPayrollViewModels.cs" />
+    <Compile Include="HR\Payroll\GradeViewModels.cs" />
+    <Compile Include="HR\Payroll\IncometaxGrossViewModels.cs" />
+    <Compile Include="HR\Payroll\IncometaxNetViewModels.cs" />
+    <Compile Include="HR\Payroll\InsuranceExchangeRateViewModels.cs" />
+    <Compile Include="HR\Payroll\PayrollExchangeRateViewModels.cs" />
+    <Compile Include="HR\Payroll\PayrollReportViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\Payroll\PayrollSummaryViewModel.cs" />
+    <Compile Include="HR\Payroll\RankViewModels.cs" />
+    <Compile Include="HR\Payroll\Salary13CoefViewModel.cs" />
+    <Compile Include="HR\Payroll\Salary13ViewModel.cs" />
+    <Compile Include="HR\Payroll\SalaryAdjustModelView.cs" />
+    <Compile Include="HR\Payroll\SalaryDeductionViewModels.cs" />
+    <Compile Include="HR\Payroll\SalaryViewModels.cs" />
+    <Compile Include="HR\Payroll\ScaleViewModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HR\REC\CalendarViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\CandidateQualificationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\CandidateResultViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\CandidateSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\CandidatetmpViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\CandidateTournamentViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\CandidateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\InterviewCalendarInfoViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\InterviewCalendarViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\InterviewCriteriaViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\PreviousRoundViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\ProjectFeeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\ProjectTournamentViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\QuotaRecruitmentCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\QuotaRecruitmentViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\RecruitmentDemandResultViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\RecruitmentDemandViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\RecruitmentPlanViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\RecruitmentProjectSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\RecruitmentProjectViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\RecruitmentSourceSelectedViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\ResultsRecordSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\TransferCandidateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\TransferEditViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\WorkingBackgroundViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\REC\WorkingExpectationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Report\Common\StatisticModel.cs" />
+    <Compile Include="Report\HR\Contract\ContractDetailReportModel.cs" />
+    <Compile Include="Report\HR\Contract\ContractReportModel.cs" />
+    <Compile Include="Report\HR\Department\DepartmentDetailReportModel.cs" />
+    <Compile Include="Report\HR\Department\DepartmentReportModel.cs" />
+    <Compile Include="Report\HR\PersonnelStatisticModel.cs" />
+    <Compile Include="Report\HR\Position\PositionDetailReportModel.cs" />
+    <Compile Include="Report\HR\Position\PositionReportModel.cs" />
+    <Compile Include="Report\HR\Qualification\QualificationReportModel.cs" />
+    <Compile Include="Report\TS\MonthlyOTReportModel.cs" />
+    <Compile Include="Report\TS\YearlyOTReportModel.cs" />
+    <Compile Include="HR\SI\C66ASearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\ConvalescenceSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\ConvalescenceViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\GeneralInformation_InsNoticeDataViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\HICardViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\HospitalViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\InsNoticeDataViewModels.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\InsuranceInformationSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\InsuranceInformationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\LeaveInsuranceViewModels.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\SI\PreviousRecordViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SYS\Content\ContentItemViewModel.cs" />
+    <Compile Include="SYS\Content\ContentTypeViewModel.cs" />
+    <Compile Include="SYS\Menu\MenuViewModel.cs" />
+    <Compile Include="SYS\User\AccountCreateModel.cs" />
+    <Compile Include="SYS\User\AccountViewModel.cs" />
+    <Compile Include="SYS\Common\CommentViewModel.cs" />
+    <Compile Include="SYS\Common\DataPermissionViewModel.cs" />
+    <Compile Include="SYS\Common\DelegateViewModel.cs" />
+    <Compile Include="SYS\FileManager\FileViewModel.cs" />
+    <Compile Include="SYS\FileManager\FolderViewModel.cs" />
+    <Compile Include="SYS\ModuleFunctions\FunctionListCreateViewModel.cs" />
+    <Compile Include="SYS\ModuleFunctions\FunctionListViewModel.cs" />
+    <Compile Include="SYS\ModuleFunctions\FunctionPermissionCreateViewModel.cs" />
+    <Compile Include="SYS\ModuleFunctions\FunctionPermissionViewModel.cs" />
+    <Compile Include="SYS\Roles\GroupCreateViewModel.cs" />
+    <Compile Include="SYS\Roles\GroupViewModel.cs" />
+    <Compile Include="SYS\Common\LS_tblOnlineProcessViewModel.cs" />
+    <Compile Include="SYS\Common\MasterDataPermissionViewModel.cs" />
+    <Compile Include="SYS\Modules\ModuleControlViewModel.cs" />
+    <Compile Include="SYS\Modules\ModuleFunctionViewModel.cs" />
+    <Compile Include="SYS\Modules\ModuleHtmlTextViewModel.cs" />
+    <Compile Include="SYS\Modules\ModulePermissionViewModel.cs" />
+    <Compile Include="SYS\Modules\ModuleSettingViewModel.cs" />
+    <Compile Include="SYS\Modules\ModuleCategories.cs" />
+    <Compile Include="SYS\Modules\ModuleViewModel.cs" />
+    <Compile Include="SYS\Common\OnlineProcessEmpMiniViewModel.cs" />
+    <Compile Include="SYS\Common\OnlineProcessEmpViewModel.cs" />
+    <Compile Include="SYS\Common\OnlineProcessMasterViewModel.cs" />
+    <Compile Include="SYS\Pages\PageMetaViewModel.cs" />
+    <Compile Include="SYS\Pages\PageModuleSettingViewModel.cs" />
+    <Compile Include="SYS\Pages\PageModuleViewModel.cs" />
+    <Compile Include="SYS\Pages\PageOptionViewModel.cs" />
+    <Compile Include="SYS\Pages\PagePermissionViewModel.cs" />
+    <Compile Include="SYS\Pages\PageSettingViewModel.cs" />
+    <Compile Include="SYS\Pages\PageViewModel.cs" />
+    <Compile Include="SYS\Common\PayrollParameterViewModel.cs" />
+    <Compile Include="SYS\Permission\MenuPermissionViewModel.cs" />
+    <Compile Include="SYS\Permission\ModulePermissionViewModel.cs" />
+    <Compile Include="SYS\Permission\PagePermissionViewModel.cs" />
+    <Compile Include="SYS\Permission\PermissionSettingViewModel.cs" />
+    <Compile Include="SYS\Permission\PermissionViewModel.cs" />
+    <Compile Include="SYS\Common\SystemParameterViewModel.cs" />
+    <Compile Include="SYS\Permission\SYS_tblFunctionPermissionViewModel.cs" />
+    <Compile Include="SYS\ModuleFunctions\UserGroupCreateViewModel.cs" />
+    <Compile Include="SYS\ModuleFunctions\UserGroupViewModel.cs" />
+    <Compile Include="HR\TER\TerminationParameterViewModel.cs" />
+    <Compile Include="HR\TER\TerminationViewModel.cs" />
+    <Compile Include="HR\TR\AnswerTypeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\DurationUserViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\EvaluationTemplateDetailViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\EvaluationTemplateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TemplateItemViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingAnswerTypeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingApprisalItemViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingApprisalPartViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingCourseViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingEvaluationDetailViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingEvaluationForEmployeeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingEvaluationPartViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingEvaluationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingPlanExpenseModelView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingPlanResultViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingPlanSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingPlanViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingRequestCostViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingRequestDurationUserViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingRequestDurationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingRequestSearchViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TR\TrainingRequestViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\AssignEmpScheduleCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\AssignEmpScheduleViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\CyclicViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\HolidayViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\IndividualOTViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveApplicationCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveApplicationDetailListViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveDayTypeCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveDayTypeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveEntitlementViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveTypeCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\LeaveTypeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\MTLChildViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\OTLimitByStaffViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\OTRequestFillDataViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\OTRequestListViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\OTRequestViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ReconciliationViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ScheduleChangeCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ScheduleChangeViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ScheduleCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ScheduleDetailCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ScheduleDetailViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ScheduleViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ShiftCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\ShiftViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\StandardAnnualLeaveCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\StandardAnnualLeaveDaysViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\TimeKeepingReportViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HR\TS\TimekeepingViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SYS\User\UserEditModel.cs" />
+    <Compile Include="SYS\User\UserInfo.cs" />
+    <Compile Include="SYS\User\UserViewModel.cs" />
+    <Compile Include="UI\Skins\SkinTemplateViewModel.cs" />
+    <Compile Include="UI\Skins\SkinViewModel.cs" />
+    <Compile Include="UI\Skins\SkinPackageViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eagle.Common\Eagle.Common.csproj">
+      <Project>{50709a7a-41c3-47d6-8c85-35c899cbae0f}</Project>
+      <Name>Eagle.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eagle.Core\Eagle.Core.csproj">
+      <Project>{d1276a46-d078-4c31-8a18-31eaa3da6496}</Project>
+      <Name>Eagle.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eagle.Resource\Eagle.Resource.csproj">
+      <Project>{5e79bc1f-181c-4d80-bf4d-1578c664e425}</Project>
+      <Name>Eagle.Resource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dashboard\" />
+    <Folder Include="SYS\Host\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

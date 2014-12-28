@@ -1,0 +1,167 @@
+﻿@model Eagle.Model.HR.QualificationCreateModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "createform", name = "createform", autocomplete = "off", @class = "form-horizontal" }))
+{
+    <div class="qualification_box">                                         
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.QualificationNo)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.QualificationNo, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.QualificationNo)                
+            </div>
+
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.LSQualificationID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSQualificationID", null, new { @class = "span12" })
+                @Html.Hidden("LSQualificationID","")
+                @Html.Hidden("LSQualificationName")        
+                @Html.ValidationMessageFor(model => model.LSQualificationID)                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.QualificationDate)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.QualificationDate)
+                @Html.ValidationMessageFor(model => model.QualificationDate)
+            </div> 
+             <div class="col-md-2">
+                @Html.LabelFor(model => model.FileIds)
+            </div>
+            <div class="col-md-4">
+                <input id="btnUpload_Qualification" type="button" class="btn-green" value="@Html.Raw(Eagle.Resource.LanguageResource.FileBrowser)" />
+                 <input type="hidden" id="FileIds" name="FileIds" value="@Model.FileIds"/>
+            </div>                          
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.FromMonth)
+            </div>
+            <div class="col-md-4">                                            
+                @Html.MonthPickerFor(model => model.FromMonth)
+                @Html.ValidationMessageFor(model => model.FromMonth)
+            </div>
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.ToMonth)
+            </div>
+            <div class="col-md-4">                                              
+                @Html.MonthPickerFor(model => model.ToMonth)
+                @Html.ValidationMessageFor(model => model.ToMonth)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSSchoolID)
+            </div>
+            <div class="col-md-4">                                    
+                @Html.TextBox("selectLSSchoolID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSSchoolID)
+                @Html.Hidden("LSSchoolName")
+                @Html.ValidationMessageFor(model => model.LSSchoolID)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.OtherSchool)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.OtherSchool, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.OtherSchool)
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSFacultyID)
+            </div>
+            <div class="col-md-4">                                    
+                @Html.TextBox("selectLSFacultyID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSFacultyID)
+                @Html.Hidden("LSFacultyName")
+                @Html.ValidationMessageFor(model => model.LSFacultyID)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.OtherFaculty)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.OtherFaculty, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.OtherFaculty)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.MajorID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSMajors", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.MajorID)
+                @Html.Hidden("LSMajorName")                             
+                @Html.ValidationMessageFor(model => model.MajorID)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSTrainingTypeID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSTrainingTypeID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSTrainingTypeID)
+                @Html.Hidden("LSTrainingTypeName")
+                @Html.ValidationMessageFor(model => model.LSTrainingTypeID)
+            </div>
+        </div>
+        <div class="row">                                
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TrainingPlace)
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.TrainingPlace,null, new { @class = "span12" })
+            </div>
+                                                               
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.Priority)
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Priority, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.Priority)
+            </div>
+        </div>
+        <div id="divCountries" style="display:@ViewBag.DivCountryStaus" class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.LSCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSCountryID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSCountryID)
+                @Html.Hidden("LSCountryName")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "span12" })
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.PayByCompany)
+            </div>
+            <div class="col-md-4">
+                @Html.CheckBox("PayByCompany", Model.PayByCompany == true, new { @style = "float:left;margin:5px;" })
+            </div>
+        </div>                      
+    </div>
+     <div class="row">
+        <div class="action-buttons text_center">           
+             @Html.HiddenFor(model => model.EmpID)
+            <button type="button" id="btnReset" class="btn btn-sm" >@Html.Raw(Eagle.Resource.LanguageResource.btnReset)</button>
+            <button type="button" id="btnAddQualification" class="btn btn-sm btn-primary add">@Html.Raw(Eagle.Resource.LanguageResource.btnSave)</button>           
+        </div>
+    </div>
+}
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade modalUpload" id="modalUpload_Qualification" style="background: #eee;">
+    <div id="divUpload_Qualification"></div>
+</div>
+
+@Scripts.Render("~/bundles/validation")

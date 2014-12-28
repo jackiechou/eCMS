@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Eagle.Model.HR.RewardDisciplineViewModel>
+<div class="table datatable">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSRewardName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSRewardLevelName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EffectiveDate)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSRewardName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSRewardLevelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EffectiveDate)
+                    </td>
+                    <td class="table-actions text_center center no-sort">
+                        <a data-id="@item.RewardID" title="Edit" class="ico editItem">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.RewardID" title="Delete" class="ico deleteItem">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

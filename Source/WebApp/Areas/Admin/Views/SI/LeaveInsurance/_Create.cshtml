@@ -1,0 +1,227 @@
+﻿@model InsuranceLeaveViewModel
+
+@Html.Action("Employee","Common")
+
+<form id="frmAdd" class="form-horizontal">
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.EmpID)
+
+    @Html.HiddenFor(model => model.Total)
+    @Html.HiddenFor(model => model.BenifitSalary)
+    @Html.HiddenFor(model => model.Percent)
+    @Html.HiddenFor(model => model.AvgSalary)
+
+    <!--hidden này dùng để lưu check xem có phải là nghỉ do sinh con nhưng bị mất không-->
+    @Html.Hidden("IsMAT")
+
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            
+                             <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSLeaveDayTypeID)
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBox("SelectLeaveDayTypeID", null, new { @class = "span12" })
+                                    @Html.HiddenFor(model => model.LSLeaveDayTypeName)
+                                    @Html.HiddenFor(model => model.LSLeaveDayTypeIDAlowNull)                                     
+                                </div>
+                                
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.dFromDate)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DatepickerFor(model => model.dFromDate)
+                                    @Html.ValidationMessageFor(model => model.dFromDate)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.dToDate)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DatepickerFor(model => model.dToDate)
+                                    @Html.ValidationMessageFor(model => model.dToDate)
+                                </div>
+                            </div>
+                            <!--end row-->
+                            
+                            <!--start row-->
+                            <div class="row hidden moreInfo">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(p => p.Total)
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lblTotal" class="reset-label">
+                                        @Html.DisplayFor(p => p.Total)
+                                    </label>
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(p => p.AvgSalary)
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lblAvgSalary" class="reset-label">
+                                        @Html.DisplayFor(p => p.AvgSalary)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row hidden moreInfo">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(p => p.Percent)
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lblPercent" class="reset-label">
+                                        @Html.DisplayFor(p => p.Percent)
+                                    </label>
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.LabelFor(p => p.BenifitSalary)
+                                </div>
+                                <div class="col-md-4">
+                                    <label id="lblBenifitSalary" class="reset-label">
+                                        @Html.DisplayFor(p => p.BenifitSalary)
+                                    </label>
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.IsInsNotice)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">
+                                     @Html.CheckBox("IsInsNotice")
+                                        </label>
+                                </div>
+                                 <div class="col-md-2">
+                                     @Html.RequiredLabelFor(model => model.SIMonth)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">
+                                        @Html.MonthPickerFor(model => model.SIMonth, null, new { @name="SIMonth", @class = "mtz-monthpicker-widgetcontainer monthPicker span11 input-validation-error" })
+                                        @Html.ValidationMessageFor(model => model.SIMonth)
+                                    </label>
+                                </div>
+                            </div>
+                            <!--end row-->
+                            <!--start row-->
+                            <div class="row Thai hidden">
+                                <div class="col-md-2 MTL hidden">
+                                    @if (ViewBag.IsMAT == true)
+                                    {
+                                        @Html.RequiredLabelFor(model => model.BabyDOB)
+                                    }
+                                    else
+                                    {
+                                        @Html.LabelFor(model => model.BabyDOB)
+                                    }
+                                </div>
+                                <div class="col-md-4 MTL hidden">
+                                    @Html.DatepickerFor(model => model.BabyDOB)
+                                    @Html.ValidationMessageFor(model => model.BabyDOB)
+                                </div>
+                                <div class="col-md-2 MIS hidden">
+                                    @if (ViewBag.IsMAT == true)
+                                    {
+                                        @Html.RequiredLabelFor(model => model.BabyDOD)
+                                    }else
+                                    {
+                                        @Html.LabelFor(model => model.BabyDOD)
+                                    }
+                                </div>
+                                <div class="col-md-4 MIS hidden">
+                                    @Html.DatepickerFor(model => model.BabyDOD)
+                                    @Html.ValidationMessageFor(model => model.BabyDOD)
+                                </div>
+                            </div>
+                            <!--end row-->
+                             <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.IsBenefits)
+                                </div>
+                                <div class="col-md-4">
+                                     <label class="reset-label"> @Html.CheckBox("IsBenefits")</label>
+                                </div>
+                                 <div class="col-md-2">
+                                     @Html.LabelFor(model => model.IsConvalescence)
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="reset-label">
+                                        @Html.CheckBox("IsConvalescence")
+                                    </label>
+                                </div>
+                            </div>
+                            <!--end row-->
+
+                              <!--start row-->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Stage)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("Stage")
+                                </div>
+                                 <div class="col-md-2">
+                                     @Html.LabelFor(model => model.ConditionEffect)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.ConditionEffect)
+                                </div>
+                            </div>
+                            <!--end row-->
+                        </div>
+                    </div>
+                    <!--row button-->
+                    <div class="row">
+                        <div class="footbar">
+                            <div>
+                                <input class="btn ResetModel" type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" />
+                                <input class="btn btn-info AddModel" type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" />
+                            </div>
+                        </div>
+                    </div>
+                    <!--End.row-->
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@*<script src="/Scripts/jquery.mtz.monthpicker.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.mtz.monthpicker.custom.js" type="text/javascript"></script>*@
+
+@Html.Action("jqueryval", "Common", null)
+<script>
+    InvokeMonthPicker();
+    InvokeDateTimePicker();
+    var strInput = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputLeaveType)';
+    PopulateDropDownListAutoComplete("SelectLeaveDayTypeID", "LSLeaveDayTypeIDAlowNull", "LSLeaveDayTypeName", strInput, areas + '/LeaveDayType/DropdownListSI');
+
+</script>

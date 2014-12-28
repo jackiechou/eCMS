@@ -1,0 +1,51 @@
+﻿@model string
+<div class="main-menu">
+    <ul id="navigation" style="display: -moz-box; width: 100%" class="sf-navbar sf-menu">
+        @Html.Raw(Model)
+    </ul>
+</div>
+    @*<link href="~/Scripts/plugins/superfish_menu/css/superfish.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/superfish_menu/css/superfish-vertical.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/superfish_menu/css/superfish-navbar.css" rel="stylesheet" />
+        <script src="~/Scripts/plugins/superfish_menu/js/superfish.js"></script>
+        <script src="~/Scripts/plugins/superfish_menu/js/hoverIntent.js"></script>
+    *@
+    <script type="text/javascript">
+        $(function () {
+            //MENU START ===================================================================================================
+            jQuery('ul.sf-menu').superfish({
+                delay: 700,                            // one second delay on mouseout
+                animation: { opacity: 'show', height: 'show' },  // fade-in and slide-down animation
+                speed: 'fast',                          // slow or fast  - animation speed
+                dropShadows: false,                            // disable drop shadows
+                dualColumn: 12, //if a submenu has at least this many items it will be divided in 2 columns
+                tripleColumn: 16, //if a submenu has at least this many items it will be divided in 3 columns
+                //onBeforeShow: function () {
+                //    if ($(this).closest('ul').hasClass('sf-navbar') == true ||
+                //        this == []) {
+                //        return;
+                //    }
+
+                //    var wid = $(window).width();
+                //    var ulparent = $(this).closest('ul');
+                //    if (ulparent.offset() != undefined) {
+                //        if (ulparent.offset().left + 2 * ulparent.width() > wid) {
+                //            $(this).addClass('pullleft');
+                //        }
+                //    }
+                //}
+            });
+            $("ul.sf-menu li").addClass("ui-state-default");
+
+            $("ul.sf-menu li").hover(function () {
+                $(this).addClass('ui-state-hover');
+                //$(this).find('.ul-menu-list').addClass("ul-menu-style");
+            },
+            function () {
+                $(this).removeClass('ui-state-hover');
+                //$(this).find('.ul-menu-list').removeClass('ul-menu-style');
+            });
+            //MENU END =====================================================================================================
+        });
+
+    </script>

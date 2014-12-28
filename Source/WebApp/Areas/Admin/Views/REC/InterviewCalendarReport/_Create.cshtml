@@ -1,0 +1,48 @@
+﻿@model  ResultsRecordSearchViewModel
+<div id="form_accordion" class="accordion-body collapse in">
+    <div class="accordion-inner">
+        <div class="accordion-content">
+
+            <div class="row" style="margin-bottom:5px;">
+                <div class="col-md-12">
+                    <label class="reset-label">
+                        <input type="radio" name="radOption" value="1" checked="checked" /> @Eagle.Resource.LanguageResource.ViewByInterviewer
+                    </label>&nbsp;&nbsp;
+                    <label class="reset-label">
+                        <input type="radio" name="radOption" value="2" /> @Eagle.Resource.LanguageResource.ViewByRecruitmentTournament
+                    </label>
+                </div>
+            </div>
+
+            <div id="divInterviewer" class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.Interviewer
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("Interviewer", null, new { @class = "span12" })
+                </div>
+            </div>
+
+            <div id="divRecruitmentTournament" class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.ProjectID)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("ProjectID", null, new { @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.ProjectTournamentID)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("ProjectTournamentID", null, new { @class = "span12" })
+                </div>
+            </div>
+           
+            <!--End.row-->
+        </div>
+    </div>
+</div>
+
+@Html.Action("jqueryval", "Common", null)

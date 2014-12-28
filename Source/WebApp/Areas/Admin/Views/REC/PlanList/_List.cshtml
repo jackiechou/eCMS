@@ -1,0 +1,123 @@
+﻿@model IEnumerable<RecruitmentPlanViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text-center">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.EmpIDPlanName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSCompanyName)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.LSPositionName)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.PlanQuantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatusProcess)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatusPlan)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>              
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int MaxOfLevelApprove = (int)ViewBag.MaxOfLevelApprove;
+              }
+            @if (Model != null)
+	        {
+                foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td class="text-center">
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmpIDPlanName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreateDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LSCompanyName)
+                        </td>
+                        <td>                    
+                            @Html.DisplayFor(modelItem => item.LSPositionName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.PlanQuantity)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.StatusProcessName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StatusPlanName)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            @*Nút Tạo yêu cầu tuyển dụng
+                             Khi Status còn đang mở
+                             và cấp cuối cùng đã duyệt
+                            *@
+                            @if (item.StatusProcess == 1 &&
+                                item.LevelApprove  == MaxOfLevelApprove && item.StatusPlan == (2 * item.LevelApprove)
+                                )
+                            {
+                                <a title="@Eagle.Resource.LanguageResource.CreateDemand" href="/Admin/RecruitmentDemand/Index?PlanID=@item.PlanID&ModuleID=8" class="ico viewItem">&nbsp;&nbsp;&nbsp;</a> 
+                            }
+                            else
+                            {
+                                <a title="@Eagle.Resource.LanguageResource.CreateDemand" class="ico viewItemDisable">&nbsp;&nbsp;&nbsp;</a> 
+                            }
+                            @*Nút xem chi tiết*@
+                            <a data-id="@item.PlanID"  title="@Eagle.Resource.LanguageResource.Edit" class="ico editItem " href="/Admin/RecruitmentPlan/Index?PlanId=@item.PlanID&ModuleID=8" >&nbsp;&nbsp;&nbsp;</a>
+                            @*Nút Xóa*@
+                            @if (Session[SettingKeys.AccountInfo] != null && item.EmpIDPlan == ((AccountViewModel)Session[SettingKeys.AccountInfo]).EmpID &&
+                            (item.StatusPlan == 0 || item.StatusPlan == 3))
+                            {
+                                <a data-id="@item.PlanID"  title="@Eagle.Resource.LanguageResource.Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>    
+                            }
+                            else
+                            {
+                                <a title="@Eagle.Resource.LanguageResource.Delete" class="ico deleteItemDisable">&nbsp;&nbsp;&nbsp;</a> 
+                            }
+                            @*Nút Đóng là người tạo mới có quyền đóng,
+                              Đang mở mới được đóng 
+                              không được duyệt mới có quyền đóng
+                            *@
+                            @if (Session[SettingKeys.AccountInfo] != null && item.EmpIDPlan == ((AccountViewModel)Session[SettingKeys.AccountInfo]).EmpID 
+                                && item.StatusProcess == 1
+                                && (item.StatusPlan == 3 ||item.StatusPlan == 5 ||item.StatusPlan == 7 ||item.StatusPlan == 9 ||item.StatusPlan == 11 )
+                                )
+                            {
+                                <a data-id="@item.PlanID"  title="@Eagle.Resource.LanguageResource.Close" class="ico closeItem ">&nbsp;&nbsp;&nbsp;</a>    
+                            }
+                            else
+                            {
+                                <a data-id="@item.PlanID"  title="@Eagle.Resource.LanguageResource.Close" class="ico closeItemDisable ">&nbsp;&nbsp;&nbsp;</a>  
+                            }
+
+                        </td>                       
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();   
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading");
+    });
+
+</script>

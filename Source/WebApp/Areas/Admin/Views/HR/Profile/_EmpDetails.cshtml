@@ -1,0 +1,159 @@
+﻿@model EmployeeViewModel
+  
+<form id="detailView">
+    <div class="contents">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="summaryView row-fluid">
+                    <div class="recordDetails">
+                                       
+                        <table class="summary-table">
+                            <tbody>
+                                <tr class="summaryViewEntries">
+                                    <td style="width: 30%" class="fieldLabel">
+                                        @Html.LabelFor(model=>model.FirstName, new { @class="muted"})
+                                    </td>
+                                    <td style="width: 70%" class="fieldValue">
+                                        <div class="row">
+                                            <span style="word-wrap: break-word;" class="value span10">
+                                                @Html.DisplayFor(model=>model.FirstName)
+                                            </span>                                                 
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="summaryViewEntries">
+                                    <td style="width: 30%" class="fieldLabel">
+                                        @Html.LabelFor(model=>model.LastName, new { @class="muted"})
+                                    </td>
+                                    <td style="width: 70%" class="fieldValue">
+                                        <div class="row">
+                                            <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.LastName)</span>                                                   
+                                        </div>
+                                    </td>
+                                </tr>
+                                    <tr class="summaryViewEntries">
+                                    <td style="width: 30%" class="fieldLabel">
+                                        <label class="muted">@Html.LabelFor(model=>model.DOB, new { @class="muted"})</label></td>
+                                    <td style="width: 70%" class="fieldValue">
+                                        <div class="row">
+                                            <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.DOB)</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="summaryViewEntries">
+                                    <td style="width: 30%" class="fieldLabel">
+                                        <label class="muted">@Html.LabelFor(model=>model.Telephone, new { @class="muted"})</label></td>
+                                    <td style="width: 70%" class="fieldValue">
+                                        <div class="row">
+                                            <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model => model.Telephone)</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="summaryViewEntries">
+                                    <td style="width: 30%" class="fieldLabel">
+                                        @Html.LabelFor(model=>model.Section, new { @class="muted"})
+                                    </td>
+                                    <td style="width: 70%" class="fieldValue">
+                                        <div class="row">
+                                            <span style="word-wrap: break-word;" class="value span10">
+                                                <a title="Organizations" href="/Admin/LS_tblCompany/Details?Id=@Model.LSCompanyID">@Html.DisplayFor(model => model.CompanyName)</a>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>      
+                                <tr class="summaryViewEntries">
+                                    <td style="width: 30%" class="fieldLabel">
+                                        @Html.LabelFor(model=>model.Email, new { @class="muted"})
+                                    </td>
+                                    <td style="width: 70%" class="fieldValue">
+                                        <div class="row">
+                                            <span style="word-wrap: break-word;" class="value span10">@Html.DisplayFor(model=>model.Email)</span>
+                                                    
+                                        </div>
+                                    </td>
+                                </tr>       
+                            </tbody>
+                        </table>
+
+                        <hr>
+                        <div class="row">
+                                <div>
+                                <div class="col-md-4 toggleViewByMode">
+                                    @Html.Raw(Eagle.Resource.LanguageResource.CreatedOnDate)  
+                                </div>
+                                <div class="col-md-8">
+                                    <small><em><b>@Html.DisplayFor(model=>model.CreatedOnDate)</b></em></small>
+                                </div>
+                            </div>
+                            <div>
+                                    <div class="col-md-4 toggleViewByMode">
+                                    @Html.Raw(Eagle.Resource.LanguageResource.LastModifiedOnDate)  
+                                </div>
+                                    <div class="col-md-8"><small><em>                                          
+                                    <b>@Html.DisplayFor(model=>model.LastModifiedOnDate)</b></em></small>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                             
+            </div>
+            <div style="overflow: hidden" class="col-md-5">
+                <div id="relatedActivities">
+                    <div class="summaryWidgetContainer">
+                        <div class="widget_header row-fluid">
+                            <span class="col-md-8">
+                                <span class="textOverflowEllipsis title14">Activities</span>
+                            </span>
+                            <span class="col-md-4">
+                                <button type="button" data-url="sourceModule=Contacts&amp;sourceRecord=19&amp;relationOperation=true" class="btn pull-right addButton createActivity">
+                                    <strong>Add</strong>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="widget_contents">
+                            <div class="summaryWidgetContainer">
+                                <table style="width:100%">
+                                    <tr class="textAlignCenter">
+                                            <td style="width:30%"><small>
+                                            @Html.Raw(Eagle.Resource.LanguageResource.JoinDate)</small>
+                                            </td>
+                                        <td style="width:70%">
+                                            <b>@Html.DisplayFor(model=>model.JoinDate)</b></td>
+                                    </tr>                                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          @*      <div class="summaryWidgetContainer">
+                    <div data-name="LBL_UPDATES" data-url="module=Contacts&amp;view=Detail&amp;record=19&amp;mode=showRecentActivities&amp;page=1&amp;limit=5" class="widgetContainer_1">
+                        <div class="widget_header row-fluid">
+                            <span class="col-md-8 margin0px">
+                                <h4>Updates</h4>
+                            </span>
+                        </div>
+                        <div class="widget_contents">
+                            <div class="recentActivitiesContainer">
+                                <div>
+                                    <ul class="unstyled">
+                                        <li>
+                                            <div>
+                                                <span><strong>Jackiechou Administrator</strong> created</span><span class="pull-right"><p class="muted"><small title="Tue, Jul 22, 2014 at 5:07 PM">2 days ago</small></p>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <span class="clearfix"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</form>
+         
+
+
+

@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.TransferCandidate;
+}
+<div id="MainBody">
+    @Html.Action("_Edit")
+</div>
+
+<script type="text/javascript">
+    $(document).on("click", "#btnReset", function () {
+        loading();
+        var url = "/Admin/TransferCandidate/Index?ModuleID=8";
+        url = url + "&CandidateCode=" + getParameterByName("CandidateCode");
+        url = url + "&FullName=" + getParameterByName("FullName");
+        url = url + "&Gender=" + getParameterByName("Gender");
+        url = url + "&Status=" + getParameterByName("Status");
+        
+        window.location.href = url;
+    });
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            $.ajax({
+                type: "GET",
+                url: areas + "/Validation/CheckValidCompany?LSCompanyID=" + $("input[name='LSCompanyID']").val(),
+                success: function (data) {
+                    if (data != true) {
+                        AlterWarning(data);
+                        return false;
+                    }
+                    else //Kiểm tra đã chọn Position chưa
+                        $.ajax({
+                            type: "POST",
+                            url: "Transfer",
+                            data: $("#frmAdd").serialize(),
+                            success: function (data) {
+                                if (data == 'success') {
+                                    AlterUpdateSuccess();
+                                } else if (data == 'timeout') {
+                                    window.location.href = '/Admin/Login?desiredUrl=@Request.Url.AbsoluteUri';
+                                }
+                                else {
+                                    $('#MainBody').html(data);
+                                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                                }
+                            }
+                        });
+                    }
+            });
+        }
+    });
+</script>

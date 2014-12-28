@@ -1,0 +1,106 @@
+﻿@model List<ScheduleDetailListViewModel>
+  <style>
+    td {
+        padding-bottom: 1px !important;
+        padding-top: 1px !important;
+    }
+   
+    .table tbody tr td{
+        padding: 2px 2px;
+    }
+     .table tbody tr td label{
+        font-size:12px;
+    }
+
+</style>
+
+ <div class="row">
+                <table class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable" style="font-size: 11px">
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>01</th>
+                            <th>02</th>
+                            <th>03</th>
+                            <th>04</th>
+                            <th>05</th>
+                            <th>06</th>
+                            <th>07</th>
+                            <th>08</th>
+                            <th>09</th>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th>15</th>
+                            <th>16</th>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th>22</th>
+                            <th>23</th>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th>29</th>
+                            <th>30</th>
+                            <th>31</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int k = -1;}
+                        @for (int month = 1; month <= 12; month++)
+                        {
+                            <tr>
+                                <td>@month</td>
+                                @foreach (var day in Model)
+                                {
+                                    if (day.M == month)
+                                    {
+                                        string CssClass = "date-" + day.strTypeDate;
+                                        if (day.TypeDate != 0)
+                                        {
+                                            k++;
+                                            string id = "td-" + day.Day.ToString() + "-" + day.M.ToString();
+                                            string val = day.LSShiftID == 0 ? "" : day.LSShiftID.ToString();
+                                    <td id="@id" class="@CssClass">
+                                        <label class="display-name reset">
+                                            @val
+                                        </label>
+                                        <input type="hidden" class="TypeDate" value="@day.TypeDate" name="[@k].TypeDate" />
+                                        <input type="hidden" value="@day.M" name="[@k].M" />
+                                        <input type="hidden" value="@day.Day" name="[@k].Day" />
+                                        <input type="hidden" class="strTypeDate" value="@day.strTypeDate" name="[@k].strTypeDate" />
+                                        <input type="hidden" value="@day.Year" name="[@k].Year" />
+                                        <input type="hidden" value="@val" name="[@k].LSShiftID" />
+                                    </td>
+                                                      
+                                        }
+                                        else
+                                        {
+                                    <td class="date-I"></td>  
+                                        }
+
+                                    }
+                                }
+
+                                @{
+                                var NgayThieu = 31 - Model.Where(p => p.M == month).Count();
+                                }
+                                @for (int i = 0; i < NgayThieu; i++)
+                                {
+                                    <td class="date-I"></td> 
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+<script type="text/javascript">
+    InvokeDateTimePicker();
+</script>

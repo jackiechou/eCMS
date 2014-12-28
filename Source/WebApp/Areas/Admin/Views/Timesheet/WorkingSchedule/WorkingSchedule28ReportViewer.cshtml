@@ -1,0 +1,11 @@
+﻿@Html.DevExpress().ReportViewer(settings =>
+{
+    settings.Name = "reportViewer1";
+    settings.Report = (WorkingSchedule28XtraReport)ViewData["Report"];
+    settings.AutoSize = false;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = 1000;    
+    settings.Attributes.Add("class", "reportViewer");
+    settings.CallbackRouteValues = new { Controller = "WorkingSchedule", Action = "LoadWorkingScheduleReportViewer" };
+    settings.ExportRouteValues = new { Controller = "WorkingSchedule", Action = "ExportWorkingScheduleData" };
+}).GetHtml()

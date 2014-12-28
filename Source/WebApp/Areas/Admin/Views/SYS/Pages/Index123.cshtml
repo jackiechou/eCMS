@@ -1,0 +1,279 @@
+﻿@{
+    ViewBag.Title = "Page";
+}
+<style type="text/css">
+    #IconPopUp ul {
+        width: 380px;
+    }
+    #IconPopUp ul li{
+        width: 25px;
+    }
+    #IconPopUp ul li.actived {
+        background-color: yellow;
+    }
+    #IconPopUp ul li{
+        float: left;
+        list-style-type: none;
+        padding: 2px 3px;
+    }
+    .ui-dialog { z-index: 1051 !important ;}
+
+    .custom-combobox {
+        width: 94%;
+    }
+
+    .EditTable .custom-combobox {
+        width: 92%;
+        display: inline-block;
+    }
+
+    .ui-jqdialog, .ui-jqdialog .EditTable, .ui-jqdialog form {
+        min-width: 600px !important;
+    }
+
+    .EditTable .FormData input:not([type='checkbox']) {
+        width: 95%;
+    }
+
+    .FormData .CaptionTD {
+        width: 100px;
+    }
+</style>
+
+<div id="IconPopUp" style="display: none">
+    @Html.Partial("../SYS/Page/_Icon")
+</div>
+<table class="tbSearch">
+    <tr>
+        <td>
+            <label class="control-label"> Tên trang </label>
+        </td>
+        <td>
+            @Html.TextBox("sSearch", null, new { @class = "FormElement ui-widget-content ui-corner-all" })
+        </td>
+        <td>
+            <label class="control-label"> Thuộc trang </label>
+        </td>
+        <td>
+            <select id="sParentId">
+                <option value=""> --- Chọn tất cả --- </option>
+                @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.ParentId_Combobox)
+                {
+                    @Html.Raw("<option value='" + item.Value + "' " + Html.Raw(item.Selected ? "selected='selected'" : "") + " >" + item.Text + "</option>");
+                }
+            </select>
+        </td>
+
+        <td>
+            <label class="control-label">Trạng thái</label>
+        </td>
+        <td>
+            @Html.Partial("_StatusSelect", "Status")
+        </td>
+        <td>
+            <button class="btnsearch" onclick="BtnSearch();"><img style="height: 24px;" alt="vi" src="~/Content/Admin/images/16x16/search.gif"></button>
+        </td>
+    </tr>
+</table>
+
+<div id="tab-content" class="tab-content">
+    <table id="Main_JQgrid"></table>
+    <div id="nav_JQgrid">
+    </div>
+</div>
+
+@section Scripts {
+   <script>
+    //$.isReLoadGrid = false;
+    //$(document).ready(function () {
+    //    //$("#modalDelete").draggable({ handle: ".modal-header" });
+    //    $("#modalEdit").draggable({ handle: ".modal-header" });
+    //    $("#myModal").draggable({ handle: ".modal-header" });
+    //});
+
+    //var controller = 'Page';
+    //<!-- add action -->
+       var jqGrid = $("#Main_JQgrid");
+       function BtnSearch() {
+           jqGrid.setGridParam({
+               postData: {
+                   sSearch: $('#sSearch').val(),
+                   sParentId: $('#sParentId').val(),
+                   Status: $('#Status').val()
+               }
+           });
+           jqGrid.trigger("reloadGrid");
+       }
+
+        jqGrid.jqGrid({
+            treeGrid: true,
+            //set TreeGrid model
+            treeGridModel: 'adjacency',
+            //set expand column
+            ExpandColumn: 'PageId',
+            //url from wich data should be requested
+            url: '@Url.Action("Main", "Page")',
+            editurl: '@Url.Action("UpdatePage", "Page")',
+            //type of data
+            datatype: 'json',
+            //url access method type
+            mtype: 'POST',
+            @*url: '@Url.Action("Main", "Page")',
+               datatype: 'json',
+               mtype: 'POST',*@
+            colNames: ['Mã', 'Tên Trang (VN)', 'Tên Trang (EN)', 'Thuộc Trang', 'Đường Dẫn', 'Số Thứ Tự', 'Biểu Tượng', 'Trạng Thái'],
+            colModel: [
+                { name: 'PageId', index: 'PageId', align: 'left', editable: true, search: true, fixed: true, width: 120 },
+                { name: 'PageNameVn', index: 'PageNameVn', align: 'left', editable: true, search: true, width: 100, editoptions: { validate: 'text' }, formoptions: { elmsuffix: "<span class='spwarning'>*</span>" } },
+                { name: 'PageNameEn', index: 'PageNameEn', align: 'left', editable: true, search: true, width: 100, editoptions: { validate: 'text' }, formoptions: { elmsuffix: "<span class='spwarning'>*</span>" } },
+                {
+                    name: 'ParentId', index: 'ParentId', align: 'left', editable: true, edittype: 'select',
+                    editoptions: {
+                        dataUrl: '@Url.Action("Dropdownlist_ParentPage_ReturnHtml", "Common")'
+                    }, search: true, width: 100
+                },
+                { name: 'PageUrl', index: 'PageUrl', align: 'left', editable: true, search: true, width: 100, editoptions: { validate: 'text' }, formoptions: { elmsuffix: "<span class='spwarning'>*</span>" } },
+                { name: 'OrderBy', index: 'OrderBy', align: 'right', editable: true, search: true, fixed: true, width: 100 },
+                { name: 'Icon', index: 'Icon', align: 'left', editable: true, search: true, fixed: true, width: 100 ,hidden:true},
+                { name: 'Actived', index: 'Actived', align: 'center', editable: true, edittype: 'checkbox', editoptions: { value: "True:False" }, search: false, fixed: true, width: 80, formatter: "checkbox", formatoptions: { disabled: true } }
+            ],
+            ondblClickRow: function (rowid) {
+                $('#edit_Main_JQgrid').trigger('click');
+            },
+            loadComplete: function (data) {
+                jqGrid.setGridParam({ autoencode: true });
+            },
+            beforeRequest: function () {
+                jqGrid.setGridParam({ autoencode: false });
+            },
+            // caption: 'Trang',
+            // pager for grid
+            pager: $('#nav_JQgrid'),
+            page: 1,
+            // number of rows per page
+            rowNum: 40,
+            rowList: [40, 60, 80, -1],
+            // scrollrows: false,
+            // hoverrows: false,
+            // initial sorting column
+            shrinkToFit: true,
+            //sortname: 'MenuName',
+            // autoencode: true,
+            // initial sorting direction
+            //sortorder: 'asc',
+            autowidth: true,
+            //sortable: true,
+            ignoreCase: true,
+            // we want to display total records count
+            viewrecords: true
+            //rownumbers: true
+        });
+
+        jqGrid.navGrid('#nav_JQgrid',
+        {
+            view: false, edit: ('@Session[Eagle.Repository.Common.Session_Edit].ToString()' == '1' ? true : false), add: ('@Session[Eagle.Repository.Common.ConstantClass.Session_Write].ToString()' == '1' ? true : false), refresh: false, del: false, search: false
+        },
+        // Edit
+        {
+            editCaption: "Sửa: Quản lý chức năng", bSubmit: "Lưu", bCancel: "Thoát",
+            recreateForm: true, closeAfterEdit: true, closeOnEscape: false,
+            beforeShowForm: function (form) {
+                $('#PageId').attr('disabled', 'disabled');
+                form.find('#tr_Icon').show();
+            },
+            afterShowForm: function (form) {
+                DragFormCenter(form.parent().parent().parent()); // File Div chua Form
+            },
+            beforeInitData: function (formid) {
+            },
+            beforeSubmit: function (postdata, formid) {
+                return [jqgridvalidate($(formid)), ''];
+            },
+            afterSubmit: function (data, formid) {
+                if (data.responseJSON == 1) {
+                    showDialog('Cập nhật thành công.', 'Thông báo:');
+                    return [true, 'Cập nhật thành công!'];
+                }
+                else if (data.responseJSON == -113) {
+                    showDialog('Bạn không có quyền cập nhật dữ liệu.', 'Thông báo:');
+                    return [false, 'Bạn không có quyền cập nhật dữ liệu'];
+                }
+                else {
+                    showDialog('Lỗi hệ thống.', 'Lỗi:');
+                    return [false, 'Lỗi hệ thống.'];
+                }
+            }
+        },
+        // Add
+        {
+            addCaption: "Tạo mới: Quản lý chức năng", bSubmit: "Lưu", bCancel: "Thoát",
+            recreateForm: true, closeAfterAdd: false, closeAfterSubmit: true,
+            beforeShowForm: function (form) {
+                $('#PageId').attr('disabled', 'disabled');
+                $('#PageId').attr('placeholder', 'Mã tự động');
+                $('#Actived').prop('checked', true);
+                form.find('#tr_Icon').show();
+            },
+            afterShowForm: function (form) {
+                DragFormCenter(form.parent().parent().parent()); // File Div chua Form
+            },
+            beforeInitData: function (form) {
+
+            },
+            beforeSubmit: function (postdata, formid) {
+                return [jqgridvalidate($(formid)), ''];
+            },
+            afterSubmit: function (data, formid) {
+                if (data.responseJSON == 1) {
+                    showDialog('Tạo mới thành công.', 'Thông báo:');
+                    return [true, 'Tạo mới thành công!'];
+                }
+                else if (data.responseJSON == -113) {
+                    showDialog('Bạn không có quyền tạo mới dữ liệu.', 'Thông báo:');
+                    return [false, 'Bạn không có quyền tạo mới dữ liệu'];
+                }
+                else {
+                    showDialog('Lỗi hệ thống.', 'Lỗi:');
+                    return [false, 'Lỗi hệ thống.'];
+                }
+            }
+        });
+
+        //jqGrid.jqGrid('filterToolbar', {
+        //    stringResult: true, searchOnEnter: false,
+        //    defaultSearch: 'cn', ignoreCase: true, enableCstringResult: true
+        //});
+
+        $(document).on('click', '#Icon', function () {
+            if ($('#IconPopUp').hasClass('ui-dialog-content')) {
+                $('#IconPopUp').dialog("open");
+            }
+            else {
+                $('#IconPopUp').dialog({
+                    title: "Chọn Icon",
+                    width: 415
+                });
+            }
+
+            $('#IconPopUp ul li.actived').removeClass('actived');
+            $('#IconPopUp ul li span[class="' + $(this).val() + '"]').addClass('actived');
+
+            var Obj = $(this);
+            $('#IconPopUp ul li span').on('click', function () {
+                Obj.val($(this).attr('class'));
+                $('#IconPopUp').dialog("close");
+
+                // Deactive and actived class
+                $('#IconPopUp ul li.actived').removeClass('actived');
+                $(this).parent().addClass('actived');
+            });
+        });
+
+        $(window).bind('resize', function () {
+            jqGrid.jqGrid("setGridHeight", $(window).height() - 220);
+        }).trigger('resize');
+
+        AutoCreateCombobox();
+        AddButtonRenderSection();
+    </script>
+}

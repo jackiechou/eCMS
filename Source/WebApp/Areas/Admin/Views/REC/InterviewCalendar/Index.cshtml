@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.InterviewSchedule;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout; 
+}
+@section ContentSection
+{
+<div id="MainBody">
+   @Html.Partial("../REC/InterviewCalendar/_Reset")
+</div>
+@Html.Action("ConfirmPopup","Common",null)
+}
+<script type="text/javascript">
+    var urlReset = "_List";
+    $(document).on("click", "#btnReset", function () {
+        if (!$("#frmAdd").valid()) {
+            return false;
+        } else {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "POST",
+                url: '_List',
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    $('#divList').html(data);
+                }
+            });
+        }
+    });
+
+    $(document).on("change", "#ProjectID", function () {
+        var options = {};
+        options.url = areas + "/CandidateTournament/GetTournaments";
+        options.type = "POST";
+        options.data = JSON.stringify({ ProjectID: $(this).val() });
+        options.dataType = "json";
+        options.contentType = "application/json";
+        options.success = function (data) {
+            $("#ProjectTournamentID").empty();
+            for (var i = 0; i < data.length; i++) {
+                $("#ProjectTournamentID").append("<option value='" + data[i].Value + "'>" + data[i].Text + "</option>");
+            }
+            $("#ProjectTournamentID").prop("disabled", false);
+            $("#ProjectTournamentID").trigger("change");
+        };
+        options.error = function () { alert("Error retrieving states!"); };
+        $.ajax(options);
+    });
+
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: 'save',
+            data: $("#frmList").serialize(),
+            success: function (data) {
+                if (data == "success") {
+                    AlterUpdateSuccess();
+                } else {
+                    AlterWarning(data);
+                }
+            }
+        });
+    });
+
+    $(document).on("change", "#ProjectTournamentID", function () {
+        $("#btnReset").trigger("click");
+
+        var selected = $(":selected", this).val();
+        if (selected != 0) {
+            $.ajax({
+                type: "GET",
+                url: areas + '/CandidateTournament/GetInterviewer?ProjectTournamentID=' + selected,
+                success: function (data) {
+                    if ($('.info').hasClass("hidden")) {
+                        $('.info').removeClass("hidden");
+                    }
+                    $("#lblInterviewer").html(data.Interviewer);
+                    $("#lblFromDate").html(data.FromDateViewer);
+                    $("#lblToDate").html(data.ToDateViewer);
+                }
+            });
+        } else {
+            if (!$('.info').hasClass("hidden")) {
+                $('.info').addClass("hidden");
+            }
+        }
+    });
+</script>

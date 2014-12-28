@@ -1,0 +1,26 @@
+﻿@model List<SYS_tblFunctionPermissionViewModel>
+<ul class="nav nav-pills">
+    <li><a id="home" href="/Admin/Home/Index">@Eagle.Resource.LanguageResource.Dashboard</a></li>
+    @foreach (SYS_tblFunctionPermissionViewModel item in Model.Where(p => !string.IsNullOrEmpty(p.FunctionNameE)))
+    {
+        string moduleid = "Module" + item.FunctionID.ToString();
+        <li><a id="@moduleid" href="/@item.Url">@item.FunctionNameE</a></li>
+    }   
+    <li><a id="SelfService" href="/Admin/SelfService/Index">@Html.Raw(Eagle.Resource.LanguageResource.SelfServices)</a>
+</ul>
+
+<script type="text/javascript">
+ 
+    function setbackground() {
+        var id = getParameterByName("ModuleID");
+        if (id != '') {
+            var module = '#Module' + getParameterByName("ModuleID");
+            $(module).css("background-color", "#0099cc");
+        } else {
+            $('#home').css("background-color", "#0099cc");
+        }
+    }
+    setbackground();
+</script>
+
+@Html.Action("LoadMainMenu", "Menu")

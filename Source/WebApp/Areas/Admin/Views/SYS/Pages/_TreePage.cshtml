@@ -1,0 +1,20 @@
+﻿@*@model Eagle.Model.SYS.Pages.PageViewModel
+
+<div id="tree">
+    <ul id="treedata">
+        @foreach (var item in Model.ParentId == 0)
+        {
+            <li data="icon: 'false'">
+                @i
+            <ul>
+                @foreach (var city in Model.CitiesAvailable.Where(c => c.County == county).OrderBy(c => c.Name))
+                {
+                    <li data="icon: 'false'" id="@city.Id">@city.Name</li>
+                }
+            </ul>
+        </li>
+        }
+    </ul>
+</div>*@
+
+

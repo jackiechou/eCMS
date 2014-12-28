@@ -1,0 +1,88 @@
+﻿@model Eagle.Model.SYS.Menu.MenuTypeViewModel
+
+<div id="FormContainer" class="form-container">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform", autocomplete = "off", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+         <div id="FormHeader" class="form-header">           
+             <div class="topbar">
+                 <div class="row topbar-inner">
+                     <div class="col-md-6">
+                         <h6>@Html.Raw(Eagle.Resource.LanguageResource.CreateMenuType)</h6>
+                     </div>
+                     <div class="col-md-6">
+                         <div class="right-button-align">
+                             <input type="button" value="@Html.Raw(Eagle.Resource.LanguageResource.btnReset)" class="btn btn-reset" />
+                             <input type="button" id="btnAdd" value="@Html.Raw(Eagle.Resource.LanguageResource.btnSave)" class="btn btn-info btn-add" />
+                         </div>
+                     </div>
+                 </div>
+             </div>                
+        </div>
+        <hr />  
+        
+        <div id="alertMessageBox" class="form-message">
+            @if (ViewBag.DisplayErrorMessage == true)
+            {
+                <div class="@ViewBag.CssClass">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>@ViewBag.SortMessage !</strong>
+                    <div class="padding-left">
+                        @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <div id="FormBody" class="form-horizontal form-body">
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.RequiredLabelFor(model => model.ScopeTypeId)
+                </div>
+                <div class="col-md-8">
+                    @Html.EnumDropDownListFor(model => model.SelectedScopeType, true, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.SelectedScopeType)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.RequiredLabelFor(model => model.MenuTypeName)
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.MenuTypeName, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.MenuTypeName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.RequiredLabelFor(model => model.IsAdmin)
+                </div>
+                <div class="col-md-8">
+                    @Html.CheckBox("Status", Model.IsAdmin == true, new { @class = "check-box" })
+                </div>
+            </div>
+        </div>
+         
+        <!-- ACTION -->
+        <div id="FormFooter" class="form-footer">
+            <div class="right-footbar">
+                <input type="button" id="btnReset" value="@Html.Raw(Eagle.Resource.LanguageResource.btnReset)" class="btn btn-reset" />
+                <input type="button" id="btnAdd" value="@Html.Raw(Eagle.Resource.LanguageResource.btnSave)" class="btn btn-info btn-add" />
+            </div>
+        </div>
+        <!--End.ACTION-->
+    }
+</div>
+
+<script type="text/javascript">
+    HandleBootstrapCheckBox();
+</script>

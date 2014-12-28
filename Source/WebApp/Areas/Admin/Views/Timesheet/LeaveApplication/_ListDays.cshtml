@@ -1,0 +1,69 @@
+﻿@model List<LeaveApplicationDetailListViewModel>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>@Eagle.Resource.LanguageResource.DateID
+                </th>
+                <th>@Eagle.Resource.LanguageResource.Days
+                </th>
+                <th>
+                    AM/PM
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;
+              }
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                        <input type="hidden"  value="@item.LeaveApplicationDetailID" name="[@k].LeaveApplicationDetailID"/>
+                        <input type="hidden" value="@item.LeaveApplicationMasterID" name="[@k].LeaveApplicationMasterID"/>
+                    </td>
+                    <td>
+                        @item.strLeaveDate
+                        @Html.Hidden("["+ k.ToString() + "].LeaveDate",item.LeaveDate)
+                    </td>
+                    <td>
+                        @{ string cssClass = "set" + k.ToString();}
+                        <input type="text" class="TypeDate @cssClass" value="@item.Days" style="width:50px;" disabled />
+                        <input type="hidden" class="TypeDate text-box @cssClass" value="@item.Days" name="[@k].Days"/>
+                    </td>
+                    <td>
+                        @{ string label = "["+ k.ToString() + "].Time";}
+                        @if (item._TypeLeave == "AM")
+                        {
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 1, true, new { @data_id = k }) AM </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 2, false, new { @data_id = k }) PM </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 3, false, new  { @data_id = k }) @Eagle.Resource.LanguageResource.AllDay </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 4, false, new  { @data_id = k }) @Eagle.Resource.LanguageResource.Cancel </label>
+                        }
+                        else if (item._TypeLeave == "PM")
+                        {
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 1, false, new { @data_id = k }) AM </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 2, true, new { @data_id = k }) PM </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 3, false, new  { @data_id = k }) @Eagle.Resource.LanguageResource.AllDay </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 4, false, new  { @data_id = k }) @Eagle.Resource.LanguageResource.Cancel </label>
+                        }
+                        else
+                        {
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 1, false, new { @data_id = k }) AM </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 2, false, new { @data_id = k }) PM </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 3, true, new  { @data_id = k }) @Eagle.Resource.LanguageResource.AllDay </label>
+                            <label style="display: inline; margin-left: 10px;">@Html.RadioButton(label, 4, false, new  { @data_id = k }) @Eagle.Resource.LanguageResource.Cancel </label>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

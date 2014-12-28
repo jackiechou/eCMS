@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_OTRequest;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.ReportLayout;
+}
+@section ContentSection
+{
+<form id="frmAdd" class="form-horizontal user-group-management">
+<div id="alertMessageBox">
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message
+        </div>
+    }
+</div>
+    <div id="divContent">
+        @Html.Action("_Create","OTRequest",null)
+    </div>
+  
+    <div id="divList">
+        @Html.Action("_List","OTRequest",null)
+    </div>
+</form>
+    }
+@*<script src="/Scripts/jquery.mtz.monthpicker.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.mtz.monthpicker.custom.js" type="text/javascript"></script>*@
+<script type="text/javascript">
+    InvokeMonthPicker();
+    $('#changeSidebarPos').trigger('click');
+    //btnFillTOIL
+    $(document).on("click", "#btnFillTOIL", function () {
+        if (!$('#frmAdd').valid()) {
+            return false;
+        } else {
+            $("body").addClass("loading");
+            //Search danh sach nhan vien 
+            var moduleId = 9;
+            var url = areas + '/OTRequest/_FillToilAndCash';
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'ErrorTimeInOut') {
+                        AlterWarning("@Eagle.Resource.LanguageResource.ErrorTimeInOut");
+                    } else if (data == "timeout") {
+                        window.location.href = '/';
+                    } else {
+                        $('#divList').html(data);
+                    }
+                }
+            });
+        }
+    });
+    // btnFillCash
+    $(document).on("click", "#btnFillCash", function () {
+        if (!$('#frmAdd').valid()) {
+            return false;
+        } else {
+            $("body").addClass("loading");
+            //Search danh sach nhan vien 
+            var moduleId = 9;
+            var urlCreate = areas + + '/OTRequest/_FillCash';
+            var url = areas + '/OTRequest/_FillCash?ModuleID=' + moduleId;
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'ErrorTimeInOut') {
+                        AlterWarning("@Eagle.Resource.LanguageResource.ErrorTimeInOut");
+                    } else if (data == "timeout") {
+                        window.location.href = '/';
+                    } else {
+                        $('#divList').html(data);
+                    }
+                }
+            });
+        }
+    });
+    // Add row
+    $(document).on("click", "#btnAddRow", function () {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var moduleId = 9;
+        var url = areas + '/OTRequest/_AddRow?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+
+    });
+    // Delete row
+    $(document).on("click", "#btnDeleteRow", function () {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var url = areas + '/OTRequest/_DeleteRow';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmAdd").serialize(),
+            success: function (data) {
+                if (data == 'timeout') {
+                    window.location.href = '/';
+                } else {
+                    $('#divList').html(data);
+                }
+            }
+        });
+
+    });
+    // save and update
+    $(document).on("click", "#btnSendForApproval", function () {
+        if ($('#btnSendForApproval').hasClass("AddModel")) {
+            if (!$('#frmAdd').valid()) {
+                return false;
+            } else {
+                //Add new OT
+                var url = areas + '/OTRequest/Save?mode=SendForApproval';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            window.location.href = areas + '/OTRequest/List?ModuleID=9';
+                        } else {
+                            AlterWarning(data);
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            return false;
+                        }
+                    }
+                });
+            };
+        }
+    });
+
+    // Send for approval and update
+    $(document).on("click", "#btnAdd", function () {
+        if ($('#btnAdd').hasClass("AddModel")) {
+            if (!$('#frmAdd').valid()) {
+                return false;
+            } else {
+                //Add new OT
+                var url = areas + '/OTRequest/Save?mode=Save';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            window.location.href = areas + '/OTRequest/List?ModuleID=9';
+                        } else {
+                            AlterWarning(data);
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            return false;
+                        }
+                    }
+                });
+            };
+        }
+    });
+</script>
+
+

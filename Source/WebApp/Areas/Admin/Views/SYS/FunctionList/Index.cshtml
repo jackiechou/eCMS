@@ -1,0 +1,359 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionList;
+}
+@model List<FunctionListViewModel>
+@section ContentSection
+{
+    <div id="MainBody" class="main_box">
+        @Html.Partial("../SYS/FunctionList/_Reset")
+    </div>
+}
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+@Html.Action("jqueryval", "Common", null)
+<link rel="stylesheet" href="/Scripts/plugins/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+<script type="text/javascript" src="/Scripts/plugins/jqwidgets/jqwidgets/jqx-all.js"></script>
+<script type="text/javascript" src="/Scripts/plugins/jqwidgets/scripts/gettheme.js"></script>
+<script type="text/javascript" src="/Scripts/json2.min.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    DataMgr.InitializeCotrols();
+                    DataMgr.GetList();
+                    DataMgr.BindEvents();
+
+                },
+                ajaxSuccess: function (data) {
+                    switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                        case 0:
+                            DataMgr.GetList();
+                        case 1:
+                            DataMgr.GetAdapter(data);
+                            break;
+                        case 2:
+                            DataMgr.BindDetails(data);
+                            break;
+                        case 3:
+                            DataMgr.RefreshPage(data);
+                            break;
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                PopulateCompaniesToDropDownList: function () {
+                    var select = $("#selectLSCompanyID");
+                    select.empty();
+
+                    $.getJSON("/Admin/LS_tblCompany/GetCompanyList",
+                        function (classesData) {
+                            if (classesData.length > 0) {
+                                $.each(classesData, function (index, itemData) {
+                                    select.append($('<option/>', {
+                                        value: itemData.Value,
+                                        text: itemData.Text
+                                    }));
+                                });
+                                select.find('option:first').attr("selected", "selected");
+                                DataMgr.PopulateDepartmentsToDropDownList();
+                            } else
+                                select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.None" }));
+                        });
+                },
+                PopulateDepartmentsToDropDownList: function () {
+                    var select = $("#selectLSLevel1ID");
+                    select.empty();
+                    var LSCompanyID = parseInt($("#selectLSCompanyID").val());
+                    var param_data = { LSCompanyID: LSCompanyID };
+                    if (LSCompanyID > 0) {
+                        $.getJSON("/Admin/LS_tblLevel1/GetDepartmentsByCompanyID", param_data,
+                         function (classesData) {
+                             if (classesData.length > 0) {
+                                 select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.Select" }));
+                                 $.each(classesData, function (index, itemData) {
+                                     select.append($('<option/>', {
+                                         value: itemData.Value,
+                                         text: itemData.Text
+                                     }));
+                                 });
+                                 //select.find('option:first').attr("selected", "selected");
+                                 //var selected_value = select.find('option:selected').val();
+                                 DataMgr.PopulateSectionsToDropDownList();
+                             } else {
+                                 select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.None" }));
+                             }
+                         });
+                    } else
+                        select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.None" }));
+                },
+                PopulateSectionsToDropDownList: function () {
+                    var select = $("#selectLSLevel2ID");
+                    select.empty();
+                    var LSLevel1ID = parseInt($("#selectLSLevel1ID").val());
+                    var param_data = { LSLevel1ID: LSLevel1ID };
+                    if (LSLevel1ID > 0) {
+                        $.getJSON("/Admin/LS_tblLevel2/GetTeamGroupsByDepartmentID", param_data,
+                         function (classesData) {
+                             if (classesData.length > 0) {
+                                 select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.Select" }));
+                                 $.each(classesData, function (index, itemData) {
+                                     select.append($('<option/>', {
+                                         value: itemData.Value,
+                                         text: itemData.Text
+                                     }));
+                                 });
+                                 //select.find('option:first').attr("selected", "selected");
+                             } else
+                                 select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.None" }));
+                         });
+                    } else
+                        select.append($('<option/>', { value: '', text: "@Eagle.Resource.LanguageResource.None" }));
+                },
+                GetList: function () {
+                    this.config.method = "Search";
+                    this.config.data = JSON.stringify({
+                        LSCompanyID: DataMgr.config.LSCompanyID,
+                        LSLevel1ID: DataMgr.config.LSLevel1ID,
+                        LSLevel2ID: DataMgr.config.LSLevel2ID,
+                        LSPositionID: DataMgr.config.LSPositionID,
+                        LSLocationID: DataMgr.config.LSLocationID,
+                        Code: DataMgr.config.Code,
+                        SearchText: DataMgr.config.SearchText
+                    });
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                InitializeCotrols: function () {
+                    DataMgr.RemoveQtip();
+                    $("#modalEdit").draggable({ handle: ".modal-header" });
+                },
+                RemoveQtip:function(){
+                    $('span.error:first').qtip("hide");
+                    $(".qtip").remove();
+                },
+                BindEvents: function () {
+                    $(document).on('change', '#selectLSCompanyID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        DataMgr.PopulateDepartmentsToDropDownList();
+                    });
+
+                    $(document).on('change', '#selectLSLevel1ID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        DataMgr.PopulateSectionsToDropDownList();
+                    });
+
+                    $(document).on('change', '#LSLocationID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                    });
+
+                    $(document).on('change', '#LSLocationID', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                    });
+
+                    $(document).on('click', '#btnSearch', function () {
+                        //DataMgr.config.LSCompanyID = $('#selectLSCompanyID').val();
+                        //DataMgr.config.LSLevel1ID = $("#selectLSLevel1ID").val();
+                        //DataMgr.config.LSLevel2ID = $("#selectLSLevel2ID").val();
+                        //DataMgr.config.LSLocationID = $("#LSLocationID").val();
+                        //DataMgr.config.LSPositionID = $("#LSPositionID").val();
+                        //DataMgr.config.Code = $("#Code").val();
+                        //DataMgr.config.SearchText = $("#FullName").val();
+                        //DataMgr.GetList();
+                    });
+
+                    $(document).on('click', '#btnReset', function () {
+                        DataMgr.ResetControls();
+                    });
+                },
+                PreviewImage: function (id, width, height) {
+                    var f = document.getElementById(id).files[0];
+                    var output_container = document.getElementById("info_output");
+                    output_container.innerHTML = "";
+
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(f);
+
+                    oFReader.onload = (function (theFile) {
+                        return function (e) {
+                            var span = document.createElement('span');
+                            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                                                '" title="', escape(theFile.name), '" width="' + width + '" height="' + height + '"', '"/>'].join('');
+                            output_container.insertBefore(span, null);
+                        };
+                    })(f);
+                },
+                GetAdapter: function (data) {
+                    var source =
+                    {
+                        localdata: data,
+                        datatype: "json",
+                        datafields: [
+                            //{ name: 'available', type: 'bool' },
+                            { name: 'FunctionID', type: 'int' },
+                            { name: 'Parent', type: 'int' },
+                            { name: 'FunctionNameE', type: 'string' },
+                            { name: 'Url', type: 'string' },
+                            { name: 'Display', type: 'bool' },
+                        ],
+                        addrow: function (rowid, rowdata, position, commit) {
+                            // synchronize with the server - send insert command
+                            // call commit with parameter true if the synchronization with the server is successful
+                            //and with parameter false if the synchronization failed.
+                            // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
+                            commit(true);
+                        },
+                        updaterow: function (rowid, rowdata, commit) {
+                            // synchronize with the server - send update command
+                            commit(true);
+                        },
+                        deleterow: function (rowid, commit) {
+                            // synchronize with the server - send delete command
+                            // call commit with parameter true if the synchronization with the server is successful
+                            // and with parameter false if the synchronization failed.
+                            commit(true);
+                        }
+                    };
+
+                    var dataAdapter = new $.jqx.dataAdapter(source);
+                    DataMgr.BindGrid(dataAdapter);
+                },
+                BindGrid: function (dataAdapter) {
+                    var theme = getTheme();
+                    var columnCheckBox = null;
+                    var updatingCheckState = false;
+                    var editrow = -1;
+
+                    // initialize jqxGrid
+                    $("#jqxgrid").jqxGrid(
+                    {
+                        width: '100%',
+                        source: dataAdapter,
+                        showfilterrow: true,
+                        filterable: true,
+                        theme: theme,
+                        selectionmode: 'singlerow',
+                        sortable: true,
+                        pageable: true,
+                        autoheight: true,
+                        columnsresize: true,
+                        pagesize: 10,
+                        pagesizeoptions: ['10', '15', '20'],
+                        showfilterrow: false,
+                        showstatusbar: true,
+                        showtoolbar: false,
+                        autoheight: true,                      
+                        columns: [
+                            { text: '@Html.Raw(Eagle.Resource.LanguageResource.EmpID)', datafield: 'FunctionID', editable: false, width: 90, hidden: false },
+                           { text: '@Html.Raw(Eagle.Resource.LanguageResource.EmpCode)', datafield: 'Parent', editable: false, width: 100 },
+                           { text: '@Html.Raw(Eagle.Resource.LanguageResource.FullName)', datafield: 'FunctionNameE', editable: false, width: 170 },
+                           { text: '@Html.Raw(Eagle.Resource.LanguageResource.Email)', datafield: 'Url', editable: false, width: 200 },
+                           { text: '@Html.Raw(Eagle.Resource.LanguageResource.Active)', datafield: 'Display', editable: false, width: 50, threestatecheckbox: true, columntype: 'checkbox' }
+                        ]
+                    });
+                    DataMgr.BindGridEvents();
+                },
+                GetDetails: function (ID) {
+                    this.config.method = "GetDetails";
+                    this.config.data = JSON.stringify({ "ID": ID });
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (response) {
+                    var entity = JSON.parse(response);
+
+                    // show the popup window.
+                    $.ajax({
+                        type: "GET",
+                        url: '/Admin/Employee/Edit/' + entity.EmpID,
+                        success: function (data) {
+                            //bind data
+                            $('#divEdit').html(data);
+                            //show popup
+                            $('#modalEdit').appendTo("body").modal('show');
+                            $('.datetimepicker').datetimepicker();
+                        }
+                    });
+                },             
+                UpdateData: function (datarow) {
+                    this.config.method = "UpdateData";
+                    this.config.data = JSON.stringify(datarow);
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 3;
+                    this.ajaxCall(this.config);
+                },
+                RefreshPage: function (data) {
+                    if (data.d == "1") {
+                        DataMgr.ResetControls();
+                        DataMgr.GetList();
+                    }
+                },
+                ResetControls: function () {
+                    $('#Code').val('');
+                    $('#FullName').val('');
+                },
+                BindGridEvents: function () {
+                    var editrow = 0;
+                    //rowclick - rowdoubleclick - rowselect
+                    $("#jqxgrid").on('rowclick', function (event) {
+                        var args = event.args;
+                        var rowindex = args.rowindex;
+                        editrow = rowindex;
+                        var ID = $('#jqxgrid').jqxGrid('getcellvalue', rowindex, 'EmpID');
+                        //$("#selectrowindex").text(id);
+                        $("body").addClass("loading"); //trigger loading process
+                        DataMgr.GetDetails(ID);
+                        $("#jqxgrid").jqxGrid('clearselection');
+                    });
+                }
+            };
+            DataMgr.init();
+        }
+
+        //var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+        var Controller = 'ModuleFunction';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: 'MainBody',
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+
+    })(jQuery);
+</script>

@@ -1,0 +1,99 @@
+﻿@model ConvalescenceSearch2ViewModel
+
+<div class="tab-pane  fade in active" id="pane-1">
+    <form id="frmSearch">
+        <div class="group-control">
+            <div>
+                <h6>@Eagle.Resource.LanguageResource.EmployeeInfomation</h6>
+            </div>
+            <hr>
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.EmpCode
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("EmpCode", null, new { @class = "span12" })
+                </div>
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.FullName
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("FullName", null, new { @class = "span12" })
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.Company
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.HiddenFor(model => model.LSCompany2Name)
+                    <select id="LSCompany2ID" name="LSCompany2ID" class="easyui-combotree span2"></select>
+                    <script>
+                        LoadComboTreeWithAction('LSCompany2ID', 'GetAllWithSelectAll');
+                    </script>
+                </div>
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.WokPlace
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("SelectLSWorkPlace2ID", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.LSWorkPlace2ID)
+                    @Html.HiddenFor(model => model.LSWorkPlace2Name)
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+        <div class="group-control">
+            <div>
+                <h6>@Eagle.Resource.LanguageResource.TimeLeave</h6>
+            </div>
+            <hr>
+            <!--start row-->
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.FromDate
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DatepickerFor(model => model.FromDate2)
+                </div>
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.ToDate
+                    </label>
+                </div>
+                <div class="col-md-4">
+                    @Html.DatepickerFor(model => model.ToDate2)
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+        <!--row button-->
+        <div class="row">
+            <div class="footbar">
+                <div>
+                    <input class="btn btn-info AddModel" type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.btnSearch" />
+                </div>
+            </div>
+        </div>
+        <!--End.row-->
+    </form>
+</div>
+
+<script>
+    InvokeDateTimePicker();
+    PopulateDropDownListAutoComplete("SelectLSWorkPlace2ID", "LSWorkPlace2ID", "LSWorkPlace2Name",
+       '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputWorkplace)', areas + '/LS_tblLocation/DropdownList');
+</script>

@@ -1,0 +1,32 @@
+﻿@model List<DataPermissionViewModel>
+
+@if (Model != null)
+{
+    <div class="col-md-2">
+        <label>@Eagle.Resource.LanguageResource.LastCompanyDefine</label>
+    </div>
+    <div class="col-md-10">
+        <div class="row" id="reset-firt-div">
+            <style>
+                #reset-firt-div div {
+                    margin-left: 2.564102564102564%;
+                }
+
+                #reset-firt-div div input {
+                    margin-top: -1px;
+                }
+            </style>
+            @{int i = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <div class="col-md-5">
+                    <label class="reset-label">
+                        @Html.CheckBox("Checked", item.Checked, new { @value = item.LSCompanyID })
+                        @item.LSCompanyName
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = @Eagle.Resource.LanguageResource.D07TS;
+}
+
+@Html.Action("_Create")
+
+<div id="divList">
+    @Html.Action("_MasterList")
+</div>
+
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    $(document).on("click", "#btnAdd", function () {
+        window.location.href = "/Admin/D07TS/Index?ModuleID=10&mode=add";
+    });
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: "_MasterList",
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    });
+
+    $(document).on("click", ".viewItem", function () {
+        $("body").addClass("loading");
+        window.location.href = '/Admin/D07TS/Index?ModuleID=10&mode=viewreport&MasterID=' + $(this).data('id');  // ID cua dong du lieu
+    });
+
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading");
+        window.location.href = "/Admin/D07TS/Index?ModuleID=10&mode=edit&MasterID=" + $(this).data("id");
+    });
+
+    $(document).on("click", ".deleteItem", function () {
+        var MasterID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_Delete?MasterID=" + MasterID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $("#btnSearch").trigger("click");
+                            } else {
+                                AlterWarning(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+    $(document).on("click", ".checkItem", function () {
+        var MasterID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: "_UpdateIsNotified?MasterID=" + MasterID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $("#btnSearch").trigger("click");
+                            } else {
+                                AlterWarning(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

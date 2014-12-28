@@ -1,0 +1,213 @@
+﻿@model Eagle.Model.HR.RelationshipViewModel
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform", autocomplete = "off", @class = "form-horizontal" }))
+{
+    @*Click Button to pick data from grid in popup *@
+    @Html.Action("GetEmployeeInfo", "Employee", null)
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass    ">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Html.Raw(Eagle.Resource.LanguageResource.FormArea)</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.FirstName)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.FirstName, null, new { @class = "span12", autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.FirstName)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LastName)
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.LastName, null, new { @class = "span12", autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.LastName)
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.LSRelationshipID)
+                                </div>
+                                <div class="col-md-4">                                    
+                                    @Html.TextBox("selectLSRelationshipID", null, new { @class = "span12" })
+                                    @Html.Hidden("LSRelationshipID", string.Empty)
+                                    @Html.Hidden("LSRelationshipName")
+                                    @Html.ValidationMessageFor(model => model.LSRelationshipID)
+                                </div>
+
+                                <div class="col-md-2">
+                                    @Html.RequiredLabelFor(model => model.Gender)
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.DropDownList("Gender", ViewBag.Gender as SelectList, "--" + Eagle.Resource.LanguageResource.Select + "--", new { @class = "span12" })*@
+                                    @Html.DropDownList("Gender", ViewBag.Gender as SelectList, new { @class = "span12" })
+                                    @Html.ValidationMessageFor(model => model.Gender)
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.DOB</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="float:left;">
+                                        @Html.CheckBox("IsYOB", false, new { @style = "float:left;margin:8px 5px;" })
+                                        @Html.Label(@Eagle.Resource.LanguageResource.IsYOB, new { @style = "float:left;padding-right:10px;" })  
+                                    </div> 
+                                    <div style="float:left;"> 
+                                         <div id="dpDOB">                                 
+                                            @Html.DateTimePickerFor(model => model.DOB)
+                                        </div>
+                                        <div id="dpYOB" style="display:none">
+                                            @Html.TextBoxFor(model => model.YOB, new { @class = "span4" })
+                                        </div> 
+                                    </div>                              
+                                </div>                               
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.Telephone</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Telephone, null, new { @class = "span12", autocomplete = "off" })
+                                </div>
+                                 <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.IDNo</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "span12", autocomplete = "off" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.Address</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Address, new { rows = 2, columns = 40, @class = "span12" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.WokPlace</label>
+                                </div>
+                                <div class="col-md-10">                                   
+                                    @Html.TextAreaFor(model => model.WokPlace, new { rows = 2, columns = 40, @class = "span12" })
+                                </div>
+                            </div>
+                           <div class="row">
+                               <div class="col-md-2"></div>
+                               <div class="col-md-10">
+                                  <div style="float:left;margin-right:5px;padding: 5px 0 0 0;"> 
+                                       @Html.CheckBox("StillAlive", false)
+                                   </div>
+                                    <div style="float:left">
+                                       <label style="float:left">@Eagle.Resource.LanguageResource.StillAlive</label>
+                                   </div>
+                               </div>
+                           </div>
+                            <div class="row">   
+                                 <div class="col-md-2"></div>                             
+                                <div class="col-md-10">
+                                    <div style="float:left;margin-right:5px;padding: 5px 0 0 0;">                                    
+                                        @Html.CheckBox("IsDependant", false)
+                                     </div>
+                                    <div style="float:left">
+                                        <label style="float:left">@Eagle.Resource.LanguageResource.IsDependant</label> 
+                                    </div> 
+                                </div>                             
+                            </div>
+
+                             <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10">
+                                     <div style="float:left;width:298px;">
+                                   <div style="float:left;margin-right:8px;">
+                                        <label style="text-align:left !important;">@Eagle.Resource.LanguageResource.FromDatePIT</label>
+                                    </div>
+                                    <div style="float:left;">
+                                        @Html.DateTimePickerFor(model => model.FromDatePIT)
+                                    </div>
+                                </div>
+                                 <div style="float:left;width:298px;">
+                                    <div style="float:left;margin-right:8px;">
+                                        <label style="text-align:left !important;">@Eagle.Resource.LanguageResource.ToDatePIT</label>
+                                    </div>
+                                   <div style="float:left;">
+                                        @Html.DateTimePickerFor(model => model.ToDatePIT)
+                                    </div>
+                                 </div>
+                                </div>
+                            </div>
+                        
+
+                            <div class="row">
+                              <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.Before75</label>
+                                </div>
+                               <div class="col-md-10">
+                                 @Html.TextAreaFor(model => model.Before75, new { rows = 2, columns = 40, @class = "span12" })
+                               </div>
+                           </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>@Eagle.Resource.LanguageResource.After75</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.After75, new { rows = 2, columns = 40, @class = "span12" })
+                                </div>                              
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.LabelFor(model => model.Note)
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150, @class = "span12" })
+                                </div>
+                            </div>
+
+                            <!--/row-->
+                            <div class="row">
+                                <div class="footbar">
+                                    <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" />
+                                    <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info add" />                                    
+                                </div>
+                            </div>
+                            <!--End.row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

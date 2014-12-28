@@ -1,0 +1,38 @@
+﻿<link href="~/Scripts/plugins/jeasyui/themes/default/easyui.css" rel="stylesheet" />
+<link href="~/Scripts/plugins/jeasyui/themes/icon.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/easyui/jquery.min.js"></script>
+<script src="~/Scripts/plugins/easyui/jquery.easyui.min.js"></script>
+<ul id="treelist" class="easyui-tree"></ul>
+
+
+<script type="text/javascript">
+    (function ($) {
+        var treeBox = $('#treelist');
+        treeBox.tree({
+            url: '/Admin/MailType/PopulateHierachyTypeList',
+            animate:true,
+            dnd:true,
+            formatter: function (node) {
+                return node.id;
+            }
+            //valueField: 'id',
+            //textField: 'text',
+            //required: true,
+        });
+
+       
+        //var node = treeBox.tree('getSelected');
+        //if (node) {
+        //    treeBox.tree('update', {
+        //        target: node.target,
+        //        text: 'new text'
+        //    });
+        //}
+    })(jQuery);
+</script>
+
+  
+
+
+

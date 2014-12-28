@@ -1,0 +1,56 @@
+﻿@model List<Eagle.Model.Contents.Banners.BannerViewModel>
+@if (Model.Count > 0)
+{
+    <div class="table datatable">
+        @*<table id="tblResults" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">*@
+        <table id="tblResults" class="pagedTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th>#</th>                    
+                    <th class="center">@Eagle.Resource.LanguageResource.No</th>
+                    <th class="center">@Eagle.Resource.LanguageResource.BannerTitle</th>
+                    <th class="center">@Eagle.Resource.LanguageResource.ListOrder</th>
+                    <th class="center">@Eagle.Resource.LanguageResource.StartDate</th>
+                    <th class="center">@Eagle.Resource.LanguageResource.EndDate</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr id="@i">
+                        <td>
+                            @i
+                        </td>                       
+                        <td>
+                          @Html.DisplayFor(modelItem => item.BannerTitle)
+                        </td>
+                        <td>
+                           @Html.DisplayFor(modelItem => item.ListOrder)
+                        </td>
+                        <td>
+                           @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    if (ViewBag.FirstRequest != true)
+    {
+        <p style="text-align:center">@Html.Raw(Eagle.Resource.LanguageResource.NoRecordFound)!</p>
+    }
+}
+
+<script type="text/javascript">
+    (function ($) {
+        ShowDataTable("#tblResults");
+    })(jQuery);
+</script>

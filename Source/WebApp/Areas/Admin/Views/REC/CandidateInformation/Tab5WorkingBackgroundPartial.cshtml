@@ -1,0 +1,56 @@
+﻿@model IEnumerable<REC_tblWorkingBackground>
+
+    <div style="text-align:right;margin-bottom:5px;">
+        <input id="btnAddNewBackgroundWorking" type="button" class="btn btn-info" value="@Eagle.Resource.LanguageResource.AddNew" />
+    </div>
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FromMonth)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ToMonth)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkFor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Position)
+                    </th>
+                    <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FromMonth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ToMonth)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WorkFor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            <a data-id="@item.WokingbackgroupID"  title="@Eagle.Resource.LanguageResource.Edit" class="ico editItem editItemBackgroundWorking" >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.WokingbackgroupID"  title="@Eagle.Resource.LanguageResource.Delete" class="ico deleteItem deleteItemBackgroundWorking">&nbsp;&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+

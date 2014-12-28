@@ -1,0 +1,113 @@
+﻿@model List<RankViewModels>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.SalaryGrade
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Code
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Name
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.VNName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.CoefSalary
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Rank
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Used
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Note
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.SalaryGrade
+                    </td>
+                    <td>
+                        @item.SalaryRankCode
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.VNName
+                    </td>
+                    <td>
+                        @item.Coef
+                    </td>
+                    <td>
+                        @item.Rank
+                    </td>
+                    <td>
+                        @item.strUsed
+                    </td>
+                    <td>
+                        @item.Note
+                    </td> 
+                    <td class="center action">
+                        <a  data-id="@item.SalaryRankID"  title="Edit" class="ico editItem" >&nbsp;&nbsp;&nbsp;</a>
+                        <a  data-id="@item.SalaryRankID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+@Html.Action("ConfirmPopup","Common",null)
+<script>
+    InvokeDataTables();
+</script>
+<script>
+
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var urlCreate = '/Rank/Index';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/Rank/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        $('#main-data').html(data);
+                                        AlterUpdateSuccess();
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

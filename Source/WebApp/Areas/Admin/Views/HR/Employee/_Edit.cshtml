@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.EmployeeProfile);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+@model Eagle.Model.HR.EmployeeEditModel
+
+@section ContentSection
+{
+@Html.Action("GetTopEmpInfo", "Employee", new { EmpID = Model.EmpID })
+<div class="clearboth"></div>
+<div id="editArea" class="box">   
+    @Html.Partial("../HR/Employee/_Reset")
+</div>
+}

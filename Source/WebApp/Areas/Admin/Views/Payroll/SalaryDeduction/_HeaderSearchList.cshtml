@@ -1,0 +1,105 @@
+﻿@model DeductionSalarySearchViewModels
+<!--Begin search -->
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.EmpCode)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "span12" })
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.FullName)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "span12" })
+    </div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+        <label>
+            @Eagle.Resource.LanguageResource.LastCompanyDefine
+        </label>
+    </div>
+    <div class="col-md-4">
+        <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+        <script type="text/javascript">
+            LoadComboTree('LSCompanyID');
+            function LoadComboTree(controlId) {
+                $('#' + controlId).combotree({
+                    url: '/CommonCompany/GetAll',
+                    textField: 'title',
+                    valueField: 'id',
+                    onLoadSuccess: function (row, data) {
+                        $(this).tree("collapseAll");
+                    },
+                    onSelect: function (node) {
+                    }
+                });
+            }
+        </script>
+    </div>
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.LSPositionID)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBox("selectLSPositionID", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.LSPositionIDNull)
+        @Html.HiddenFor(model => model.LSPositionName)
+        @Html.ValidationMessageFor(model => model.LSPositionIDNull)
+    </div>
+</div>
+<!--end row-->
+<hr />
+<!--start row-->
+<div class="row">
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.FromMonth)
+    </div>
+    <div class="col-md-4">
+        <label class="reset-label">
+            @Html.MonthPickerFor(model => model.FromMonth, null, new { @name = "FromMonth" })
+            @Html.ValidationMessageFor(model => model.FromMonth)
+        </label>
+    </div>
+    <div class="col-md-2">
+        @Html.RequiredLabelFor(model => model.ToMonth)
+    </div>
+    <div class="col-md-4">
+        <label class="reset-label">
+            @Html.MonthPickerFor(model => model.ToMonth, null, new { @name = "ToMonth" })
+            @Html.ValidationMessageFor(model => model.ToMonth)
+        </label>
+    </div>
+</div>
+<!--end row-->
+<!--start row-->
+<div class="row">    
+    <div class="col-md-2">
+        @Html.LabelFor(model => model.LSDeductSalaryIDNullSearch)
+    </div>
+    <div class="col-md-4">
+        @Html.TextBox("selectLSDeductionSalarySearch", null, new { @class = "span12" })
+        @Html.HiddenFor(model => model.LSDeductSalaryIDNullSearch)
+        @Html.HiddenFor(model => model.LSDeductSalaryNameSearch)
+        @Html.ValidationMessageFor(model => model.LSDeductSalaryIDNullSearch)
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+<!--end row-->
+
+<!--End search -->
+
+<script>
+    InvokeMonthPicker();
+    var strInputPosition = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)';
+    PopulateDropDownListAutoComplete("selectLSPositionID", "LSPositionIDNull", "LSPositionName", strInputPosition, areas + '/LS_tblPosition/DropdownList');
+
+    var strInputDeductionSalarySearch = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputDeductionSalary)';
+    PopulateDropDownListAutoComplete("selectLSDeductionSalarySearch", "LSDeductSalaryIDNullSearch", "LSDeductSalaryNameSearch", strInputDeductionSalarySearch, areas + '/LS_tblSalaryDeduction/DropdownList');
+</script>

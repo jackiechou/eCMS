@@ -1,0 +1,141 @@
+﻿@model List<ReconciliationViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LastCompanyDefine
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LeaveEntitlement
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LeaveTaken
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Balance
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Reconciliation_LeaveForward
+                </th>
+                <th class="table-actions text_center">@Html.CheckBox("chkCheckAll")</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @if(ViewBag.LanguageId == 124)
+                        {
+                        @item.CompanyName
+                        }else{
+                            @item.CompanyNameVN
+                        }
+                    </td>
+                    <td>
+                        @item.ALPrevious
+                        <input type="hidden" value="@item.ALPrevious" name="[@k].ALPrevious" />
+                    </td>
+                    <td>
+                        @item.ALTakenPrevious
+                        <input type="hidden" value="@item.ALTakenPrevious" name="[@k].ALTakenPrevious" />
+                    </td>
+                    <td>
+                        @item.ALBalancePrevious
+                        <input type="hidden" value="@item.ALBalancePrevious" name="[@k].ALBalancePrevious" />
+                    </td>
+                    <td class="center action">
+                        @if (item.ReconciliationID > 0)
+                        { 
+                            @item.LeaveForward
+                        }
+                        else
+                        {
+                            
+                            <input type="text" class="TypeDate input-validation-error" data-val-number="The field Work hour must be a number." data-val="true" data-hasqtip="@i" aria-describedby="@i" value="@item.LeaveForward" name="[@k].LeaveForward" style="width:100px;" />
+                            <span data-valmsg-replace="true" data-valmsg-for="[@k].LeaveForward" class="field-validation-error Hidden"></span>
+                        }
+
+                    </td>
+                    <td class="center">
+                        <input type="hidden" value="@item.EmpID" name="[@k].EmpID" />
+                        <input type="hidden" value="@item.Year" name="[@k].Year" />
+                        <input type="hidden" value="@item.ReconciliationID" name="[@k].ReconciliationID" />
+                        @if (item.ReconciliationID == 0)
+                        { 
+                            <input type="checkbox"  name="[@k].chkCheck" class="chkCheck"  value="true"/>
+                        }
+                        else
+                        {
+                            <a  data-id="@item.ReconciliationID"  title="Edit" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="confirm" class="modal hide fade" style="width: 300px">
+    <div class="modal-body">
+        Do you want to continue?
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+    </div>
+</div>
+<script>
+    InvokeDataTables();
+</script>
+<script type="text/javascript">
+    // region click delete
+    $('.launchConfirm').on('click', function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+
+                    var urlCreate = '/Reconciliation/Index';
+                    $.ajax({
+                        type: "POST",
+                        url: areas + '/Reconciliation/_Delete' + '/' + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $('#btnSearch').trigger('click');
+                                AlterUpdateSuccess();
+                            } else {
+                                $('#divEdit').html(data);
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+
+</script>
+
+
+@Html.Action("jqueryval", "Common", null)

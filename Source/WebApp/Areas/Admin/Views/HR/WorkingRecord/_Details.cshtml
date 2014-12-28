@@ -1,0 +1,171 @@
+﻿@model Eagle.Model.HR.WorkingRecordViewModel
+
+<form id="myform" class="form-horizontal">
+    @Html.HiddenFor(model => model.WorkingID)
+    @*Click Button to pick data from grid in popup *@
+    @Html.Action("GetEmployeeInfoByEmpID", "Employee", new { EmpID = Model.EmpID })
+    @Html.Action("GetBriefEmpInfoByEmpID", "Employee", new { EmpID = Model.EmpID })
+    @Html.HiddenFor(model => model.WorkingID, new { @id = "WorkingID" })
+
+    <div class="box">
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            <div class="accordion-content">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model => model.LSCompanyID)
+                                    </div>
+                                    <div class="col-md-10">
+                                         @Html.TextBox("LSCompanyID", Model.LSCompanyID, new { @class = "easyui-combotree span2" })
+                                        @Html.ValidationMessageFor(model => model.LSCompanyID)
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model => model.LSChangeStatusID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.LSChangeStatusID, null, new { @class = "span12" })
+                                        @Html.ValidationMessageFor(model => model.LSChangeStatusID)
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model => model.EffectiveDate)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DateTimePickerFor(model => model.EffectiveDate)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.LSLocationID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.LSLocationID, null, new { @class = "span12" })
+                                        @Html.ValidationMessageFor(model => model.LSLocationID)
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.LSPositionID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.LSPositionID, null, new { @class = "span12" })
+                                        @Html.ValidationMessageFor(model => model.LSPositionID)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.LSGradeID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.LSGradeID, null, new { @class = "span12" })
+                                        @Html.ValidationMessageFor(model => model.LSGradeID)
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.LineManagerID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model => model.LineManagerID, null, new { @class = "span12" })
+                                        @Html.ValidationMessageFor(model => model.LineManagerID)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.Note)
+                                    </div>
+                                    <div class="col-md-10">
+                                        @Html.TextAreaFor(model => model.Note, new { @class = "span12", @cols = "20", @rows = "3", maxlength=150 })
+                                    </div>
+                                </div>
+
+                                <div class="row line-show">
+                                    <div style="text-align: right; width: 4%; float: left; padding-right:4px;">
+                                        @Html.CheckBox("Decision")
+                                        @Html.ValidationMessageFor(model => model.Decision)
+                                    </div>
+                                    <div style="text-align: left; width: 9%; float: left;">
+                                        @Html.LabelFor(model => model.Decision, new { @style = "padding:0px !important;" })
+                                    </div>
+
+                                </div>
+
+
+                               <div id="pnlCollapsable"  style="margin-top:10px;">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @Html.LabelFor(model => model.DecisionNo)
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(model => model.DecisionNo, new { @class = "span12" })
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            @Html.LabelFor(model => model.SignDate)
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DateTimePickerFor(model => model.SignDate)
+                                        </div>
+                                    </div>
+                                    <div class="row">                                       
+                                        <div class="col-md-2">
+                                            @Html.LabelFor(model => model.FileId)
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBox("FileUpload", null, new { id = "FileUpload", type = "file" })
+                                            @Html.Hidden("FileId")
+                                            @Html.Action("CreateDownloadLink", "FileManager", new { @FileId = Model.FileId })
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@Html.Action("jqueryval", "Common", null)
+
+<script>
+    //***************************************************************************************************************
+    //Begin Company - Deparment (Level1) - Section(Level 2) **********************************************************
+    //****************************************************************************************************************
+    $(document).on('change', '#LSCompanyID', function () {
+        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+        PopulateDepartmentsToDropDownList();
+    });
+    //****************************************************************************************************************
+    //End Company - Deparment (Level1) - Section(Level 2) ************************************************************
+    //****************************************************************************************************************
+    //Xu ly collapse div with checkbox Decision
+    var chkStatus = @Model.Decision.ToString().ToLower();
+    if (chkStatus == true) {
+        $("input[id$=Decision]").attr("checked", true);
+        $("div[id$=pnlCollapsable]").slideDown('slow');
+    } else
+    {
+        $("input[id$=Decision]").attr("checked", false);
+        $("div[id$=pnlCollapsable]").slideUp('slow');
+    }
+
+    $("input[id$=Decision]").click(function () {
+        ShowHideDivByCheckBox("Decision", "pnlCollapsable")
+    });   
+</script>

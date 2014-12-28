@@ -1,0 +1,69 @@
+﻿<link href="~/Scripts/plugins/SmartWizard/styles/smart_wizard.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/SmartWizard/js/jquery.smartWizard-2.0.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Smart Wizard
+        $('#wizard').smartWizard();
+
+        function onFinishCallback() {
+            $('#wizard').smartWizard('showMessage', 'Finish Clicked');
+        }
+    });
+</script>
+
+
+<!-- Smart Wizard -->
+<div id="wizard" class="swMain">
+    <ul>
+        <li>
+            <a href="#step-1">
+                <span class="stepNumber">1</span>
+                <span class="stepDesc">
+                    Step 1<br />
+                    <small>Step 1 description</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="#step-2">
+                <span class="stepNumber">2</span>
+                <span class="stepDesc">
+                    Step 2<br />
+                    <small>Step 2 description</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="#step-3">
+                <span class="stepNumber">3</span>
+                <span class="stepDesc">
+                    Step 3<br />
+                    <small>Step 3 description</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="#step-4">
+                <span class="stepNumber">4</span>
+                <span class="stepDesc">
+                    Step 4<br />
+                    <small>Step 4 description</small>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <div id="step-1">
+      @Html.Partial("../Contents/Banners/_BannerType")
+    </div>
+    <div id="step-2">
+       @Html.Partial("../Contents/Banners/_BannerProperties")
+    </div>
+    <div id="step-3">
+        @Html.Partial("../Contents/Banners/_BannerUploadAndLifeSpan")
+    </div>
+    <div id="step-4">
+        @Html.Partial("../Contents/Banners/_BannerDeliveryOptions")
+    </div>
+</div>
+<!-- End SmartWizard Content -->  	

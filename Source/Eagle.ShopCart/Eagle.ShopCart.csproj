@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{620EEB80-F7A6-4F14-A81A-E29D0DC90EDE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Eagle.ShopCart</RootNamespace>
+    <AssemblyName>Eagle.ShopCart</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Customers\CustomerInfo.cs" />
+    <Compile Include="Customers\Customers.cs" />
+    <Compile Include="Customers\CustomerTypes.cs" />
+    <Compile Include="Data\Classification.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Currency.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\CurrencyRate.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\CurrencyRate_GetDetailsByCurrencyCode_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\CurrencyRate_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\CurrencyRate_GetList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Currency_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Currency_GetListByDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Currency_GetListByVendorIdDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Currency_GetList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customer.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customers_CheckList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customers_GetAll_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customers_GetDetailByID_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customers_GetDetailsByCustomerNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Customers_GetListByStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\CustomerType.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Employee.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Gallery_Collections.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Gallery_Files.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Gallery_Topics.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Manufacturer.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Manufacturers_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Manufacturers_GetListByVendorIdDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Manufacturer_Categories.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Manufacturer_Categories_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Manufacturer_Categories_GetListByVendorIdDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Orders_GetListProductionByOrderNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Orders_GetOrderInfoByOrderNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Orders_GetSalesByProductCategoryOrderPeriod_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Orders_GetTotalOrdersByProductCategoryOrderYear_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order_Payment.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order_Products.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order_Products_GetDetailsByOrderNoProductNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order_Products_GetListByOrderNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order_Product_Options.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Order_Shipment.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Payment_Methods.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Payment_Methods_GetListByStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Payment_Methods_GetListByVendorIdStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductCategories_GetAllParentNodesOfSelectedNode_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductCategories_GetAllParentNodesOfSelectedNode_test_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductCategory_GetHierarchicalTree_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductsHost_GetDetailByNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductsHost_GetListByProductTypeId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetCompletionList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetDetailByID_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetDetailByProductName_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetDetailByProductNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetFileByProductID_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetListByCodeDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetListByNumTypeStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetListByNumType_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetListByTime_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetListByVendorIdTypeId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetListByVendor_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_GetPublishedListByCode_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Products_TotalProductsOfProductCategories_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_AttributeOptions.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_AttributeOptions_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_AttributeOptions_GetListByAttributeId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Attributes.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Attributes_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Attributes_GetListByProductNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetActiveListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetActiveList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetAll_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetAncestorListByCodeStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetDescendantListByCodeStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetDetailByCode_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetDetailByID_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetListByCondition_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetListByParentIDStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetListByStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetListByVendorIdCultureCodeStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetListByVendorIdCultureCode_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Categories_GetPublishedList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Comments.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Coupons.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Discounts.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Discounts_GetDetailByVendorIdDiscountId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Discounts_GetDetailByVendorProductDiscountId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Discounts_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Discounts_GetListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Files.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Files_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Files_GetListByProductNo_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Files_GetListByStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_GalleryCollections.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_HostServers.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Ranges.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Ranges_GetActiveList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Ranges_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Ranges_GetListByCodeDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Ranges_GetListByDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_TaxRates.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_TaxRates_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_TaxRates_GetList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_TypeParameters.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_TypeParameters_GetList_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Types.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Types_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Types_GetListByStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Types_GetListByVendorIdCategoryCodeStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Types_GetListByVendorIdStatus_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product_Votes.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Promotion.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Report_Templates.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Report_Types.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingCarrier.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingCity.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingCountry.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingDistrict.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingMethod.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingRate.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShippingRegion.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShopCartModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopCartModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShopCartModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShopCartModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShopCartModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShoppingCart.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShoppingCarts_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ShoppingCarts_GetListByPortalId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\StatisticExpens.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendors_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendors_GetListByPortalId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Address.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Articles.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Banners.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Branches.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Classification.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Contact.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_CreditCards.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Currency.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Customers.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Departments.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ManufacturerCategories.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Manufacturers.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Manufacturers_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Manufacturers_GetListByVendorIdDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Manufacturers_GetListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Manufacturer_Categories_GetDetails_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Manufacturer_Categories_GetListByVendorIdDiscontinued_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_OrderPromotions.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_OrderPromotions_GetDetailByVendorOrderPromotionId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Portals.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductCategories.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductCategories_GetDetailByCodeVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductCategories_GetListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductCategories_GetPublishedListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductDiscounts.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductDiscounts_GetDetailByDiscountId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductDiscounts_GetDetailByVendorProductDiscountId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductDiscounts_GetListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Products.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductTypes.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductTypes_GetDetailVendorProductTypeId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_ProductTypes_GetListByVendorId_Result.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Vendor_Temp.cs">
+      <DependentUpon>ShopCartModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Manufacturers\ManufacturerCategories.cs" />
+    <Compile Include="Manufacturers\Manufacturers.cs" />
+    <Compile Include="Orders\CartItem.cs" />
+    <Compile Include="Orders\CurrencyClass.cs" />
+    <Compile Include="Orders\CurrencyRate.cs" />
+    <Compile Include="Orders\OrderProducts.cs" />
+    <Compile Include="Orders\Orders.cs" />
+    <Compile Include="Orders\OrderShipmentController.cs" />
+    <Compile Include="Orders\Order_UserInfos.cs" />
+    <Compile Include="Orders\PaymentMethods.cs" />
+    <Compile Include="Orders\RevenueReports.cs" />
+    <Compile Include="Orders\ShoppingCart.cs" />
+    <Compile Include="Orders\TransactionMethods.cs" />
+    <Compile Include="Payment\nganluong.cs" />
+    <Compile Include="Products\ProductAttributeOptions.cs" />
+    <Compile Include="Products\ProductAttributes.cs" />
+    <Compile Include="Products\ProductCategories.cs" />
+    <Compile Include="Products\ProductComments.cs" />
+    <Compile Include="Products\ProductController.cs" />
+    <Compile Include="Products\ProductDiscounts.cs" />
+    <Compile Include="Products\ProductDocuments.cs" />
+    <Compile Include="Products\ProductFiles.cs" />
+    <Compile Include="Products\ProductGallery.cs" />
+    <Compile Include="Products\ProductHostServers.cs" />
+    <Compile Include="Products\ProductInfo.cs" />
+    <Compile Include="Products\ProductLifeCycles.cs" />
+    <Compile Include="Products\ProductPeriods.cs" />
+    <Compile Include="Products\ProductRanges.cs" />
+    <Compile Include="Products\ProductTypes.cs" />
+    <Compile Include="Products\StatusConst.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shippers\ShippingCarrierController.cs" />
+    <Compile Include="Shippers\ShippingMethodController.cs" />
+    <Compile Include="Shippers\ShippingRateController.cs" />
+    <Compile Include="Statistics\StatisticReports.cs" />
+    <Compile Include="Taxes\Taxes.cs" />
+    <Compile Include="Vendors\Contacts.cs" />
+    <Compile Include="Vendors\ContactTypes.cs" />
+    <Compile Include="Vendors\VendorController.cs" />
+    <Compile Include="Vendors\VendorDiscounts.cs" />
+    <Compile Include="Vendors\VendorManufacturerCategories.cs" />
+    <Compile Include="Vendors\VendorManufacturers.cs" />
+    <Compile Include="Vendors\VendorOrderPromotions.cs" />
+    <Compile Include="Vendors\VendorProductCategories.cs" />
+    <Compile Include="Vendors\VendorProductTypes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Eagle.Common\Eagle.Common.csproj">
+      <Project>{50709a7a-41c3-47d6-8c85-35c899cbae0f}</Project>
+      <Name>Eagle.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EntityDeploy Include="Data\ShopCartModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ShopCartModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Data\ShopCartModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShopCartModel.Context.cs</LastGenOutput>
+      <DependentUpon>ShopCartModel.edmx</DependentUpon>
+    </None>
+    <None Include="Data\ShopCartModel.edmx.diagram">
+      <DependentUpon>ShopCartModel.edmx</DependentUpon>
+    </None>
+    <None Include="Data\ShopCartModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ShopCartModel.edmx</DependentUpon>
+      <LastGenOutput>ShopCartModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

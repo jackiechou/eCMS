@@ -1,0 +1,122 @@
+﻿@model IEnumerable<OTRequestListViewModel>
+<div class="row">
+    <div class="col-md-12" style="text-align:right;"> 
+        <input id="btnAddRow" type="button" class="btn-custom-addrow" style="margin-right: 18px;" /> 
+        <input id="btnDeleteRow" type="button" class="ico btn-custom-Deleterow launchConfirm" style="margin-right: 18px;" /> 
+    </div>
+</div>
+<style type="text/css">
+    #dataTable tbody tr td {
+        padding-top: 0px!important;
+        padding-bottom: 0px!important;
+    }
+</style>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.No</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.DateID</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.Type</th>
+                <th colspan="2" style="text-align:center;">AM</th>
+                <th colspan="2" style="text-align:center;">PM</th>
+                <th rowspan="2"> Total hrs</th>
+                <th rowspan="2"> Night hrs</th>
+                <th rowspan="2"> Holidays hrs</th>
+                <th colspan="3" style="text-align:center;">Cash</th>
+                <th colspan="2" style="text-align:center;">TOIL & Cash</th>
+                <th rowspan="2"> @Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+            <tr>
+                <th style="text-align:center;">From</th>
+                <th style="text-align:center;">To</th>
+                <th style="text-align:center;">From</th>
+                <th style="text-align:center;">To</th>
+                <th>150%</th>
+                <th>200%</th>
+                <th>300%</th>
+                <th>TOIL</th>
+                <th>100%</th>
+            </tr>
+        </thead>
+        <tbody>
+             @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+            <tr>
+                <td>@i</td>
+                <td> 
+                     @Html.Datepicker2For(modelItem => item.DateID, "dd/MM/yyyy", new { @name= "["+k.ToString()+"].strDateID", @style ="width:75px;"})
+                    </td>
+                <td class="@item.TypeDate">
+                    <input type="hidden" value="@item.TypeDate" name="[@k].TypeDate" />
+                </td>  
+                <td> 
+
+                    @Html.TimepickerFor(modelItem => item.TimeInAM, null,  new { @name= "["+k.ToString()+"].TimeInAM" , @style ="width:40px;"})
+                </td>
+                <td>
+                    @Html.TimepickerFor(modelItem => item.TimeOutAM, null,  new { @name= "["+k.ToString()+"].TimeOutAM" , @style ="width:40px;"})
+                </td>
+
+                <td>
+                    @Html.TimepickerFor(modelItem => item.TimeInPM, null,  new { @name= "["+k.ToString()+"].TimeInPM" , @style ="width:40px;"})
+                </td>
+                <td>
+                    @Html.TimepickerFor(modelItem => item.TimeOutPM, null,  new { @name= "["+k.ToString()+"].TimeOutPM" , @style ="width:40px;"})
+                </td>
+                <td>
+                    @item.TotalHours
+                    <input type="hidden" value="@item.TotalHours" name="[@k].TotalHours" />
+                </td>
+                <td> 
+                     @item.NightOT
+                    <input type="hidden" value="@item.NightOT" name="[@k].NightOT" />
+                </td>
+                <td>
+                     @if (item.TypeDate == "date-H")
+                        {
+                             @item.TotalHours
+                            <input type="hidden" value="@item.TotalHours" name="[@k].HolidayOT" />
+                        }
+                        else
+                        {
+                         <input type="hidden" value="0" name="[@k].HolidayOT" />
+                        }
+                </td>
+                <td>
+                    @item.Rate150
+                    <input type="hidden" value="@item.Rate150" name="[@k].Rate150" />
+                </td>
+                <td>
+                    @item.Rate200
+                    <input type="hidden" value="@item.Rate200" name="[@k].Rate200" />
+                </td>
+                <td>
+                     @item.Rate300
+                    <input type="hidden" value="@item.Rate300" name="[@k].Rate300" />
+                </td>
+                <td>
+                    @item.TOIL
+                    <input type="hidden" value="@item.TOIL" name="[@k].TOIL" />
+                </td>
+                <td> 
+                    @item.Rate100
+                    <input type="hidden" value="@item.Rate100" name="[@k].Rate100" />
+                </td>
+                <td class="center">
+                    <input type="checkbox"  name="[@k].chkCheck"  value="true"/>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    InvokeDateTimePicker();
+    InvokeDateTimePicker();
+</script>

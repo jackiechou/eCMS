@@ -1,0 +1,86 @@
+﻿@model LS_tblBankBranchEditModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myform_bankbranch", name = "myform_bankbranch", autocomplete = "off", @class = "form-horizontal" }))
+{
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass    ">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage     !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div id="divContainer_Bank">
+            <div class="row">                              
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.LSBankBranchCode)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.LSBankBranchCode, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.LSBankBranchCode)
+                     @Html.HiddenFor(model => model.BankBranchID)
+                </div>    
+                     <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.BankID)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBox("selectBank", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.BankID)
+                    @Html.Hidden("BankName")
+                    @Html.ValidationMessageFor(model => model.BankID)
+                </div>                                                       
+            </div>
+            <div class="row">  
+                  <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.Name)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Name, null, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>                                   
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.VNName)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VNName)
+                    @Html.ValidationMessageFor(model => model.VNName)
+                </div>                          
+            </div> 
+             <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Used)
+                </div>
+                <div class="col-md-4">                                            
+                   @Html.CheckBoxFor(model => model.Used)
+                </div>
+                  <div class="col-md-2">
+                    @Html.Label("IsPopUpClosed", @Html.Raw(Eagle.Resource.LanguageResource.IsPopUpClosed))
+                </div>
+                <div class="col-md-4">
+                     @Html.CheckBox("IsPopUpClosed", true)
+                </div>  
+            </div>
+            <div class="row"> 
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-10">                                            
+                    @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.Note)
+                </div>     
+            </div>    
+       </div>    
+        <div class="row">
+            <div class="footbar">
+                <input type="button" id="btnSubmit" name="btnSubmit" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-small btn-info" />
+                <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn btn-small" />
+            </div>
+        </div>
+    </div>
+}
+

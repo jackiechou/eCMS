@@ -1,0 +1,77 @@
+﻿@model List<EvaluationTemplateViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:5%">@Eagle.Resource.LanguageResource.No</th>
+                <th style="width:20%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingEvaluationTemplateCode
+                </th>
+                <th style="width:65%" class="text_center">
+                    @Eagle.Resource.LanguageResource.TrainingEvaluationTemplateName
+                </th>                                                                                                                
+                <th class="table-actions text_center no-sort" style="width:10%">@Eagle.Resource.LanguageResource.Actions</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EvaluationTemplateCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EvaluationTemplateName)
+                    </td>                                                           
+                    <td class="table-actions text_center no-sort">
+                        <a data-id="@item.EvaluationTemplateID"  title="Edit" class="ico editItem " href="/Admin/EvaluationTemplate/Index?EvaluationTemplateID=@item.EvaluationTemplateID" >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.EvaluationTemplateID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>                            
+                    </td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>    
+    
+    var urlReset = areas + "/EvaluationTemplateList/_List"
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        var urlRedirect = areas + "/EvaluationTemplateList/_Delete?id=" + lsID;
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: urlRedirect,
+                        success: function (data) {                            
+                            if (data == 'success') {
+                                $("body").addClass("loading");
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlSearch,
+                                    data: $("#frmAdd").serialize(),
+                                    success: function (data) {
+                                        $('#divList').html(data);
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

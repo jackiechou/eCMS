@@ -1,0 +1,62 @@
+﻿@model IEnumerable<InsuranceLeaveViewModel>
+
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.FromDate)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.ToDate)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Stage)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BenifitSalary)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="text-center">
+                        @i
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.FromDate)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.ToDate)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Stage)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td style="text-align:right;">
+                        @Html.DisplayFor(modelItem => item.BenifitSalary)
+                    </td>
+                    <td class="table-actions text_center no-sort">
+                        <a data-id="@item.ID"  title="Edit" class="ico editItem " >&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.ID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    InvokeDataTables();
+</script>

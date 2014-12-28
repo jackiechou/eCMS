@@ -1,0 +1,15 @@
+﻿<div id="divEdit">
+    @Html.Action("_Create")
+</div>
+<div id="divList"> 
+    @Html.DevExpress().ReportToolbar(settings =>
+    {
+        // The following settings are necessary for a Report Toolbar.
+        settings.Name = "ReportToolbar";
+        settings.ReportViewerName = "reportViewer1";
+    }).GetHtml()
+     
+    <div id="divReport">   
+        @Html.Action("Report")
+    </div>
+</div>

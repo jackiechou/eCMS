@@ -1,0 +1,87 @@
+﻿@model LS_tblPositionViewModel
+
+<form id="frmAdd" class="form-horizontal">        
+        @Html.HiddenFor(model => model.LSPositionID)
+    <fieldset>
+
+        <div id="alertMessageBox">
+            @if (ViewBag.DisplayErrorMessage == true)
+            {
+                <div class="@ViewBag.CssClass">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>@ViewBag.SortMessage !</strong>
+                    <div class="padding-left">
+                        @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                    </div>
+                </div>
+        }
+        </div>
+        <div class="input-area">
+            <!-- start row -->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LSPositionCode)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.LSPositionCode, new { @class = "input-large" })
+                    @Html.ValidationMessageFor(model => model.LSPositionCode)
+                </div>
+            </div>
+            <!-- end row -->
+            <!-- start row -->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "input-large" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.VNName)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VNName, new { @class = "input-large" })
+                    @Html.ValidationMessageFor(model => model.VNName)
+                </div>
+            </div>
+            <!-- end row -->
+            <!-- start row -->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Rank)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.Rank, new { @class = "input-mini" })
+                    @Html.ValidationMessageFor(model => model.Rank)
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Used)
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBox("Used")
+                </div>
+            </div>
+            <!-- end row -->
+            <!-- start row -->
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.Note, new { @class = "input-xxlarge" })
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <div class="row">
+            <div class="footbar">
+                <div>
+                    <input type="button" id="btnReset" value=" @Eagle.Resource.LanguageResource.btnReset" class="direct_bt btn btn-larg1e row-fluid" />
+                    <input type="button" id="btnAdd" value=" @Eagle.Resource.LanguageResource.btnSave" class="direct_bt btn btn-info btn-larg1e row-fluid AddModel" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+@Html.Action("jqueryval", "Common", null)

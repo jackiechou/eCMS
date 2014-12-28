@@ -1,0 +1,291 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.MasterDataInfo;
+    }
+@model List<MasterDataViewModel>
+
+<div class="box">
+    <div class="row">
+     <div class="col-md-9">
+             <div class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.MasterData</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                       <div class="accordion-content">
+                            <div id="contentMaster"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div id="scrollbar_hrm"  class="col-md-3">
+
+            <table class="table table-bordered table-hover" >
+                <thead>
+                    <tr>
+                        <th colspan="2">@Eagle.Resource.LanguageResource.MasterDataList</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a data-id="@item.TableName"  title="Edit" class="ico edit master cursor-pointer">@item.Name</a>                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+
+</div>       
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".edit[data-id='Position']").trigger('click');
+        });
+        var strTableNameURL = '/HR_MasterData/LS_tbl';
+        var strTableNameEdit = '/HR_MasterData/_EditLS_tbl';
+        var strTableName = '';
+
+        $(document).on("click", ".master", function () {
+            
+            var url = strTableNameURL + $(this).data('id');
+            strTableName = $(this).data('id');
+            var strTagName = $(this).text();
+            $.ajax({
+                type: "GET",
+                url: areas + url,
+                success: function (data) {
+                    $('#contentMaster').html(data);
+                    $('.content-header .span12 h2').html('@Eagle.Resource.LanguageResource.MasterDataInfo - ' + strTagName);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            });
+        });
+
+        // reset form
+        $(document).on("click", "#btnReset" , function () {
+            //var urlCreate = '/HR_MasterData/LS_tblLocation' ;
+            $.ajax({
+                type: "GET",
+                //url: areas + urlCreate,
+                url: areas + strTableNameURL+ strTableName,
+                success: function (data) {
+                    $('#contentMaster').html(data);
+
+                }
+            });
+        });
+        
+        // add / update location
+        $(document).on("click", "#btnAdd", function () {
+            if ($('#btnAdd').hasClass("AddModel")) {
+                //Add new
+                var url = areas + '/LS_tbl' + strTableName + '/Save';
+                var urlCreate = '/HR_MasterData/LS_tbl' + strTableName;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    $('#contentMaster').html(data);
+                                    AlterAddSuccess();
+                                    return false;
+                                }
+                            });
+                        } else {
+                            $('#divEdit').html(data);
+                        }
+                    }
+                });
+            } else {
+                // Update Location
+                var url = '/Admin/LS_tbl' + strTableName + '/Update';
+                //var url = '@Url.Action("Update", "LS_tblLocation")';
+                var urlCreate = '/HR_MasterData/LS_tbl' + strTableName;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    $('#contentMaster').html(data);
+                                    AlterUpdateSuccess();
+                                }
+                            });
+                        } else {
+                            $('#contentMaster').html(data);
+                        }
+                    }
+                });
+            }
+
+        });
+
+        // region click edit
+        $(document).on("click", ".editItem", function () {
+
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+
+            $.ajax({
+                type: "GET",
+                url: areas + strTableNameEdit + strTableName + '/' + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    //
+                    $('#LS' + strTableName + 'Code').attr('readonly', 'readonly');
+
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            })
+            return false;
+        });
+
+        // region click edit
+        $(document).on("click", ".editItemLevel1", function () {
+       
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+            
+            $.ajax({
+                type: "GET",
+                url: areas + strTableNameEdit + strTableName + '/' + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    //
+                    $('#LS' + strTableName + 'Code').attr('readonly', 'readonly');
+
+                    var strCompanyName = $('#strCompanyName').val();
+                    $('#LSCompanyID').val($('#s2id_LSCompanyID .select2-chosen').html());
+                    $('#s2id_LSCompanyID .select2-chosen').html(strCompanyName);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            })            
+            return false;            
+        }); 
+        // region click edit district
+        $(document).on("click", ".editItemDistrict", function () {
+
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+
+            $.ajax({
+                type: "GET",
+                url: areas + strTableNameEdit + strTableName + '/' + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    //
+                    $('#LS' + strTableName + 'Code').attr('readonly', 'readonly');
+
+                    var strProvinceName = $('#strProvinceName').val();
+                    $('#LSProvinceID').val($('#s2id_LSProvinceID .select2-chosen').html());
+                    $('#s2id_LSProvinceID .select2-chosen').html(strProvinceName);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            })
+            return false;
+        });
+        // region click edit Bank - ngan hang
+        $(document).on("click", ".editItemBank", function () {
+
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+
+            $.ajax({
+                type: "GET",
+                url: areas + strTableNameEdit + strTableName + '/' + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    //
+                    $('#LS' + strTableName + 'Code').attr('readonly', 'readonly');
+
+                    var strProvinceName = $('#strProvinceName').val();
+                    $('#LSProvinceID').val($('#s2id_LSProvinceID .select2-chosen').html());
+                    $('#s2id_LSProvinceID .select2-chosen').html(strProvinceName);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+                }
+            })
+            return false;
+        });
+        // region click edit
+        $(document).on("click", ".editItem2", function () {
+
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+
+            $.ajax({
+                type: "GET",
+                url: areas + strTableNameEdit + strTableName + '/' + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    //
+                    $('#LS' + strTableName + 'Code').attr('readonly', 'readonly');
+
+                    var strLevel1Name = $('#strLevel1Name').val();
+                    $('#LSLevel1ID').val($('#s2id_LSLevel1ID .select2-chosen').html());
+                    $('#s2id_LSLevel1ID .select2-chosen').html(strLevel1Name);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+
+                }
+            })
+            return false;
+        });
+
+        // region click edit  danh muc Province
+        $(document).on("click", ".editItem3", function () {
+
+            var lsID = $(this).data('id');  // ID cua dong du lieu
+            $.ajax({
+                type: "GET",
+                url: areas + strTableNameEdit + strTableName + '/' + lsID,
+                success: function (data) {
+                    //Create edit form
+                    $('#divEdit').html(data);
+                    //Add => Edit
+                    $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                    //
+                    $('#LS' + strTableName + 'Code').attr('readonly', 'readonly');
+
+                    var strCountryName = $('#strCountryName').val();
+                    $('#LSProvinceID').val($('#s2id_LSCountryID .select2-chosen').html());
+                    $('#s2id_LSCountryID .select2-chosen').html(strCountryName);
+                    $('html, body').animate({ scrollTop: 80 }, 'slow');
+
+                }
+            })
+            return false;
+        });
+        $('#changeSidebarPos').trigger('click');
+        $('#changeSidebarPos').remove();
+
+    </script>
+}

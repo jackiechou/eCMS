@@ -1,0 +1,225 @@
+﻿@model List<HolidayViewModel>
+<form id="frmAdd" class="form-horizontal">
+    <div id="alertMessageBox">
+        
+    </div>
+    <div class="box" >
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">Input region</span>
+                    </a>
+                </div>
+            </div>
+            <div id="form_accordion" class="accordion-body collapse in">
+                <div class="accordion-inner" style="padding-left:0px;padding-right:0px;">
+                    <div class="accordion-content">
+                        <div class="input-area">
+                            <!-- start row -->
+                            @if (Model != null && Model.Count > 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @Html.LabelFor(model => model.First().Year)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(model => model.First().Year, new { @class = "span2" })
+                                        @Html.ValidationMessageFor(model => model.First().Year)
+                                        <input type="button" id="btnSearch" value=" @Eagle.Resource.LanguageResource.btnSearch" class="direct_bt btn btn-info btn-larg1e row-fluid" />
+                                        
+                                    </div>
+                                </div>
+                                    }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @Html.Label("Year", Eagle.Resource.LanguageResource.Year, null)
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.TextBox("Year", (int)ViewBag.iYear , new { @class = "span2" })
+                                        <input type="button" id="btnSearch" value=" @Eagle.Resource.LanguageResource.btnSearch" class="direct_bt btn btn-info btn-larg1e row-fluid" />
+                                    </div>
+                                </div>
+                                <script>
+                                    AlterUpdateWarningHolidaysYear();
+                                </script>
+                           }
+                            <!-- end row -->
+                            <style>
+                                td {
+                                    padding-bottom: 1px !important;
+                                    padding-top: 1px !important;
+                                }
+                            </style>
+                            <div class="row">
+                                <label style="color: #006699; font-style: italic; font-size: 11px;">(* Input year and click reset button to setup holidays)</label>
+                                <table class="table table-bordered table-condensed table-hover table-striped tablesorter sortableTable" style="font-size:11px">
+                                <thead>
+                                    <tr>
+                                        <th>@Eagle.Resource.LanguageResource.M</th>
+                                        <th>01</th>
+                                        <th>02</th>
+                                        <th>03</th>
+                                        <th>04</th>
+                                        <th>05</th>
+                                        <th>06</th>
+                                        <th>07</th>
+                                        <th>08</th>
+                                        <th>09</th>
+                                        <th>10</th>
+                                        <th>11</th>
+                                        <th>12</th>
+                                        <th>13</th>
+                                        <th>14</th>
+                                        <th>15</th>
+                                        <th>16</th>
+                                        <th>17</th>
+                                        <th>18</th>
+                                        <th>19</th>
+                                        <th>20</th>
+                                        <th>21</th>
+                                        <th>22</th>
+                                        <th>23</th>
+                                        <th>24</th>
+                                        <th>25</th>
+                                        <th>26</th>
+                                        <th>27</th>
+                                        <th>28</th>
+                                        <th>29</th>
+                                        <th>30</th>
+                                        <th>31</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int k =-1;}
+                                    @for (int month = 1; month <= 12; month++)
+			                        {
+                                        <tr>
+                                            <td>@month</td>
+                                            @foreach (var day in Model)
+	                                        {
+                                                if (day.M == month)
+                                                {
+                                                    string CssClass = "date-"+ day.strTypeDate;
+                                                    if (day.TypeDate != 0)                                                    
+                                                    {
+                                                        k++;
+                                                        string id = "td-" + day.Day.ToString() + "-" + day.M.ToString();
+                                                        //string date = day.Day.ToString() + "-" + day.M.ToString();
+                                                        <td id="@id" class="@CssClass launchConfirm" onclick="Popup(@day.M,@day.Day,'@id')">
+                                                            <label class="display-name reset">
+                                                                @day.strTypeDate
+                                                            </label>
+                                                            <input type="hidden" class="TypeDate" value="@day.TypeDate" name="[@k].TypeDate" />
+                                                            <input type="hidden" value="@day.M" name="[@k].M" />
+                                                            <input type="hidden" value="@day.Day" name="[@k].Day" />
+                                                            <input type="hidden" class="strTypeDate" value="@day.strTypeDate" name="[@k].strTypeDate" />
+                                                            <input type="hidden" value="@day.Year" name="[@k].Year" />
+                                                        </td>
+                                                      
+                                                    }else
+                                                    {
+                                                        <td class="date-I">
+                                                        </td>  
+                                                    }
+                                                   
+                                                }
+	                                        }
+
+                                           @{
+                                                var NgayThieu = 31 - Model.Where(p => p.M == month).Count();
+                                            }
+                                            @for (int i = 0; i < NgayThieu; i++)
+			                                {
+                                                <td class="date-I">
+                                                </td> 
+			                                }
+                                        </tr>
+			                        }
+                                </tbody>
+                            </table>
+                             
+                            </div>
+                            <!-- start row button-->
+                            <div class="row">
+                                <div class="footbar">
+                                    <div>
+                                        <input type="button" id="btnReset" value=" @Eagle.Resource.LanguageResource.btnReset" class="direct_bt btn btn-larg1e row-fluid" />
+                                        <input type="button" id="btnAdd" value=" @Eagle.Resource.LanguageResource.btnSave" class="direct_bt btn btn-info btn-larg1e row-fluid AddModel" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end row button-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Action("jqueryval", "Common", null)
+<script>
+    function Popup(month, day, id) {
+        $("#popupDay").val(day);
+        $("#popupMonth").val(month);
+        $("#popupId").val(id);
+        $("#modal-content").modal('show');
+    }
+
+    $('.launchConfirm').on('click', function (e) {
+        $('#modal-content')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    var tr = $('#popupId').val();
+                    var id = '#' + tr;
+                    $(id).removeClass("date-H").removeClass("date-").removeClass("date-S");//.addClass("EditModel");
+                    var selected_value = $('#modal-content').find('input[type=radio]:checked').val();
+                    $(id).find('.display-name').html(selected_value);
+                    //$(id).html(selected_value);
+                    if (selected_value == "H")
+                    {
+                        $(id).find('.TypeDate').val('2');
+                        $(id).find('.strTypeDate').val('H');
+                        $(id).addClass("date-H");
+                    } else if (selected_value == "S") {
+
+                        $(id).find('.TypeDate').val('4');
+                        $(id).find('.strTypeDate').val('S');
+                        $(id).addClass("date-S");
+                    } else {
+
+                        $(id).find('.TypeDate').val('1');
+                        $(id).find('.strTypeDate').val('');
+                        $(id).addClass("date-");
+                    }
+                    
+
+                }
+            });
+    });
+</script>
+
+<div id="modal-content" class="modal hide fade" style="width: 400px;margin: auto auto;">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Setup holidays</h3>
+    </div>
+    <div class="modal-body">
+       <label class="reset-label margin-left-25">@Html.RadioButton("Holidays","H",true) Holidays</label>
+       <label class="reset-label margin-left-25"> @Html.RadioButton("Holidays","S",false) Weekend</label>
+       <label class="reset-label margin-left-25"> @Html.RadioButton("Holidays","",false)  Workday</label>
+        <input type="hidden" value="" id="popupDay" />
+        <input type="hidden" value="" id="popupMonth" />
+        <input type="hidden" value="" id="popupId" />
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">OK</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+    </div>
+</div>

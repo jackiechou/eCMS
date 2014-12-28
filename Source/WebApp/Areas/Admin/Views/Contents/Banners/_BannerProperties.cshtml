@@ -1,0 +1,64 @@
+﻿@model Eagle.Model.Contents.Banners.BannerViewModel
+
+<h2 class="StepTitle">@Html.Raw(Eagle.Resource.LanguageResource.BannerProperties)</h2>
+<div id="BannerProperties"> 
+    <div class="row">
+        <div class="col-md-2">
+            @Html.RequiredLabelFor(model => model.BannerTitle)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.BannerTitle, new { @class = "span12 ignored" })
+            @Html.ValidationMessageFor(model => model.BannerTitle)
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.DestinationUrl)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("DestinationUrl", null, new { @class = "span12" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.AltText)
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.AltText, new { @class = "span12 ignored" })
+            @Html.ValidationMessageFor(model => model.AltText)
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Status)
+        </div>
+        <div class="col-md-4">
+            @Html.RadioButton("Status", true, true, new { id = "IsActive", @style = "float:left;" })
+            @Html.Label("Active", Eagle.Resource.LanguageResource.Active, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+
+            @Html.RadioButton("Status", false, false, new { id = "IsActive", @style = "float:left;" })
+            @Html.Label("InActive", Eagle.Resource.LanguageResource.InActive, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.BannerPositionId)
+        </div>
+        <div class="col-md-4">
+            @Html.ListBox("BannerPositionId", (MultiSelectList)ViewBag.BannerPositions, new { @id = "BannerPositionId", @class = "span12", size = ((MultiSelectList)ViewBag.BannerPositions).Count() })
+            @Html.ValidationMessageFor(model => model.AltText)
+        </div>
+
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.Target)
+        </div>
+        <div class="col-md-4">
+            @Html.RadioButton("Target", true, true, new { id = "IsActive", @style = "float:left;" })
+            @Html.Label("NewWindow", Eagle.Resource.LanguageResource.NewWindow, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+
+            @Html.RadioButton("Target", false, false, new { id = "IsActive", @style = "float:left;" })
+            @Html.Label("SameWindow", Eagle.Resource.LanguageResource.SameWindow, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
+        </div>
+    </div>
+</div>

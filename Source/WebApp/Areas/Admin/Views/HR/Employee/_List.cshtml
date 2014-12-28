@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Eagle.Model.HR.EmployeeViewModel>
+<div class="table datatable">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.EmpCode</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.FullName</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.Email</th>
+                <th class="text_center">@Eagle.Resource.LanguageResource.Mobile</th>
+                @*<th class="text_center">@Eagle.Resource.LanguageResource.Telephone</th>*@
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td style="text-align:center">
+                        @i
+                    </td>
+                    <td class="text_center">
+                        @item.EmpCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>                   
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.Mobile
+                    </td>
+                    @*<td>
+                        @item.Telephone
+                    </td> *@                 
+                     <td class="table-actions text_center center no-sort">    
+                           @*<a data-id="@item.EmpID" title="@Eagle.Resource.LanguageResource.Edit" class="btn btn-smal btn-edit"><i class="icon-align-center icon-edit"></i></a>   *@                 
+                            <a data-id="@item.EmpID" title="@Html.Raw(Eagle.Resource.LanguageResource.Edit)" class="ico editItem ">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

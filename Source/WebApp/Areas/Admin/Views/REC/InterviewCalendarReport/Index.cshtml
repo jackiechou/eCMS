@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.InterviewCalendar;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+}
+
+@section ContentSection
+{
+<div id="MainBody">
+    <div id="divEdit">
+        @Html.Action("_Create")
+    </div>
+    <div id='calendar'></div>
+</div>
+}
+@section HeadScripts
+{
+    <link href="~/Scripts/plugins/fullcalendar-2.0.3/lib/cupertino/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/fullcalendar-2.0.3/fullcalendar.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/fullcalendar-2.0.3/fullcalendar.print.css" rel="stylesheet" />
+    <link href="~/Scripts/plugins/fullcalendar-2.0.3/lib/cupertino/jquery-ui.min.css" rel="stylesheet" />
+    <style>
+        #ContentPane * {
+            font-family: Arial,Helvetica,sans-serif !important;
+        }
+    </style>
+}
+
+
+@section Scripts
+{
+@*    <script src="~/Scripts/plugins/fullcalendar-2.0.3/lib/jquery.min.js"></script>
+    <script src="~/Scripts/plugins/fullcalendar-2.0.3/lib/jquery-ui.custom.min.js"></script>*@
+    <script src="~/Scripts/plugins/fullcalendar-2.0.3/lib/moment.min.js"></script>
+    <script src="~/Scripts/plugins/fullcalendar-2.0.3/fullcalendar.js"></script>
+    <script src="~/Scripts/plugins/fullcalendar-2.0.3/lang/vi.js"></script>
+@*    <script src="~/Scripts/plugins/fullcalendar-2.0.3/lang-all.js"></script>*@
+
+    @{
+        string LanguageCode = "en";
+        int LanguageId = 10001;
+        if (Session["LanguageId"] != null)
+        {
+            LanguageId = (int)Session["LanguageId"];   
+        }
+        if (LanguageId != 10001)
+        {
+            LanguageCode = "vi";
+        }
+    }
+    <script>
+        //Khai báo language = 'en' hoặc 'vi'
+        var currentLangCode = '@LanguageCode';
+        //Khi load lên:
+        //1. Kiểm tra radio checkbox load mặc định
+        //2. Load Calendar theo thông số mặc định
+        $(document).ready(function () {
+            $('#changeSidebarPos').trigger('click');
+            CheckVisDiv();
+            LoadingCalendar();
+        });
+        $(document).on("click", "#changeSidebarPos", function () {
+            CheckVisDiv();
+            LoadingCalendar();
+        });
+        //Thay đổi radio checkbox thì xét lại
+        $(document).on("change", "input[name='radOption']", function () {
+            CheckVisDiv();
+            LoadingCalendar();
+        })
+        //Project thay đổi => thay đổi ProjectTournamentID
+        $(document).on("change", "#ProjectID", function () {
+            var options = {};
+            options.url = areas + "/CandidateTournament/GetTournaments";
+            options.type = "POST";
+            options.data = JSON.stringify({ ProjectID: $(this).val() });
+            options.dataType = "json";
+            options.contentType = "application/json";
+            options.success = function (data) {
+                $("#ProjectTournamentID").empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("#ProjectTournamentID").append("<option value='" + data[i].Value + "'>" + data[i].Text + "</option>");
+                }
+                $("#ProjectTournamentID").prop("disabled", false);
+                $("#ProjectTournamentID").trigger("change");
+            };
+            options.error = function () { alert("Error retrieving states!"); };
+            $.ajax(options);
+        });
+
+        $(document).on("change", "#ProjectTournamentID", function () {
+            LoadingCalendar();
+        });
+        $(document).on("change", "#Interviewer", function () {
+            LoadingCalendar();
+        });
+
+        function LoadingCalendar() {
+            $('#calendar').fullCalendar('destroy');
+
+            var urlGet = areas + "/InterviewCalendarReport/";
+
+            if ($("input[name='radOption']:checked").val() == 1) {
+                urlGet = urlGet + "GetCalendarByEmployeeID?EmpID=" + $("#Interviewer").val();
+            } else {
+                urlGet = urlGet + "GetCalendarByProject?ProjectID=" + $("#ProjectID").val() + "&ProjectTournamentID=" + $("#ProjectTournamentID").val();
+            }
+            var strMonthFormat = 'MMMM YYYY';
+            if (currentLangCode == 'vi') {
+                strMonthFormat = 'MMMM [năm] YYYY';
+            }
+            $('#calendar').fullCalendar({
+                height: 500,
+                theme: true,
+                lang: currentLangCode,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                    //right: 'month,basicWeek,basicDay'
+                },
+                titleFormat: {
+                    month: strMonthFormat,
+                    week: 'LL', // like "Sep 4 1986"
+                    day: 'LL' // like "September 4 1986"
+                },
+                //defaultDate: '2014-08-12',
+                editable: false,
+                events: {
+                    url: urlGet,
+                    error: function () {
+                        alert('Error! loading.');
+                    }
+                },
+                eventRender: function (event, element) {
+                    //element.children('.fc-event-inner').css({ 'background-color': event.bgcolor });
+                    //element.children('.fc-event-inner').css({ 'color': event.color });
+                    element.children('.fc-event-inner').css({ 'background-color': '#3a87ad' });
+                    element.children('.fc-event-inner').css({ 'border-color': 'blue' });
+                    element.children('.fc-event-inner').css({ 'color': 'white' });
+                }
+                //eventMouseover: function (calEvent, jsEvent) {
+                //    var tooltip = '<div class="tooltipevent" style="min-width:100px;min-height:100px;background:#ccc;position:absolute;z-index:10001;">' + calEvent.title + '</div>';
+                //    $("body").append(tooltip);
+                //    $(this).mouseover(function (e) {
+                //        $(this).css('z-index', 10000);
+                //        $('.tooltipevent').fadeIn('500');
+                //        $('.tooltipevent').fadeTo('10', 1.9);
+                //    }).mousemove(function (e) {
+                //        $('.tooltipevent').css('top', e.pageY + 10);
+                //        $('.tooltipevent').css('left', e.pageX + 20);
+                //    });
+                //},
+
+                //eventMouseout: function (calEvent, jsEvent) {
+                //    $(this).css('z-index', 8);
+                //    $('.tooltipevent').remove();
+                //},
+
+            });
+        }
+
+        function CheckVisDiv() {
+            if ($("input[name='radOption']:checked").val() == 1) {
+                if (!$("#divRecruitmentTournament").hasClass("hidden")) {
+                    $("#divRecruitmentTournament").addClass("hidden");
+                }
+                if ($("#divInterviewer").hasClass("hidden")) {
+                    $("#divInterviewer").removeClass("hidden");
+                }
+            }
+            else {
+                if (!$("#divInterviewer").hasClass("hidden")) {
+                    $("#divInterviewer").addClass("hidden");
+                }
+                if ($("#divRecruitmentTournament").hasClass("hidden")) {
+                    $("#divRecruitmentTournament").removeClass("hidden");
+                }
+            }
+        }
+
+
+    </script>
+}

@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.CompanyInfomation;   
+}
+
+@section ContentSection
+{
+<div class="box">
+    <div class="row"> 
+        <div id="MainBody">
+            @Html.Partial("../HR_MasterData/Company/_Reset")
+        </div>
+    </div>
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup","Common",null)
+
+<script>
+    $('#changeSidebarPos').trigger('click');
+    //$('#changeSidebarPos').remove();
+    var Controller = 'Company';
+
+    //Url Reset (Get)
+    var urlReset = areas + '/' + Controller + '/Index';
+
+    //Url Add New Item (Post)
+    var urlAddNew = areas + '/' + Controller + '/Save';
+
+    //Url Update (Get)
+    var urlEdit = areas + '/' + Controller + '/_Edit/';
+
+    //Url Update (Post)
+    var urlUpdate = areas + '/' + Controller + '/Update';
+
+    //Url Delete (Post)
+    var urlDelete = areas + '/' + Controller + '/_Delete/';
+</script>
+
+@*<script src="~/Scripts/plugins/common/AddUpdateDelete.js"></script>*@
+
+<script type="text/javascript">
+    
+    function LoadCompanyTree() {
+        $('#companyTree').tree({
+            url: areas + '/CommonCompany/Getall',
+            textField: 'title',
+            valueField: 'id',
+            onSelect: function (node) {
+                $("body").addClass("loading");
+                var lsID = node.id;  
+                $.ajax({
+                    type: "GET",
+                    url: urlEdit + lsID,
+                    success: function (data) {
+                        //Create edit form
+                        $('#divEdit').html(data);
+                        //Add => Edit
+                        $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                        //kiểm tra lại ẩn hiện "Thuộc"
+                        checkDivParentHidden();
+                        //Khóa "Thuộc" không cho edit
+                        $('input[name=CompanyDefine]').prop("disabled", true);
+                        if ($('.combo-arrow').hasClass('combo-arrow')) {
+                            $('.combo-arrow').addClass('combo-arrow2')
+                            $('.combo-arrow').removeClass('combo-arrow')
+                        }
+                    }
+                })
+                //Go to top
+                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                return false;
+                
+            }
+        });
+    }
+    function checkDivParentHidden() {
+
+        $("#LSCompanyDefineID").val($('input#CompanyDefine:checked').val());
+
+        var parent = $('input#CompanyDefine:checked').attr('data-id');
+        if (parent == 0 && !$('#divParent').hasClass('hidden')) {
+            $('#divParent').addClass('hidden');
+        } else if (parent != 0) {
+            if ($('#divParent').hasClass('hidden')) {
+                $('#divParent').removeClass('hidden');
+            }
+            //Load dropdownlist
+            LoadComboTreeWithActionWithRequired('Parent', 'GetTo?Parent=' + parent, '@string.Format(Eagle.Resource.LanguageResource.Required,Eagle.Resource.LanguageResource.LastCompanyDefine)', $("input[name='Parent']").val());
+
+        }
+        $('.qtip').qtip("hide");
+
+    }
+    $(document).ready(function () {
+        checkDivParentHidden();
+        LoadCompanyTree();
+    });
+    $(document).on("click", "#CompanyDefine", function () {
+        checkDivParentHidden();
+    });
+
+    //Add and update post action
+    $(document).on("click", "#btnAdd", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            $('.qtip').qtip("show");
+            return false;
+        } else {
+            //Loading
+            $("body").addClass("loading");
+            //check LSCompanyID (parent) valid
+            var LSCompanyDefineID = $('#LSCompanyDefineID').val();
+            var LSCompanyID = $("input[name='Parent']").val();// => to check valid
+            $.ajax({
+                type: "GET",
+                url: areas + '/CommonCompany/CheckLSCompanyIDValid?LSCompanyDefineID=' + LSCompanyDefineID + '&LSCompanyID=' + LSCompanyID,
+                success: function (data) {
+                    if (data == true) {
+                        //  data is valid => add
+                        AddAndEdit();
+                    } else {
+                        AlterWarning(data);
+                    }
+                }
+            });
+        }
+    });
+    function AddAndEdit() {
+        if ($('#btnAdd').hasClass("AddModel")) {
+            //Add new Item
+            $.ajax({
+                type: "POST",
+                url: urlAddNew,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlReset,
+                            success: function (data) {
+                                $('#MainBody').html(data);
+                                AlterAddSuccess();
+                                checkDivParentHidden();
+                                LoadCompanyTree();
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '@Request.Url.AbsoluteUri';
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        } else {
+            // Update Item
+            $.ajax({
+                type: "POST",
+                url: urlUpdate,
+                data: $("#frmAdd").serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlReset,
+                            success: function (data) {
+                                $('#MainBody').html(data);
+                                AlterUpdateSuccess();
+                                checkDivParentHidden();
+                                LoadCompanyTree();
+                            }
+                        });
+                    } else if (data == 'timeout') {
+                        window.location.href = '@Request.Url.AbsoluteUri';
+                    }
+                    else {
+                        $('#divEdit').html(data);
+                        $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                    }
+                }
+            });
+        }
+    }
+    // Reset form
+    $(document).on("click", "#btnReset", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "GET",
+            url: urlReset,
+            success: function (data) {
+                $('#MainBody').html(data);
+                checkDivParentHidden();
+                LoadCompanyTree();
+            }
+        });
+    });
+
+    // Click edit (get)
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading");
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+
+        $.ajax({
+            type: "GET",
+            url: urlEdit + lsID,
+            success: function (data) {
+                //Create edit form
+                $('#divEdit').html(data);
+                //Add => Edit
+                $('#btnAdd').removeClass("AddModel").addClass("EditModel");
+                checkDivParentHidden();
+                $('input[name=CompanyDefine]').prop("disabled", true);
+                if ($('.combo-arrow').hasClass('combo-arrow')) {
+                    $('.combo-arrow').addClass('combo-arrow2')
+                    $('.combo-arrow').removeClass('combo-arrow')
+                }
+            }
+        })
+        //Go to top
+        $('html, body').animate({ scrollTop: 80 }, 'slow');
+        return false;
+    });
+
+    // Click delete (get)
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $("body").addClass("loading");
+                    $.ajax({
+                        type: "POST",
+                        url: urlDelete + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: urlReset,
+                                    success: function (data) {
+                                        $('#MainBody').html(data);
+                                        AlterUpdateSuccess();
+                                        $('html, body').animate({ scrollTop: 80 }, 'slow');
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+</script>

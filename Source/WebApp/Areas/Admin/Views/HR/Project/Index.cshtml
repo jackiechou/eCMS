@@ -1,0 +1,284 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.JoinedProjects;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout;    
+}
+@model List<Eagle.Model.HR.ProjectViewModel>
+
+@section ContentSection
+{
+<div id="MainBody" class="main_box">
+    @Html.Partial("../Hr/Project/_Reset")
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade" id="modalEdit">
+    <div id="divEdit"></div>
+</div>
+}
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+@Html.Action("jqueryval", "Common", null)
+
+<script type="text/javascript">
+    ShowDateTimePicker();
+    InvokeMonthPicker();
+    InvokeDataTables();
+
+    (function ($) {
+        $.validator.methods["date"] = function (value, element) { return true; }
+
+        var Controller = 'Project';
+        //Url Reset (Get)
+        var urlReset = areas + '/' + Controller + '/Index';
+
+        //Url Update (Get)
+        var urlEdit = areas + '/' + Controller + '/Edit/';
+
+        //Url Add New Item (Post)
+        var urlAdd = areas + '/' + Controller + '/Create';
+
+        //Url Update (Post)
+        var urlUpdate = areas + '/' + Controller + '/Edit/';
+
+        //Url Delete (Post)
+        var urlDelete = areas + '/' + Controller + '/Delete/';
+
+        //******************************************************************************************************
+        //VALIDATION FORM **************************************************************************************
+        //******************************************************************************************************
+        //$.validator.addMethod("valueNotEquals", function (value, element, arg) {
+        //    return arg != value;
+        //}, "Please select an item");
+
+        //$.validator.addMethod("validateCompareDate", function (value, element) {
+        //    var isValid = false;
+        //    if ($("#FromDate").val() != null && $("#FromDate").val() != "") {
+        //        var FromDate = $("#FromDate").val().split("/");
+        //        var ToDate = $("#ToDate").val().split("/");
+
+        //        var _FromDate = new Date(FromDate[2], FromDate[0] - 1, FromDate[1]);
+        //        var _ToDate = new Date(ToDate[2], ToDate[0] - 1, ToDate[1]);
+
+        //        if (_FromDate > _ToDate)
+        //            isValid = true;
+        //        else
+        //            isValid = false;
+        //    }
+        //    return isValid;
+        //}, "Please pick start date must be before end date");
+
+
+        //$('#myform').validate(
+        //{
+        //    errorClass: 'error',
+        //    validClass: 'valid',
+        //    rules: {
+        //        ProjectCode: {
+        //            required: true
+        //        },
+        //        Position: {
+        //            required: true
+        //        },
+        //        ProjectName: {
+        //            required: true
+        //        },
+        //        MainWork: {
+        //            required: true
+        //        },
+        //        FromMonthPicker: {
+        //            required: false,
+        //            validateCompareDate: true
+        //        },
+        //        ToMonthPicker: {
+        //            required: false,
+        //            validateCompareDate: true
+        //        },
+        //        message: {
+        //            ProjectCode: "[ProjectCode] - Please fill in the blank",
+        //            Position: "[Position] - Please fill in the blank",
+        //            ProjectName: "[ProjectName] - Please fill in the blank",
+        //            MainWork: "[MainWork] - Please fill in the blank",
+        //            //FromMonthPicker: {
+        //            //    validateCompareDate: "[FromMonth] - Please pick start date must be before end date"
+        //            //},
+        //            //ToMonthPicker: {
+        //            //    validateCompareDate: "[ToMonth] - Please pick start date must be before end date"
+        //            //}
+        //        }
+        //    },
+        //    success: function (element) {
+        //        element
+        //        .closest('.control-group').removeClass('error').addClass('success');
+
+        //        //element
+        //        //.addClass('valid')
+        //        //.closest('.control-group').removeClass('error').addClass('success');
+        //        // Use a mini timeout to make sure the tooltip is rendred before hiding it
+        //        //setTimeout(function () {
+        //        //    myForm.find('.valid').qtip('destroy');
+        //        //}, 1);
+        //    },highlight: function (element) {
+        //        $(element).closest('.control-group').removeClass('success').addClass('error');
+        //    },
+        //    unhighlight: function (element) {
+        //        $(element).closest('.control-group').removeClass('error').addClass('success');
+        //    },
+        //    submitHandler: function (form) { // for demo
+        //       // alert('valid form');
+        //        return false;
+        //    }
+        //});
+        //******************************************************************************************************
+        //ENDING VALIDATION FORM *******************************************************************************
+        //******************************************************************************************************
+
+
+        //Add and update post action
+        $(document).on("click", "#btnAdd", function () {
+            if (!$("#myform").valid()) { // Not Valid
+                return false;
+            } else {
+                //$("#myform").submit();
+                //Add new Item
+                $.ajax({
+                    type: "POST",
+                    url: urlAdd,
+                    data: $("#myform").serialize(),
+                    success: function (data, statusCode, xhr) {
+                        if (data.flag.toLowerCase() == 'true') {
+                            //Reload page after success
+                            $.ajax({
+                                type: "GET",
+                                url: urlReset,
+                                success: function (data, statusCode, xhr) {
+                                    if (data.message == "timeout")
+                                        window.location.reload();
+                                    else {
+                                        $('#MainBody').html(data);
+                                        showMessageWithTitle("@Eagle.Resource.LanguageResource.Success", "@Eagle.Resource.LanguageResource.CreateSuccess", "success", 2000);
+                                    }
+                                }, error: function (jqXHR, textStatus, errorThrown) {
+                                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                                }
+                            });
+                        } else {
+                            showMessageWithTitle("@Eagle.Resource.LanguageResource.CreateFailure", data, "error", 2000);
+                        }
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                    }
+                });
+        }
+    });
+
+    $(document).on("click", "#btnEdit", function () {
+        if (!$("#myform").valid()) { // Not Valid
+            return false;
+        } else {
+            // Update Item
+            $.ajax({
+                type: "POST",
+                url: urlUpdate,
+                data: $("#myform").serialize(),
+                success: function (data, statusCode, xhr) {
+                    if (data.flag.toLowerCase() == 'true') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlReset,
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout")
+                                    window.location.reload();
+                                else {
+                                    $('#MainBody').html(data);
+                                    AlterUpdateSuccess();
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } 
+                    else {
+                        $('#divEdit').html(data);
+                    }
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+    });
+
+
+    // Reset form
+    $(document).on("click", "#btnReset", function () {
+        var $validateObj = $(this).parents('form');
+
+        $validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+        $validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+
+
+        $.ajax({
+            type: "GET",
+            url: urlReset,
+            success: function (data, statusCode, xhr) {
+                $('#MainBody').html(data);
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+            }
+        });
+    });
+
+    // Click edit (get)
+    $(document).on("click", ".editItem", function () {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+
+        $.ajax({
+            type: "GET",
+            url: urlEdit + lsID,
+            success: function (data, statusCode, xhr) {
+                //Create edit form
+                $('#divEdit').html(data);
+                InvokeMonthPicker();
+            }, error: function (jqXHR, textStatus, errorThrown) {
+                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+            }
+        });
+        //Go to top
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        return false;
+    });
+
+    // Click delete (get)
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $.ajax({
+                        type: "POST",
+                        url: urlDelete + lsID,
+                        success: function (data, statusCode, xhr) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: urlReset,
+                                    success: function (data, statusCode, xhr) {
+                                        $('#MainBody').html(data);
+                                        AlterUpdateSuccess();
+                                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 0 }, 'fast');
+                            }
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+
+})(jQuery);
+</script>

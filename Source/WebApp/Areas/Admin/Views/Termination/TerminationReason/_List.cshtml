@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LS_tblTerminationReasonViewModel>
+<div class="table datatable">
+    <div id="debugArea" style="display:none"></div>
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rank)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Used)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody class="sortable">
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr id="@i">
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.Rank)
+                    </td>
+                    <td class="center">
+                        @Html.CheckBoxFor(modelItem => item.Used, new { @disabled = "disabled" })
+                        @*@Html.CheckBox("Used", item.Used == true, new { @disabled = "disabled" })*@
+                    </td>
+                    <td class="table-actions text_center center no-sort">
+                        <a data-id="@item.LSTerminationReasonID" title="Edit" class="ico editItem">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.LSTerminationReasonID" title="Delete" class="ico deleteItem">&nbsp;&nbsp;&nbsp;</a>
+                        <a data-id="@item.LSTerminationReasonID" title="UpdateStatus" class="ico updateStatusItem">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

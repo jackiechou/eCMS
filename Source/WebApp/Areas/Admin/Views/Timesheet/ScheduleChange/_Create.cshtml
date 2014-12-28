@@ -1,0 +1,104 @@
+﻿@model Eagle.Model.ScheduleChangeCreateViewModel
+<form id="frmAdd">
+
+<div id="alertMessageBox">
+    @if (ViewBag.DisplayErrorMessage == true)
+    {
+        <div class="@ViewBag.CssClass">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>@ViewBag.SortMessage !</strong> @ViewBag.Message
+        </div>
+    }
+</div>
+<div class="box">
+    <div class="row">
+        <div id="right_accordion" class="accordion-group">
+            <div class="accordion-heading toolbar">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                    <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                    <span class="heading-tite">Input region</span>
+                </a>
+            </div>
+            <div id="form_accordion" class="accordion-body collapse in">
+                <div>
+                    <div class="accordion-inner">
+                        <div class="accordion-content">
+                            <!--start row-->
+                            <div class="row user-group-management">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(model => model.FromDate)
+                                        </div>
+                                        <div class="col-md-7">
+                                            @Html.Datepicker2For(model => model.strFromDate, "dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(model => model.ToDate)
+                                        </div>
+                                        <div class="col-md-7">
+                                            @Html.Datepicker2For(model => model.strToDate, "dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(model => model.ScheduleID_From)
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBox("SelectScheduleIDFrom", null, new { @class = "span12" })
+                                            @Html.HiddenFor(model => model.ScheduleName_From)
+                                            @Html.HiddenFor(model => model.ScheduleID_From)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            @Html.LabelFor(model => model.ScheduleID_To)
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBox("SelectScheduleIDTo", null, new { @class = "span12" })
+                                            @Html.HiddenFor(model => model.ScheduleName_To)
+                                            @Html.HiddenFor(model => model.ScheduleID_To)
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 115px;">
+                                        <div class="footbar">
+                                            <div>
+                                                <input type="button" id="btnAdd" value="Transfer" class="direct_bt btn btn-larg1e row-fluid AddModel" />
+                                                <input type="button" id="btnAddAll" value="Transfer all" class="direct_bt btn btn-info btn-larg1e row-fluid AddModel" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="user-style">
+                                        <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "span12" })</h5>
+                                        <div class="control-group">
+                                            @Html.ListBox("lstBox", ViewData["lstBox"] as MultiSelectList, new { @id = "lstBox" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+</form>
+@Html.Action("ConfirmPopup", "Common", null)
+@Html.Action("jqueryval", "Common", null)
+<script type="text/javascript">
+    InvokeDateTimePicker();
+</script>
+<script>
+    var strInputSchedule = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputScheduleName)';
+    PopulateDropDownListAutoComplete("SelectScheduleIDFrom", "ScheduleID_From", "ScheduleName_From", strInputSchedule, areas + '/Schedule/DropdownList');
+
+    @*var strInputSchedule = '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputScheduleName)';*@
+    PopulateDropDownListAutoComplete("SelectScheduleIDTo", "ScheduleID_To", "ScheduleName_To", strInputSchedule, areas + '/Schedule/DropdownList');
+</script>

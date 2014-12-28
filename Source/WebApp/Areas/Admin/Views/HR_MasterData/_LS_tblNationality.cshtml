@@ -1,0 +1,80 @@
+﻿@using MvcPaging
+@model List<LS_tblNationalityViewModel>
+
+<div id="divEdit">
+  @Html.Action("_CreateLS_tblNationality")
+</div>
+@using (Html.BeginForm("Index", "LS_tblNationality", FormMethod.Get, new { @class = "Form-Horizontal" }))
+{ 
+    
+    <div class="table">
+        <div style="clear:both;"></div>
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter">
+            <thead>
+            <tr>
+         
+                <th class="text_center no_sort ">@Eagle.Resource.LanguageResource.No</th>
+                
+                <th>
+                    @Eagle.Resource.LanguageResource.Code
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Name
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.VNName
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Rank
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Used
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Note
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    
+                    <td>
+                        @item.LSNationalityCode
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.VNName
+                    </td>
+                    <td class="text-center"> 
+                         @item.Rank
+                    </td>
+                     <td class="text-center"> 
+                         @item.strUsed
+                    </td>
+                    <td class="text-center">@item.Note
+                    </td>
+                    <td class="center">
+                        <a data-id="@item.LSNationalityID"  title="Edit" class="ico edit editItem iconedit">&nbsp;&nbsp;&nbsp;</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+        <div style="clear:both"></div>
+    </div>
+}
+<script>
+    InvokeDataTables();
+</script>
+   
+   

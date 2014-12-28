@@ -1,0 +1,438 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.MailTemplate;
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+}
+@model List<Mail_Templates>
+@Html.Hidden("AccountId")
+@section ContentSection
+{
+<div id="MainBody" class="main_box">
+    @Html.Partial("../Mail/MailTemplate/_Reset")
+</div>
+    }
+<!--Confirm box-->
+@Html.Action("ConfirmPopup", "Common", null)
+
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+@Html.Action("jqueryval", "Common", null)
+@*@Html.CKEditorHeaderScripts()*@
+
+<link href="~/Scripts/plugins/drilldown/fg.menu.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/drilldown/fg.menu.js"></script>
+
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    InvokeDataTables();
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                        //case 0:
+                        //    DataMgr.GetList();
+                        case 1:
+                            DataMgr.BindDetails(data);
+                            break;
+                        case 2:
+                            DataMgr.ReloadData(data);
+                            break;
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {                   
+                    DataMgr.PopulateTypeListWithDrillDown();
+                    
+                    CKEDITOR.replace('Contents', {
+                        toolbar: [
+                                 { name: 'document', items: ['Source', '-', 'NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                 { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', 'Clipboard', '-', 'Undo', 'Redo'] },			// Defines toolbar group without name.
+                                 { name: 'editing', groups: ['find', 'selection', 'spellchecker'], items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'] },
+                                 { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] },
+	                             { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+                                 { name: 'basicstyles', items: ['Paragraph', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat', '-', 'MyButton'] },
+                                 { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
+                                  '/',// Line break - next group will be placed in new line.
+                                 { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'] }
+                        ],
+                        htmlEncodeOutput: true,
+                        enterMode: CKEDITOR.ENTER_BR,
+                        //uiColor: '#339999'
+                    });
+                    CKEDITOR.instances['Contents'].on('change', function () {
+                        var contents = this.getData();
+                        $('input[name=Mail_Template_Content][type=hidden]').val(contents);
+                    });                   
+                   
+                    $("#modalEdit").draggable({ handle: ".modal-header" });
+                },
+                BindEvents: function () {
+                    @*$(document).on('change', '#Type', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        var TypeId = $(this).val();
+                        DataMgr.BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblReward")?Type=' + TypeId,
+                       'selectLSRewardID', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'LSRewardID', 'LSRewardName');
+                        DataMgr.PopulateRewardLevelsToDropDownList(TypeId);
+                    });*@
+
+                    //Add and update post action
+                    $(document).on("click", "#btnAdd", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            //Add new Item      
+                            CKEDITOR.instances['Contents'].updateElement();
+                            $('input[name=Mail_Template_Content][type=hidden]').val(CKEDITOR.instances['Contents'].getData());
+
+                            var data = DataMgr.ConvertFormToJSON("myform");
+                            DataMgr.AddData(data);
+                        }
+                    });
+
+                    $(document).on("click", "#btnEdit", function () {
+                        if (!$("#myform").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            // Update Item
+                            CKEDITOR.instances['Contents'].updateElement();
+                            $('input[name=Mail_Template_Content][type=hidden]').val(CKEDITOR.instances['Contents'].getData());
+
+                            var data = DataMgr.ConvertFormToJSON("myform");
+                            DataMgr.UpdateData(data);
+                        }
+                    });
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".editItem", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        DataMgr.config.mode = 1;                        
+                        DataMgr.GetDetails(ID);
+                      
+
+                        DataMgr.PopulateTypeListWithDrillDown();
+                        CKEDITOR.replace('Contents', {    
+                            toolbar: [
+                                 { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
+                                 { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord','Clipboard', '-', 'Undo', 'Redo'] },			// Defines toolbar group without name.
+                                 { name: 'editing', groups: ['find', 'selection', 'spellchecker'], items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'] },
+                                 { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] },
+	                             { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+                                 { name: 'basicstyles', items: ['Paragraph', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat', '-', 'MyButton'] },
+                                 { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },   
+                                  '/',// Line break - next group will be placed in new line.
+                                 { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'] }
+                            ],
+                            htmlEncodeOutput: true,
+                            enterMode: CKEDITOR.ENTER_BR,
+                            //uiColor: '#339999'
+                            //filebrowserImageBrowseUrl: '/Scripts/ckfinder/ckfinder.html?type=Images',
+                            //filebrowserImageUploadUrl: '/Scripts/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+                        });
+                        CKEDITOR.instances['Contents'].on('change', function () {
+                            var contents = this.getData();
+                            $('input[name=Mail_Template_Content][type=hidden]').val(contents);
+                        });
+
+                        //Go to top
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {
+                                    DataMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+                },
+                BuildUL:function(parent, items){
+                    $.each(items, function () {
+                        if (this.name) { // create LI element and append it to the parent element.                        
+                            var anchor = $('<a />', { id: this.id, text: this.name, href: 'javascript:void(0);', rel: this.id });
+                            var li = $('<li/>', { html: anchor, "id": "li_"+ this.id }).appendTo(parent);
+                            // if there are sub items, call the buildUL function. 
+                            if (this.items && this.items.length > 0) {
+                                var ul = $("<ul id='MultipleSelectBox_DropDown'></ul>");
+                                ul.appendTo(li);
+                                DataMgr.BuildUL(ul, this.items);
+                            }
+                        }
+                    });
+                },
+                PopuplateTemplateListByTypeId: function (TypeId) {                    
+                    //$("#ReportTemplate_List").empty();
+                    //var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/services/report_services.asmx/LoadReportTemplateByTypeId";
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: base_url,
+                    //    data: "{TypeId:'" + TypeId + "'}",
+                    //    beforeSend: function (xhr) { xhr.setRequestHeader("Content-type", "application/json; charset=utf-8"); },
+                    //    contentType: "application/json; charset=utf-8",
+                    //    dataType: "json",
+                    //    success: function (msg) {
+                    //        var parsedJSON = eval('(' + msg.d + ')');
+                    //        var ReportTemplateIdFirst = parsedJSON.ReportTemplateIdFirst;
+                    //        var ReportTemplateList = parsedJSON.ReportTemplateList;
+                    //        if (ReportTemplateList != "" && ReportTemplateList != null) {
+                    //            $("#ReportTemplate_List").append(ReportTemplateList);
+                    //            if (ReportTemplateIdFirst > 0)
+                    //                GetDetailReportTemplate(ReportTemplateIdFirst);
+                    //            LoadTabs();
+                    //            $("#tabs_edit").tabs("refresh");
+                    //            $("#ReportTemplate_Detail").css("display", "block");
+                    //        }
+                    //        else {
+                    //            $("#ReportTemplate_List").append("Không có dữ liệu.");
+                    //            $("#tabs_edit").tabs("refresh");
+                    //            $("#ReportTemplate_Detail").css("display", "none");
+                    //        }
+                    //    }, error: function (xhr, ajaxOptions, thrownError) {
+                    //        $('#message_box').append(xhr.responseText); return false;
+                    //    }
+                    //});   
+                },
+                BindDataToList:function(data){
+                    var source = []; var items = []; // build hierarchical source. 
+                    for (i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        var id = item["id"];
+                        var name = item["text"];
+                        var parentid = item["parentid"];
+                        if (items[parentid]) {
+                            var item = { id: id, parentid: parentid, name: name, item: item };
+                            if (!items[parentid].items) { items[parentid].items = []; } items[parentid].items[items[parentid].items.length] = item; items[id] = item;
+                        }
+                        else { items[id] = { id: id, parentid: parentid, name: name, item: item }; source[id] = items[id]; }
+                    } 
+                    var ul = $("<ul id='MultipleSelectBox_DropDown'></ul>");
+                    DataMgr.BuildUL(ul, source);
+                    return ul;
+                },
+                PopulateTypeListWithDrillDown: function () {                   
+                    var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
+                    var serviceUrl =  base_url + "/Admin/MailType/GetActiveList";
+                    var selectBox = $('#hierarchy');
+                    var divContainer = $('#DropDownDivContainer');
+                    divContainer.empty();                   
+                  
+                    $.ajax({
+                        type: "GET",
+                        url: serviceUrl,  
+                      //  beforeSend: function (xhr) { xhr.setRequestHeader("Content-type", "application/json; charset=utf-8"); },
+                       // contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {                            
+                            var list = $.parseJSON(data);
+                            var data = [];
+                            $.each(list, function (i) {
+                                data[i] = list[i];
+                            });
+                            var ulTags = DataMgr.BindDataToList(data);
+                            ulTags.appendTo(divContainer);                            
+                            //==================================================================================
+                            //Trigger=========================================================================== 
+                            selectBox.menu({
+                                content: selectBox.next().html(),
+                                flyOut: true,
+                                maxHeight: 180,
+                                flyOut: true,
+                                //posX: 'left',
+                                //posY: 'bottom',
+                                //directionV: 'down',
+                                //detectV: false,
+                                //showSpeed: 350,
+                                onChoose: function (item) {
+                                    $('.spanSelectedText').html($(item).text());
+                                    $('input[class=spanSelectedValue][type=hidden]').val($(item).attr('rel'));
+                                    DataMgr.PopuplateTemplateListByTypeId($(item).attr('rel'));
+                                    //var link = $(item).attr('href');		
+                                    //if (link != "#" || link != "javascript:void(0);")
+                                    //    location.href = $(item).attr('href');
+                                    //$('#{id}').html(
+                                    //'<span class="ui-icon ui-icon-triangle-1-s"></span>' +
+                                    //$(selection).text()
+                                    //);
+                                    //var vid = jQuery(selection).attr('value');
+                                    //$('#{field}').attr('value', vid);
+
+                                    //
+                                    //$('input[class=spanSelectedValue][type=hidden]').val($(item).attr('rel'));
+                                    //var link = $(item).attr('href');		
+                                    //if (link != "#" || link != "javascript:void(0);")
+                                    //    location.href = $(item).attr('href');
+                                }
+                            });
+
+                            $('.fg-button').hover(
+                              function () { $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
+                              function () { $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
+                            );
+                            //===================================================================================
+                            //====================================================================================
+
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                   
+                },               
+                ConvertFormToJSON: function (form) {
+                    var array = $("#" + form).serializeArray();
+                    var json = {};
+                    $.each(array, function () {
+                        json[this.name] = this.value || '';
+                    });
+                    return JSON.stringify(json);
+                },   
+                AddData: function (data) {
+                    this.config.method = "Create";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                GetDetails: function (id) {
+                    DataMgr.config.key = id;
+                    var data = { "id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },              
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+                },
+                UpdateData: function (data) {
+                    this.config.method = "Edit";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    // var result = $.parseJSON(data);
+                    if (result.flag == 'true') {
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            success: function (data) {
+                                //DataMgr.ResetControls();
+                                $('#' + DataMgr.config.ContainerClientID).html(data);
+                               DataMgr.InitializeCotrols();
+                                showMessageWithTitle(titleSuccess, result.message, "success");
+                                hideMessageWithTitle(20000);
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error",200000);
+                    }
+                },
+                ResetControls: function () {
+                    var $validateObj = $('#myform');
+                    $validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                    $validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                    this.config.method = "Index";
+                    $.ajax({
+                        type: "GET",
+                        url: DataMgr.config.baseURL + this.config.method,
+                        success: function (data) {
+                            $('#' + DataMgr.config.ContainerClientID).html(data);
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'MailTemplate';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "MainBody",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

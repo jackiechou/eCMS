@@ -1,0 +1,478 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.BankBranchManagement);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.PopUpLayout;
+}
+@section ContentSection
+{
+<div id="MainBody" class="main_box">
+    <div id="divEdit">
+        @Html.Action("Create", "LS_tblBankBranch", null)
+    </div>
+    <div id="divList">
+       @* @Html.Action("List", "LS_tblBankBranch", null)*@
+    </div>
+</div>
+    }
+<!--Confirm box-->
+<div id="confirm" class="modal hide fade" style="width: 300px;margin: auto auto;z-index:14005">
+    <div class="modal-body">
+        @Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">@Html.Raw(Eagle.Resource.LanguageResource.Yes)</button>
+        <button type="button" data-dismiss="modal" class="btn" data-value="0">@Html.Raw(Eagle.Resource.LanguageResource.Cancel)</button>
+    </div>
+</div>
+
+
+<link href="~/Scripts/plugins/tablednd/tablednd_custom.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/tablednd/js/jquery.tablednd.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    formID: p.MainFormID,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) { 
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                            case 0:
+                                DataMgr.ResetControls();
+                            case 1:
+                                DataMgr.BindDetails(data);
+                                break;
+                            case 2:
+                                DataMgr.BindDataGrid(data);
+                                break;
+                            case 3:
+                                DataMgr.ReloadData(data);
+                                break;
+                            case 4:
+                                DataMgr.LoadDataGrid();
+                                break;
+                            default:
+                                showMessagePopUpWithTitle("@Eagle.Resource.LanguageResource.NotFound", "@Eagle.Resource.LanguageResource.NotFound", "warning", 2000);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },             
+                InitializeCotrols: function () {
+                    removeQtip();
+
+                    if (DataMgr.config.mode == 0) {
+                        DataMgr.GenerateCode();
+                        handleCheckBoxStatus('Used', true);
+                        $("#btnSubmit").addClass("add").removeClass("edit");
+                    } else {
+                        $("#btnSubmit").removeClass("add").addClass("edit");
+                        handleCheckBox('Used');
+                    }
+                    handleCheckBoxStatus('IsPopUpClosed', true);
+                    BindAutoCompleteSelect2('@Url.Action("DropdownList", "LS_tblBank")', 'selectBank', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'BankID', 'BankName');
+                    DataMgr.LoadDataGrid();
+                    DataMgr.DragNDrop();
+                },               
+                BindEvents: function () {
+
+                    $('#selectBank').on("change", function (e) {
+                        DataMgr.LoadDataGrid();
+                    });
+
+
+                    //Add and update post action
+                    $(document).on("click", "#" + DataMgr.config.formID + " .add", function () {
+                        var formId = "myform_bankbranch";
+                        ValidateFormWithQtip(formId);
+                        var isValid = $("#" + formId).valid();
+                        if (!isValid) { // Not Valid  
+                            return false;
+                        } else {
+                            DataMgr.ValidateBankBranchCode();
+                        }
+                    });
+
+                    $(document).on("click", "#" + DataMgr.config.formID + " .edit", function () {
+                        var formId = "myform_bankbranch"
+                        ValidateFormWithQtip(formId);
+                        var isValid = $("#" + formId).valid();
+                        if (!isValid) { // Not Valid  
+                            return false
+                        } else {
+                            removeQtip(); 
+                            DataMgr.UpdateData();
+                        }                        
+                    });
+
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", "#btnGetDetails_BankBranch", function () {
+                        var ID = $(this).data('id');  // ID cua dong du lieu                       
+                        DataMgr.GetDetails(ID);                       
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".deleteItem", function (e) {
+                        var ID = $(this).data('id');  // ID cua dong du lieu
+                        $('#confirm')
+                            .modal({ backdrop: 'static', keyboard: false })
+                            .one('click', '[data-value]', function (e) {
+                                if ($(this).data('value')) {                                   
+                                    DataMgr.DeleteData(ID);
+                                    return false;
+                                }
+                            });
+                    });
+
+
+                    $('#Note').keypress(function () {
+                        if (this.value.length >= 150)
+                            return false;
+                    });
+
+                },
+                GenerateCode: function () {
+                    $.getJSON("/Admin/LS_tblBankBranch/GenerateCode",
+                        function (data) {
+                            $("#LSBankBranchCode").val(data);
+                        });
+                },
+                ValidateBankBranchCode: function () {
+                    var result = false;
+                    var params = {};
+                    params.Code = $('#LSBankBranchCode').val();
+                    $.getJSON('@Url.Action("ValidateCode", "LS_tblBankBranch")', params,
+                         function (data) {
+                             if (data == false) {
+                                 ShowToolTip('LSBankBranchCode', '@Html.Raw(Eagle.Resource.LanguageResource.InValid)');
+                             }
+                             else {
+                                 result = true;
+                                 CloseToolTip('LSBankBranchCode');
+                                 DataMgr.ValidateBankBranchName();
+                             }
+                             return result;
+                         });
+                 },
+                ValidateBankBranchName: function () {
+                    var result = false;
+                    var params = {};
+                    params.Name = $('#Name').val();
+                    $.getJSON('@Url.Action("ValidateName", "LS_tblBankBranch")', params,
+                         function (data) {
+                             if (data == false)
+                                 ShowToolTip('Name', '@Html.Raw(Eagle.Resource.LanguageResource.InValid)');
+                             else {
+                                 result = true;
+                                 CloseToolTip('Name');
+                                 DataMgr.ValidateBankBranchVNName();
+                             }
+                         });
+                    return result;
+                },
+                ValidateBankBranchVNName: function () {
+                    var result = false;
+                    var params = {};
+                    params.Name = $('#VNName').val();
+                    $.getJSON('@Url.Action("ValidateVNName", "LS_tblBankBranch")', params,
+                         function (data) {
+                             if (data == false)
+                                 ShowToolTip('VNName', '@Html.Raw(Eagle.Resource.LanguageResource.InValid)');
+                             else {
+                                 result = true;
+                                 CloseToolTip('VNName');
+                                 DataMgr.AddData();
+                             }
+                         });
+                    return result;
+                }, 
+                AddData: function (data) {
+                    var data = convertFormToJSON(DataMgr.config.formID);                  
+                    this.config.method = "Insert";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.contentType = "application/json; charset=utf-8";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 3;
+                    this.ajaxCall(this.config);
+                },
+                GetDetails: function (id) {
+                    DataMgr.config.mode = 1;
+                    DataMgr.config.key = id;
+                    var data = { "id": id };
+                    this.config.method = "Edit";                  
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.data = data;
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+                    DataMgr.InitializeCotrols();
+                    scrollToTopInPopUp();
+                    //$('html, body').animate({ scrollTop: 0 }, 'fast');
+                },
+                UpdateData: function () {
+                    var data = convertFormToJSON(DataMgr.config.formID);
+                    this.config.method = "Update";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 3;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    DataMgr.config.mode = 2;
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                LoadDataGrid: function () {
+                    var data = { BankID: $('#BankID').val() };
+                    this.config.method = "List";
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.data = data;
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                BindDataGrid: function (data) {
+                    $('#divList').html(data);
+                    ShowDataTable('#' + DataMgr.config.formID + ' use-dataTable');
+                    DataMgr.DragNDrop();
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    } else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    } else {
+                         titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    if (result.flag == 'true') {
+                        showMessagePopUpWithTitle(titleSuccess, titleSuccess, "success", 10000);
+                        DataMgr.ResetControls();
+                        DataMgr.LoadDataGrid();
+                       
+                        $('#btnReload_BankBranch').attr({
+                            "data-id": result.message,
+                            "data-isclosed": $("input:checkbox[name=IsPopUpClosed]").is(":checked")
+                        }).click();
+                    } else 
+                        showMessageWithTitle(titleFailure, result.message, "error",20000);
+                },
+                ResetControls: function () {
+                    var mode = DataMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#myform');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();                        
+                    } else {
+                        var key = DataMgr.config.key;
+                        DataMgr.GetDetails(key);
+                    }
+                    DataMgr.InitializeCotrols();
+                },
+                UpdateListOrder: function (id, listorder) {
+                    this.config.method = "UpdateListOrder";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = JSON.stringify({ "id": id, "listorder": listorder });
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 4;
+                    this.ajaxCall(this.config);
+                },
+                DragNDrop: function () {
+                    //Important: Phai set id cho tr => tr-id
+                    // Initialise the second table specifying a dragClass and an onDrop function that will display an alert
+                    $("#dataTable").tableDnD({
+                        onDragClass: "myDragClass",
+                        onDrop: function (table, row) {
+                            var rows = table.tBodies[0].rows;
+                            var debugStr = "Row dropped was " + row.id + ". New order: ";
+                            for (var i = 0; i < rows.length; i++) {                                
+                                DataMgr.UpdateListOrder(rows[i].id, i + 1);
+                                debugStr += rows[i].id + " ";
+                            }
+                            //$("#debugArea").html(debugStr);
+                        },
+                        //onDragStart: function (table, row) {
+                        // $("#debugArea").html("Started dragging row " + row.id);
+                        //}
+                    });
+
+                    $("#dataTable tr").hover(function () {
+                        $(this.cells[0]).addClass('showDragHandle');
+                    }, function () {
+                        $(this.cells[0]).removeClass('showDragHandle');
+                    });
+
+                    // Setup the "Up" links
+                    $(".rowUp").click(function () {
+                        var row = $(this).closest("tr");
+                        var table = row.parents('table');
+
+                        // Get the previous element in the DOM
+                        var previous = row.prev();
+
+                        // Check to see if it is a row
+                        if (previous.is("tr")) {
+                            // Move row above previous
+                            row.detach();
+                            previous.before(row);
+
+                            // draw the user's attention to it
+                            row.fadeOut();
+                            row.fadeIn();
+                        }
+                        // else - already at the top
+                        GetSortableOrderingTable(table.attr("id"), row.attr("id"));
+                    });
+
+                    // Setup the "Up" links
+                    $(".rowDown").click(function () {
+                        var row = $(this).closest("tr");
+                        var table = row.parents('table');
+
+                        // Get the previous element in the DOM
+                        var next = row.next();
+
+                        // Check to see if it is a row
+                        if (next.is("tr")) {
+                            // Move row above previous
+                            row.detach();
+                            next.after(row);
+
+                            // draw the user's attention to it
+                            row.fadeOut();
+                            row.fadeIn();
+                        }
+                        // else - already at the bottom   	
+
+                        DataMgr.GetSortableOrderingTable(table.attr("id"), row.attr("id"));
+                    });
+                },
+                GetSortableOrderingTable: function (selected_table, selected_row) {
+                    var table = $('#' + selected_table)[0];
+                    var row = $('#' + selected_row)[0];
+                    var rows = table.tBodies[0].rows;
+
+                    var debugStr = "Row dropped was " + row.id + ". New order: ";
+
+                    for (var i = 0; i < rows.length; i++) {                       
+                        DataMgr.UpdateListOrder(rows[i].id, i + 1);
+                        debugStr += rows[i].id + " ";
+                    }
+                    // $("#debugArea").html(debugStr);
+                },
+                SortList: function () {
+                    $(".sortable").sortable({
+                        placeholder: "ui-state-highlight",
+                        helper: 'clone',
+                        sort: function (e, ui) {
+                            $(ui.placeholder).html(Number($(".sortable > li:visible").index(ui.placeholder)) + 1);
+                        },
+                        update: function (event, ui) {
+                            var lis = $(this).children('li');
+                            lis.each(function () {
+                                var lis = $(this);
+                                var newVal = $(this).index() + 1;
+                                $(this).find('div.sortable-number').html(newVal);
+                            });
+
+                            //  var ordering = $(this).sortable('toArray').toString();
+                            var ordering = $(".sortable").sortable('serialize');
+                            // alert(ordering);
+                        }
+                    });
+                    $(".sortable").disableSelection();
+                    //$(".sortable li").hover(function () {
+                    //    $(this).css('border', '3px solid black');
+                    //});
+                }
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'LS_tblBankBranch';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            MainFormID: "myform_bankbranch",
+            ContainerClientID: "MainBody",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>

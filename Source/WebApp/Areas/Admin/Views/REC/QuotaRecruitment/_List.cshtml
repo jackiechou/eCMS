@@ -1,0 +1,83 @@
+﻿@model IEnumerable<QuotaRecruitmentViewModel>
+
+    @Html.Hidden("tmpYear")
+    
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSCompanyID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSPositionID)
+                </th>
+                 <th style="width:60px;" class="text-center">
+                    @Html.DisplayNameFor(model => model.QuotaQuantity)
+                </th>
+                 <th style="width:60px;" class="text-center">
+                    @Html.DisplayNameFor(model => model.RecruitedQuantity)
+                </th>
+                 <th style="width:60px;" class="text-center">
+                    @Html.DisplayNameFor(model => model.EmployeeQuantity)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+                int k = -1;
+              }
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <input type="hidden" name="[@k].QuotaID" value="@item.QuotaID" />
+                <input type="hidden" name="[@k].Year" value="@item.Year" />
+                <input type="hidden" name="[@k].LSCompanyID" value="@item.LSCompanyID" />
+                <input type="hidden" name="[@k].LSPositionID" value="@item.LSPositionID" />
+
+                <input type="hidden" name="[@k].RecruitedQuantity" value="@item.RecruitedQuantity" />
+                <input type="hidden" name="[@k].Note" value="@item.Note" />
+                
+                <input type="hidden" name="[@k].LSCompanyName" value="@item.LSCompanyName" />
+                <input type="hidden" name="[@k].LSPositionName" value="@item.LSPositionName" />
+                
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSCompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LSPositionName)
+                    </td>
+                    <td  class="text-center">
+                        <input type="text" name="[@k].QuotaQuantity" value="@item.QuotaQuantity" class="col-md-10" style="text-align:center"/>                        
+                    </td>
+                    <td  class="text-center">
+                        @Html.DisplayFor(modelItem => item.RecruitedQuantity)
+                    </td>
+                    <td  class="text-center">
+                        @Html.DisplayFor(modelItem => item.EmployeeQuantity)
+                    </td>
+                    <td class="table-actions text_center no-sort">      
+                        @if (item.RecruitedQuantity == 0)
+                        {
+                            <a data-id="pLSCompanyID=@item.LSCompanyID&pLSPositionID=@item.LSPositionID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>    
+                        }else{
+                            <a title="Delete" class="ico deleteItemDisable ">&nbsp;&nbsp;&nbsp;</a>
+                        }
+
+
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

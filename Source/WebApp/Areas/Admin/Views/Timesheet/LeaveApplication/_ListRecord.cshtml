@@ -1,0 +1,94 @@
+﻿@model List<LeaveApplicationCreateViewModel>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Year
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.LeaveType
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Creater
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.CreatedTime
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.FromDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.ToDate
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Days
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.Status
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.Year
+                    </td>
+                    <td>
+                        @item.LSLeaveDayTypeName
+                    </td>
+                    <td>
+                        @item.Creater
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FromDate)
+                    </td> 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToDate)
+                    </td> 
+                    <td>
+                        @item.Days
+                    </td> 
+                    <td>
+                        @item.StatusLeaveApplication
+                    </td> 
+                    <td class="center action">
+                        <a href="/Admin/LeaveApplication/Index?LeaveApplicationMasterID=@item.LeaveApplicationMasterID&ModuleID=9"  title="Edit" class="ico editItem" >&nbsp;&nbsp;&nbsp;</a>
+
+                        @if (item.Status == 0)
+                        {
+                            <a  data-id="@item.LeaveApplicationMasterID"  title="delete" class="ico deleteItem launchConfirm">&nbsp;&nbsp;&nbsp;</a>    
+                        }
+                        else
+                        {
+                            <a  title="delete" class="ico deleteItemDisable ">&nbsp;&nbsp;&nbsp;</a>    
+                        }
+                        
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+       <div id="confirm" class="modal hide fade" style="width:300px">
+                          <div class="modal-body">
+                            Do you want to continue?
+                          </div>
+           <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">Continue</button>
+               <button type="button" data-dismiss="modal" class="btn" data-value="0">Cancel</button>
+           </div>
+</div>

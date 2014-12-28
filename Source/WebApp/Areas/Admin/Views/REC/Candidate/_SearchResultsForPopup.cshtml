@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CandidateResultViewModel>
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="box-table">
+        <table class="reset-font table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CandidateCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IDNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ApplyDate)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var itemmodel in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @{ 
+                                string DOB = itemmodel.DOB.HasValue ? itemmodel.DOB.Value.ToString("dd/MM/yyyy") : "";
+                                string ApplyDate = itemmodel.ApplyDate.HasValue ? itemmodel.ApplyDate.Value.ToString("dd/MM/yyyy") : "";
+                               
+                               }
+                            <a onclick="ChooseCandidate('@itemmodel.CandidateID','@itemmodel.CandidateCode','@itemmodel.FullName','@itemmodel.GenderName','@itemmodel.ResultName','@DOB','@ApplyDate',controlId)" class="cursor-pointer">@itemmodel.CandidateCode</a>
+                            @Html.HiddenFor(model => itemmodel.CandidateID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => itemmodel.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => itemmodel.IDNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => itemmodel.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => itemmodel.ApplyDate)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    if (ViewBag.FirstRequest != true)
+    {   
+        <center>@Eagle.Resource.LanguageResource.ThereAreNoResultsThatMatch</center>  
+    }
+    else
+    {
+
+    }
+
+}

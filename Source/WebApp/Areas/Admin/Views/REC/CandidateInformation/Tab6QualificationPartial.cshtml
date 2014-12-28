@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CandidateQualificationViewModel>
+
+    <div style="text-align:right;margin-bottom:5px;">
+        <input id="btnAddNewQualification" type="button" class="btn btn-info" value="@Eagle.Resource.LanguageResource.AddNew" />
+    </div>
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QualificationNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LSQualificationIDAlowNullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QualificationDate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Priority)
+                    </th>
+                    <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QualificationNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LSQualificationIDAlowNullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QualificationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Priority)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            <a data-id="@item.QualificationID"  title="@Eagle.Resource.LanguageResource.Edit" class="ico editItem editItemQualification " >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.QualificationID"  title="@Eagle.Resource.LanguageResource.Delete" class="ico deleteItem deleteItemQualification ">&nbsp;&nbsp;&nbsp;</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

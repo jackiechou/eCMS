@@ -1,0 +1,82 @@
+﻿@model List<TrainingEvaluationPartViewModel>
+
+<table id="dataTableDuration" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+    <thead>
+        <tr>
+            <th class="text_center" style="width:5%">@Eagle.Resource.LanguageResource.No</th>
+            <th class="text_center" style="width:90%">
+                @Eagle.Resource.LanguageResource.TrainingApprisalPart
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            int k = -1;
+            int j = -1;
+            int h = 0;
+        }
+        @foreach (var detail in Model)
+        {
+            i++;
+            k++;
+            <input type="hidden" name="[@k].Part_TrainingEvaluationID" value="@detail.TrainingEvaluationID" />
+            <input type="hidden" name="[@k].Part_LSTrainingApprisalPartID" value="@detail.LSTrainingApprisalPartID" />
+            <tr id="@k">
+                <td class="text_center">
+                    @i
+                </td>
+                <td style="width:100%">
+                    @detail.TrainingApprisalPartName
+                </td>                
+            </tr>        
+             
+            int z = 1;
+            foreach (var item in detail.ListOfTrainingEvaluationDetail)
+            {
+                j++;
+                @*<input type="hidden" name="[@j].TrainingEvaluationDetailID" value="@item.TrainingEvaluationDetailID" />
+                <input type="hidden" name="[@j].LSTrainingApprisalItemID" value="@item.LSTrainingApprisalItemID" />
+                <input type="hidden" name="[@j].LSTrainingApprisalPartID" value="@item.LSTrainingApprisalPartID" />
+                <input type="hidden" name="[@j].TrainingEvaluationID" value="@item.TrainingEvaluationID" />*@                   
+                <tr id="@k">
+                    <td class="text_center">                        
+                    </td>
+                    <td style="width:100%">
+                        @i.@z&nbsp;&nbsp;&nbsp;@item.TrainingApprisalItemName
+                    </td>                
+                </tr>                      
+                foreach (var answer in item.ListOfTrainingAnswer)
+                {                    
+                    <input type="hidden" name="[@h].TrainingEvaluationDetailID" value="@answer.TrainingEvaluationDetailID" />
+                    <input type="hidden" name="[@h].LSTrainingApprisalItemID" value="@answer.LSTrainingApprisalItemID" />
+                    <input type="hidden" name="[@h].LSTrainingApprisalPartID" value="@item.LSTrainingApprisalPartID" />
+                    <input type="hidden" name="[@h].TrainingEvaluationID" value="@item.TrainingEvaluationID" /> 
+                    <input type="hidden" name="[@h].LSTrainingAnswerTypeID" value="@answer.LSTrainingAnswerTypeID" />                                          
+                    <tr id="@k">
+                        <td class="text_center">                        
+                        </td>
+                        <td style="width:100%">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            @if (item.IsMultiAnswers)
+                            {
+                                @Html.CheckBox(String.Format("[{0}].Checked", h), answer.IsAnswer )
+                            }
+                            else
+                            {
+                                @Html.CheckBox(String.Format("[{0}].Checked", h), answer.IsAnswer )
+                            }                            
+                            @answer.Name
+                        </td>                                   
+                    </tr>
+                    h++; 
+                }                             
+                z++;   
+            }
+        }
+    </tbody>
+</table>
+
+
+
+

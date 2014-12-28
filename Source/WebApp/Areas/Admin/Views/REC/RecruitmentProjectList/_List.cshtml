@@ -1,0 +1,78 @@
+﻿@model IEnumerable<RecruitmentProjectViewModel>
+<form id="frmList">
+<div class="table">
+   
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text-center">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.ProjectCode)
+                </th>     
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSLocationID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PlanCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActualCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LSCurrencyName)
+                </th>
+                <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>              
+            </tr>
+        </thead>
+        <tbody>
+           
+            @if (Model != null)
+	        {
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    i++;
+                    <tr>
+                        <td class="text-center">
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectCode)
+                        </td>
+                        <td  class="text_center">
+                            @Html.DisplayFor(modelItem => item.StatusName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LSLocationName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PlanCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActualCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LSCurrencyName)
+                        </td>
+                        <td class="table-actions text_center no-sort">
+                            <a data-id="@item.ProjectID"  title="@Eagle.Resource.LanguageResource.Edit" class="ico editItem " href="/Admin/RecruitmentProject/Index?ProjectID=@item.ProjectID&ModuleID=8" >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.ProjectID"  title="@Eagle.Resource.LanguageResource.Copy" class="ico copyItem " href="/Admin/RecruitmentProject/Index?ProjectID=@item.ProjectID&Mode=copy&ModuleID=8" >&nbsp;&nbsp;&nbsp;</a>
+                            <a data-id="@item.ProjectID"  title="@Eagle.Resource.LanguageResource.Close" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>  
+                        </td>                       
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDataTables();   
+    $(document).on("click", ".editItem", function () {
+        $("body").addClass("loading");
+    });
+
+</script>

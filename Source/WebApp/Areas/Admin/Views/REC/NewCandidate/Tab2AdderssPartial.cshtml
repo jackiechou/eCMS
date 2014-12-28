@@ -1,0 +1,110 @@
+﻿@model CandidateViewModel
+
+<div class="tab-pane fade in" id="pane-2">
+    
+    <div class="group-control">
+        <div>
+            <h6>@Eagle.Resource.LanguageResource.PermanentAddress</h6>
+        </div>
+        <hr />
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.PLSCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectPLSCountryID",null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PLSCountryName)
+                @Html.HiddenFor(model => model.PLSCountryID)
+            </div>
+
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.PLSProvinceID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectPLSProvinceID",null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PLSProvinceName)
+                @Html.HiddenFor(model => model.PLSProvinceID)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.PLSDistrictID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectPLSDistrictID",null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PLSDistrictName)
+                @Html.HiddenFor(model => model.PLSDistrictID)
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                <label>@Eagle.Resource.LanguageResource.PAddress</label>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.PAddress, new { @class = "span12" })
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+    
+    <div class="group-control">
+        <div>
+            <h6>@Eagle.Resource.LanguageResource.TemporaryAddress</h6>
+        </div>
+        <hr />
+
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TLSCountryID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectTLSCountryID",null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.TLSCountryName)
+                @Html.HiddenFor(model => model.TLSCountryID)
+            </div>
+
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TLSProvinceID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectTLSProvinceID",null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.TLSProvinceName)
+                @Html.HiddenFor(model => model.TLSProvinceID)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TLSDistrictID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("SelectTLSDistrictID",null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.TLSDistrictName)
+                @Html.HiddenFor(model => model.TLSDistrictID)
+
+            </div>
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.TAddress)
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.TAddress, new {  @class = "span12" })
+
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</div>

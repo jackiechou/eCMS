@@ -1,0 +1,44 @@
+﻿@model List<PayrollViewModels>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.FullName
+                </th>
+                 <th>
+                    @Eagle.Resource.LanguageResource.LastCompanyDefine
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.Department
+                    </td>
+                   
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+<script>
+    InvokeDataTables();
+</script>

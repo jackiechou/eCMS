@@ -1,0 +1,135 @@
+﻿@model DocumentViewModel
+<div class="modal hide fade popupAttachFile" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">@Eagle.Resource.LanguageResource.ViewAttachFile</h3>
+    </div>
+    <div class="modal-body">
+        <!--Begin Document Information -->
+        <div class="group-control">
+            <div>
+                <h6>@Eagle.Resource.LanguageResource.DocumentInformation</h6>
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.FileTitle)
+                </div>
+                <div class="col-md-8">
+                    <label class="reset-label">@Html.DisplayFor(model => model.FileTitle)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>@Eagle.Resource.LanguageResource.FileAttach</label>
+                </div>
+                <div class="col-md-8">
+                    @if (Model != null && Model.DocumentId != 0)
+                    {
+                        <label class="reset-label"><a href="@Model.FilePath" target="_blank">@Model.FileNameVirtual</a></label>
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Keywords)
+                </div>
+                <div class="col-md-8">
+                    <label class="reset-label">@Html.DisplayFor(model => model.Keywords, new { @class = "span12" })</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.FileDescription)
+                </div>
+                <div class="col-md-8">
+                        <label class="reset-label">@Html.DisplayFor(model => model.FileDescription, new { @class = "span12" })</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CreatedOnDate)
+                </div>
+                <div class="col-md-4">
+                    <label class="reset-label">@Html.DisplayFor(model => model.CreatedOnDate)</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LastModifiedOnDate)
+                </div>
+                <div class="col-md-4">
+                    <label class="reset-label">@Html.DisplayFor(model => model.LastModifiedOnDate)</label>
+                </div>
+            </div>
+              <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.CreatedByUserId)
+                </div>
+                <div class="col-md-4">
+                    <label class="reset-label">@Html.DisplayFor(model => model.UserUpload)</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.LastModifiedByUserId)
+                </div>
+                <div class="col-md-4">
+                    <label class="reset-label">@Html.DisplayFor(model => model.UserModified)</label>
+                </div>
+            </div>
+        </div>
+        <!--End Document Information -->
+
+        <!--Begin Reference Information-->
+         <div class="group-control">
+            <div>
+                <h6>@Eagle.Resource.LanguageResource.ReferenceInformation</h6>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.ReferenceType
+                    </label>
+                </div>
+                <div class="col-md-8">
+                     <label class="reset-label">
+                         @ViewBag.ReferenceType
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.ReferenceNo
+                    </label>
+                </div>
+                <div class="col-md-8">
+                     <label class="reset-label">
+                         @ViewBag.ReferenceNo
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>
+                        @Eagle.Resource.LanguageResource.Description
+                    </label>
+                </div>
+                <div class="col-md-8">
+                     <label class="reset-label">
+                         @ViewBag.ReferenceDescription
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!--End Reference Information -->
+
+    </div>
+    <div class="modal-footer">
+        <input type="button" id="btnATFCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+    </div>
+</div>
+
+<script>
+
+</script>

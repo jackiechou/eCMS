@@ -1,0 +1,80 @@
+﻿@Html.DevExpress().ReportViewer(settings =>{
+    // The following settings are necessary for a Report Viewer.
+    settings.Name = "reportViewer";
+    settings.Report = (ContractXtraReport)ViewData["Report"];
+    settings.AutoSize = true;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.Style.Add("margin-bottom", "26px");
+    settings.Attributes.Add("class", "reportViewer");
+    // Callback and export route values specify the corresponding controllers and their actions.
+    // These settings are necessary as well.
+    settings.CallbackRouteValues = new { Controller = "PersonnelReport", Action = "PopulateReportViewer_Contract", LSCompanyID = ViewBag.LSCompanyID };
+    settings.ExportRouteValues = new { Controller = "PersonnelReport", Action = "ExportData_Contract", LSCompanyID = ViewBag.LSCompanyID };    
+}).GetHtml()
+
+
+@*@model IEnumerable<Eagle.Model.Report.HR.Contract.ContractReportModel>
+<div class="table datatable">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>               
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.TotalMaleContractsByLSContractTypeIDAndMaleGender)
+                </th>
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.TotalFeMaleContractsByLSContractTypeIDAndMaleGender)
+                </th>
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.TotalContractsByLSContractTypeID)
+                </th>
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.TotalPercentMaleContractsByLSContractTypeIDAndMaleGender)
+                </th>
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.TotalPercentFeMaleContractsByLSContractTypeIDAndMaleGender)
+                </th>
+                <th class="center">
+                    @Html.DisplayNameFor(model => model.TotalPercentByLSContractTypeID)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td class="center">
+                        @i
+                    </td>                  
+                    <td >
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.TotalMaleContractsByLSContractTypeIDAndMaleGender)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.TotalFeMaleContractsByLSContractTypeIDAndMaleGender)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.TotalContractsByLSContractTypeID)
+                    </td>
+                   <td class="center">
+                        @Html.DisplayFor(modelItem => item.TotalPercentMaleContractsByLSContractTypeIDAndMaleGender)
+                    </td>
+                    <td class="center">
+                        @Html.DisplayFor(modelItem => item.TotalPercentFeMaleContractsByLSContractTypeIDAndMaleGender)
+                    </td>
+                   <td class="center">
+                        @Html.DisplayFor(modelItem => item.TotalPercentByLSContractTypeID)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@

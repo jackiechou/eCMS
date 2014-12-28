@@ -1,0 +1,45 @@
+﻿@model List<SYS_tblFunctionPermissionViewModel>
+
+@{    
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@{ List<string> rows = new List<string>() { "adg", "beh", "cfi" };}
+ <div class="row">
+@if (Model != null)
+{
+    foreach (var row in rows)
+    {
+        <div class="col-md-4 menu3">
+            @foreach (var SubModule in Model)
+            {
+                if (SubModule.Parent == ViewBag.ModuleId && SubModule.Tooltips != null && row.Contains(SubModule.Tooltips) )
+                {
+                    <h4>@SubModule.FunctionNameE</h4>
+                    <div class="menu_small3">
+                        <ul class="menu3ul">
+                        @foreach (var FunctionItem in Model)
+                        {
+                            if (FunctionItem.Parent == SubModule.FunctionID)
+                            {
+                                <li>
+                                    <i class="icon-chevron-right"></i>
+                                    <a href="/@FunctionItem.Url">
+                                        @FunctionItem.FunctionNameE
+                                    </a>
+                                </li>
+                            }
+                        }
+                        </ul>
+                    </div>
+                }
+             }
+        </div><!--/span-->
+    }
+}
+</div><!--/row-->
+
+<script type="text/javascript">
+    @{ string module = "Module" + ((int)ViewBag.ModuleId).ToString() ;}
+    $('#@module').css("background-color", "#0099cc");
+</script>

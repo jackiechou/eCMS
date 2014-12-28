@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_ScheduleChange;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;
+}
+
+@section ContentSection
+{
+<div id="main-data">
+    <div id="divContent">
+        @Html.Action("_Create", "ScheduleChange", null)
+    </div>
+    <div id="divList">
+        @Html.Action("_List", "ScheduleChange", null)
+    </div>
+</div>
+}
+<script type="text/javascript">
+
+    // su kien add du lieu
+    $(document).on("click", "#btnAdd", function () {
+
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        }
+        else {
+            //selectedValue : User list
+            var selectedValue = $('#lstBox').val();
+            var request = { lstBox: selectedValue }
+
+            //Nếu không chọn group thì báo lỗi
+            if ($('#SelectScheduleIDFrom').val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                }
+                return false;
+            } else if (selectedValue == null) {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please choose staff to assign", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Chọn nhân viên để gán lịch làm việc", 'warning');
+                }
+                return false;
+            } else if ($('#btnAdd').hasClass("AddModel")) {
+                var moduleId = getParameterByName("ModuleID");
+                //Add new Account
+                var url = areas + '/ScheduleChange/Save';
+                //Get sau khi action Save trong controller thuc hien
+                var urlCreate = '/ScheduleChange/_List?ModuleID=' + moduleId;
+                
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    var userList = $('#lstBoxAssigned');
+                                    $.each(request.lstBox, function (index, itemData) {
+                                        $("#lstBox option[value=" + itemData + "]").remove();
+                                    });
+                                    $('#divList').html(data);
+                                    AlterUpdateSuccess();
+                                }
+                            });
+                        }
+                        else if (data == 'isExists') {
+                            AlterWarning('@Eagle.Resource.LanguageResource.DataIsExists');
+                        }
+                        else {
+                            $('#divContent').html(data);
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        }
+                    }
+                }); // end ajax
+            }
+        }
+    });
+    // su kien add all tat ca item trong list
+    $(document).on("click", "#btnAddAll", function () {
+        if (!$("#frmAdd").valid()) { // Not Valid
+            return false;
+        }
+        else {
+            //Nếu không chọn group thì báo lỗi
+            if ($('#SelectScheduleIDFrom').val() == '' || $('#SelectScheduleIDTo').val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please choose schedule to assign staff", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Chọn lịch làm việc để gán nhân viên", 'warning');
+                }
+                return false;
+            } else if ($('#btnAddAll').hasClass("AddModel")) {
+
+                //Add new Account
+                var url = areas + '/ScheduleChange/Save';
+                //Get sau khi action Save trong controller thuc hien
+                var urlCreate = '/ScheduleChange/_List';
+
+                var lstBoxname = $("#lstBox");
+                $("option", lstBoxname).attr('selected', true);
+
+                var selectedValue = $('#lstBox').val();
+                var request = { lstBox: selectedValue }
+                //alert(selectedValue);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    var userList = $('#lstBoxAssigned');
+                                    $.each(request.lstBox, function (index, itemData) {
+                                        $("#lstBox option[value=" + itemData + "]").remove();
+                                    });
+                                    $('#divList').html(data);
+                                    AlterUpdateSuccess();
+                                }
+                            });
+                        }
+                        else if (data == 'isExists') {
+                            AlterWarning('@Eagle.Resource.LanguageResource.DataIsExists');
+                        }
+                        else {
+                            $('#divContent').html(data);
+                            $('html, body').animate({ scrollTop: 80 }, 'slow');
+                        }
+                    }
+                }); // end ajax
+            }
+        }
+    });
+    $("#SelectScheduleIDFrom").change(function () {
+       
+        if ($("#strFromDate").val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please input from date to process", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Nhập vào  từ ngày để thực hiện", 'warning');
+            }
+            return false;
+        } else
+            if ($("#strToDate").val() == '') {
+                if (LanguageId == 124) {
+                    showMessageWithTitle('warning!', "Please input to date to process", 'warning');
+                } else {
+                    showMessageWithTitle('Error!', "Nhập vào  từ ngày để thực hiện", 'warning');
+                }
+                return false;
+         }
+        var strFromDate = $("#strFromDate").val();
+        var strToDate = $("#strToDate").val();
+        var arrayFrom = strFromDate.split("/");
+        var arrayTo = strToDate.split("/");
+        
+        if (arrayFrom[2] != arrayTo[2]) {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "From date and To date must be the same year", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Từ ngày và đến ngày phải cùng năm với nhau", 'warning');
+            }
+            return false;
+        }
+
+        var ScheduleID = $(this).val();
+        $.getJSON("/Admin/ScheduleChange/_ListUserFrom?ScheduleID=" + ScheduleID + "&iYear=" + arrayFrom[2],
+               function (classesData) {
+                   var select = $("#lstBox");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+    });
+    // filter tren danh sach nhan vien từ lịch ( Schedule from)
+    $(document).on("keyup", "#FilterEmplist", function () {
+        
+        if ($("#SelectScheduleIDFrom").val() == ''){
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose schedule from", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn lịch làm việc", 'warning');
+            }
+            return false;    
+        }
+
+        var strFromDate = $("#strFromDate").val();
+        var strToDate = $("#strToDate").val();
+        var arrayFrom = strFromDate.split("/");
+        var arrayTo = strToDate.split("/");
+
+        var ScheduleID = $("#SelectScheduleIDFrom").val()
+        var strSearch = $(this).val();
+        $.getJSON("/Admin/ScheduleChange/_ListUserFrom?ScheduleID=" + ScheduleID + "&iYear=" + arrayFrom[2] + "&strSearch=" + strSearch,
+               function (classesData) {
+                   var select = $("#lstBox");
+                   select.empty();
+                   $.each(classesData, function (index, itemData) {
+                       select.append($('<option/>', {
+                           value: itemData.Value,
+                           text: itemData.Text
+                       }));
+                   });
+               });
+    });
+   
+</script>

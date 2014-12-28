@@ -1,0 +1,107 @@
+﻿@model List<Salary13ViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center" style="width:3px">@Eagle.Resource.LanguageResource.No</th>
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefEmpCode
+                </th>
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefEmployee
+                </th>
+                <th style="min-width:100px;" class="text_center">
+                    @Eagle.Resource.LanguageResource.LastCompanyDefine
+                </th>                                                
+                <th class="text_center" style="width:15%">
+                    @Eagle.Resource.LanguageResource.Position
+                </th>                                                
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefYear
+                </th>                                                
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefCalMonth
+                </th>             
+                <th class="text_center" style="width:10%">
+                    @Eagle.Resource.LanguageResource.BasicSalary
+                </th>
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13CoefOnGrid
+                </th>               
+                <th class="text_center">
+                    @Eagle.Resource.LanguageResource.Salary13
+                </th>    
+                <th class="table-actions text_center no-sort">
+                    @Html.CheckBox("CheckAll", true) 
+                </th>                
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0; int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++; k++;        
+                <input type="hidden" name="[@k].SalaryCoefID" value="@item.Salary13ID" />
+                <input type="hidden" name="[@k].EmpID" value="@item.EmpID" />
+                <input type="hidden" name="[@k].Year" value="@item.Year" />
+                <input type="hidden" name="[@k].CalMonth" value="@item.CalMonth" />                         
+                <input type="hidden" name="[@k].BasicSalary" value="@item.BasicSalary" />                         
+                <tr id="@k">
+                    <td class="text_center">
+                        @i
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmloyeepName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>                                        
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PositionName)
+                    </td>                              
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>               
+                    <td class="text_center">
+                        @Html.DisplayFor(modelItem => item.CalMonth)                                                
+                    </td>   
+                    <td class="text_right">
+                        @Html.DisplayFor(modelItem => item.BasicSalaryInfo)
+                    </td>
+                    <td class="text_right">
+                        <input type="text" name="[@k].Coef" value="@item.CoefInfo" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);GetSalary13(this);" onkeyup="CheckNumber(this);GetSalary13(this);"/>                                                            
+                    </td>     
+                    <td class="text_right">
+                        <input type="text" name="[@k].Salary13" value="@item.Salary13Info" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);" onkeyup="CheckNumber(this);"/>                                                            
+                    </td>                                
+                    <td class="text_center">          
+                        @Html.CheckBox(String.Format("[{0}].Checked", @k), item.Checked)                         
+                    </td> 
+                </tr>                 
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    //InvokeDataTables();
+    function CheckNumber(obj) {        
+        if (validateNumeric($(obj).val()) == false) {
+            $(obj).val('');
+        }
+    }
+    function GetSalary13(obj) {
+        var lsID = $(obj).closest('tr').attr('id');
+        var Coef = $("input[name='[" + lsID + "].Coef']").val();
+        var BasicSalary = $("input[name='[" + lsID + "].BasicSalary']").val();
+        var objSalary13 = $("input[name='[" + lsID + "].Salary13']");        
+        if (validateNumeric(Coef) && validateNumeric(BasicSalary)) {
+            var result = (BasicSalary * Coef) / 100;
+            objSalary13.val(result);
+        }
+    }
+</script>

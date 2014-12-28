@@ -1,0 +1,168 @@
+﻿@model Eagle.Model.HR.ContractEditModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "editform_contract", name = "editform_contract", autocomplete = "off", @class = "form-horizontal" }))
+{ 
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.ContractNo)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ContractNo, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.ContractNo)
+                @Html.HiddenFor(model => model.ContractID, new { @id = "ContractID" })
+            </div>
+
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.LSContractTypeID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLSContractTypeID", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LSContractTypeID)
+                @Html.Hidden("LSContractTypeName")
+                @Html.ValidationMessageFor(model => model.LSContractTypeID)                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.SignedDate)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.SignedDate)
+                @Html.ValidationMessageFor(model => model.SignedDate)
+            </div>
+             <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.ContractStatus)
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("ContractStatus", null, new { @class = "span12" })
+            </div>            
+        </div>
+        <div class="row">         
+             <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.EffectiveDate)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.EffectiveDate)
+                @Html.ValidationMessageFor(model => model.EffectiveDate)
+            </div>
+             <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.PositionID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectPosition", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.PositionID)
+                @Html.Hidden("PositionName")
+                @Html.ValidationMessageFor(model => model.PositionID)
+            </div>
+        </div>
+
+        <div class="row">
+             <div class="col-md-2">
+                @Html.LabelFor(model => model.ExpiredDate)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.ExpiredDate)
+            </div>
+           
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.LocationID)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBox("selectLocation", null, new { @class = "span12" })
+                @Html.HiddenFor(model => model.LocationID)
+                @Html.Hidden("LocationName")
+                @Html.ValidationMessageFor(model => model.LocationID)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ProbationFrom)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.ProbationFrom)
+                @Html.ValidationMessageFor(model => model.ProbationFrom)
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ProbationTo)
+            </div>
+            <div class="col-md-4">
+                @Html.DateTimePickerFor(model => model.ProbationTo)
+                @Html.ValidationMessageFor(model => model.ProbationTo)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.RequiredLabelFor(model => model.MethodPIT)
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("MethodPIT", null, new { @class = "span12" })
+                @Html.ValidationMessageFor(model => model.MethodPIT)
+            </div>
+
+            <div id="divPercentPIT" class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PercentPIT)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PercentPIT, null, new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.PercentPIT)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+             <div class="col-md-2">
+                @Html.LabelFor(model => model.FileIds)
+            </div>
+            <div class="col-md-4">
+                <input id="btnUpload_Contract" type="button" class="btn-green" value="@Html.Raw(Eagle.Resource.LanguageResource.FileBrowser)" />
+                 @Html.HiddenFor(model => model.FileIds)
+                 @Html.Action("PopulateDownloadPage", "FileManager", new { @ItemId = Model.ContractID, @ItemTag = "Contract", @FileIds = Model.FileIds })  
+            </div>    
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.ProbationSalary)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ProbationSalaryEdit, new { @class = "span12", Value = String.Format("{0:#.###}", Model.ProbationSalaryEdit) })
+            </div>
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.InsuranceSalary)
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.InsuranceSalaryEdit, new { @class = "span12", Value = String.Format("{0:#.###}", Model.InsuranceSalaryEdit) })
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Note)
+            </div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150, @class = "span12" })
+            </div>
+        </div>   
+
+        <!--Action-->
+        <div class="row">
+             <div class="action-buttons text_center">
+                 @Html.HiddenFor(model => model.ContractID)
+                 @Html.HiddenFor(model => model.EmpID)                        
+                <button type="button" id="btnEditContract" class="btn btn-sm btn-primary edit" >@Html.Raw(Eagle.Resource.LanguageResource.btnSave)</button> 
+                <button type="button" id="btnReset" class="btn btn-sm">@Html.Raw(Eagle.Resource.LanguageResource.btnReset)</button>              
+            </div>
+        </div>
+        <!--End.Action-->
+    </div>
+}
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade modalUpload" id="modalUpload_Contract" style="background: #eee;">
+    <div id="divUpload_Contract"></div>
+</div>
+
+@Html.Action("jqueryval", "Common", null)

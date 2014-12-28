@@ -1,0 +1,73 @@
+﻿@model IEnumerable<InterviewCalendarViewModel>
+<form id="frmList">
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text-center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CandidateName)
+                </th> 
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.InterviewTime)
+                </th>         
+            </tr>
+        </thead>
+        <tbody>
+           
+            @if (Model != null)
+	        {
+                int i = 0;
+                int j = -1;
+                int k = -1;
+                foreach (var item in Model)
+                {
+                    i++;
+                    j++;
+                    <tr>
+                        <td class="text-center">
+                            @i
+                            
+                            @Html.Hidden("list[" + j.ToString() + "].InterviewCalendarID",item.InterviewCalendarID)
+                            @Html.Hidden("list[" + j.ToString() + "].ProjectTournamentID",item.ProjectTournamentID)
+                            @Html.Hidden("list[" + j.ToString() + "].CandidateID",item.CandidateID)
+                            @Html.Hidden("list[" + j.ToString() + "].InterviewTime",item.InterviewTime)
+                            @Html.Hidden("list[" + j.ToString() + "].CandidateName",item.CandidateName)
+                            @Html.Hidden("list[" + j.ToString() + "].DOB",item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CandidateName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td  class="text_center">
+                            @if (item.Result == null)
+                            {
+                                k++;
+                                @Html.Hidden("update[" + k.ToString() + "].InterviewCalendarID",item.InterviewCalendarID)
+                                @Html.Hidden("update[" + k.ToString() + "].ProjectTournamentID",item.ProjectTournamentID)
+                                @Html.Hidden("update[" + k.ToString() + "].CandidateID",item.CandidateID)
+                                @Html.Hidden("update[" + k.ToString() + "].InterviewTime",item.InterviewTime)
+                                @Html.Datepicker2For(modelItem => item.InterviewTime, null, new { name="update[" + k.ToString() + "].Date" })
+                                @Html.Raw("&nbsp; &nbsp;")
+                                @Html.TimepickerFor(modelItem => item.InterviewTime, null, new { name = "update[" + k.ToString() + "].Time" })
+                            }
+                            else
+                            {
+                                @Eagle.Resource.LanguageResource.Interviewed
+                            }
+                        </td>                  
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+</form>
+<script>
+    InvokeDateTimePicker();
+</script>

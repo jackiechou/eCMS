@@ -1,0 +1,172 @@
+﻿@model EmployeeViewModel
+<div id="choose-employee">
+    <div class="box1 img-rounded">
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label(@Eagle.Resource.LanguageResource.EmployeeCode)
+            </div>
+            <div class="col-md-4">
+                <div class="input-append">
+                    @Html.TextBoxFor(model => model.EmpCode, new { @placeholder = @Eagle.Resource.LanguageResource.EmpCode, @class = "span10 ignored" })
+                    @Html.HiddenFor(model => model.EmpID, new { @id = "EmpID" })
+
+                    @Html.HiddenFor(model => model.JoinDate, new { @id = "JoinDate", @class = "ignore" })
+                    <button id="btnPopuEmployeeCode" class="btn btnPopupEmp" type="button">...</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.FullName)
+            </div>
+            <div class="col-md-4">
+                <div class="input-append">
+                    @Html.TextBoxFor(model => model.FullName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span10 ignored" })
+                    <button id="btnPopuEmployeeName" class="btn btnPopupEmp" type="button">...</button>
+                </div>
+            </div>
+
+        </div>
+        <!--end row-->
+        <!--start row-->
+        <div class="row">
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.CompanyName)
+            </div>
+            <div class="col-md-4 line_bottom">
+                <label id="lblCompany" class="reset-label">
+                    @Html.DisplayFor(model => model.CompanyName, new {@class = "ignored" })
+                </label>
+            </div>  
+
+            <div class="col-md-2">
+                @Html.LabelFor(model => model.Position)
+            </div>
+            <div class="col-md-4 line_bottom">
+                <label id="lblPosition"  class="reset-label">
+                    @Html.DisplayFor(model => model.Position, new {@class = "ignored" })
+                </label>
+            </div>
+        </div>
+        <!--end row-->      
+    </div>   
+   
+</div>
+
+    @Html.Action("_PopupEmployeeGrid", "Employee", null)
+    <script type="text/javascript">
+        /*button gọi show popup*/
+        $(document).on("click", "#btnPopuEmployeeCode", function () {
+            //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+            controlId = "EmployeeCode";
+            $('.popupEmp').modal('show');
+            return false;
+        });
+
+
+        $(document).on("click", "#btnPopuEmployeeName", function () {
+            //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+            controlId = "EmployeeName";
+            $('.popupEmp').modal('show');
+            return false;
+
+        });
+
+        $('.btnPopup').click(function () {
+            //nếu mà add thì mới show
+            if ($('#btnAdd').hasClass("add")) {
+                //bien toan cuc - ko khai bao lai - controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+                controlId = "SignerEmpName";
+                $('.popupEmp').modal('show');
+            }
+            return false;
+        });
+
+        /*popup sẽ call hàm này khi chọn kết quả*/
+        /*
+            id: EmplId  int
+            code: EmplCode string
+        */
+        function ChooseEmployee(id, code, fullName, companyName, department, section, position, joinDate, controlId) {          
+            //Set value
+            $('#EmpID').val(id);
+            $('#EmpCode').val(code);
+            $('#JoinDate').val(joinDate);
+            $('#FullName').val(fullName);
+
+            $('#lblCompany').html(companyName);
+            $('#lblDepartment').html(department);
+            $('#lblSection').html(section);
+            $('#lblPosition').html(position);
+
+            $('.popupEmp').modal('hide');
+            /*remove qtip*/
+            var qtip = $('#strEmpName').attr('aria-describedby');
+            $('#' + qtip).remove();
+              
+            GetLeftBriefEmployeeInfo(id);
+            GetBriefEmpInfoByEmpID(id);
+            ReloadSelfPage(id);
+        }  
+
+
+
+        function GetLeftBriefEmployeeInfo(id) {
+            $.ajax({
+                url: areas + "/Common/EmployeeDisplay/?EmpID=" + id,
+                encoding: "UTF-8",
+                dataType: "html",
+                contentType: "text/plain; charset=UTF-8",
+                success: function (data, statusCode, xhr) {
+                    $('#LeftPane #avatar-display').html(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+            
+        function GetBriefEmpInfoByEmpID(id) {
+            $.ajax({
+                url: areas + "/Employee/GetBriefEmpInfoByEmpID/?EmpID=" + id,
+                encoding: "UTF-8",
+                dataType: "html",
+                contentType: "text/plain; charset=UTF-8",
+                success: function (data, statusCode, xhr) {
+                    $('#briefInfo').html(data);
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+
+        function ReloadSelfPage(id) {
+            var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + window.location.pathname;
+            var list_url = base_url.replace('/Index', '/GetList');
+            var params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                params[key] = value;
+            });        
+            var data = { "EmpID": id, "ModuleID": params["ModuleID"] }
+           
+            $.ajax({
+                type: "GET",
+                url: list_url,
+                data: data,
+                success: function (response) {
+                    $('.datatable').html(response);
+                    ResetForm();
+                }, error: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+
+        function ResetForm() {    
+            var validateObj = $('#myform');
+            validateObj.find('input:text, input:password, input:file, select, textarea').not('.date').not('.ignore').val('');
+            validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+            validateObj.find('input[type="number"]').val(0);
+            validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+            validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+            validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();          
+        }
+    </script>

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ConvalescenceViewModel>
+<form id="frmList">
+
+    <div class="table">
+        <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmpCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LSCompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Regime)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Stage)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.LeaveDate)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Days)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.MinSalary)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.IsConcentrate)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Percent)
+                    </th>
+                    <th class="text_center">
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th class="no-sort">
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                    <th class="no-sort">
+                        @Eagle.Resource.LanguageResource.Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 0;
+                    int k = -1;
+                }
+                @foreach (var item in Model)
+                {
+                    i++;
+                    k++;
+                    <tr>
+                        <td class="text-center">
+                            @i
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.EmpCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.LSCompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Regime)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.Stage)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.LeaveDate)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.Days)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.MinSalary)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.IsConcentrateName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.Percent)%
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(model => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Note)
+                        </td>
+                        <td class="text-center">
+                             <a data-id="@item.ID"  title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>    
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</form>
+<script>
+    InvokeDataTables();
+</script>

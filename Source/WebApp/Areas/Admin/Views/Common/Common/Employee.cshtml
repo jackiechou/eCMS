@@ -1,0 +1,119 @@
+﻿@model EmployeeViewModel
+<div id="choose-employee" class="box1 img-rounded">
+    @Html.HiddenFor(model => model.EmpID, new { @id = "EmpID" })   
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            <label>@Html.LabelFor(model => model.EmpCode)</label>
+        </div>
+        <div class="col-md-4">
+            <div class="input-append">
+                @Html.TextBoxFor(model => model.EmpCode, new { @placeholder = @Eagle.Resource.LanguageResource.EmpCode, @class = "span10" })
+                <button id="btnPopuEmployeeCode" class="btn btnPopupEmp" type="button">...</button>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>@Html.LabelFor(model => model.FullName)</label>
+        </div>
+        <div class="col-md-4">
+            <div class="input-append">
+                @Html.TextBoxFor(model => model.FullName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span10" })
+                <button id="btnPopuEmployeeName" class="btn btnPopupEmp" type="button">...</button>
+            </div>
+        </div>
+                           
+    </div>
+    <!--end row-->
+    <!--start row-->
+    <div class="row">
+        <div class="col-md-2">
+            @Html.LabelFor(model => model.CompanyName)
+        </div>
+        <div class="col-md-4 line_bottom">
+            <label id="lblCompanyName" class="reset-label">
+                @Html.DisplayFor(model => model.CompanyName)
+            </label>
+        </div>
+          <div class="col-md-2">
+            @Html.LabelFor(model => model.Position)
+        </div>
+        <div class="col-md-4 line_bottom">
+            <label id="lblPosition" class="reset-label">
+                @Html.DisplayFor(model => model.Position)
+            </label>
+        </div>                  
+    </div>
+    <!--end row-->
+</div>
+
+@Html.Action("_PopupEmployeePartial", "SYS_Account", null)
+<script type="text/javascript">
+    /*button gọi show popup*/
+    $(document).on("click", "#btnPopuEmployeeCode", function () {
+        //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+        controlId = "EmployeeCode";
+        $('.popupEmp').modal('show');
+
+        //var EmpNameInput = $('#strEmpName').val();
+
+        //$('.popup-empl-search #SearchEmpCode').val();
+        //$('.popup-empl-search #SearchFullName').val(EmpNameInput);
+        //// Nếu có nhập thì search, còn không nhập thì xóa bỏ lưới search
+        //if (EmpNameInput != '') {
+        //    $('.popup-empl-button #btnSearch').trigger("click");
+        //} else {
+        //    $('.popup-empl-results-grid').html('');
+        //}
+
+        return false;
+
+    })
+    $(document).on("click", "#btnPopuEmployeeName", function () {
+        //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+        controlId = "EmployeeName";
+        $('.popupEmp').modal('show');
+
+        //var EmpNameInput = $('#strEmpName').val();
+
+        //$('.popup-empl-search #SearchEmpCode').val();
+        //$('.popup-empl-search #SearchFullName').val(EmpNameInput);
+        //// Nếu có nhập thì search, còn không nhập thì xóa bỏ lưới search
+        //if (EmpNameInput != '') {
+        //    $('.popup-empl-button #btnSearch').trigger("click");
+        //} else {
+        //    $('.popup-empl-results-grid').html('');
+        //}
+
+        return false;
+
+    })
+
+    /*popup sẽ call hàm này khi chọn kết quả*/
+    /*
+        id: EmplId  int
+        code: EmplCode string        
+    */
+    //function ChooseEmployee(id, code, fullName, company, position, controlId) {      
+    //    //Set value
+    //    //$('#EmpID').val(id);
+    //    $('#EmpCode').val(code);
+    //    $('#FullName').val(fullName);
+    //    $('#lblCompanyName').html(company);
+    //    $('#lblPosition').html(position);
+        
+    //    $('.popupEmp').modal('hide');
+    //    /*remove qtip*/
+    //    var qtip = $('#strEmpName').attr('aria-describedby');
+    //    $('#' + qtip).remove();
+
+    //    $.ajax({
+    //        url: areas + "/Common/EmployeeDisplay/?EmpID=" + id,
+    //        encoding: "UTF-8",
+    //        dataType: "html",
+    //        contentType: "text/plain; charset=UTF-8",
+    //        success: function (data) {
+    //            $('#LeftPane #avatar-display').html(data);
+    //        }
+    //    })
+    //}
+</script>

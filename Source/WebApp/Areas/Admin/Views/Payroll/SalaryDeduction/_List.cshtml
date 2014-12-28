@@ -1,0 +1,49 @@
+﻿@model List<DeductionSalaryViewModels>
+<div class="table">
+    <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
+        <thead>
+            <tr>
+                <th class="text_center">@Eagle.Resource.LanguageResource.No</th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpCode
+                </th>
+                <th>
+                    @Eagle.Resource.LanguageResource.EmpName
+                </th>
+                 <th>
+                    @Eagle.Resource.LanguageResource.Position
+                </th>
+                <th class="table-actions text_center">@Eagle.Resource.LanguageResource.Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;
+              int k = -1;}
+            @foreach (var item in Model)
+            {
+                i++;
+                k++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.EmpCode
+                    </td>
+                    <td>
+                        @item.FullName
+                    </td>
+                    <td>
+                        @item.LSPositionName
+                    </td>
+                    <td  class="center">
+                        <input type="hidden" value="@item.EmpID" name="[@k].EmpID" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    //InvokeDataTables();
+</script>

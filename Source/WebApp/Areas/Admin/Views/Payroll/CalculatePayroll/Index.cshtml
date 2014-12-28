@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.FunctionName_CalculatePayroll;
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MainLayout;   
+}
+@section ContentSection
+{
+<form id="frmSearch" class="form-horizontal user-group-management">
+<div id="alertMessageBox">
+</div>
+    <div id="divHeader">
+        @Html.Action("_HeaderSearchList","CalculatePayroll",null)
+    </div>
+    <hr />
+    <!--/row-->
+    <div class="row">
+        <div class="footbar">
+            <input type="button" id="btnSearch" value="@Eagle.Resource.LanguageResource.btnSearch" class="btn" />
+            <input type="button" id="btnCalculatePayroll" value="@Eagle.Resource.LanguageResource.btnCalculatePayroll" class="btn btn-info" />
+        </div>
+    </div>
+    <!--End.row-->
+    <div id="divList" >
+        @Html.Action("_List","CalculatePayroll",null)
+    </div>
+</form>
+    }
+<script type="text/javascript">
+    $('#changeSidebarPos').trigger('click');
+    $(document).on("click", "#btnCalculatePayroll", function () {
+        $("body").addClass("loading");
+        //Search danh sach nhan vien 
+        var moduleId = 11;
+        var url = areas + '/CalculatePayroll/_CalculatePayroll?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $('#btnSearch').trigger('click');
+            }
+        });
+        
+    });
+
+    $(document).on("click", "#btnSearch", function () {
+
+        // kiem tra MMYYYY
+        if ($('#MMYYYY').val() == '') {
+            if (LanguageId == 124) {
+                showMessageWithTitle('warning!', "Please choose month to Calculate", 'warning');
+            } else {
+                showMessageWithTitle('Error!', "Chọn tháng để tổng hợp dữ liệu", 'warning');
+            }
+            return false;
+        }
+        $("body").addClass("loading");
+
+        var moduleId = 11;
+        var url = areas + '/CalculatePayroll/_Search?ModuleID=' + moduleId;
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $('#divList').html(data);
+            }
+        });
+    });
+</script>

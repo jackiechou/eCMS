@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.AddNew;
+}
+
+
+@Html.Action("_Search")
+<div id="divList">
+    @Html.Action("_List")
+</div>
+
+<div id="divList2">
+    </div>
+<script>
+    $(document).ready(function () {
+        $("#changeSidebarPos").trigger("click");
+    });
+    $(document).on("click", "#btnSearch", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: "_List",
+            data: $("#frmSearch").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    });
+
+    $(document).on("click", "#btnAddRow", function () {
+        $("body").addClass("loading");
+
+        var selectedList = '';
+        $(".check").each(function () {
+            if ($(this).prop("checked") == true && $(this).val() != 'false') {
+                selectedList += $(this).val() + ';';
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "_AddRow",
+            data: $("#frmList").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    });
+    $(document).on("click", ".btnDeleteRows", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: "_DeleteList" ,
+            data: $("#frmList").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    });
+    //begin - check all
+    $(document).on("change", "input[name='checkAll']", function () {
+        $(".check").prop("checked", $(this).prop("checked"));
+    });
+
+    $(document).on("change", ".check", function () {
+        var checkAll = true;
+        $('.check').each(function () {
+            if (!this.checked) {
+                checkAll = false;
+            }
+        });
+        $("input[name='checkAll']").prop("checked", checkAll);
+    });
+    //end - check all
+
+
+    $(document).on("change", ".grvEmpID", function () {
+        var empid = $(this).val();
+        var stt = $(this).data("id");
+        $.ajax({
+            type: "GET",
+            url: "_GetSIBook?EmpID="+empid,
+            success: function (data) {
+                $("input[name='[" + stt + "].SIBook']").val(data);
+                $("#lblSIBook-" + stt).html(data);
+            }
+        });
+    });
+    $(document).on("change", ".grvEmpID", function () {
+        var empid = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: "_GetSIBook?EmpID=" + empid,
+            success: function (data) {
+                $("#SIBook").val(data);
+                $("#lblSIBook").html(data);
+            }
+        });
+    });
+
+    /*Add to grid*/
+    $(document).on("click", "#btnAddToGrid", function () {
+        $.ajax({
+            type: "POST",
+            url: "_AddToGrid?Old=" + $("#Old").val() + "&New=" + $("#New").val() + "&FromMonth=" + $("input[name='FromMonth']").val() + "&ToMonth=" + $("input[name='ToMonth']").val() + "&BasedChange=" + $("#BasedChange").val() + "&SIBook=" + $("#SIBook").val() + "&ChangeTypeName=" + $("#ChangeTypeName").val() + "&ChangeTypeID=" + $("#ChangeTypeID").val() + "&FullName=" + $("#FullName").val() + "&EmpID=" + $("#EmpID").val(),
+            data: $("#frmList").serialize(),
+            success: function (data) {
+                $("#divList").html(data);
+            }
+        });
+    });
+    /*Save grid*/
+    $(document).on("click", "#btnAdd", function () {
+        $("body").addClass("loading");
+        $.ajax({
+            type: "POST",
+            url: "_SaveGrid?LSCompanyID=" + $("#LSCompanyID").val() + "&MonthYear=" + $("#MonthYear").val() + "&MasterID=" + getParameterByName("MasterID"),
+            data: $("#frmList").serialize(),
+            success: function (data) {
+                if (data == 'success') {
+                    window.location.href = "Index?ModuleID=10";
+                } else {
+                    AlterWarning(data);
+                }
+            }
+        });
+    });
+</script>

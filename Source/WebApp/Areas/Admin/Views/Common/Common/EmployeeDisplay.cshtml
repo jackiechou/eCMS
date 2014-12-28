@@ -1,0 +1,163 @@
+﻿@model EmployeeViewModel
+<div id="brief_emp">
+@if(Model.EmpID==null || Model.EmpID==0)
+{
+    @Html.Action("EmployeeDisplayDetails", "Common")        
+}
+else
+{
+    @Html.Action("EmployeeDisplayDetails", "Common", new { EmpID = Model.EmpID })  
+}    
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade modalEdit" id="modalEdit">
+    <div id="divFileEdit"></div>
+</div>
+@*<link rel='stylesheet prefetch' href='~/Scripts/plugins/jquery.contextMenu/jquery.contextMenu.css'>
+<script src='~/Scripts/plugins/jquery.contextMenu/jquery.contextMenu.js'></script>*@
+
+<script type="text/javascript">
+     (function ($) {
+         $.createDataBuilder = function (p) {
+             var FileMgr = {
+                 config: {
+                     isPostBack: false,
+                     async: true,
+                     cache: false,
+                     processData: false,
+                     mimeType: "multipart/form-data",
+                     type: 'POST',
+                     contentType: "application/json; charset=utf-8",
+                     data: '{}',
+                     dataType: 'json',
+                     baseURL: p.BaseURL,
+                     method: "",
+                     url: "",
+                     ajaxCallMode: 0,
+                     isValid: false,
+                     mode: 0,
+                     key: 0,
+                     ContainerClientID: p.ContainerClientID
+                 },
+                 messages:
+                 {
+                     nomenu: "No Data"
+                 },
+                 init: function (config) {
+                     FileMgr.InitializeCotrols();
+                     FileMgr.BindEvents();
+                 },
+                 ajaxSuccess: function (data) {
+                     if (data.message == "timeout")
+                         window.location.reload();
+                     else {
+                         switch (parseInt(FileMgr.config.ajaxCallMode)) {
+                             case 1:
+                                 FileMgr.BindDetails(data);
+                                 break;
+                             case 2:
+                                 FileMgr.ReloadData(data);
+                                 break;
+                         }
+                     }
+                 },
+                 ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                     handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                 },
+                 ajaxCall: function (config) {
+                     $.ajax({
+                         type: FileMgr.config.type,
+                         contentType: FileMgr.config.contentType,
+                         cache: FileMgr.config.cache,
+                         url: FileMgr.config.url,
+                         data: FileMgr.config.data,
+                         dataType: FileMgr.config.dataType,
+                         success: FileMgr.ajaxSuccess,
+                         error: FileMgr.ajaxFailure,
+                         async: false
+                     });
+                 },
+                 InitializeCotrols: function () {
+                     $("#modalEdit").draggable({ handle: ".modal-header" });
+                 },
+                 BindEvents: function () {
+                     $('#avatar').contextmenu({
+                         target: '#context-menu-avatar',
+                         onItem: function (context, e) {
+                             //alert($(e.target).text());
+                             var FileId = $(e.target).data("id");
+                             var EmpID = $(e.target).data("empid");
+                             if (FileId != null && FileId > 0)
+                                 FileMgr.GetFileDetails(FileId);
+                             else
+                                 FileMgr.PopulateAddFileForm(EmpID);
+
+                             //methods 2
+                             //var FileId = $('input[type=hidden][name=FileId]').val();  // ID cua dong du lieu
+                             //var EmpID = $('input[type=hidden][name=ItemId]').val();
+                             //if (FileId != null && FileId > 0)
+                             //    FileMgr.GetFileDetails(FileId);
+                             //else
+                             //    FileMgr.PopulateAddFileForm(EmpID);
+                         }
+                     });
+
+                     @*$.contextMenu({
+                         selector: '.avatar',
+                         items: {
+                             "ChangeAvatar": {
+                                 name: "@Html.Raw(Eagle.Resource.LanguageResource.ChangeAvatar)",
+                                callback: function (key, options) {
+                                    // var m = "clicked: " + key;
+                                    var FileId = $('input[type=hidden][name=FileId]').val();  // ID cua dong du lieu
+                                    var EmpID = $('input[type=hidden][name=ItemId]').val();
+                                    if (FileId != null && FileId > 0)
+                                        FileMgr.GetFileDetails(FileId);
+                                    else
+                                        FileMgr.PopulateAddFileForm(EmpID);
+                                    return true;
+                                }
+                            }
+                        }
+                     });*@                    
+                },              
+                GetFileDetails: function (FileId) {
+                    FileMgr.config.mode = 2;
+                    FileMgr.config.key = FileId;
+                    var data = { "FileId": FileId, "FolderKey": "UPLOAD_EMPLOYEE_IMAGE_DIR", "ItemId": $('input[type=hidden][name="ItemId"]').val(), "ItemTag": "Employee" };
+                    this.config.method = "EditPhoto";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                PopulateAddFileForm: function (ItemId) {
+                    FileMgr.config.mode = 1;
+                    var data = { "ItemId": ItemId, "ItemTag": "Employee", "FolderKey": "UPLOAD_EMPLOYEE_IMAGE_DIR" };
+
+                    this.config.method = "PopulateAddFileForm";
+                    this.config.type = "GET";
+                    this.config.data = data;
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                BindDetails: function (data) {
+                    $('#divFileEdit').html(data);
+                    $('#modalEdit').modal('show');
+                }
+             };
+             FileMgr.init();
+         }
+
+         var Controller = 'FileManager';
+         var BaseURL = areas + "/" + Controller + "/";
+         var base_settings = {
+             ContainerClientID: "MainBody_Download",
+             BaseURL: BaseURL
+         };
+         $.createDataBuilder(base_settings);
+     })(jQuery);
+</script>

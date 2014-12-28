@@ -1,0 +1,214 @@
+﻿@model Eagle.Model.ShiftCreateViewModel
+
+<form id="frmAdd" class="form-horizontal">
+    @Html.HiddenFor(model => model.LSShiftID)
+
+    <div id="alertMessageBox">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">
+        <div class="row">
+
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">Input region</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                    <div>
+                        <div class="accordion-inner">
+                            <div class="accordion-content">
+                                <!--start row-->
+                                <div class="row shift-code">
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.LSShiftCode)
+                                    </div>
+                                    <div class="col-md-3">
+
+                                        @Html.TextBoxFor(model => model.LSShiftCode, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.LSShiftCode, @class = "input-small" })
+                                        @Html.ValidationMessageFor(model => model.LSShiftCode)
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.LabelFor(model => model.ShiftName)
+                                    </div>
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(model => model.ShiftName, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.ShiftName, @class = "input-large" })
+                                        @Html.ValidationMessageFor(model => model.ShiftName)
+                                    </div>
+
+                                </div>
+                                <!--end row-->
+
+                                <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-3 shift-time-content">
+                                        Giờ làm chính
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.StartTime
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TimepickerFor(model => model.WorkTimeBegin)
+                                        @Html.ValidationMessageFor(model => model.WorkTimeBegin)
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.EndTime
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TimepickerFor(model => model.WorkTimeEnd)
+                                        @Html.ValidationMessageFor(model => model.WorkTimeEnd)
+                                    </div>
+                                </div>
+                                <!--end row-->
+                                <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-3 shift-time-content">
+                                        Giờ nghỉ ca
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.StartTime
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.TimepickerFor(model => model.BreakTimeBegin)
+                                        @Html.ValidationMessageFor(model => model.BreakTimeBegin)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.EndTime
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TimepickerFor(model => model.BreakTimeEnd)
+                                        @Html.ValidationMessageFor(model => model.BreakTimeEnd)
+                                    </div>
+                                </div>
+                                <!--end row-->
+                                <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-3 shift-time-content">
+                                        Time late / Time early
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.TimeLate
+                                        </label>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        @Html.TimepickerFor(model => model.TimeLate)
+                                        @Html.ValidationMessageFor(model => model.TimeLate)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.TimeEarly
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TimepickerFor(model => model.TimeEarly)
+                                        @Html.ValidationMessageFor(model => model.TimeEarly)
+                                    </div>
+                                </div>
+                                <!--end row-->
+                                <!--start row-->
+                                <div class="row ">
+                                    <label class="col-md-12 checkbox-align">
+                                        @Eagle.Resource.LanguageResource.isNextDate_OTTimeEnd @Html.CheckBox("isNextDate_OTTimeEnd")
+                                    </label>
+                                </div>
+                                <!--end row-->
+                                <!--start row-->
+                               @* <div class="row">
+                                    <label class="col-md-3 shift-time-content">
+                                        Night Overtime
+                                    </label>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.StartTime
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-append timepicker">
+                                            @Html.TextBoxFor(model => model.OTNightBegin, @"{0:hh\:mm}", new { @placeholder = @Eagle.Resource.LanguageResource.OTNightBegin, @class = "input-mini", @data_format = "hh:mm" })
+                                            <span class="add-on">
+                                                <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
+                                            @Html.ValidationMessageFor(model => model.OTNightBegin)
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.EndTime
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TimepickerFor(model => model.OTNightEnd)
+                                        @Html.ValidationMessageFor(model => model.OTNightEnd)
+                                    </div>
+                                </div>*@
+                                <!--end row-->
+                                <!--start row-->
+                                @*<div class="row shift-time-out">
+                                    <label class="col-md-12 checkbox-align">
+                                        @Eagle.Resource.LanguageResource.IsOTNightEnd @Html.CheckBox("IsOTNightEnd")
+                                    </label>
+                                </div>*@
+                                <!--end row-->
+                                <!--start row-->
+                                <div class="row ">
+                                    <div class="col-md-7">
+                                        &nbsp;                                      
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>
+                                            @Eagle.Resource.LanguageResource.WorkHour
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(model => model.WorkHour, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.WorkHour, @class = "input-mini" })
+                                        @Html.ValidationMessageFor(model => model.WorkHour)
+                                    </div>
+                                </div>
+                                <!--end row-->
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="footbar">
+                                <div>
+                                    <input class="btn AddModel" type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" />
+                                    <input class="btn btn-info AddModel" type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" />
+                                </div>
+                            </div>
+                        </div>
+                        <!--End.row-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@Html.Action("jqueryval", "Common", null)
+
+<script>
+    InvokeDateTimePicker();
+</script>

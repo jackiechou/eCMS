@@ -1,0 +1,84 @@
+﻿@model LS_tblBankCreateModel
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myform_bank", name = "myform_bank", autocomplete = "off", @class = "form-horizontal" }))
+{
+    <div id="alertMessagePopUp">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass    ">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage     !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+    <div class="box">      
+        <div id="divContainer_Bank">
+            <div class="row">                              
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.LSBankCode)
+                </div>
+                <div class="col-md-4">
+                     @Html.TextBoxFor(model => model.LSBankCode, new { @class = "span12" })                   
+                    @Html.ValidationMessageFor(model => model.LSBankCode)
+                     @Html.HiddenFor(model => model.LSBankID)
+                </div>
+                    <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ProvinceID)
+                </div>
+                <div class="col-md-4">                                    
+                    @Html.TextBox("selectProvince", null, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.ProvinceID)
+                    @Html.Hidden("ProvinceName")
+                    @Html.ValidationMessageFor(model => model.ProvinceID)
+                </div>                                            
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.Name)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Name,new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.VNName)
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VNName,new { @class = "span12" })
+                    @Html.ValidationMessageFor(model => model.VNName)
+                </div>                                      
+            </div>
+             <div class="row">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Used)
+                </div>
+                <div class="col-md-4">                                            
+                   @Html.CheckBoxFor(model => model.Used)
+                </div>
+                  <div class="col-md-2">
+                    @Html.Label("IsPopUpClosed", @Html.Raw(Eagle.Resource.LanguageResource.IsPopUpClosed))
+                </div>
+                <div class="col-md-4">
+                     @Html.CheckBox("IsPopUpClosed", true)
+                </div>  
+            </div>
+
+            <div class="row">               
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Note)
+                </div>
+                <div class="col-md-10">                                            
+                    @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "span12" })
+                </div>                                           
+            </div>            
+         </div>    
+        <div class="row">
+            <div class="footbar">
+                <input type="button" id="btnSubmit" name="btnSubmit" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-small btn-info" />
+                <input type="button" id="btnReset" name="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn btn-small" />
+            </div>
+        </div>     
+    </div>
+}

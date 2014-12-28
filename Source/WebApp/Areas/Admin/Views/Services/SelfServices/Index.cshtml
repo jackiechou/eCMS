@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = @Html.Raw(Eagle.Resource.LanguageResource.SelfServices);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.SharedLayout;
+}
+
+<div class="content-wrapper">
+    <div id="MainBody" class="main_box">  
+        <div id="BirthdayContainer">
+            @Html.Partial("../Services/SelfServices/_BirthdayServices")  
+        </div>
+    </div>
+</div>

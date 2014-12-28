@@ -1,0 +1,433 @@
+﻿@model OnlineProcessEmpViewModel
+@{
+    ViewBag.Title = Eagle.Resource.LanguageResource.OnlineProcess_Detail;   
+}
+@section ContentSection
+{
+@using (Html.BeginForm("SaveOnlineProcessDetail", "OnlineProcessDetail", FormMethod.Post, new { @id = "frmSaveOnlineProcessDetail" }))
+{
+    @Html.HiddenFor(model =>model.OnlineProcessEmpID)
+    @Html.Hidden("CurrentDepartmentChecked")
+    @Html.ValidationSummary(true)
+    <div id="alertMessageBox">
+    </div>
+    <!--start box-->
+    <div class="box">
+        <div class="row">
+            <div id="right_accordion" class="accordion-group">
+                <div class="accordion-heading toolbar">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
+                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
+                    </a>
+                </div>
+                <div id="form_accordion" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="accordion-content">
+                                <!--start row-->
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model =>model.strEmpName)
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-append" id="InputstrEmpName">
+                                                @Html.HiddenFor(model => model.EmpID)
+                                                @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span8" })
+                                                @Html.ValidationMessageFor(model => model.strEmpName)
+                                                <button class="btn btnPopupEmp" type="button">...</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="CompanyName">@Eagle.Resource.LanguageResource.NearLastCompanyDefine (<span class="color-red">*</span>)</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select id="CompanyId" name="CompanyId" class="easyui-combotree span2"></select>
+                                        @Html.ValidationMessage("CompanyId")
+                                        <script type="text/javascript">
+                                            LoadComboTreeWithActionWithRequired('CompanyId', 'GetNearLast', '@string.Format(Eagle.Resource.LanguageResource.Required,Eagle.Resource.LanguageResource.LastCompanyDefine)',null)
+                                        </script>
+                                    </div>
+                                </div>
+                                <!--end row-->
+                                <!--start row-->
+                                <div class="row">
+                                     <div class="col-md-2">
+                                        @Html.RequiredLabelFor(model =>model.OnlineProcessID)
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(model =>model.OnlineProcessID, null, new { @class = "span12" })
+                                    </div>
+                                </div>
+                                <!--end row-->
+                                <div id="divList" class="row">
+                       
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        @Eagle.Resource.LanguageResource.DecentralizedApprovalProcess (<span class="color-red">*</span>)
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="row  form-inline">
+                                    <div class="col-md-5">
+                                        <div class="col-md-6 ApproveLevel1">
+                                            @Html.LabelFor(model =>model.ApproveLevel1) @Html.CheckBox("ApproveLevel1") 
+                                        </div>  
+                                        <div class="col-md-6 ApproveLevel2">
+                                            @Html.LabelFor(model =>model.ApproveLevel2) @Html.CheckBox("ApproveLevel2") 
+                                        </div>      
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="col-md-6 ApproveLevel3">
+                                            @Html.LabelFor(model =>model.ApproveLevel3) @Html.CheckBox("ApproveLevel3") 
+                                        </div>      
+                                        <div class="col-md-6 ApproveLevel4">
+                                            @Html.LabelFor(model =>model.ApproveLevel4) @Html.CheckBox("ApproveLevel4") 
+                                        </div>    
+                                    </div>  
+                                    <div class="col-md-2 ApproveLevel5">
+                                        @Html.LabelFor(model =>model.ApproveLevel5) @Html.CheckBox("ApproveLevel5") 
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="footbar">
+                                <div>
+                                   <input type="button" id="btnCancel" value="@Eagle.Resource.LanguageResource.Cancel" class="btn AddModel" />
+                                    <input type="button" id="btnAdd" value="  @Eagle.Resource.LanguageResource.btnSave " class="btn btn-info AddModel add-mode" />
+    
+                                </div>
+                            </div>
+                        </div>
+                        <!--End.row-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end box-->
+} 
+ <div id="GridList" class="row">
+    @Html.Action("_List")
+</div>
+}
+@Html.Action("jqueryval", "Common", null)
+@Html.Action("_PopupEmployeePartial", "SYS_Account", null)
+@Html.Action("ConfirmPopup","Common",null)
+<script>
+    $(document).ready(function () {
+        $(".ApproveLevel1").addClass('hidden');
+        $(".ApproveLevel2").addClass('hidden');
+        $(".ApproveLevel3").addClass('hidden');
+        $(".ApproveLevel4").addClass('hidden');
+        $(".ApproveLevel5").addClass('hidden');
+        $("#ApproveLevel1").attr("disabled", true);
+        $("#ApproveLevel2").attr("disabled", true);
+        $("#ApproveLevel3").attr("disabled", true);
+        $("#ApproveLevel4").attr("disabled", true);
+        $("#ApproveLevel5").attr("disabled", true);
+    });
+
+
+    $(document).on("change", "#OnlineProcessID", function () {
+        hiddenApprove();
+    });
+    
+    $(document).on("change", "input[name='CompanyId']", function () {
+        var CompanyID = $(this).val();
+          if (CompanyID != '') {
+            $.ajax({
+                type: 'GET',
+                url: 'GetSettings?CompanyID=' + CompanyID + '&CurrentDepartmentChecked=' + $('#CurrentDepartmentChecked').val(),
+                success: function (data) {
+                    $('#divList').html(data);
+                }
+            });
+        };
+    });
+
+    $(document).on("click", "#btnAdd",function () {
+        if (!$("form#frmSaveOnlineProcessDetail").valid()){
+            return false;
+        }else
+        //Thêm
+        if ($('#btnAdd').hasClass('add-mode')) {
+
+            if ($('#CompanyId').val() == '') {
+                AlterUpdateWarning();
+            } else {
+                $.ajax({
+                    url: 'SaveOnlineProcessDetail',
+                    type: 'post',
+                    data: $('form#frmSaveOnlineProcessDetail').serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            //thành công load lại grid và thông báo thành công
+                            $.ajax({
+                                type: "GET",
+                                url: '_List',
+                                success: function (data) {
+                                    $('#GridList').html(data);
+                                    AlterUpdateSuccess();
+                                    $('html, body').animate({ scrollTop: 0 }, 'fast');
+                                }
+                            });
+
+                        } else {
+                            //lỗi thông báo lỗi
+                            AlterWarning(data);
+                        }
+                    }
+                });
+            }
+        } else if ($('#btnAdd').hasClass('edit-mode')) {
+            $.ajax({
+                url: 'UpdateOnlineProcessDetail',
+                type: 'post',
+                data: $('form#frmSaveOnlineProcessDetail').serialize(),
+                success: function (data) {
+                    if (data == 'success') {
+                        //thành công load lại grid và thông báo thành công
+                        $.ajax({
+                            type: "GET",
+                            url: '_List',
+                            success: function (data) {
+                                $('#GridList').html(data);
+                                $('#btnCancel').trigger('click');
+                                AlterUpdateSuccess();
+                                $('html, body').animate({ scrollTop: 0 }, 'fast');
+
+                            }
+                        });
+
+                    } else {
+                        //lỗi thông báo lỗi
+                        AlterWarning(data);
+                    }
+                }
+            });
+        }
+    });
+    $(document).on("click", "#btnCancel", function () {
+        if ($('#btnAdd').hasClass('edit-mode')) {
+            $('#CurrentDepartmentChecked').val('');
+            $('.btnPopupEmp').prop('disabled', false);
+            $('#strEmpName').prop('disabled', false);
+            $('#OnlineProcessID').prop('disabled', false);
+
+            $('#CompanyId').siblings().find('.combo-arrow2').removeClass('combo-arrow2').addClass('combo-arrow');
+            $('#CompanyId').siblings('span.combo').css('background', '#fff')
+            $('#CompanyId').siblings('span.combo').children('input.combo-text').css('background', '#fff')
+
+
+            $('#btnAdd').removeClass('edit-mode');
+            $('#btnAdd').addClass('add-mode');
+
+        }
+
+        $('#EmpID').val('');
+        $('#strEmpName').val('');
+        $('#OnlineProcessID').val('');
+        $('#CompanyId').val('');
+        $('#CompanyId').combotree('setValue', '');
+        $('#OnlineProcessEmpID').val('');
+        
+
+        $('#divList').html('');
+        
+
+        $('#ApproveLevel1').prop('checked', false);
+        $('#ApproveLevel2').prop('checked', false);
+        $('#ApproveLevel3').prop('checked', false);
+        $('#ApproveLevel4').prop('checked', false);
+        $('#ApproveLevel5').prop('checked', false);
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+
+    });
+    $(document).on("click", ".btnPopupEmp", function () {
+        //hidden qtip nếu có
+        $('.qtip').addClass('hidden');
+        $('.qtip-content').addClass('hidden');
+        
+
+        //controlId khi dùng cho nhiều nút để phân biệt nút nào ở hàm ChooseEmployee
+        controlId = "strEmpName";
+        $('.popupEmp').modal('show');
+
+        var EmpNameInput = $('#strEmpName').val();
+
+        $('.popup-empl-search #SearchEmpCode').val();
+        $('.popup-empl-search #SearchFullName').val(EmpNameInput);
+        // Nếu có nhập thì search, còn không nhập thì xóa bỏ lưới search
+        if (EmpNameInput != '') {
+            $('.popup-empl-button #btnSearch').trigger("click");
+        } else {
+            $('.popup-empl-results-grid').html('');
+        }
+
+        return false;
+
+    });
+       
+
+
+    /*popup sẽ call hàm này khi chọn kết quả*/
+    /*
+        id: EmplId  int
+        code: EmplCode string        
+    */
+             
+    function ChooseEmployee(id, code, fullName, department, position, controlId) {
+        if (controlId == "strEmpName") {
+            //Gán các thông số
+            $('#strEmpName').val(fullName);
+            $('#EmpID').val(id);
+            $('#EmpID').trigger('change');
+
+            //Ẩn popup
+            $('.popupEmp').modal('hide');
+
+            /*remove qtip nếu có*/
+            var qtip = $('#strEmpName').attr('aria-describedby');
+            $('#' + qtip).remove();
+            // bỏ ẩn các qtip khác
+            $('.qtip').removeClass('hidden');
+            $('.qtip-content').removeClass('hidden');
+        }
+    }
+
+    $(document).on("click", ".deleteItem", function (e) {
+        var lsID = $(this).data('id');  // ID cua dong du lieu
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click', '[data-value]', function (e) {
+                if ($(this).data('value')) {
+                    $.ajax({
+                        type: "POST",
+                        url: "_Delete/" + lsID,
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "_List",
+                                    success: function (data) {
+                                        $('#GridList').html(data);
+                                        $('#btnCancel').trigger('click');
+                                        AlterUpdateSuccess();
+                                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                                    }
+                                });
+                            } else {
+                                $('#divEdit').html(data);
+                                $('html, body').animate({ scrollTop: 0 }, 'fast');
+                            }
+                        }
+                    })
+                    return false;
+                }
+            });
+    });
+
+    $(document).on("click", ".editItem ", function (e) {
+        var Id = $(this).data('id');  // ID cua dong du lieu
+
+        $.ajax({
+            url: "_Edit/" + Id,
+            type: "GET",
+            context: this,
+            error: function () { },
+            dataType: 'json',
+            success: function (response) {
+
+                $('#CurrentDepartmentChecked').val(response.LSCompanyID)
+                $('#EmpID').val(response.EmpID);
+                $('#strEmpName').val(response.strEmpName);
+                $('#OnlineProcessID').val(response.OnlineProcessID);
+                $('#CompanyId').val(response.LSCompanyID);
+                $('#OnlineProcessEmpID').val(response.OnlineProcessEmpID);
+
+                //Disabled toàn bộ các nút
+                $('.btnPopupEmp').prop('disabled', true);
+                $('#strEmpName').prop('disabled', true);                
+                $('#OnlineProcessID').prop('disabled', true);
+                $('#CompanyId').siblings().find('.combo-arrow').removeClass('combo-arrow').addClass('combo-arrow2');
+                $('#CompanyId').siblings('span.combo').css('background', '#eee')
+                $('#CompanyId').siblings('span.combo').children('input.combo-text').css('background', '#eee')
+                $('#CompanyId').combotree('setValue', response.RootLevel);
+
+
+                if ($('#btnAdd').hasClass('add-mode')) {
+                    $('#btnAdd').removeClass('add-mode').addClass('edit-mode');
+                }
+                //$("#DepartmentChecked[value='" + response.LSCompanyID + "']").prop("checked", true);
+                
+
+                $('#ApproveLevel1').prop('checked', response.ApproveLevel1);
+                $('#ApproveLevel2').prop('checked', response.ApproveLevel2);
+                $('#ApproveLevel3').prop('checked', response.ApproveLevel3);
+                $('#ApproveLevel4').prop('checked', response.ApproveLevel4);
+                $('#ApproveLevel5').prop('checked', response.ApproveLevel5);
+                hiddenApprove();
+                $('html, body').animate({ scrollTop: 0 }, 'fast');
+            }
+        });
+
+    });
+
+    function hiddenApprove() {
+        var url = "GetTotalLevelApprove/" + $("#OnlineProcessID").val();
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var total = parseInt(data);
+                if (1 <= total) {
+                    $(".ApproveLevel1").removeClass('hidden');
+                    $("#ApproveLevel1").attr("disabled", false);
+                } else {
+                    if ($(".ApproveLevel1").hasClass("hidden")) {
+                        $(".ApproveLevel1").addClass('hidden');
+                    }
+                    $("#ApproveLevel1").attr("disabled", true);
+                }
+                if (2 <= total) {
+                    $(".ApproveLevel2").removeClass('hidden');
+                    $("#ApproveLevel2").attr("disabled", false);
+                } else {
+                    if ($(".ApproveLevel2").hasClass("hidden")) {
+                        $(".ApproveLevel2").addClass('hidden');
+                    }
+                    $("#ApproveLevel2").attr("disabled", true);
+                }
+                if (3 <= total) {
+                    $(".ApproveLevel3").removeClass('hidden');
+                    $("#ApproveLevel3").attr("disabled", false);
+                } else {
+                    if ($(".ApproveLevel3").hasClass("hidden")) {
+                        $(".ApproveLevel3").addClass('hidden');
+                    }
+                    $("#ApproveLevel3").attr("disabled", true);
+                }
+                if (4 <= total) {
+                    $(".ApproveLevel4").removeClass('hidden');
+                    $("#ApproveLevel4").attr("disabled", false);
+                } else {
+                    if ($(".ApproveLevel4").hasClass("hidden")) {
+                        $(".ApproveLevel4").addClass('hidden');
+                    }
+                    $("#ApproveLevel4").attr("disabled", true);
+                }
+                if (5 == total) {
+                    $(".ApproveLevel5").removeClass('hidden');
+                    $("#ApproveLevel5").attr("disabled", false);
+                } else {
+                    if ($(".ApproveLevel5").hasClass("hidden")) {
+                        $(".ApproveLevel5").addClass('hidden');
+                    }
+                    $("#ApproveLevel5").attr("disabled", true);
+                }
+            }
+        })
+    }
+</script>
