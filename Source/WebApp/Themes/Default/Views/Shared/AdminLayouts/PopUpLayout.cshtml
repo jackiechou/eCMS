@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Themes/Default/FullScreenAdminStyle")
+    @Scripts.Render("~/Scripts/App/HeaderScript", "~/Scripts/App/Validation")
+
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie7style.css"><link rel="stylesheet" type="text/css" href="/Content/Admin/css/font-awesome.css"/><![endif]-->
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie-style.css"/><![endif]-->
+    <!--[if lt IE 7]><style media="screen" type="text/css">#container {height:100%;}</style><![endif]-->
+    <!--[if IE]><script src="~/Scripts/plugins/flot/excanvas.js"></script><![endif]-->
+    <script type="text/javascript">
+        @{
+            //set LanguageId
+            string LanguageId = Session["LanguageId"] == null ? "124" : Session["LanguageId"].ToString();
+        }
+        var LanguageId = parseInt('@LanguageId');
+        var areas = '/Admin';
+        $(window).load(function () {
+            $('#divLoading').fadeOut(500);
+        });
+    </script>
+    
+    @RenderSection("HeadScripts", required: false)
+    @RenderSection("DevScripts", required: false)
+</head>
+<!--[if IE 6]><body class="ie ie6"><![endif]-->
+<!--[if IE 7]><body class="ie ie7"><![endif]-->
+<!--[if IE 8]><body class="ie ie8"><![endif]-->
+<!--[if IE 9]><body class="ie ie9"><![endif]-->
+<!--[if gt IE 9]><body class="ie"><![endif]-->
+<!--[if !IE ]><!-->
+<body>
+    <!--<![endif]-->
+    <div id="container">
+        <!-- start container -->
+        <div id="body">
+            <div class="row" id="content-bg">
+                <!--start.content -->
+                <div id="ContentPane">
+                    @RenderBody()
+                </div>
+                <!--start.content -->
+            </div>
+            <!--/row-->
+        </div>
+        <!-- and menutop -->
+        @section BottomPane
+        {
+            @Scripts.Render("~/Scripts/App/FooterScript")
+            @RenderSection("Scripts", required: false)
+            <!-- start footer -->
+            <div id="footer" class="footer">
+                @Html.Partial("_FooterPartial")
+            </div>
+            <!-- and footer -->
+        }
+    </div>
+    @Scripts.Render("~/Scripts/App/FooterScript")
+    @RenderSection("Scripts", required: false)
+    <div class="loading-modal"></div>
+    <div id="divLoading"></div>
+</body>
+</html>

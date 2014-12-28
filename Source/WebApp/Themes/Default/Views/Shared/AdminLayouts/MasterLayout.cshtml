@@ -1,0 +1,234 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @section Meta{
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    }
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!-- jqgrid plugin -->
+    @*<link href="~/Scripts/plugins/jqgrid/css/ui.jqgrid.css" rel="stylesheet" />*@
+
+    @*@Styles.Render("~/Themes/Default/TwoColumnAdminStyle")*@
+    @RenderSection("HeaderStyle", required: true)   
+    @Scripts.Render("~/Scripts/App/HeaderScript", "~/Scripts/App/Validation")
+
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie-styles.css"/><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie7style.css"><link rel="stylesheet" type="text/css" href="/Content/Admin/css/font-awesome.css"/><![endif]-->
+    <!--[if lt IE 7]><style media="screen" type="text/css">#container {height:100%;}</style><![endif]-->
+    <!--[if IE]><script src="~/Scripts/plugins/flot/excanvas.js"></script><![endif]-->
+
+    <!-- jgrid ui -->
+    @*<link href="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.min.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.structure.min.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.theme.min.css" rel="stylesheet" />
+        <script src="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.min.js"></script>
+
+        <script src="~/Scripts/plugins/jqgrid/js/jquery.jqGrid.min.js"></script>
+        <script src="~/Scripts/plugins/jqgrid/js/i18n/grid.locale-vi.js"></script>
+        <script src="~/Scripts/plugins/jqgrid/src/grid.jqueryui.js"></script>*@
+
+    <!-- popup -->
+    <!-- style -->
+    @*<link href="~/Scripts/plugins/popup/css/normalize.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/popup/css/ns-default.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/popup/css/ns-style-attached.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/popup/css/ns-style-bar.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/popup/css/ns-style-growl.css" rel="stylesheet" />
+        <link href="~/Scripts/plugins/popup/css/ns-style-other.css" rel="stylesheet" />*@
+    <!-- script -->
+    @*<script src="~/Scripts/plugins/popup/js/classie.js"></script>
+        <script src="~/Scripts/plugins/popup/js/modernizr.custom.js"></script>
+        <script src="~/Scripts/plugins/popup/js/snap.svg-min.js"></script>
+        <script src="~/Scripts/plugins/popup/js/notificationFx.js"></script>*@
+    <!-- end popup -->
+    <!-- auto format -->
+    @*<script src="~/Scripts/plugins/autoformat/maskinput/jquery.maskedinput.min.js"></script>
+        <script src="~/Scripts/plugins/autoformat/number/autoNumeric.js"></script>*@
+    <!-- end auto format -->
+    <!-- developer script -->
+    @*<script src="~/Scripts/common/common.js"></script>
+        <script src="~/Scripts/common/Common_AutoComplete.js"></script>
+        <script src="~/Scripts/common/validateInput.js"></script>
+        <script src="~/Scripts/common/icon.js"></script>*@
+    <!-- end -->
+    <!-- layout master page -->
+    @*<link href="~/Areas/Admin/Themes/default/css/style.css" rel="stylesheet" />*@
+
+    @*<script src="~/Areas/Admin/Themes/default/js/tablesorter-pager.js"></script>
+        <script src="~/Areas/Admin/Themes/default/js/tablesorter.js"></script>
+        <script src="~/Areas/Admin/Themes/default/js/tooltip.js"></script>*@
+    <!-- end layout -->
+    <script>
+        var matched, browser;
+        jQuery.uaMatch = function (ua) {
+            ua = ua.toLowerCase();
+            var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+                /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+                /(msie)[\s?]([\w.]+)/.exec(ua) ||
+                /(trident)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+                [];
+
+            return {
+                browser: match[1] || "",
+                version: match[2] || "0"
+            };
+        };
+        matched = jQuery.uaMatch(navigator.userAgent);
+        //IE 11+ fix (Trident)
+        matched.browser = matched.browser == 'trident' ? 'msie' : matched.browser;
+        browser = {};
+        if (matched.browser) {
+            browser[matched.browser] = true;
+            browser.version = matched.version;
+        }
+        // Chrome is Webkit, but Webkit is also Safari.
+        if (browser.chrome) {
+            browser.webkit = true;
+        } else if (browser.webkit) {
+            browser.safari = true;
+        }
+
+        jQuery.browser = browser;
+    </script>
+    <!-- auto format -->
+    <!--end-->
+    <!--[if !IE]>
+        <style type="text/css">
+            #notification_count {
+                margin-top: -29px;
+            }
+        </style>
+    <![endif]-->
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie-style.css"/>
+
+        <script src="~/Scripts/plugins/flot/excanvas.js"></script>
+    <![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie7style.css"><link rel="stylesheet" type="text/css" href="/Content/Admin/css/font-awesome.css"/><![endif]-->
+    <!--[if lt IE 7]><style media="screen" type="text/css">#container {height:100%;}</style><![endif]-->
+
+    <script type="text/javascript">
+        @{
+            //set LanguageId
+            string LanguageId = Session["LanguageId"] == null ? "124" : Session["LanguageId"].ToString();
+            //Set Permission
+
+            int FView = 1; int FDelete = 1; int FEdit = 1; int FExport = 1;
+            //List<SYS_tblFunctionPermissionViewModel> lst = (List<SYS_tblFunctionPermissionViewModel>)Session[SettingKeys.MenuList];
+            //if (lst != null && Session[SettingKeys.AccountInfo] != null)
+            //{
+            //    string url = Request.Url.AbsolutePath.ToString().Substring(1);
+            //    var fp = lst.Where(p => p.Url.Contains(url.TrimEnd('/'))).FirstOrDefault();
+            //    //nếu không phải là admin thì check quyền
+            //    if (fp != null)
+            //    {
+            //        if (((AccountViewModel)Session[SettingKeys.AccountInfo]).FAdm != 1)
+            //        {
+            //            //Nếu không phải là  admin => check quyền
+            //            FView = (fp.FView == true) ? 1 : 0;
+            //            FDelete = (fp.FDelete == true) ? 1 : 0;
+            //            FEdit = (fp.FEdit == true) ? 1 : 0;
+            //            FExport = (fp.FExport == true) ? 1 : 0;
+
+            //        }
+            //        else
+            //        {
+            //            //Nếu là admin full quyền
+            //            FView = 1;
+            //            FDelete = 1;
+            //            FEdit = 1;
+            //            FExport = 1;
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        //Nếu không có quyền hoặc hết session acc => return
+            //        Response.RedirectToRoute("Admin_PermissionDenied");
+            //    }
+            //}
+            //else
+            //{
+            //    //Hết session => nhảy ra trang ngoài
+            //    Response.Redirect("/Admin/Login?desiredUrl=" + Request.Url.AbsoluteUri);
+            //}
+
+        }
+        $(window).load(function () {
+            $('#divLoading').fadeOut(500);
+        });
+        var LanguageId = parseInt('@LanguageId');
+
+        var areas = '/Admin';
+        var FView = parseInt('@FView');
+        var FDelete = parseInt('@FDelete');
+        var FEdit = parseInt('@FEdit');
+        var FExport = parseInt('@FExport');
+        //var bmsLocale = 'en';
+        // $.uiBackCompat = false;
+    </script>
+
+    @RenderSection("HeadScripts", required: false)
+    @RenderSection("DevScripts", required: false)
+</head>
+<!--[if IE 6]><body class="ie ie6"><![endif]-->
+<!--[if IE 7]><body class="ie ie7"><![endif]-->
+<!--[if IE 8]><body class="ie ie8"><![endif]-->
+<!--[if IE 9]><body class="ie ie9"><![endif]-->
+<!--[if gt IE 9]><body class="ie"><![endif]-->
+<!--[if !IE ]><!-->
+<body>
+    <!--<![endif]-->
+    <div id="container">
+
+        <div id="header" class="banner_top">
+            @Html.Partial("_TopHeaderPartial")     
+
+            <!-- start main menu -->
+            @Html.Action("LoadMainMenu", "Menu")
+            <!-- and main menu -->           
+        </div>
+        <div class="clearboth"></div>
+
+        <!-- start container -->
+        <div id="body">
+            @RenderBody()           
+        </div>
+        <div class="clearboth"></div>
+        <!-- end container -->
+
+
+        @Scripts.Render("~/Scripts/App/FooterScript")
+        @RenderSection("Scripts", required: false)
+        <!-- start footer -->
+        <div id="footer" class="footer">
+            @Html.Partial("_Footer")
+        </div>
+        <!-- and footer -->
+    </div>
+    <div class="loading-modal"></div>
+    <div id="divLoading"></div>
+
+    <div id="modal-popup" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade" style="z-index:14005;background: #eee;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="modal-header">Info</h3>
+        </div>
+        <div id="modal-content" class="modal-body">
+            Message is here
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">@Html.Raw(Eagle.Resource.LanguageResource.Close)</button>
+        </div>
+    </div>
+</body>
+</html>

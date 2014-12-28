@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery Superfish dropdown menu example with full touch support (Android, iOS, etc)</title>
+		<link rel="stylesheet" href="css/superfish.css" media="screen" />
+    <style type="text/css">
+        .rtl{direction: rtl;}
+		body{font-family:Tahoma; font-size:13px}
+    </style>
+    <script src="js/jquery-1.9.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.1.custom.min.css" media="screen" />
+	<script type="text/javascript" src="js/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="js/hoverIntent.js"></script>
+    <script src="js/superfish.js"></script>
+    <script>
+
+        // initialise plugins
+        jQuery(function () {
+            jQuery('#example').superfish({
+                //useClick: true
+            });
+			 $("ul.sf-menu li").addClass("ui-state-default");
+	
+	            $("ul.sf-menu li").hover(function () { $(this).addClass('ui-state-hover'); },
+	                                     function () { $(this).removeClass('ui-state-hover'); });
+        });
+
+		</script>
+
+	</head>
+	<body>
+		<ul class="sf-menu" id="example">
+			<li class="current">
+				<a href="followed.html">menu item 1</a>
+				<ul>
+					<li>
+						<a href="followed.html">menu item that is quite long</a>
+					</li>
+					<li class="current">
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li class="current"><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="followed.html">menu item 2</a>
+			</li>
+			<li>
+				<a href="followed.html">menu item 3</a>
+				<ul>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">short</a></li>
+							<li><a href="followed.html">short</a></li>
+							<li><a href="followed.html">short</a></li>
+							<li><a href="followed.html">short</a></li>
+							<li><a href="followed.html">short</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="followed.html">menu item</a>
+						<ul>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+							<li><a href="followed.html">menu item</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="followed.html">menu item 4</a>
+			</li>	
+		</ul>
+
+	</body>
+</html>

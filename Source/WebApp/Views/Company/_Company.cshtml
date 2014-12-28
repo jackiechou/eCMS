@@ -1,0 +1,31 @@
+﻿@model Eagle.Model.LS_tblCompanyViewModel
+@if(Model != null)
+{
+    <div id="NewsBox">
+        <h3>@Html.Raw(Eagle.Resource.LanguageResource.CompanyInfo)</h3>
+        <div id="NewsList">
+            <h5 data-id="@Model.LSCompanyID" data-code="@Model.LSCompanyCode" >@Model.LSCompanyName</h5>
+            <section class="company">
+                <header>
+                    <h3>@Html.Raw(Eagle.Resource.LanguageResource.Details)</h3>
+                </header>
+                <p>
+                    <span class="label">@Html.Raw(Eagle.Resource.LanguageResource.Address):</span>
+                    <span>@Model.Address</span>
+                </p>
+                 <p>
+                    <span class="label">@Html.Raw(Eagle.Resource.LanguageResource.Phone):</span>
+                    <span>@Model.Phone</span>
+                </p>
+                <p>
+                    <span class="label">@Html.Raw(Eagle.Resource.LanguageResource.Fax):</span>
+                     <span>@Model.Fax</span>
+                </p>
+                <p>
+                    <span class="label">@Html.Raw(Eagle.Resource.LanguageResource.TaxCode):</span>
+                    <span>@Model.TaxCode</span>
+                </p>
+            </section>                 
+        </div>
+    </div>
+}

@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>test</title>
+    <link rel="stylesheet" type="text/css" href="/Scripts/plugins/qtip/css/jquery.qtip.min.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Admin/css/validate.css" />
+    <style type="text/css">
+        .error {
+            font: normal 10px arial;
+            padding: 3px;
+            margin: 3px;
+            background-color: #ffc;
+            border: 1px solid #c00;
+        }
+
+        body {
+            font-size: x-large;
+            background: #CCC;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            padding: 50px;
+        }
+
+        .focus {
+            color: #444444;
+            font-style: normal;
+            background-color: #fff4c2;
+        }
+
+        .blur {
+            color: #b1b5b8;
+            font-style: italic;
+            background-color: #e1e5e8;
+        }
+
+        .hovering {
+            background-color: #f1f5f8;
+        }
+    </style>
+    <script type="text/javascript" src="/Content/Admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-migrate-1.2.1.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="/Scripts/MicrosoftMvcJQueryValidation.js"></script>
+    <script type="text/javascript" src="/Scripts/plugins/qtip/js/jquery.qtip.min.js"></script>
+    
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var myform = $("#myform");
+
+            // Run this function for all validation error messages
+            //$('.field-validation-error').each(function () {
+            //    // Get the name of the element the error message is intended for
+            //    // Note: ASP.NET MVC replaces the '[', ']', and '.' characters with an
+            //    // underscore but the data-valmsg-for value will have the original characters
+            //    var inputElem = '#' + $(this).attr('data-valmsg-for').replace('.', '_').replace('[', '_').replace(']', '_');
+
+            //    var corners = ['left center', 'right center'];
+            //    var flipIt = $(inputElem).parents('span.right').length > 0;
+
+            //    // Hide the default validation error
+            //    $(this).hide();
+
+            //    // Show the validation error using qTip
+            //    $(inputElem).filter(':not(.valid)').qtip({
+            //        content: { text: $(this).text() }, // Set the content to be the error message
+            //        position: {
+            //            my: corners[flipIt ? 0 : 1],
+            //            at: corners[flipIt ? 1 : 0],
+            //            viewport: $(window)
+            //        },
+            //        show: { ready: true },
+            //        hide: false,
+            //        style: { classes: 'ui-tooltip-red' }
+            //    });
+            //});
+
+            function message(msg) {  // the box for displaying the ajax message from the MC API
+                $("#message").animate({ opacity: 0 }, 250,
+                    function () {
+                        $("#message").html(msg).animate({ opacity: 1 }, 500);
+                    });
+            };
+
+            $('.autoclear')  // for showing/hiding default values in fields automagically
+            .focus(function () {
+                if ($(this).val() == $(this).attr('defaultValue')) $(this).val("").removeClass('blur').addClass('focus');
+            })
+            .blur(function () {
+                if ($(this).val() == "") $(this).val($(this).attr('defaultValue')).removeClass('focus').addClass('blur');
+            })
+            .hover(
+                function () {
+                    $(this).addClass('hovering');
+                },
+                function () {
+                    $(this).removeClass('hovering');
+                });
+            jQuery.validator.addMethod("defaultInvalid", function (value, element) {
+                return value != element.defaultValue;
+            }, "");
+
+
+            // initialize validate plugin on the form
+            myform.validate({        
+                onkeyup: false,
+                //errorClass: 'error',
+                //errorClass: 'errormessage',
+                validClass: 'valid',
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    email: {
+                        required: true,                       
+                        email: true
+                    }, one: {
+                        required: true,
+                        min: 1,
+                        max: 100
+                    }
+                },
+                messages: {
+                    name: "Please enter your name",                   
+                    email: {
+                        required: "Please enter your email address",
+                        email: "Please enter a valid email address"
+                    },
+                    one: "Please enter your one",
+                },
+                errorPlacement: function (error, element) {
+                    // Set positioning based on the elements position in the form
+                    var corners = ['left center', 'right center'],
+                       flipIt = $(element).parents('span.right').length > 0,
+                       position = {
+                           my: corners[flipIt ? 0 : 1],
+                           at: corners[flipIt ? 1 : 0],
+                           viewport: $(window)
+                       };
+                    // Check we have a valid error message
+                  //  if (!error.is(':empty')) {
+                        // Apply the tooltip only if it isn't valid
+                        $(element).filter(':not(.valid)').qtip({
+                            overwrite: false,
+                            content: error,
+                            position: position,
+                            show: {
+                                event: false,
+                                ready: true
+                            },
+                            hide: false,
+                            style: {
+                                classes: 'ui-tooltip-red' // Make it red... the classic error colour!
+                            }
+                        })// If we have a tooltip on this element already, just update its content
+                        .qtip('option', 'content.text', error);
+                    // }else { 
+                    // If the error is empty, remove the qTip
+                    //  element.qtip('destroy'); }
+                },
+                success: function (label, element) {
+                    //element
+                    //.addClass('valid')
+                    //.closest('.control-group').removeClass('error').addClass('success');
+
+                    // Use a mini timeout to make sure the tooltip is rendred before hiding it
+                    setTimeout(function () {
+                        myForm.find('.valid').qtip('destroy');
+                    }, 1);
+                }, highlight: function (element) {
+                    $(element).closest('.control-group').removeClass('success').addClass('error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.control-group').removeClass('error').addClass('success');
+                },
+                submitHandler: function (form) { // for demo
+                    alert('valid form');
+                    //$(form).ajaxSubmit();
+                    // do other things for a valid form
+                    //form.submit();
+                    return false;
+                }, invalidHandler: function (event, validator) {
+                    // 'this' refers to the form
+                    var errors = validator.numberOfInvalids();
+                    if (errors) {
+                        var message = errors == 1
+                        ? 'You missed 1 field. It has been highlighted'
+                        : 'You missed ' + errors + ' fields. They have been highlighted';
+                        $("div.error span").html(message);
+                        $("div.error").show();
+                    } else {
+                        $("div.error").hide();
+                    }
+                }
+            });
+
+            $(document).on("click", "#btnSubmit", function () {
+                if (!myform.valid()) { // Not Valid
+                     return false;
+                   // alert("sai");
+                } else {
+                    alert("dung");
+                }
+            });
+        });
+    </script>
+ 
+</head>
+<body>
+    <div id="content" class="preview">
+        <div class="error" style="display:none;"><span></span> </div>
+        <form id="myform" name='myform' method='post' >
+            <p>
+            Name: <input type='text' name='name' id='name' class='required' />
+        </p>
+        <p>
+        Email: <input type='text' name='email' id='email' class='required' />
+    </p>
+            <p>One: <input id="one" type="number" name="one" class='required' /></p>
+    <p>
+        <input type='button' name='btnSubmit' id="btnSubmit" value='Submit' />
+    </p>
+</form>
+       
+</div>
+</body>
+</html>

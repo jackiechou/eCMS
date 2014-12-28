@@ -1,0 +1,12 @@
+﻿@model List<Eagle.Model.Contents.News.NewsViewModel>
+<div id="NewsBox">
+    <h3>@Eagle.Resource.LanguageResource.News</h3>
+    <div id="NewsList">
+        <ul class="new-list">  
+            @foreach (Eagle.Model.Contents.News.NewsViewModel item in Model)
+            {
+                <li data-id="@item.CategoryId" data-code="@item.CategoryCode" ><a id="@item.NewsId" href="/news/@item.CategoryCode">@item.Title</a></li>
+            }    
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>test</title>
+    <link rel="stylesheet" type="text/css" href="/Scripts/plugins/qtip/css/jquery.qtip.min.css" />
+    <!--<link rel="stylesheet" type="text/css" href="/Content/Admin/css/validate.css" />-->
+    <style type="text/css">
+        body {
+            padding: 50px 20px 0 120px;
+        }
+
+        .focus {
+            color: #444444;
+            font-style: normal;
+            background-color: #fff4c2;
+        }
+
+        .blur {
+            color: #b1b5b8;
+            font-style: italic;
+            background-color: #e1e5e8;
+        }
+
+        .hovering {
+            background-color: #f1f5f8;
+        }
+    </style>
+    <script type="text/javascript" src="/Content/Admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-migrate-1.2.1.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="/Scripts/plugins/qtip/js/jquery.qtip.min.js"></script>
+
+
+    <script type="text/javascript">
+   
+            // Create the tooltips only when document ready
+            var emailEntered,
+                fnameVal,
+                lnameVal,
+                emailtypeVal;
+            $(document).ready(function () {
+
+                function message(msg) {  // the box for displaying the ajax message from the MC API
+                    $("#message").animate({ opacity: 0 }, 250,
+                        function () {
+                            $("#message").html(msg).animate({ opacity: 1 }, 500);
+                        });
+                };
+
+                $('.autoclear')  // for showing/hiding default values in fields automagically
+                .focus(function () {
+                    if ($(this).val() == $(this).attr('defaultValue')) $(this).val("").removeClass('blur').addClass('focus');
+                })
+                .blur(function () {
+                    if ($(this).val() == "") $(this).val($(this).attr('defaultValue')).removeClass('focus').addClass('blur');
+                })
+                .hover(
+                    function () {
+                        $(this).addClass('hovering');
+                    },
+                    function () {
+                        $(this).removeClass('hovering');
+                    });
+                jQuery.validator.addMethod("defaultInvalid", function (value, element) {
+                    return value != element.defaultValue;
+                }, "");
+
+                $('#signup').validate({
+                    onkeyup: false,
+                    //errorClass: 'error',
+                    //errorClass: 'errormessage',
+                    validClass: 'valid',
+                    rules: {
+                        firstName: { required: true },
+                        lastName: { required: true },
+                        email: { required: true, email: true },
+                    },
+                    messages: {
+                        firstName: "Please enter your first name",
+                        lastName: "Please enter your last name",
+                        email: {
+                            required: "Please enter your email address",
+                            email: "This address is not valid"
+                        }
+                    },
+                    success: function (error) {
+                        // Use a mini timeout to make sure the tooltip is rendred before hiding it
+                        setTimeout(function () {
+                            $('#signup').find('.valid').qtip('destroy');
+                        }, 1);
+                    },
+                    submitHandler: function (form) {
+                        fnameVal = escape($("#Field1").val());
+                        lnameVal = escape($("#Field2").val());
+                        emailEntered = escape($('#Field3').val());
+                        emailtypeVal = $('input:radio[name=emailtype]:checked').val();
+                        message('<span class="error">Adding your email address...</span>');
+                        $.ajax({
+                            url: '/includes/mailchimp/store-address.php',
+                            data: 'ajax=true&email=' + emailEntered + '&fname=' + fnameVal + '&lname=' + lnameVal + '&emailtype=' + emailtypeVal,
+                            success: function (msg) { message(msg); }
+                        });
+                        return false;
+                    },
+
+                    errorPlacement: function (error, element) {
+
+                        // Set positioning based on the elements position in the form
+                        var corners = ['left center', 'right center'],
+
+                        flipIt = $(element).parents('div.right').length > 0,
+                        position = {
+                            my: corners[flipIt ? 0 : 1],
+                            at: corners[flipIt ? 1 : 0]
+                        };
+                        //console.log(error);
+                        // Apply the tooltip only if it isn't valid
+                        $(element).filter(':not(.valid)').qtip({
+                            overwrite: false,
+                            content: error,
+                            position: position,
+                            show: {
+                                event: false,
+                                ready: true
+                            },
+                            hide: false,
+                            style: {  // Make it red... the classic error colour!
+                                classes: 'ui-tooltip-red ui-tooltip-shadow ui-tooltip-rounded'
+                            }
+                        }).qtip('option', 'content.text', error); // New bit
+
+                    }
+                })  // closes validate
+            }); // closes doc ready
+       
+    </script>
+
+</head>
+<body>
+    <div id="content" class="preview">
+        <div class="error" style="display:none;"><span></span> </div>
+        <form id="signup" action="newsletter.html" method="post">
+            <div id="row1" style="margin-bottom:20px;">
+                <div style="float:left;">
+                    <input id="Field1" name="firstName" type="text" class="blur defaultInvalid autoclear" value="first name" tabindex="1" maxlength="20" style="width:100px; padding-top:8px; padding-bottom:8px; margin: 0; border: solid 1px #d9d9d9; font-size:22px; padding-left:8px;" />
+                </div>
+                <div style="float:left; margin-left:20px;" class="right">
+                    <input id="Field2" name="lastName" type="text" class="blur defaultInvalid autoclear" value="last name" tabindex="2" maxlength="40" style="width:100px; padding-top:8px; padding-bottom:8px; margin: 0; border: solid 1px #d9d9d9; font-size:22px; padding-left:8px;" />
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div id="row2" style="margin-bottom:20px;">
+                <div style="width:300px;">
+                    <input id="Field3" name="email" type="text" class="blur defaultInvalid autoclear" value="email address" tabindex="3" maxlength="80" style="width:275px; padding-top:8px; padding-bottom:8px; margin: 0; border: solid 1px #d9d9d9; font-size:22px; padding-left:8px;" />
+                </div>
+            </div>
+            <div id="row3" style="width:300px;">
+                <div style="float:left;">
+                    <fieldset id="radioset">
+                        <input type="radio" name="emailtype" id="radio-1" value="html" checked="checked" /><label for="radio-1">graphic</label>
+                        <input type="radio" name="emailtype" id="radio-2" value="text" /><label for="radio-2">text</label>
+                        <input type="radio" name="emailtype" id="radio-3" value="mobile" /><label for="radio-3">mobile</label>
+                    </fieldset>
+                </div>
+                <div style="float:right;margin-bottom:42px;">
+                    <input class="submit" id="SendButton" type="submit" alt="" />
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>

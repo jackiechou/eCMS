@@ -1,0 +1,36 @@
+﻿@*@model List<SYS_tblFunctionPermissionViewModel>
+<ul class="nav nav-pills">
+    <li><a id="home" href="/Admin/Home/Index">@Eagle.Resource.LanguageResource.Dashboard</a></li>
+    @foreach (SYS_tblFunctionPermissionViewModel item in Model)
+    {
+        string moduleid = "Module" + item.FunctionID.ToString();
+        <li><a id="@moduleid" href="/@item.Url">@item.FunctionNameE</a></li>
+    }    
+</ul>*@
+
+
+<div class="col-md-11">
+    <ul class="nav nav-pills">
+        <li><a id="home" href="/Home/Index" style="background-color: rgb(0, 153, 204);">@Eagle.Resource.LanguageResource.Dashboard</a></li>
+        <li><a id="test" href="/DesktopContact/Index">Contact</a></li>
+    </ul>    
+</div>
+@* <div class="col-md-1 s-h">
+        <a data-placement="bottom" data-original-title="Show / Hide Sidebar" href="javascript:void(0);" rel="tooltip" class="btn btn-success" id="changeSidebarPos">
+            <i class="icon-resize-horizontal"></i>
+        </a>
+    </div>*@
+
+
+
+<script type="text/javascript"> 
+    function setbackground() {
+        var id = getParameterByName("TabId");
+        if (id != '') {      
+            $('#test').css("background-color", "#0099cc");
+        } else {
+            $('#home').css("background-color", "#0099cc");
+        }
+    }
+    setbackground();
+</script>

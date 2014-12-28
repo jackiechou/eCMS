@@ -1,0 +1,69 @@
+﻿@{
+    Layout = Eagle.Repository.UI.Layout.LayoutType.MasterLayout;
+}
+
+@section HeaderStyle{
+    @Styles.Render("~/Themes/Default/TwoColumnAdminStyle")
+}
+
+<div id="BodyContainer">
+    <!--start left -->
+    <div id="LeftPane">
+        @Html.Action("LoadLeftMainMenu", "Menu")
+    </div>
+    <!--end left -->
+    <!--start content -->
+    <div id="ContentPane">
+        <div id="SiteMap" class="navbar-header site-map"></div>
+        <div id="HeaderContainer" class="headings">
+            <div class="row">
+                <div class="col-md-10">
+                    @if (IsSectionDefined("TitleSection"))
+                    {
+                        @RenderSection("TitleSection", required: false)
+                    }
+                    else
+                    {
+                        <h4>@ViewBag.Title</h4>
+                    }
+                </div>
+                <div class="col-md-2">
+                    <div class="top-toolbar">
+                        @if (IsSectionDefined("TopActionButtons"))
+                        {
+                            @RenderSection("TopActionButtons", required: false)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="MainContainer">
+            @if (IsSectionDefined("MessageSection"))
+            {
+                @RenderSection("MessageSection", required: false)
+            }else
+            {
+                 @Html.Partial("_MessagePartial")     
+            }
+                      
+            @RenderSection("ContentSection")
+
+            @if (IsSectionDefined("SubContentSection"))
+            {
+                @RenderSection("SubContentSection", required: false)
+            }
+        </div>
+
+        <div id="FooterContainer">           
+            <div class="bottom-toolbar">
+                @if (IsSectionDefined("BottomActionButtons"))
+                {
+                   @RenderSection("BottomActionButtons", required: false)
+                }
+            </div>            
+        </div>
+
+    </div>
+    <!--end content -->
+</div>

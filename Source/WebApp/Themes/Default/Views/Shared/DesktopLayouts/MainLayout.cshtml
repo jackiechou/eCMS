@@ -1,0 +1,100 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @section meta{
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    }
+
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Themes/Default/DesktopStyle")
+    @Scripts.Render("~/Themes/Default/DesktopScript")
+    @RenderSection("HeadScripts", required: false)
+    <script src="~/Scripts/app/common/sitemap.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="header" class="banner_top">
+            <div class="container">
+                <div class="header_bar">
+                    @Html.Action("LoadHeader", "DesktopLayout")
+                </div>
+            </div>
+            <!-- start menutop -->
+            <div class="menu_top">
+                <div class="container">
+                    <div class="row">
+                        @Html.Action("LoadTopMenu", "DesktopLayout")
+                    </div>
+                </div>
+            </div>
+            <!-- and menutop -->
+        </div>
+        <!-- start container -->
+        <div id="body">
+            <div class="row" id="content-bg">
+                <div id="left">
+                    @Html.Partial("_LeftBarPartial")
+                </div>
+                <!--/span-->
+                <!--start.content -->
+                <div id="content">
+                    <div id="divSitemap">
+                        <div class="breadcrumbs">
+                            <a href="/Home/Index" class="sf-with-ul" style="margin-right: 5px"><img style="width: 13px; height: 13px; margin-right: 2px;" src="~/Themes/Default/Content/images/icon_home.png" />Trang chủ</a>
+                        </div>
+                    </div>
+                    <div id="alertMessageBox">
+                        @if (ViewBag.DisplayErrorMessage == true)
+                        {
+                            <div class="@ViewBag.CssClass">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>@ViewBag.SortMessage !</strong>
+                                <div class="padding-left">
+                                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    @RenderSection("featured", required: false)
+                    <section class="content-wrapper main-content clear-fix">
+                        @RenderBody()
+                    </section>
+                </div>
+                <!--end.content -->
+            </div>
+            <!--/row-->
+        </div>
+        <!-- and menutop -->
+        <hr style="margin-bottom: -5px;margin-right: -10px;margin-left: -10px;" />
+        <!-- start footer -->
+        <div id="footer" class="footer">
+            @Html.Action("LoadFooter", "DesktopLayout")
+        </div>
+        <!-- and footer -->
+    </div>
+    @*@Scripts.Render("~/bundles/footer")*@
+    @RenderSection("Scripts", required: false)
+    <div class="loading-modal"></div>
+    <div id="divLoading"></div>
+    <div id="modal-popup" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade" style="z-index:14005;background: #eee;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="modal-header">Info</h3>
+        </div>
+        <div id="modal-content" class="modal-body">
+            Message is here
+        </div>
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">@Html.Raw(Eagle.Resource.LanguageResource.Close)</button>
+        </div>
+    </div>
+</body>
+</html>

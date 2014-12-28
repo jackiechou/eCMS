@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.Contact);
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.DesktopLayoutType.MainLayout;
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+
+
+@Html.Action("GetContactInfo", "DesktopContact")
+@Html.Partial("../Contact/_ContactForm")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //CAPTCHA ==================================================================================================
+        getCaptchaImage(190, 90, 6);
+        $("#btnGetImage").click(function () {
+            getCaptchaImage(190, 90, 6);
+        });
+
+        function getCaptchaImage(width, height, num_char, hiddenStoreCaptchaValue) {
+            var random_text = GetRandomText(num_char);
+            $("#<%= hiddenCaptcha.ClientID %>").val(random_text);
+            $('#imgLoading').show();
+            $('#imgId').remove();
+            $('#CaptchaImageDiv').append('<img id="imgId" alt="" style="display:none" src="/handlers/CaptchaHandler.ashx?captchatext=' + random_text + '&width=' + width + '&height=' + height + '" />');
+            $('#imgId').load(function () {
+                $("#imgLoading").hide();
+                $('#imgId').fadeIn('slow');
+            });
+        }
+
+        function GetRandomText(count) {
+            var allowedChars = new String();
+            allowedChars = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,";
+            allowedChars += "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,";
+            allowedChars += "1,2,3,4,5,6,7,8,9,0";
+
+            var arr = new Array();
+            arr = allowedChars.split(",");
+
+            var passwordString = new String();
+            var temp = new String();
+            passwordString = "";
+            temp = "";
+
+            for (i = 0; i < count; i++) {
+                var rand = Math.random();
+                temp = Math.ceil(rand * (arr.length - 1));
+                passwordString += arr[temp];
+            }
+            return passwordString;
+        }
+        //==========================================================================================================
+    });
+</script>

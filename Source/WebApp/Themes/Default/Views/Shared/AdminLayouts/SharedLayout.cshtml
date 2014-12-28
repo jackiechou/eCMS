@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Themes/Default/TwoColumnAdminStyle")
+    @Scripts.Render("~/Scripts/App/HeaderScript", "~/Scripts/App/Validation")
+
+
+    <script type="text/javascript">
+        @{
+            //set LanguageId
+            string LanguageId = Session["LanguageId"] == null ? "124" : Session["LanguageId"].ToString();
+        }
+        $(window).load(function(){
+            $('#divLoading').fadeOut(500);
+        });
+        var LanguageId = parseInt('@LanguageId');
+        var areas = '/Admin';
+    </script>
+    <title>@ViewBag.Title</title>
+    @RenderSection("HeadScripts", required: false)
+    @RenderSection("DevScripts", required: false)
+</head>
+<!--[if IE 6]><body class="ie ie6"><![endif]-->
+<!--[if IE 7]><body class="ie ie7"><![endif]-->
+<!--[if IE 8]><body class="ie ie8"><![endif]-->
+<!--[if IE 9]><body class="ie ie9"><![endif]-->
+<!--[if gt IE 9]><body class="ie"><![endif]-->
+<!--[if !IE ]><!-->
+<body>
+    <!--<![endif]-->
+    <div id="container">
+        <div id="header" class="banner_top">
+            <div class="container">
+                <div class="row">
+                    @Html.Partial("_HeaderPartial")
+                </div>
+            </div>
+            <!-- start menutop -->
+            <div class="menu_top">
+                <div class="container">
+                    <div class="row">
+                        @Html.Action("_NavigationPartial", "Home")
+                    </div>
+                </div>
+            </div>
+            <!-- and menutop -->
+        </div>
+        <!-- start container -->
+        <div id="body">
+            <div class="row" id="content-bg">
+                <!--start.content -->
+                <div id="ContentPane">
+                    <ul class="breadcrumb">
+                        @Html.MvcSiteMap().SiteMapPath()
+                    </ul>
+
+                    <div class="row content-header">
+                        <div class="col-md-10">
+                            <h4>@ViewBag.Title</h4>
+                        </div>
+                        <div class="col-md-2" style="padding:0px;margin:0px;">
+                            <div style="margin:10px 0px 0px 0px;">
+                                @RenderSection("Button", required: false)
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="alertMessageBox">
+                        @if (ViewBag.DisplayErrorMessage == true)
+                        {
+                            <div class="@ViewBag.CssClass">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                <strong>@ViewBag.SortMessage !</strong>
+                                <div class="padding-left">
+                                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="MainContainer" class="content-wrapper main-content clear-fix">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!--start.content -->
+
+            </div>
+            <!--/row-->
+            <hr style="margin-bottom: -5px;margin-right: -10px;margin-left: -10px;" />
+        </div>
+        <!-- and menutop -->
+        @section BottomPane
+        {
+            @Scripts.Render("~/Scripts/App/FooterScript")
+            @RenderSection("Scripts", required: false)
+            <!-- start footer -->
+            <div id="footer" class="footer">
+                @Html.Partial("_FooterPartial")
+            </div>
+            <!-- and footer -->
+        }
+    </div>
+   
+    <div class="loading-modal"></div>
+    <div id="divLoading"></div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            FormatLine();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿@model Eagle.Model.LS_tblCompanyViewModel
+@if(Model != null)
+{
+    <div class="row">
+        <div class="logo">
+            <a href="/" >
+                <img src="~/Themes/Default/Content/images/logo.png" alt="logo" class="logo" />
+            </a>
+        </div>  
+        <div class="slogan">
+            Công ty TNHH Công Nghệ Cao DVTM Phi Ưng
+        </div> 
+        <div class="top-controls">     
+            <div class="languages">
+                @using (Html.BeginForm("SwitchLang", "Language", new { LanguageId = 124, CurrentLanguage = "vi-VN", @desiredUrl = Request.Url.AbsoluteUri }, FormMethod.Post, new { @id = "frmVietnamese", @style = "display:inline;" }))
+                {
+                    <a href='#' onclick='$(this).closest("form").submit(); return false;' role="menuitem" rel="vi" data-original-title="Tiếng Việt" data-placement="bottom">
+                        <img src="/Images/icons/languages/vi.png" alt="vi" />
+                    </a>
+                }
+                @using (Html.BeginForm("SwitchLang", "Language", new { LanguageId = 41, CurrentLanguage = "en-US", @desiredUrl = Request.Url.AbsoluteUri }, FormMethod.Post, new { @id = "frmEnglish", @style = "display:inline;" }))
+                {
+                    <a href='#' onclick='$(this).closest("form").submit(); return false;' role="menuitem" rel="en" data-original-title="Tiếng Anh" data-placement="bottom" data-toggle="modal">
+                        <img src="/Images/icons/languages/en.png" alt="en" />
+                    </a>
+                }
+            </div>
+            <div class="hot-line">
+                <div class="hot-line-status"><img src="~/Themes/Default/Content/images/hotline.png" alt="vi" /></div>
+                <div class="hot-line-number">(+84) 907607748</div>
+            </div>
+        </div>
+    </div>
+}

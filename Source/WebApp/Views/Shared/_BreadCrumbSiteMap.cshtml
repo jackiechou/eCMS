@@ -1,0 +1,59 @@
+﻿<style type="text/css">
+    .breadcrumb_lst {
+        width: 50%;
+        float: left;
+    }
+    .breadcrumbs {
+        color: #666666;
+        font-size: 12px;
+        font-weight: bold;
+        padding-top: 12px;
+    }
+    .breadcrumbs a {
+        color: #009DFC;
+        margin-left: 2px;
+        margin-right: 4px;
+    }
+    .breadcrumbs a.first {
+        margin-left: 0;
+    }
+    .breadcrumbs a:hover {
+        color: #444444;
+        text-decoration: none;
+    }
+    .breadcrumbs a:after {
+        color: #BBBBBB;
+        content: "";
+        font-family: Wingdings;
+        font-size: 11px;
+        margin-left: 8px;
+    }
+
+    .breadcrumbs i[class*="halfling-"] {
+        font-size: 1em;
+        padding-right: 2px;
+        color: black;
+    }
+</style>
+
+<div class="breadcrumb_lst">
+    <ol class="breadcrumbs">        
+        @{
+            if (Session[Eagle.Common.Session.SettingKeys.SiteMap] != null)
+            {
+                List<Eagle.Model.SiteMapModel> lst_sitemap = (List<Eagle.Model.SiteMapModel>)Session[Eagle.Common.Settings.SettingKeys.SiteMap];
+                <li><i class='/Themes/Default/Content/images/icon_home.png'></i><a href="/Home/Index">Trang chủ</a></li>
+                foreach (var item in lst_sitemap)
+                {                   
+                    if (item.Icon == string.Empty)
+                    {
+                        <li><a href="@item.Page_Url">@item.Page_Name</a></li>
+                    }
+                    else {
+                        <li><i class="@item.Icon"></i><a href="@item.Page_Url">@item.Page_Name</a></li>
+                    }                                     
+                }
+            }
+        }
+    </ol>
+</div>

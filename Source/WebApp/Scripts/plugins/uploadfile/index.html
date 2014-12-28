@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="jquery-upload-file-master/js/jquery.uploadfile.js"></script>
+<script type="text/javascript" src="jquery.Jcrop.min.js"></script>
+
+<link rel="stylesheet" href="smoothness/jquery-ui-1.9.2.custom.css" type="text/css"/>
+<link rel="stylesheet" href="jquery-upload-file-master/css/uploadfile.css" type="text/css"/>
+<link rel="stylesheet" href="jquery.Jcrop.css" type="text/css" />
+
+</head>
+<body>
+Works ok in Firefox,Opera and Chrome.
+Problem in safari.
+Css problem in Internet explorer
+<div id="fileuploader">Upload files here</div>
+<div id="fileuploader_message"></div>
+<div id="fileuploader_queue"></div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#fileuploader").uploadFile({
+        pluginPath:"jquery-upload-file-master",//dhz added
+        fileName:"myfile",//important, there is wrong default value in jquery.uploadfile.js or in upload.php
+        maxFileCount: 5,//max number of files to upload
+        maxFileSize: 1000000,//max filesize
+        uploadFolderHttp:"http://www.meet-now.org/jquery-upload-file-master-dhz/uploads/",
+        thumbnailFolderHttp:"http://www.meet-now.org/jquery-upload-file-master-dhz/uploads/thumbnails/",
+        
+        dragdropWidth: 800,//width of drop zone
+        statusBarWidth: 800,//width of statusbar
+        showDone: false,//hide the done button
+        showQueueDiv:"fileuploader_queue",//what div to show the Queue in
+        showDownload: true,//display download button
+        createThumbnail: true,//dhz added
+        thumbnailFixedTo: "Height",//dhz added
+        thumbnailHeight: 105,//dhz added
+        thumbnailWidth: 75,//dhz added
+        
+        uploadedImageKeepOriginal: false,//dhz added
+        uploadedImageMaxHeight: 600,//if original image is higher than this value then it will be resized (if uploadedImageKeepOriginal=false)
+        uploadedImageMaxWidth: 800,//if original image is wider than this value then it will be resized (if uploadedImageKeepOriginal=false)
+        
+        downloadCallback:function(filename,s){//dhz added
+            location.href=s.pluginPath+"/php/download.php?uploadFolder="+s.uploadFolder+"&filename="+filename[0]; 
+        },
+        showCrop: true,//dhz add functionality to plugin
+        cropCallback:function(filename, pd, s){//dhz add functionality to plugin
+            $("#fileuploader_message").html("Cropped "+filename);
+       },//dhz add functionality to plugin
+           
+        showDelete: true,
+        deleteCallback: function (data, pd, s) {//dhz added //callback to be invoked when the user clicks on Delete button..
+            for (var i = 0; i < data.length; i+=2) {//dhz added //only show filename, not filesize
+                $.post(s.pluginPath+'/php/delete.php',
+                {
+                    op: "delete",//dhz i think we should remove this
+                    name: data[i],
+                    uploadFolder: s.uploadFolder,
+                    thumbnailFolder: s.thumbnailFolder
+                },
+                    function (resp,textStatus, jqXHR) {
+                        $("#fileuploader_message").html(resp);
+                 });
+            }
+            pd.statusbar.hide(); //You choice.
+       },
+       
+        showPreview: true,//for image
+        previewHeight: "50px",//for image
+        previewWidth: "auto",//for image
+        
+        returnType: "json",//important if we use delete
+        showQueueDiv:"fileuploader_queue",//what div to show the Queue in
+        
+        onError: function(files,status,errMsg){//callback back to be invoked when the upload is failed.      
+            $("#fileuploader_message").html($("#fileuploader_message").html()+"<br><font color='red'>Upload failed</font>");
+        },
+        afterUploadAll: function(){//callback to be invoked when all the uploads are done.
+        	$("#fileuploader_message").html("Upload done");
+        },
+            
+        onLoad:function(obj, s){//dhz added
+                //alert (s.uploadFolder);
+            	$.ajax({
+        	    	cache: false,
+        	    	//url: "cms_common/plugins/jquery-upload-file-master/php/load.php?uploadFolder="+s.uploadFolder,
+                    url: s.pluginPath+"/php/load.php?uploadFolder="+s.uploadFolder,
+                    dataType: "json",                
+        		    success: function(data) 
+        		    {
+        			    //for(var i=0;i<data.length;i++)//dhz removed
+                        for(var i=0;i<data.length;i+=2)//dhz added //only show filename, not filesize
+            	    	{
+                			obj.createProgress(data[i],data[i+1]);//dhz added 1 more arg for show filesize
+                		}
+        	        }
+        		});
+           },
+            
+        
+    });
+});
+</script>
+</body>

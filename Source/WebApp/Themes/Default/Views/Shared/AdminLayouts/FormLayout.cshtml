@@ -1,0 +1,48 @@
+﻿@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+<div id="FormContainer" class="form-container">
+    <div id="FormHeader" class="form-header">
+        <div class="topbar">
+            @if (IsSectionDefined("TopActionButtons"))
+            {
+                <div class="row topbar-inner">
+                    <div class="col-md-6">
+                        <h4>@ViewBag.Title</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="right-button-align">
+                            @RenderSection("TopActionButtons", required: false)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+    <div id="alertMessageBox" class="form-message">
+        @if (ViewBag.DisplayErrorMessage == true)
+        {
+            <div class="@ViewBag.CssClass">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@ViewBag.SortMessage !</strong>
+                <div class="padding-left">
+                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id="FormBody" class="form-body">
+        @RenderBody()
+    </div>
+
+    <div id="FormFooter" class="form-footer">       
+        @if (IsSectionDefined("BottomActionButtons"))
+        {
+                <div class="right-footbar">
+                @RenderSection("BottomActionButtons", required: false)
+            </div>
+        }
+    </div>
+</div>

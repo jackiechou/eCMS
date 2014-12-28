@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+   <head>
+      <meta charset="UTF-8" />
+       <meta name="robots" content="noindex,nofollow" />
+      <title>A date range picker for Bootstrap</title>
+
+       <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.css" />
+         <link rel="stylesheet" type="text/css" media="all" href="daterangepicker.css" />
+
+       <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+       <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.js"></script>
+      <script type="text/javascript" src="moment.js"></script>
+      <script type="text/javascript" src="daterangepicker.js"></script>
+   </head>
+   <body>
+
+       <div class="container">
+         
+
+
+<input type="text" name="daterange2" id="daterange2" data-datepicker="datepicker" class="small" data-link-format="MM/YYYY" />
+<script type="text/javascript">
+    (function ($) {
+        $('#daterange2').daterangepicker({
+            startDate: new Date(), // From
+            endDate: new Date(), // To
+            format: 'MM/YYYY',
+            separator: ' ～ ', // From To
+            opens: 'left',
+            showDropdowns: true,
+            showWeekNumbers: true,
+            locale: {
+                applyLabel: 'Apply', // Apply
+                clearLabel: 'Clear', // Clear
+                fromLabel: 'From', // From
+                toLabel: 'To', // To
+            }
+        },
+        function (start, end) {
+            if (start) {
+                $('#FromMonth').val(start.format('MM/DD/YYYY'));
+                $('#ToMonth').val(end.format('MM/DD/YYYY'));
+            }
+        });
+    })(jQuery);
+    </script>
+              
+       </div>
+   </body>
+</html>

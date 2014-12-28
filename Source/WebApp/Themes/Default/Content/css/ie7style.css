@@ -1,0 +1,1007 @@
+﻿@charset "utf-8";
+/* CSS Document */
+{margin: 0; padding: 0;}
+
+.banner_top {
+	background: #006699;
+	padding: 10px 0px;
+	}
+.menu_top {
+	width: 100%;
+	height: 25px;
+	background: #006699;
+	border-top: 1px solid #fff;
+}
+
+.icon-large{
+	font-size: 40px !important;	
+}
+
+.icon-medium{
+	font-size: 20px !important;	
+}
+
+.icon-small{
+	font-size: 15px !important;	
+}
+.container-fluid {
+	margin: 0px auto;
+}
+
+.menu_top .nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+ 	background-color: #0099cc;
+    color: #fff;
+	}
+.menu_top .nav-tabs .open .dropdown-toggle, .nav-pills .open .dropdown-toggle, .nav > li.dropdown.open.active > a:hover, .nav > li.dropdown.open.active > a:focus {
+	background-color: #FFFFFF;
+    border: none;
+    color: #0082a4;
+	}
+.menu_top .nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+  background-color: #0099cc;
+}
+.table-bordered {
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-collapse: separate;
+    border-color: #DDDDDD #DDDDDD #DDDDDD -moz-use-text-color;
+    border-image: none;
+    border-radius: 0px 0px 0px 0px;
+    border-style: solid solid solid none;
+    border-width: 1px 1px 1px 0;
+	}
+
+
+.menu_top .container-fluid .nav {
+	padding: 2px 0 0 0;
+	*padding: 0px 0 0 0;
+	float: left;
+	width: 100%;
+	}
+.menu_top .container-fluid .nav li{
+	float: left;
+	}
+.menu_top .container-fluid .nav li .dropdown-menu li{
+	float: left;
+	width: 100%;
+	}
+.menu_top .nav {
+	margin: 0px;
+	padding: 0px;
+	}
+	
+.title_top {
+	background: #f0f1f5;
+	margin: 5px 0 0 0;
+	border-bottom: 1px solid #ccc;
+	}
+
+.row-fluid .title_h2 h3 {
+	font-weight: normal;
+	color: #0082a4;
+	float: left;
+	}
+
+/*start menu images*/
+.row-fluid .menu_images ul {
+	margin: 0px;
+	padding: 0px;
+	}
+.row-fluid .menu_images ul li{
+	list-style: none;
+	float: right;
+	width: 70px;
+	padding-left: 3px;
+	}
+.row-fluid .menu_images .new a{
+	background: url(../images/bt_new.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .new a:hover{
+	background: url(../images/bt_new_hover.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	text-transform: none;
+	}
+.row-fluid .menu_images .new .new_text {
+	margin: 35px 0 0 22px; float: left;
+	}
+	
+.row-fluid .menu_images .edit a{
+	background: url(../images/bt_edit.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .edit a:hover{
+	background: url(../images/bt_edit_hover.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .edit .edit_text {
+	margin: 35px 0 0 22px; float: left;
+	}
+	
+.row-fluid .menu_images .delete a{
+	background: url(../images/bt_delete.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .delete a:hover{
+	background: url(../images/bt_delete_hover.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .delete .delete_text {
+	margin: 35px 0 0 17px; float: left;
+	}
+	
+.row-fluid .menu_images .import a{
+	background: url(../images/bt_import.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .import a:hover{
+	background: url(../images/bt_import_hover.png) no-repeat top left;
+	float: right;
+	width: 70px;
+	height: 60px;
+	}
+.row-fluid .menu_images .import .import_text {
+	margin: 35px 0 0 17px; float: left;
+	}
+/*and menu images*/	
+
+.container-fluid .search {
+	text-align: center;
+	padding: 30px 0;
+	border-bottom: 5px solid #0181a4;
+	margin-bottom: 15px;
+	}
+.title_table{
+	background: #f0f1f5;
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid #ddd;
+	}
+.title_table .title h3{
+	color: #0181a4;
+	font-weight: normal;
+	margin: 0px !important;
+	padding: 0 0 0 10px !important;
+	}
+.title_table .title {
+	float: left;
+	padding: 10px 0 0 0px;
+	}
+table th {
+	background-color: #0181a4;
+	color: #fff;
+    border-radius: 0px 0px 0px 0px;
+	}
+.colortd {
+	background-color: #c9d2da;
+	}
+	
+.input-append, .input-prepend {
+    display: inline-block;
+    font-size: 0;
+    margin-bottom: 10px;
+	margin-left: 3px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.input-compo253 {
+    width: 223px !important;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+padding-top: 0px !important;
+padding-bottom: 0px !important;
+}
+.row-fluid [class*="span"] {
+  margin-left: 3px !inportant;
+}
+.row-fluid .span12 {
+  width: 93% !inportant;
+}
+.footer {
+	background: #006699;
+	margin: 5px 0 0 0;
+	border-top: 1px solid #ffffff;
+	}
+.footer p {
+	padding-top: 10px;
+	color: #fff;
+	}
+
+
+
+
+
+
+	
+/* font */
+
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.icon-large {
+    font-size: 1.3333em;
+}
+
+.ie7icon(@inner) {
+    *zoom: ~"expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '@{inner}')";
+}
+
+.icon-glass { .ie7icon('&#xf000'); }
+.icon-music { .ie7icon('&#xf001'); }
+.icon-search { .ie7icon('&#xf002'); }
+.icon-envelope { .ie7icon('&#xf003'); }
+.icon-heart { .ie7icon('&#xf004'); }
+.icon-star { .ie7icon('&#xf005'); }
+.icon-star-empty { .ie7icon('&#xf006'); }
+.icon-user { .ie7icon('&#xf007'); }
+.icon-film { .ie7icon('&#xf008'); }
+.icon-th-large { .ie7icon('&#xf009'); }
+.icon-th { .ie7icon('&#xf00a'); }
+.icon-th-list { .ie7icon('&#xf00b'); }
+.icon-ok { .ie7icon('&#xf00c'); }
+.icon-remove { .ie7icon('&#xf00d'); }
+.icon-zoom-in { .ie7icon('&#xf00e'); }
+
+.icon-zoom-out { .ie7icon('&#xf010'); }
+.icon-off { .ie7icon('&#xf011'); }
+.icon-signal { .ie7icon('&#xf012'); }
+.icon-cog { .ie7icon('&#xf013'); }
+.icon-trash { .ie7icon('&#xf014'); }
+.icon-home { .ie7icon('&#xf015'); }
+.icon-file { .ie7icon('&#xf016'); }
+.icon-time { .ie7icon('&#xf017'); }
+.icon-road { .ie7icon('&#xf018'); }
+.icon-download-alt { .ie7icon('&#xf019'); }
+.icon-download { .ie7icon('&#xf01a'); }
+.icon-upload { .ie7icon('&#xf01b'); }
+.icon-inbox { .ie7icon('&#xf01c'); }
+.icon-play-circle { .ie7icon('&#xf01d'); }
+.icon-repeat { .ie7icon('&#xf01e'); }
+
+.icon-refresh { .ie7icon('&#xf021'); }
+.icon-list-alt { .ie7icon('&#xf022'); }
+.icon-lock { .ie7icon('&#xf023'); }
+.icon-flag { .ie7icon('&#xf024'); }
+.icon-headphones { .ie7icon('&#xf025'); }
+.icon-volume-off { .ie7icon('&#xf026'); }
+.icon-volume-down { .ie7icon('&#xf027'); }
+.icon-volume-up { .ie7icon('&#xf028'); }
+.icon-qrcode { .ie7icon('&#xf029'); }
+.icon-barcode { .ie7icon('&#xf02a'); }
+.icon-tag { .ie7icon('&#xf02b'); }
+.icon-tags { .ie7icon('&#xf02c'); }
+.icon-book { .ie7icon('&#xf02d'); }
+.icon-bookmark { .ie7icon('&#xf02e'); }
+.icon-print { .ie7icon('&#xf02f'); }
+
+.icon-camera { .ie7icon('&#xf030'); }
+.icon-font { .ie7icon('&#xf031'); }
+.icon-bold { .ie7icon('&#xf032'); }
+.icon-italic { .ie7icon('&#xf033'); }
+.icon-text-height { .ie7icon('&#xf034'); }
+.icon-text-width { .ie7icon('&#xf035'); }
+.icon-align-left { .ie7icon('&#xf036'); }
+.icon-align-center { .ie7icon('&#xf037'); }
+.icon-align-right { .ie7icon('&#xf038'); }
+.icon-align-justify { .ie7icon('&#xf039'); }
+.icon-list { .ie7icon('&#xf03a'); }
+.icon-indent-left { .ie7icon('&#xf03b'); }
+.icon-indent-right { .ie7icon('&#xf03c'); }
+.icon-facetime-video { .ie7icon('&#xf03d'); }
+.icon-picture { .ie7icon('&#xf03e'); }
+
+.icon-pencil { .ie7icon('&#xf040'); }
+.icon-map-marker { .ie7icon('&#xf041'); }
+.icon-adjust { .ie7icon('&#xf042'); }
+.icon-tint { .ie7icon('&#xf043'); }
+.icon-edit { .ie7icon('&#xf044'); }
+.icon-share { .ie7icon('&#xf045'); }
+.icon-check { .ie7icon('&#xf046'); }
+.icon-move { .ie7icon('&#xf047'); }
+.icon-step-backward { .ie7icon('&#xf048'); }
+.icon-fast-backward { .ie7icon('&#xf049'); }
+.icon-backward { .ie7icon('&#xf04a'); }
+.icon-play { .ie7icon('&#xf04b'); }
+.icon-pause { .ie7icon('&#xf04c'); }
+.icon-stop { .ie7icon('&#xf04d'); }
+.icon-forward { .ie7icon('&#xf04e'); }
+
+.icon-fast-forward { .ie7icon('&#xf050'); }
+.icon-step-forward { .ie7icon('&#xf051'); }
+.icon-eject { .ie7icon('&#xf052'); }
+.icon-chevron-left { .ie7icon('&#xf053'); }
+.icon-chevron-right { .ie7icon('&#xf054'); }
+.icon-plus-sign { .ie7icon('&#xf055'); }
+.icon-minus-sign { .ie7icon('&#xf056'); }
+.icon-remove-sign { .ie7icon('&#xf057'); }
+.icon-ok-sign { .ie7icon('&#xf058'); }
+.icon-question-sign { .ie7icon('&#xf059'); }
+.icon-info-sign { .ie7icon('&#xf05a'); }
+.icon-screenshot { .ie7icon('&#xf05b'); }
+.icon-remove-circle { .ie7icon('&#xf05c'); }
+.icon-ok-circle { .ie7icon('&#xf05d'); }
+.icon-ban-circle { .ie7icon('&#xf05e'); }
+
+.icon-arrow-left { .ie7icon('&#xf060'); }
+.icon-arrow-right { .ie7icon('&#xf061'); }
+.icon-arrow-up { .ie7icon('&#xf062'); }
+.icon-arrow-down { .ie7icon('&#xf063'); }
+.icon-share-alt { .ie7icon('&#xf064'); }
+.icon-resize-full { .ie7icon('&#xf065'); }
+.icon-resize-small { .ie7icon('&#xf066'); }
+.icon-plus { .ie7icon('&#xf067'); }
+.icon-minus { .ie7icon('&#xf068'); }
+.icon-asterisk { .ie7icon('&#xf069'); }
+.icon-exclamation-sign { .ie7icon('&#xf06a'); }
+.icon-gift { .ie7icon('&#xf06b'); }
+.icon-leaf { .ie7icon('&#xf06c'); }
+.icon-fire { .ie7icon('&#xf06d'); }
+.icon-eye-open { .ie7icon('&#xf06e'); }
+
+.icon-eye-close { .ie7icon('&#xf070'); }
+.icon-warning-sign { .ie7icon('&#xf071'); }
+.icon-plane { .ie7icon('&#xf072'); }
+.icon-calendar { .ie7icon('&#xf073'); }
+.icon-random { .ie7icon('&#xf074'); }
+.icon-comment { .ie7icon('&#xf075'); }
+.icon-magnet { .ie7icon('&#xf076'); }
+.icon-chevron-up { .ie7icon('&#xf077'); }
+.icon-chevron-down { .ie7icon('&#xf078'); }
+.icon-retweet { .ie7icon('&#xf079'); }
+.icon-shopping-cart { .ie7icon('&#xf07a'); }
+.icon-folder-close { .ie7icon('&#xf07b'); }
+.icon-folder-open { .ie7icon('&#xf07c'); }
+.icon-resize-vertical { .ie7icon('&#xf07d'); }
+.icon-resize-horizontal { .ie7icon('&#xf07e'); }
+
+.icon-bar-chart { .ie7icon('&#xf080'); }
+.icon-twitter-sign { .ie7icon('&#xf081'); }
+.icon-facebook-sign { .ie7icon('&#xf082'); }
+.icon-camera-retro { .ie7icon('&#xf083'); }
+.icon-key { .ie7icon('&#xf084'); }
+.icon-cogs { .ie7icon('&#xf085'); }
+.icon-comments { .ie7icon('&#xf086'); }
+.icon-thumbs-up { .ie7icon('&#xf087'); }
+.icon-thumbs-down { .ie7icon('&#xf088'); }
+.icon-star-half { .ie7icon('&#xf089'); }
+.icon-heart-empty { .ie7icon('&#xf08a'); }
+.icon-signout { .ie7icon('&#xf08b'); }
+.icon-linkedin-sign { .ie7icon('&#xf08c'); }
+.icon-pushpin { .ie7icon('&#xf08d'); }
+.icon-external-link { .ie7icon('&#xf08e'); }
+
+.icon-signin { .ie7icon('&#xf090'); }
+.icon-trophy { .ie7icon('&#xf091'); }
+.icon-github-sign { .ie7icon('&#xf092'); }
+.icon-upload-alt { .ie7icon('&#xf093'); }
+.icon-lemon { .ie7icon('&#xf094'); }
+
+ Skip to content
+
+    Explore
+    Features
+    Enterprise
+    Blog
+
+    22,379
+    2,961
+
+public FortAwesome/Font-Awesome
+
+IE 7 support for icons in bootstrap #38
+Closed
+pagameba opened this Issue 2 years ago · 41 comments
+Labels
+feature
+Milestone
+No milestone
+Assignee
+No one assigned
+21 participants
+Paul Spencer Dave Gandy Mohsen Azimi onlinedev Fred Warnock Anders parkerault Jørn Schou-Rode Marcus Bointon Matt Brian Alexander Seth Aldridge Ryan Furtner Jeremy Dill Luis Cordova Andrew Gunn Liam Potter Ayyash James Harrison periyasamy24 ...
+Paul Spencer
+pagameba commented 2 years ago
+
+While @font-face is technically supported in older versions of IE, the use of the :before selector is not supported and so setting icons in buttons for bootstrap using the default technique (relying on :before and content) does not work. After considerable research, the simplest solution we found was to create an ie7 specific css file using an expression. We did not test in versions prior to IE 7 but theoretically it should work for at least some of them. I used a regex in my text editor to modify the icon list and then added a couple of required css classes to fix things up.
+
+Here is how it works:
+
+<!--[if IE 7]><link rel="stylesheet" href="/stylesheets/font-awesome-ie7.css"><![endif]-->
+
+font-awesome-ie7.css contents:
+
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.icon-large {
+    font-size: 1.3333em;
+}
+
+
+.icon-glass { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf000;&nbsp;'); }
+.icon-music { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf001;&nbsp;'); }
+.icon-search { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf002;&nbsp;'); }
+.icon-envelope { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf003;&nbsp;'); }
+.icon-heart { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf004;&nbsp;'); }
+.icon-star { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf005;&nbsp;'); }
+.icon-star-empty { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf006;&nbsp;'); }
+.icon-user { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf007;&nbsp;'); }
+.icon-film { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf008;&nbsp;'); }
+.icon-th-large { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf009;&nbsp;'); }
+.icon-th { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf00a;&nbsp;'); }
+.icon-th-list { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf00b;&nbsp;'); }
+.icon-ok { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf00c;&nbsp;'); }
+.icon-remove { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf00d;&nbsp;'); }
+.icon-zoom-in { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf00e;&nbsp;'); }
+
+.icon-zoom-out { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf010;&nbsp;'); }
+.icon-off { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf011;&nbsp;'); }
+.icon-signal { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf012;&nbsp;'); }
+.icon-cog { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf013;&nbsp;'); }
+.icon-trash { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf014;&nbsp;'); }
+.icon-home { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf015;&nbsp;'); }
+.icon-file { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf016;&nbsp;'); }
+.icon-time { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf017;&nbsp;'); }
+.icon-road { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf018;&nbsp;'); }
+.icon-download-alt { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf019;&nbsp;'); }
+.icon-download { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf01a;&nbsp;'); }
+.icon-upload { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf01b;&nbsp;'); }
+.icon-inbox { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf01c;&nbsp;'); }
+.icon-play-circle { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf01d;&nbsp;'); }
+.icon-repeat { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf01e;&nbsp;'); }
+
+.icon-refresh { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf021;&nbsp;'); }
+.icon-list-alt { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf022;&nbsp;'); }
+.icon-lock { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf023;&nbsp;'); }
+.icon-flag { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf024;&nbsp;'); }
+.icon-headphones { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf025;&nbsp;'); }
+.icon-volume-off { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf026;&nbsp;'); }
+.icon-volume-down { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf027;&nbsp;'); }
+.icon-volume-up { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf028;&nbsp;'); }
+.icon-qrcode { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf029;&nbsp;'); }
+.icon-barcode { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf02a;&nbsp;'); }
+.icon-tag { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf02b;&nbsp;'); }
+.icon-tags { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf02c;&nbsp;'); }
+.icon-book { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf02d;&nbsp;'); }
+.icon-bookmark { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf02e;&nbsp;'); }
+.icon-print { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf02f;&nbsp;'); }
+
+.icon-camera { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf030;&nbsp;'); }
+.icon-font { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf031;&nbsp;'); }
+.icon-bold { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf032;&nbsp;'); }
+.icon-italic { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf033;&nbsp;'); }
+.icon-text-height { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf034;&nbsp;'); }
+.icon-text-width { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf035;&nbsp;'); }
+.icon-align-left { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf036;&nbsp;'); }
+.icon-align-center { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf037;&nbsp;'); }
+.icon-align-right { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf038;&nbsp;'); }
+.icon-align-justify { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf039;&nbsp;'); }
+.icon-list { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf03a;&nbsp;'); }
+.icon-indent-left { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf03b;&nbsp;'); }
+.icon-indent-right { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf03c;&nbsp;'); }
+.icon-facetime-video { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf03d;&nbsp;'); }
+.icon-picture { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf03e;&nbsp;'); }
+
+.icon-pencil { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf040;&nbsp;'); }
+.icon-map-marker { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf041;&nbsp;'); }
+.icon-adjust { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf042;&nbsp;'); }
+.icon-tint { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf043;&nbsp;'); }
+.icon-edit { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf044;&nbsp;'); }
+.icon-share { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf045;&nbsp;'); }
+.icon-check { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf046;&nbsp;'); }
+.icon-move { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf047;&nbsp;'); }
+.icon-step-backward { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf048;&nbsp;'); }
+.icon-fast-backward { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf049;&nbsp;'); }
+.icon-backward { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf04a;&nbsp;'); }
+.icon-play { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf04b;&nbsp;'); }
+.icon-pause { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf04c;&nbsp;'); }
+.icon-stop { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf04d;&nbsp;'); }
+.icon-forward { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf04e;&nbsp;'); }
+
+.icon-fast-forward { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf050;&nbsp;'); }
+.icon-step-forward { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf051;&nbsp;'); }
+.icon-eject { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf052;&nbsp;'); }
+.icon-chevron-left { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf053;&nbsp;'); }
+.icon-chevron-right { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf054;&nbsp;'); }
+.icon-plus-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf055;&nbsp;'); }
+.icon-minus-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf056;&nbsp;'); }
+.icon-remove-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf057;&nbsp;'); }
+.icon-ok-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf058;&nbsp;'); }
+.icon-question-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf059;&nbsp;'); }
+.icon-info-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf05a;&nbsp;'); }
+.icon-screenshot { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf05b;&nbsp;'); }
+.icon-remove-circle { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf05c;&nbsp;'); }
+.icon-ok-circle { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf05d;&nbsp;'); }
+.icon-ban-circle { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf05e;&nbsp;'); }
+
+.icon-arrow-left { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf060;&nbsp;'); }
+.icon-arrow-right { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf061;&nbsp;'); }
+.icon-arrow-up { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf062;&nbsp;'); }
+.icon-arrow-down { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf063;&nbsp;'); }
+.icon-share-alt { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf064;&nbsp;'); }
+.icon-resize-full { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf065;&nbsp;'); }
+.icon-resize-small { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf066;&nbsp;'); }
+.icon-plus { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf067;&nbsp;'); }
+.icon-minus { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf068;&nbsp;'); }
+.icon-asterisk { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf069;&nbsp;'); }
+.icon-exclamation-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf06a;&nbsp;'); }
+.icon-gift { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf06b;&nbsp;'); }
+.icon-leaf { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf06c;&nbsp;'); }
+.icon-fire { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf06d;&nbsp;'); }
+.icon-eye-open { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf06e;&nbsp;'); }
+
+.icon-eye-close { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf070;&nbsp;'); }
+.icon-warning-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf071;&nbsp;'); }
+.icon-plane { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf072;&nbsp;'); }
+.icon-calendar { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf073;&nbsp;'); }
+.icon-random { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf074;&nbsp;'); }
+.icon-comment { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf075;&nbsp;'); }
+.icon-magnet { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf076;&nbsp;'); }
+.icon-chevron-up { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf077;&nbsp;'); }
+.icon-chevron-down { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf078;&nbsp;'); }
+.icon-retweet { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf079;&nbsp;'); }
+.icon-shopping-cart { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf07a;&nbsp;'); }
+.icon-folder-close { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf07b;&nbsp;'); }
+.icon-folder-open { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf07c;&nbsp;'); }
+.icon-resize-vertical { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf07d;&nbsp;'); }
+.icon-resize-horizontal { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf07e;&nbsp;'); }
+
+.icon-bar-chart { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf080;&nbsp;'); }
+.icon-twitter-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf081;&nbsp;'); }
+.icon-facebook-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf082;&nbsp;'); }
+.icon-camera-retro { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf083;&nbsp;'); }
+.icon-key { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf084;&nbsp;'); }
+.icon-cogs { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf085;&nbsp;'); }
+.icon-comments { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf086;&nbsp;'); }
+.icon-thumbs-up { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf087;&nbsp;'); }
+.icon-thumbs-down { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf088;&nbsp;'); }
+.icon-star-half { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf089;&nbsp;'); }
+.icon-heart-empty { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf08a;&nbsp;'); }
+.icon-signout { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf08b;&nbsp;'); }
+.icon-linkedin-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf08c;&nbsp;'); }
+.icon-pushpin { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf08d;&nbsp;'); }
+.icon-external-link { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf08e;&nbsp;'); }
+
+.icon-signin { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf090;&nbsp;'); }
+.icon-trophy { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf091;&nbsp;'); }
+.icon-github-sign { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf092;&nbsp;'); }
+.icon-upload-alt { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf093;&nbsp;'); }
+.icon-lemon { *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '&#xf094;&nbsp;'); }
+
+Dave Gandy
+Owner
+davegandy commented 2 years ago
+
+Interesting. I'll check this out as soon as I get a chance. Thanks a ton for the work!
+Mohsen Azimi
+mohsen1 commented 2 years ago
+
+Wow! This is really interesting. I can't find docs for zoom: expression(). Can you provide a link?
+Paul Spencer
+pagameba commented 2 years ago
+I think the main docs are http://msdn.microsoft.com/en-us/library/ms537634.aspx. Expressions can be used anywhere in CSS, its not just 'zoom', using zoom or *zoom is really a hack to avoid other browsers from trying to interpret the expression. There are numerous examples of using expression to solve various problems. I used it to support PNG24s in IE 6, /* css */ .png24{filter:expression(applyPNGFilter(this))} /* javascript */ applyPNGFilter = function(o) { var t = 'a_pixel.png', s; if (o.src != t) { s = o.src; o.src = t; o.runtimeStyle.filter = "progid:
+DXImageTransform.Microsoft.AlphaImageLoader(src='" + s + "',sizingMethod='scale')"; } } Applying a class of 'png24' to any image would, in IE 6 (because I used an if IE conditional to define the style) cause a PNG 24 image to load correctly. I can't recall the inspiration for this hack but it was wonderful at the time :) Hope this helps Paul
+…
+onlinedev
+onlinedev commented 2 years ago
+
+Great work by Paul. I also observed issues with rendering of font awesome icons with buttons. However, I saw the issue both in the IE7 and IE8. What was your experience with IE8. Will the solution you described above work with IE8 as well?
+
+Is the above fix likely to be included in the future release of font awesome?
+Fred Warnock
+fredrock commented 2 years ago
+
+IE 8 supports :before and :after, so you don't need to use the expressions with it.
+onlinedev
+onlinedev commented 2 years ago
+
+Thanks Fred for your response
+Anders
+arnars commented 2 years ago
+
+How would you actually reference the different icons? In the above example it is only squares. I am able to get content into the i-tag by using the above code, but when I try to put in content as from the font awesome reference i am only able to output squares or 'real' letters.
+Paul Spencer
+pagameba commented 2 years ago
+
+ah I see - the part where it has the little square above is supposed to be a hex code as per the original fontawesome styles, I'm updated the original with correct markdown (I hope).
+Anders
+arnars commented 2 years ago
+
+Yes. Thank you so much. It is not working for me yet, as I am having troubles getting IE7 to load the damn font face. However now I am able to rule out the fact that my innerHTML content was wrong.
+parkerault
+parkerault commented 2 years ago
+
+If I remember correctly IE recalculates CSS expression properties on scroll, resize, and redraw events, which can have a significant impact on performance depending on the complexity of the expression. I believe a JS polyfill would be a better solution in this case.
+Paul Spencer
+pagameba commented 2 years ago
+
+It probably would, but is it worth the effort? I have not yet seen or been able to find a polyfill that provides IE < 8 CSS pseudo element support for :before and :after. The expression in this case is pretty minimal and if the use of icons is not extensive then the performance impact is probably minimal. I really think this is the expedient solution that can easily be automated as part of the build and in this case is completely sufficient, but if someone can craft or find an appropriate polyfill then by all means it should be used.
+Jørn Schou-Rode
+schourode commented 2 years ago
+
+Dean Ewdards' "IE7.js" project adds support for :before and :after to IE6 and IE7. Unfortunately, the library doesn't seem built in a way that allows one to get just this polyfill, without doing some serious hacking.
+Paul Spencer
+pagameba commented 2 years ago
+
+It looks like you would need at least IE8.js to get the right stuff. I had a cursory pass through the code, the comments certainly indicate that it adds support for :before and :after. I didn't test to see if this performs the task correctly for FontAwesome, nor if it would be better (performance) than the expression hack proposed in this issue. One advantage obviously is that the IE8.js solution requires no changes to FontAwesome. It may also bring along some other desirable polyfills. The disadvantage is that it is 37k compressed (not gzipped though) compared to a (potentially) very much smaller file with the expression hack approach.
+Jørn Schou-Rode
+schourode commented 2 years ago
+
+I agree that bundling IE8.js with Font-Awesome just to polyfill :before and :after is overkill. When I mentioned the library, it was mainly to inform that such polyfix exists.
+
+In most of the projects I work on, IE8.js or IE9.js is already included, and thus Font Awesome should work out of the box. So I thought. Today I tried it out, and it turns out that the polyfix has an issue with escaped unicode literals, used extensively in Font-Awesome. I have figured out a workaround for this issue (documented in the bug report), which may be useful for others playing with Font-Awesome and IE8.js together.
+
+IMHO, the expression hack seems to be a better way to provide "official" IE7 support for Font-Awesome.
+Marcus Bointon
+Synchro commented 2 years ago
+
+Any particular reason for the &nbsp;s? The stock fontawesome doesn't add a space, and though it's often needed, it's not always, for example if the icons are used by themselves on toolbar buttons. Removing them seems to work ok.
+Paul Spencer
+pagameba commented 2 years ago
+
+I can't recall why we decided the   was needed but I seem to recall that it was at least for how we were using it - I suspect we used labels with them, that might cause the need? I also vaguely recall a change in bootstrap regarding whitespace also - perhaps that was related, I'm pretty sure at one time a bunch of specific whitespace was needed for some elements and they fixed that.
+Dave Gandy
+Owner
+davegandy commented 2 years ago
+
+Okay, I finally got to the IE7 stuff. This method works quite well, as far as I can see. It'll be in the next version.
+
+Biggest concern is the extra amount of CSS to be downloaded, But it's IE7, so I'm not sure I care that much. Anyone have any alternative methods? I found this a few days ago: https://gist.github.com/2362483
+
+Maybe that could be less text in the CSS to keep load times down.
+Paul Spencer
+pagameba commented 2 years ago
+
+Its late and I'm tired but I don't see how that could be used to create less text in the css - perhaps I am overlooking the obvious?
+Matt
+suqi commented 2 years ago
+
+I'm so looking forward to the release of IE7 support for this awesome icon design.
+Hope everything goes fine!
+Marcus Bointon
+Synchro commented 2 years ago
+
+I'd suggest breaking it out into a separate less file for IE7 so as not to increase the CSS burden for those that do things right, then it can be included with a conditional comment for IE7. I would recommend removing the &nbsp;s though as it results in different appearance than other browsers for no good reason.
+Marcus Bointon
+Synchro commented 2 years ago
+
+It struck me there's a lot of repetition in there that could be improved with LESS, so I turned it into a LESS file using a mixin to generate the full syntax:
+
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.icon-large {
+    font-size: 1.3333em;
+}
+
+.ie7icon(@inner) {
+    *zoom: ~"expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = '@{inner}')";
+}
+
+.icon-glass { .ie7icon('&#xf000'); }
+.icon-music { .ie7icon('&#xf001'); }
+.icon-search { .ie7icon('&#xf002'); }
+.icon-envelope { .ie7icon('&#xf003'); }
+.icon-heart { .ie7icon('&#xf004'); }
+.icon-star { .ie7icon('&#xf005'); }
+.icon-star-empty { .ie7icon('&#xf006'); }
+.icon-user { .ie7icon('&#xf007'); }
+.icon-film { .ie7icon('&#xf008'); }
+.icon-th-large { .ie7icon('&#xf009'); }
+.icon-th { .ie7icon('&#xf00a'); }
+.icon-th-list { .ie7icon('&#xf00b'); }
+.icon-ok { .ie7icon('&#xf00c'); }
+.icon-remove { .ie7icon('&#xf00d'); }
+.icon-zoom-in { .ie7icon('&#xf00e'); }
+
+.icon-zoom-out { .ie7icon('&#xf010'); }
+.icon-off { .ie7icon('&#xf011'); }
+.icon-signal { .ie7icon('&#xf012'); }
+.icon-cog { .ie7icon('&#xf013'); }
+.icon-trash { .ie7icon('&#xf014'); }
+.icon-home { .ie7icon('&#xf015'); }
+.icon-file { .ie7icon('&#xf016'); }
+.icon-time { .ie7icon('&#xf017'); }
+.icon-road { .ie7icon('&#xf018'); }
+.icon-download-alt { .ie7icon('&#xf019'); }
+.icon-download { .ie7icon('&#xf01a'); }
+.icon-upload { .ie7icon('&#xf01b'); }
+.icon-inbox { .ie7icon('&#xf01c'); }
+.icon-play-circle { .ie7icon('&#xf01d'); }
+.icon-repeat { .ie7icon('&#xf01e'); }
+
+.icon-refresh { .ie7icon('&#xf021'); }
+.icon-list-alt { .ie7icon('&#xf022'); }
+.icon-lock { .ie7icon('&#xf023'); }
+.icon-flag { .ie7icon('&#xf024'); }
+.icon-headphones { .ie7icon('&#xf025'); }
+.icon-volume-off { .ie7icon('&#xf026'); }
+.icon-volume-down { .ie7icon('&#xf027'); }
+.icon-volume-up { .ie7icon('&#xf028'); }
+.icon-qrcode { .ie7icon('&#xf029'); }
+.icon-barcode { .ie7icon('&#xf02a'); }
+.icon-tag { .ie7icon('&#xf02b'); }
+.icon-tags { .ie7icon('&#xf02c'); }
+.icon-book { .ie7icon('&#xf02d'); }
+.icon-bookmark { .ie7icon('&#xf02e'); }
+.icon-print { .ie7icon('&#xf02f'); }
+
+.icon-camera { .ie7icon('&#xf030'); }
+.icon-font { .ie7icon('&#xf031'); }
+.icon-bold { .ie7icon('&#xf032'); }
+.icon-italic { .ie7icon('&#xf033'); }
+.icon-text-height { .ie7icon('&#xf034'); }
+.icon-text-width { .ie7icon('&#xf035'); }
+.icon-align-left { .ie7icon('&#xf036'); }
+.icon-align-center { .ie7icon('&#xf037'); }
+.icon-align-right { .ie7icon('&#xf038'); }
+.icon-align-justify { .ie7icon('&#xf039'); }
+.icon-list { .ie7icon('&#xf03a'); }
+.icon-indent-left { .ie7icon('&#xf03b'); }
+.icon-indent-right { .ie7icon('&#xf03c'); }
+.icon-facetime-video { .ie7icon('&#xf03d'); }
+.icon-picture { .ie7icon('&#xf03e'); }
+
+.icon-pencil { .ie7icon('&#xf040'); }
+.icon-map-marker { .ie7icon('&#xf041'); }
+.icon-adjust { .ie7icon('&#xf042'); }
+.icon-tint { .ie7icon('&#xf043'); }
+.icon-edit { .ie7icon('&#xf044'); }
+.icon-share { .ie7icon('&#xf045'); }
+.icon-check { .ie7icon('&#xf046'); }
+.icon-move { .ie7icon('&#xf047'); }
+.icon-step-backward { .ie7icon('&#xf048'); }
+.icon-fast-backward { .ie7icon('&#xf049'); }
+.icon-backward { .ie7icon('&#xf04a'); }
+.icon-play { .ie7icon('&#xf04b'); }
+.icon-pause { .ie7icon('&#xf04c'); }
+.icon-stop { .ie7icon('&#xf04d'); }
+.icon-forward { .ie7icon('&#xf04e'); }
+
+.icon-fast-forward { .ie7icon('&#xf050'); }
+.icon-step-forward { .ie7icon('&#xf051'); }
+.icon-eject { .ie7icon('&#xf052'); }
+.icon-chevron-left { .ie7icon('&#xf053'); }
+.icon-chevron-right { .ie7icon('&#xf054'); }
+.icon-plus-sign { .ie7icon('&#xf055'); }
+.icon-minus-sign { .ie7icon('&#xf056'); }
+.icon-remove-sign { .ie7icon('&#xf057'); }
+.icon-ok-sign { .ie7icon('&#xf058'); }
+.icon-question-sign { .ie7icon('&#xf059'); }
+.icon-info-sign { .ie7icon('&#xf05a'); }
+.icon-screenshot { .ie7icon('&#xf05b'); }
+.icon-remove-circle { .ie7icon('&#xf05c'); }
+.icon-ok-circle { .ie7icon('&#xf05d'); }
+.icon-ban-circle { .ie7icon('&#xf05e'); }
+
+.icon-arrow-left { .ie7icon('&#xf060'); }
+.icon-arrow-right { .ie7icon('&#xf061'); }
+.icon-arrow-up { .ie7icon('&#xf062'); }
+.icon-arrow-down { .ie7icon('&#xf063'); }
+.icon-share-alt { .ie7icon('&#xf064'); }
+.icon-resize-full { .ie7icon('&#xf065'); }
+.icon-resize-small { .ie7icon('&#xf066'); }
+.icon-plus { .ie7icon('&#xf067'); }
+.icon-minus { .ie7icon('&#xf068'); }
+.icon-asterisk { .ie7icon('&#xf069'); }
+.icon-exclamation-sign { .ie7icon('&#xf06a'); }
+.icon-gift { .ie7icon('&#xf06b'); }
+.icon-leaf { .ie7icon('&#xf06c'); }
+.icon-fire { .ie7icon('&#xf06d'); }
+.icon-eye-open { .ie7icon('&#xf06e'); }
+
+.icon-eye-close { .ie7icon('&#xf070'); }
+.icon-warning-sign { .ie7icon('&#xf071'); }
+.icon-plane { .ie7icon('&#xf072'); }
+.icon-calendar { .ie7icon('&#xf073'); }
+.icon-random { .ie7icon('&#xf074'); }
+.icon-comment { .ie7icon('&#xf075'); }
+.icon-magnet { .ie7icon('&#xf076'); }
+.icon-chevron-up { .ie7icon('&#xf077'); }
+.icon-chevron-down { .ie7icon('&#xf078'); }
+.icon-retweet { .ie7icon('&#xf079'); }
+.icon-shopping-cart { .ie7icon('&#xf07a'); }
+.icon-folder-close { .ie7icon('&#xf07b'); }
+.icon-folder-open { .ie7icon('&#xf07c'); }
+.icon-resize-vertical { .ie7icon('&#xf07d'); }
+.icon-resize-horizontal { .ie7icon('&#xf07e'); }
+
+.icon-bar-chart { .ie7icon('&#xf080'); }
+.icon-twitter-sign { .ie7icon('&#xf081'); }
+.icon-facebook-sign { .ie7icon('&#xf082'); }
+.icon-camera-retro { .ie7icon('&#xf083'); }
+.icon-key { .ie7icon('&#xf084'); }
+.icon-cogs { .ie7icon('&#xf085'); }
+.icon-comments { .ie7icon('&#xf086'); }
+.icon-thumbs-up { .ie7icon('&#xf087'); }
+.icon-thumbs-down { .ie7icon('&#xf088'); }
+.icon-star-half { .ie7icon('&#xf089'); }
+.icon-heart-empty { .ie7icon('&#xf08a'); }
+.icon-signout { .ie7icon('&#xf08b'); }
+.icon-linkedin-sign { .ie7icon('&#xf08c'); }
+.icon-pushpin { .ie7icon('&#xf08d'); }
+.icon-external-link { .ie7icon('&#xf08e'); }
+
+.icon-signin { .ie7icon('&#xf090'); }
+.icon-trophy { .ie7icon('&#xf091'); }
+.icon-github-sign { .ie7icon('&#xf092'); }
+.icon-upload-alt { .ie7icon('&#xf093'); }
+.icon-lemon { .ie7icon('&#xf094'); }
+
+You could shrink it further by putting the &#xf0 sequence in the mixin too, but that would mean you couldn't use other items in there (e.g. regular non-icon characters).
+Marcus Bointon
+Synchro commented 2 years ago
+
+FWIW I have found that the ie7/ie8.js scripts cause my site to explode. While some things that didn't work before certainly do work with them, they also break other things horribly that worked fine without them, for example bootstrap modals suddenly go 100% screen width, random images start being scaled square (i.e. their width gets applied as their height!).
+They are also very slow - with them enabled, and using fairly stock bootstrap CSS (which is pretty big) I get a complete hang for about 8 sec on every page load, after which everything shifts around as its fixes get applied.
+Brian Alexander
+balexand commented 2 years ago
+
+I agree with @Synchro 's suggestion to break it out into a separate file for IE7 so as to not bloat the CSS for modern browsers.
+Paul Spencer
+pagameba commented 2 years ago
+That's how we are using it, works great with conditional comments. Extra download size isn't a big concern for me, but the idea of using a less file is great, easy to make changes like adding or removing the &nbsp; :)
+…
+Dave Gandy davegandy closed this 2 years ago
+Dave Gandy
+Owner
+davegandy commented 2 years ago
+
+Completed in the new v2.0 release. Include support for IE7 this way:
+<!--[if IE 7]> <link rel="stylesheet" href="assets/css/font-awesome-ie7.css"> <![endif]-->
+Marcus Bointon Synchro referenced this issue 2 years ago
+Merged
+Add IE7 LESS file #270
+Seth Aldridge
+sethaldridge commented 2 years ago
+
+We have run into an issue where elements added to the DOM after the page renders don't get the icons because the expression has already run.
+
+Does anyone have a workaround for this?
+Ryan Furtner
+ryanfurtner commented 2 years ago
+
+I'm having the same issue as @sethaldridge. Used the icons in a table that is added after page load and i get no icons in IE7. Is there any way to have a jQuery function or something to call that fixes this?
+Jeremy Dill
+tpneumat commented 2 years ago
+
+Same here.. any solutions?
+Ryan Furtner
+ryanfurtner commented 2 years ago
+
+Give your tag an id of 'font_awesome_ie7'
+
+Set this up as a function:
+function reloadStylesheets() {
+var queryString = '?reload=' + new Date().getTime();
+$('#font_awesome_ie7').each(function () {
+this.href = this.href.replace(/\?.*|$/, queryString);
+});
+}
+
+Call the function whenever you have just dynamically loaded new content with font-awesome icons.
+
+Note: This is super dodgy, but i really needed this to work :P
+Seth Aldridge
+sethaldridge commented 2 years ago
+
+I would recommend using a class over an ID for the element as you should only have one ID per page.
+Ryan Furtner
+ryanfurtner commented 2 years ago
+
+@sethaldridge It is targeting the stylesheet inclusion of font-awesome-ie7.css. If you have more than one of those included on your page youre doing something wrong.
+
+Eg. <link href="/css/font-awesome-ie7.css" rel="stylesheet" id="font_awesome_ie7" type="text/css" />
+Luis Cordova
+cordoval commented 2 years ago
+
+@ryanfurtner it seems your approach works however is kind of flaky, i get to reload the css most of the times, but others the element just don't get fix, on the next click it gets refreshed. Do you have a newer version of your script corrected?
+Andrew Gunn
+andrewgunn commented a year ago
+
+Why have you the added following to each expression/what does it do...?
+
+this.runtimeStyle['zoom'] = "1"
+
+I've put together a demo without including this code (http://jsbin.com/ipakoj/6/edit). The demo has one tag, five CSS classes (each with a different HTML character) and JS to loop through each class name. Try viewing it in IE7 and it works fine - the output shows the content being replaced by each icon. Add the above code and the tag's content won't get modified after the first expression has been evaluated. I'm planning on going ahead without this code but just wanted to get a better understanding of what it does!?
+Liam Potter
+evoactivity commented a year ago
+
+I've also removed the bit setting to the zoom to 1. It was stopping the icons switching when classes where added. As far as I can tell it works fine without it, well better in fact because I can now switch icons.
+Andrew Gunn
+andrewgunn commented a year ago
+I've actually left it in. We had a scenario where an icon class was applied to an element where the zoom was greater than 1 and the icons appeared too big. This resets it. I'll try and create a demo and send it over.
+…
+Liam Potter
+evoactivity commented a year ago
+Isn't that the behavior you would want, if the element the icon is applied to is zoomed shouldn't the icon also be zoomed?
+…
+Ayyash
+ayyash commented a year ago
+
+Stop supporting IE7! Let people feel awful about it til they have to upgrade
+James Harrison
+jjlharrison commented a year ago
+
+@ayyash This has been discussed in issue #687. It's not going to happen.
+Liam Potter
+evoactivity commented a year ago
+
+So, all those expressions can cause serious speed issues and full crashes if there are a lot of icons on the page. Clicking into an input on a page with lots of icons was enough to crash the browser for me.
+
+My choices now are to either replace all the icons on the site with images or figure out another solution for ie7 that doesn't rely on expressions, I guess I could add the html entity code to each icon and only show the text in ie7, might be quicker than replacing them all with images.
+
+So, as a warning, if your page has a lot of icons on it, this ie7 file may very well make the site unusably slow.
+periyasamy24
+periyasamy24 commented 5 months ago
+
+check out the site and see the Cheat Seats...
+
+http://fontawesome.io/3.2.1/cheatsheet/
+bradvin bradvin referenced this issue in bradvin/FooTable 2 months ago
+Open
+Sort indicator in header not seen in IE7 #202
+John Slegers
+jslegers commented a month ago
+
+If your content is not intented to change at runtime, you could use the following :
+
+.icon-glass {
+  *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf000;');
+}
+
+If your content is intended to change at runtime, you could do something like this :
+
+.icon-glass {
+  *top:expression(0, this.innerHTML = '&#xf000;');
+}
+
+Unfortunately, this is extremely slow. While it is likely to work in IE6 with a significant reduction of your performance, IE7 is likely to crash if you have too many icons on your page. So I wouldn't recommend this second technique unless you use only very few icons and you can afford the performance reduction.
+to join this conversation on GitHub. Already have an account? Sign in to comment
+
+    Status
+    API
+    Training
+    Shop
+    Blog
+    About
+
+    © 2014 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Contact
+
+
+
