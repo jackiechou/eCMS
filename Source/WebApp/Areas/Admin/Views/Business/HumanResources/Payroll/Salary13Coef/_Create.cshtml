@@ -33,13 +33,13 @@
                                     @Html.LabelFor(model => model.EmployeeCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.EmployeeCode, null, new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.EmployeeCode, null, new { @class = "form-control"})
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => Model.EmloyeepName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.EmloyeepName, null, new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.EmloyeepName, null, new { @class = "form-control"})
                                 </div>
                             </div> 
                             <div class="row">
@@ -68,7 +68,7 @@
                                     @Html.LabelFor(model => model.LSPositionID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSPositionID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSPositionID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSPositionID)   
                                     @Html.HiddenFor(model => model.PositionName)
                                 </div>
@@ -92,7 +92,7 @@
                                     @Html.LabelFor(model => model.Coef)
                                 </div>
                                 <div class="col-md-1">
-                                    @Html.TextBoxFor(mode => Model.Coef, null, new { @class = "span12" } )
+                                    @Html.TextBoxFor(mode => Model.Coef, null, new { @class = "form-control" } )
                                 </div>                                
                                 <div class="col-md-4" align="center">
                                     <label style="display: inline; margin-right: 10px;">@Html.RadioButton("optSetting", 1, (@Model.IsSetting == 1 ? true : false), new { id = "optSetting1" }) @Eagle.Resource.LanguageResource.Salary13CoefSetting </label>

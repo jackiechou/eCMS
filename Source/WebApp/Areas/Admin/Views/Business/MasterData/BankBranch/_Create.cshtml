@@ -21,7 +21,7 @@
                     @Html.RequiredLabelFor(model => model.LSBankBranchCode)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.LSBankBranchCode, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.LSBankBranchCode, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.LSBankBranchCode)
                      @Html.HiddenFor(model => model.BankBranchID)
                 </div>    
@@ -29,7 +29,7 @@
                     @Html.RequiredLabelFor(model => model.BankID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectBank", null, new { @class = "span12" })
+                    @Html.TextBox("selectBank", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.BankID)
                     @Html.Hidden("BankName")
                     @Html.ValidationMessageFor(model => model.BankID)
@@ -40,7 +40,7 @@
                     @Html.RequiredLabelFor(model => model.Name)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Name, null, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.Name, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Name)
                 </div>                                   
                 <div class="col-md-2">
@@ -70,7 +70,7 @@
                     @Html.LabelFor(model => model.Note)
                 </div>
                 <div class="col-md-10">                                            
-                    @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "span12" })
+                    @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Note)
                 </div>     
             </div>    

@@ -15,14 +15,14 @@
                 @Html.Label(@Eagle.Resource.LanguageResource.EmpCode)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SearchEmpCode", null, new { @class = "span12" })
+                @Html.TextBox("SearchEmpCode", null, new { @class = "form-control" })
                 @Html.Hidden("SearchEmpID")
             </div>
             <div class="col-md-2">
                 @Html.LabelFor(model => model.FullName)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SearchFullName", null, new { @class = "span12" })
+                @Html.TextBox("SearchFullName", null, new { @class = "form-control" })
             </div>
         </div>
         <div class="row">

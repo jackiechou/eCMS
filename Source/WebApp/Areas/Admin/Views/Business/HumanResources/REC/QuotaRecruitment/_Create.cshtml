@@ -54,7 +54,7 @@
                                     @Html.RequiredLabelFor(model => model.YearSearch)                                    
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.YearSearch, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.YearSearch, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.YearSearch)
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                     @Html.RequiredLabelFor(model => model.LSPositionIDSearch)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSPositionIDSearch", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLSPositionIDSearch", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSPositionIDSearch)
                                     @Html.HiddenFor(model => model.LSPositionNameSearch)
                                 </div>

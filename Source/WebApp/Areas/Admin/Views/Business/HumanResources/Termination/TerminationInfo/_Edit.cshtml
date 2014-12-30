@@ -41,7 +41,7 @@
                                             @Html.RequiredLabelFor(model => model.LSTerminationReasonID)
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.DropDownListFor(model => model.LSTerminationReasonID, null, new { @class = "span12" })
+                                            @Html.DropDownListFor(model => model.LSTerminationReasonID, null, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LSTerminationReasonID)
                                         </div>
 
@@ -49,7 +49,7 @@
                                             @Html.RequiredLabelFor(model => model.LSTerminationTypeID)
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.DropDownListFor(model => model.LSTerminationTypeID, null, new { @class = "span12" })
+                                            @Html.DropDownListFor(model => model.LSTerminationTypeID, null, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LSTerminationTypeID)
                                         </div>
                                     </div>
@@ -106,8 +106,8 @@
                                             @Html.Label(Eagle.Resource.LanguageResource.UnPaidMonths, new { title = @Html.Raw(Eagle.Resource.LanguageResource.MonthsOfUnPaidInsuranceCard) })
                                         </div>
                                         <div class="col-md-4">
-                                            @* @Html.EditorFor(model => model.MonthsOfUnPaidInsuranceCard,null, new { @class = "span12", min = "0", max = "12", title = @Html.Raw(Eagle.Resource.LanguageResource.MonthsOfUnPaidInsuranceCard) })*@
-                                            @Html.TextBoxFor(model => model.MonthsOfUnPaidInsuranceCard, null, new { type = "number", min = "0", max = "12", @class = "span12", title = @Html.Raw(Eagle.Resource.LanguageResource.MonthsOfUnPaidInsuranceCard) })
+                                            @* @Html.EditorFor(model => model.MonthsOfUnPaidInsuranceCard,null, new { @class = "form-control", min = "0", max = "12", title = @Html.Raw(Eagle.Resource.LanguageResource.MonthsOfUnPaidInsuranceCard) })*@
+                                            @Html.TextBoxFor(model => model.MonthsOfUnPaidInsuranceCard, null, new { type = "number", min = "0", max = "12", @class = "form-control", title = @Html.Raw(Eagle.Resource.LanguageResource.MonthsOfUnPaidInsuranceCard) })
                                         </div>
                                         <div class="col-md-2">
                                             @Html.LabelFor(model => model.DecisionNo)
@@ -131,7 +131,7 @@
                                             @Html.LabelFor(model => model.Description)
                                         </div>
                                         <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, @class = "span12" })
+                                            @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>

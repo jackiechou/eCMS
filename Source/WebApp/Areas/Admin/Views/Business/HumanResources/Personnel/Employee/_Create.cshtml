@@ -60,7 +60,7 @@
                                                     @Html.RequiredLabelFor(model => model.EmpCode)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBoxFor(model => model.EmpCode, new { @class = "span9" })
+                                                    @Html.TextBoxFor(model => model.EmpCode, new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(model => model.EmpCode)
                                                     <span class="add-on btn" id="btnReloadCode"><i class="icon-refresh"></i></span>
                                                 </div>
@@ -68,7 +68,7 @@
                                                     @Html.LabelFor(model => model.UserMachineID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBoxFor(model => model.UserMachineID, null, new { @class = "span12", autocomplete = "off" })
+                                                    @Html.TextBoxFor(model => model.UserMachineID, null, new { @class = "form-control", autocomplete = "off" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -78,7 +78,7 @@
                                                     @Html.RequiredLabelFor(model => model.FirstName)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBoxFor(model => model.FirstName, null, new { @class = "span12", autocomplete = "off" })
+                                                    @Html.TextBoxFor(model => model.FirstName, null, new { @class = "form-control", autocomplete = "off" })
                                                     @Html.ValidationMessageFor(model => model.FirstName)
                                                 </div>
 
@@ -106,7 +106,7 @@
                                                     @Html.RequiredLabelFor(model => model.LastName)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBoxFor(model => model.LastName, null, new { @class = "span12", autocomplete = "off" })
+                                                    @Html.TextBoxFor(model => model.LastName, null, new { @class = "form-control", autocomplete = "off" })
                                                     @Html.ValidationMessageFor(model => model.LastName)
                                                 </div>
                                                 <div class="col-md-2">
@@ -120,7 +120,7 @@
                                                         @Html.ValidationMessageFor(model => model.DOB)
                                                     </div>
                                                     <div id="dpYOB" style="display: none">
-                                                        @Html.TextBoxFor(model => model.YOB, new { @class = "span3" })
+                                                        @Html.TextBoxFor(model => model.YOB, new { @class = "form-control" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,14 +131,14 @@
                                                     @Html.RequiredLabelFor(model => model.Gender)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.DropDownList("Gender", null, new { @class = "span7" })
+                                                    @Html.DropDownList("Gender", null, new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(model => model.Gender)
                                                 </div>
                                                 <div class="col-md-2">
                                                     @Html.LabelFor(m => m.LSMaritalID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.DropDownList("LSMaritalID", null, new { @name = "LSMaritalID", @class = "span7" })
+                                                    @Html.DropDownList("LSMaritalID", null, new { @name = "LSMaritalID", @class = "form-control" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -148,14 +148,14 @@
                                                     @Html.RequiredLabelFor(model => model.Email)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("Email", null, new { @class = "span12", @name = "Email", @type = "email", @required = false, pattern = "[^ @]*@[^ @]*", autocomplete = "off" })
+                                                    @Html.TextBox("Email", null, new { @class = "form-control", @name = "Email", @type = "email", @required = false, pattern = "[^ @]*@[^ @]*", autocomplete = "off" })
                                                     @Html.ValidationMessageFor(model => model.Email)
                                                 </div>
                                                 <div class="col-md-2">
                                                     @Html.LabelFor(model => model.BloodType)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.DropDownListFor(model => model.BloodType, null, new { @class = "span12" })
+                                                    @Html.DropDownListFor(model => model.BloodType, null, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -183,13 +183,13 @@
                                                     @Html.LabelFor(model => model.Telephone)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("Telephone", null, new { @class = "span12", @name = "Telephone", @type = "tel", autocomplete = "off" })
+                                                    @Html.TextBox("Telephone", null, new { @class = "form-control", @name = "Telephone", @type = "tel", autocomplete = "off" })
                                                 </div>
                                                 <div class="col-md-2">
                                                     @Html.LabelFor(model => model.Mobile)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("Mobile", null, new { @class = "span12", @name = "Mobile", autocomplete = "off" })
+                                                    @Html.TextBox("Mobile", null, new { @class = "form-control", @name = "Mobile", autocomplete = "off" })
                                                 </div>
 
                                             </div>
@@ -200,7 +200,7 @@
                                                     @Html.LabelFor(model => model.IDNo)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "span12", autocomplete = "off" })
+                                                    @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "form-control", autocomplete = "off" })
                                                 </div>
                                                 <div class="col-md-2">
                                                     @Html.LabelFor(model => model.IDIssuedDate)
@@ -216,8 +216,8 @@
                                                     @Html.LabelFor(model => model.IDIssuedPlace)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownListFor(model => model.IDIssuedPlace, null, new { @name = "IDIssuedPlace", @class = "span7" })*@
-                                                    @Html.TextBox("selectIDIssuedPlace", null, new { @class = "span12" })
+                                                    @*@Html.DropDownListFor(model => model.IDIssuedPlace, null, new { @name = "IDIssuedPlace", @class = "form-control" })*@
+                                                    @Html.TextBox("selectIDIssuedPlace", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.IDIssuedPlaceName)
                                                     @Html.HiddenFor(model => model.IDIssuedPlace)
                                                 </div>
@@ -225,7 +225,7 @@
                                                     @Html.LabelFor(model => model.LSNationalityID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectLSNationalityID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectLSNationalityID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LSNationalityID)
                                                     @Html.Hidden("LSNationalityName")
                                                 </div>
@@ -237,8 +237,8 @@
                                                     @Html.LabelFor(model => model.LSEthnicID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownList("LSEthnicID", null, new { @class = "span7" })*@
-                                                    @Html.TextBox("selectLSEthnicID", null, new { @class = "span12" })
+                                                    @*@Html.DropDownList("LSEthnicID", null, new { @class = "form-control" })*@
+                                                    @Html.TextBox("selectLSEthnicID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LSEthnicID)
                                                     @Html.Hidden("LSEthnicName")
                                                 </div>
@@ -247,8 +247,8 @@
                                                     @Html.LabelFor(model => model.LSReligionID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownList("LSReligionID", null, new { @name = "LSReligionID", @class = "span7" })*@
-                                                    @Html.TextBox("selectLSReligionID", null, new { @class = "span12" })
+                                                    @*@Html.DropDownList("LSReligionID", null, new { @name = "LSReligionID", @class = "form-control" })*@
+                                                    @Html.TextBox("selectLSReligionID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LSReligionID)
                                                     @Html.Hidden("LSReligionName")
                                                 </div>
@@ -261,8 +261,8 @@
                                                     @Html.LabelFor(model => model.LSEducationID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownList("LSEducationID", null, new { @name = "LSEducationID", @class = "span12" })*@
-                                                    @Html.TextBox("selectLSEducationID", null, new { @class = "span12" })
+                                                    @*@Html.DropDownList("LSEducationID", null, new { @name = "LSEducationID", @class = "form-control" })*@
+                                                    @Html.TextBox("selectLSEducationID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LSEducationID)
                                                     @Html.Hidden("LSEducationName")
                                                 </div>
@@ -270,8 +270,8 @@
                                                     @Html.LabelFor(model => model.LSMajorID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownList("LSMajorID", null, new { @name = "LSMajorID", @class = "span12" })*@
-                                                    @Html.TextBox("selectLSMajorID", null, new { @class = "span12" })
+                                                    @*@Html.DropDownList("LSMajorID", null, new { @name = "LSMajorID", @class = "form-control" })*@
+                                                    @Html.TextBox("selectLSMajorID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LSMajorID)
                                                     @Html.Hidden("LSMajorName")
                                                 </div>
@@ -296,7 +296,7 @@
                                                     @Html.LabelFor(model => model.LSPositionID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.DropDownList("LSPositionID", null, new { @class = "span12" })
+                                                    @Html.DropDownList("LSPositionID", null, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -306,8 +306,8 @@
                                                     <label>@Eagle.Resource.LanguageResource.LSLocationID</label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownList("LSLocationID", null, new { @class = "span12" })*@
-                                                    @Html.TextBox("selectLSLocationID", null, new { @class = "span12" })
+                                                    @*@Html.DropDownList("LSLocationID", null, new { @class = "form-control" })*@
+                                                    @Html.TextBox("selectLSLocationID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LSLocationID)
                                                     @Html.Hidden("LSLocationName")
                                                     <input type="button" id="btnReload_Location" style="display: none" data-isclosed="false" data-id="null" value="Reload">
@@ -317,8 +317,8 @@
                                                     @Html.LabelFor(model => model.LineManagerID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @*@Html.DropDownList("LineManagerID", null, new { @class = "span12" })*@
-                                                    @Html.TextBox("selectManager", null, new { @class = "span12" })
+                                                    @*@Html.DropDownList("LineManagerID", null, new { @class = "form-control" })*@
+                                                    @Html.TextBox("selectManager", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.LineManagerID)
                                                     @Html.Hidden("LineManagerName")
                                                 </div>
@@ -335,7 +335,7 @@
                                                     @Html.LabelFor(model => model.BornLSCountryID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectBornLSCountryID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectBornLSCountryID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.BornLSCountryID)
                                                     @Html.Hidden("BornLSCountryName")
                                                 </div>
@@ -343,7 +343,7 @@
                                                     @Html.LabelFor(model => model.BornLSProvinceID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectBornLSProvinceID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectBornLSProvinceID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.BornLSProvinceID)
                                                     @Html.Hidden("BornLSProvinceName")
                                                 </div>
@@ -355,7 +355,7 @@
                                                     @Html.LabelFor(model => model.BornLSDistrictID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectBornLSDistrictID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectBornLSDistrictID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.BornLSDistrictID)
                                                     @Html.Hidden("BornLSDistrictName")
                                                 </div>
@@ -373,7 +373,7 @@
                                                     @Html.LabelFor(model => model.PLSCountryID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectPLSCountryID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectPLSCountryID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.PLSCountryID)
                                                     @Html.Hidden("PLSCountryName")
                                                 </div>
@@ -381,7 +381,7 @@
                                                     @Html.LabelFor(model => model.PLSProvinceID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectPLSProvinceID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectPLSProvinceID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.PLSProvinceID)
                                                     @Html.Hidden("PLSProvinceName")
                                                 </div>
@@ -394,7 +394,7 @@
                                                     @Html.LabelFor(model => model.PLSDistrictID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectPLSDistrictID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectPLSDistrictID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.PLSDistrictID)
                                                     @Html.Hidden("PLSDistrictName")
                                                 </div>
@@ -406,7 +406,7 @@
                                                     @Html.LabelFor(model => model.PAddress)
                                                 </div>
                                                 <div class="col-md-10">
-                                                    @Html.TextAreaFor(model => model.PAddress, 2, 1, new { @class = "span12" })
+                                                    @Html.TextAreaFor(model => model.PAddress, 2, 1, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -422,7 +422,7 @@
                                                     @Html.LabelFor(model => model.TLSCountryID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectTLSCountryID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectTLSCountryID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.TLSCountryID)
                                                     @Html.Hidden("TLSCountryName")
                                                 </div>
@@ -430,7 +430,7 @@
                                                     @Html.LabelFor(model => model.TLSProvinceID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectTLSProvinceID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectTLSProvinceID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.TLSProvinceID)
                                                     @Html.Hidden("TLSProvinceName")
                                                 </div>
@@ -443,7 +443,7 @@
                                                     @Html.LabelFor(model => model.TLSDistrictID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectTLSDistrictID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectTLSDistrictID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.TLSDistrictID)
                                                     @Html.Hidden("TLSDistrictName")
                                                 </div>
@@ -455,7 +455,7 @@
                                                     @Html.LabelFor(model => model.TAddress)
                                                 </div>
                                                 <div class="col-md-10">
-                                                    @Html.TextAreaFor(model => model.TAddress, 2, 1, new { @name = "TAddress", @class = "span12" })
+                                                    @Html.TextAreaFor(model => model.TAddress, 2, 1, new { @name = "TAddress", @class = "form-control" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -470,7 +470,7 @@
                                                     @Html.LabelFor(model => model.NativeCountryID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectNativeCountryID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectNativeCountryID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.NativeCountryID)
                                                     @Html.Hidden("NativeCountryName")
                                                 </div>
@@ -478,7 +478,7 @@
                                                     @Html.LabelFor(model => model.NativeProvinceID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectNativeProvinceID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectNativeProvinceID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.NativeProvinceID)
                                                     @Html.Hidden("NativeProvinceName")
                                                 </div>
@@ -491,7 +491,7 @@
                                                     @Html.LabelFor(model => model.NativeDistrictID)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("selectNativeDistrictID", null, new { @class = "span12" })
+                                                    @Html.TextBox("selectNativeDistrictID", null, new { @class = "form-control" })
                                                     @Html.HiddenFor(model => model.NativeDistrictID)
                                                     @Html.Hidden("NativeDistrictName")
                                                 </div>
@@ -509,13 +509,13 @@
                                                     @Html.LabelFor(model => model.EmergencyContact)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("EmergencyContact", null, new { @class = "span12", @name = "EmergencyContact" })
+                                                    @Html.TextBox("EmergencyContact", null, new { @class = "form-control", @name = "EmergencyContact" })
                                                 </div>
                                                 <div class="col-md-2">
                                                     @Html.LabelFor(model => model.EmergencyAddess)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("EmergencyAddess", null, new { @class = "span12", @name = "EmergencyAddess" })
+                                                    @Html.TextBox("EmergencyAddess", null, new { @class = "form-control", @name = "EmergencyAddess" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -525,13 +525,13 @@
                                                     @Html.LabelFor(model => model.EmergencyMobile)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("EmergencyMobile", null, new { @class = "span12", @name = "EmergencyMobile" })
+                                                    @Html.TextBox("EmergencyMobile", null, new { @class = "form-control", @name = "EmergencyMobile" })
                                                 </div>
                                                 <div class="col-md-2">
                                                     @Html.LabelFor(model => model.EmergencyPhone)
                                                 </div>
                                                 <div class="col-md-4">
-                                                    @Html.TextBox("EmergencyPhone", null, new { @class = "span12", @name = "EmergencyPhone" })
+                                                    @Html.TextBox("EmergencyPhone", null, new { @class = "form-control", @name = "EmergencyPhone" })
                                                 </div>
                                             </div>
                                             <!--end row-->
@@ -558,13 +558,13 @@
                                         @Html.LabelFor(model => model.AccountNumber)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("AccountNumber", null, new { @class = "span12", @name = "AccountNumber", autocomplete = "off" })
+                                        @Html.TextBox("AccountNumber", null, new { @class = "form-control", @name = "AccountNumber", autocomplete = "off" })
                                     </div>
                                     <div class="col-md-2">
                                         @Html.LabelFor(model => model.AccountName)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("AccountName", null, new { @class = "span12", @name = "AccountName", autocomplete = "off" })
+                                        @Html.TextBox("AccountName", null, new { @class = "form-control", @name = "AccountName", autocomplete = "off" })
                                     </div>
                                 </div>
                                 <!--end row-->
@@ -575,7 +575,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="@(ViewBag.btnAddBank != "hidden" ? "input-append" : "")">
-                                            @Html.TextBox("selectBank", null, new { @class = "span12" })
+                                            @Html.TextBox("selectBank", null, new { @class = "form-control" })
                                             @Html.HiddenFor(model => model.LSBankID)
                                             @Html.Hidden("LSBankName")
 
@@ -588,7 +588,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="@(ViewBag.btnAddBank != "hidden" ? "input-append" : "")">
-                                            @Html.TextBox("selectBankBranch", null, new { @class = "span12" })
+                                            @Html.TextBox("selectBankBranch", null, new { @class = "form-control" })
                                             @Html.HiddenFor(model => model.LSBankBranchID)
                                             @Html.Hidden("LSBankBranchName")
 
@@ -625,7 +625,7 @@
                                         @Html.LabelFor(model => model.SIBook)
                                     </div>
                                     <div class="col-md-4">
-                                        @* @Html.TextBox("SIBook", null, new { @class = "span8", @name = "SIBook", autocomplete = "off" })*@
+                                        @* @Html.TextBox("SIBook", null, new { @class = "form-control", @name = "SIBook", autocomplete = "off" })*@
                                         @Html.TextBoxFor(model => model.SIBook, new { autocomplete = "off" })
                                     </div>
                                     <div class="col-md-2">
@@ -673,7 +673,7 @@
                                         @Html.LabelFor(model => model.TaxNo)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("TaxNo", null, new { @class = "span12", @name = "TaxNo", autocomplete = "off" })
+                                        @Html.TextBox("TaxNo", null, new { @class = "form-control", @name = "TaxNo", autocomplete = "off" })
                                     </div>
                                     <div class="col-md-2">
                                     </div>
@@ -689,7 +689,7 @@
                                         @Html.LabelFor(model => model.NoOfDependent)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("NoOfDependent", null, new { @class = "span12", @name = "NoOfDependent", @type = "number", @min = "0", @max = "100", @value = "0" })
+                                        @Html.TextBox("NoOfDependent", null, new { @class = "form-control", @name = "NoOfDependent", @type = "number", @min = "0", @max = "100", @value = "0" })
                                     </div>
                                     <div class="col-md-2">
                                     </div>

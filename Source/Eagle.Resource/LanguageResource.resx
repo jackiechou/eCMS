@@ -5889,4 +5889,10 @@
   <data name="Setting" xml:space="preserve">
     <value>Cấu hình hệ thống</value>
   </data>
+  <data name="MailManager" xml:space="preserve">
+    <value>Quản lý mail</value>
+  </data>
+  <data name="MailServerProtocol" xml:space="preserve">
+    <value>Giao thức mail</value>
+  </data>
 </root>

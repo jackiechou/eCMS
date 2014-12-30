@@ -45,14 +45,14 @@
                                     <div class="col-md-4">
                                             @if (Model != null && Model.EmpID > 0)
                                             {
-                                                @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span12",@disabled="disabled" })
+                                                @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "form-control",@disabled="disabled" })
                                                 @Html.HiddenFor(model => model.strEmpName)
                                             }
                                             else
                                             {
                                                 <div class="input-append" id="InputstrEmpName">
                                                     <div class="input-append">
-                                                        @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span8" })
+                                                        @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "form-control" })
                                                         @Html.ValidationMessageFor(model => model.strEmpName)
                                                         <button class="btn btnPopupEmp" type="button">...</button>
                                                     </div> 

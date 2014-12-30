@@ -52,16 +52,16 @@
                     <label for="FullName">@Eagle.Resource.LanguageResource.FullName</label>
                 </div>
                 <div class="col-md-4">
-                     @Html.TextBoxFor(model=>model.FullName, null, new { @class = "span12" })   
-                    @*@Html.TextBox("selectFullName", null, new { @class = "span12" })
+                     @Html.TextBoxFor(model=>model.FullName, null, new { @class = "form-control" })   
+                    @*@Html.TextBox("selectFullName", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.FullName, new { autocomplete="off" } )*@
                 </div>
                 <div class="col-md-2">
                     <label for="Code">@Eagle.Resource.LanguageResource.EmpCode</label>
                 </div>
                 <div class="col-md-4">  
-                     @Html.TextBoxFor(model=>model.EmpCode, null, new { @class = "span12" })                 
-                   @* @Html.TextBox("selectEmpCode", null, new { @class = "span12" })
+                     @Html.TextBoxFor(model=>model.EmpCode, null, new { @class = "form-control" })                 
+                   @* @Html.TextBox("selectEmpCode", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.EmpCode, new { autocomplete="off" } )*@
                 </div>    
             </div>

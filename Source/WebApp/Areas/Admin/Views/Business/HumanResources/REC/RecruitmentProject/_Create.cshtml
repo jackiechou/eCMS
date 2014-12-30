@@ -35,7 +35,7 @@
                                     @Html.RequiredLabelFor(model => model.ProjectCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.ProjectCode, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ProjectCode, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -93,7 +93,7 @@
                                     @Html.LabelFor(model => model.LSCurrencyID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSCurrencyID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLSCurrencyID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSCurrencyID)
                                     @Html.HiddenFor(model => model.LSCurrencyName)
                                 </div>
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     
-                                    @Html.TextBox("SelectLSLocationID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLSLocationID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSLocationID)
                                     @Html.HiddenFor(model => model.LSLocationName)
                                 </div>
@@ -154,7 +154,7 @@
                                     @Html.LabelFor(model => model.Content)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Content, new { @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row">
@@ -162,7 +162,7 @@
                                     @Html.LabelFor(model => model.Description)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Description, new { @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--/row-->

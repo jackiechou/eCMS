@@ -15,7 +15,7 @@
             @Html.LabelFor(model => model.DestinationUrl)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("DestinationUrl", null, new { @class = "span12" })
+            @Html.TextBox("DestinationUrl", null, new { @class = "form-control" })
         </div>
     </div>
 
@@ -46,7 +46,7 @@
             @Html.LabelFor(model => model.BannerPositionId)
         </div>
         <div class="col-md-4">
-            @Html.ListBox("BannerPositionId", (MultiSelectList)ViewBag.BannerPositions, new { @id = "BannerPositionId", @class = "span12", size = ((MultiSelectList)ViewBag.BannerPositions).Count() })
+            @Html.ListBox("BannerPositionId", (MultiSelectList)ViewBag.BannerPositions, new { @id = "BannerPositionId", @class = "form-control", size = ((MultiSelectList)ViewBag.BannerPositions).Count() })
             @Html.ValidationMessageFor(model => model.AltText)
         </div>
 

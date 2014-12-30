@@ -91,7 +91,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Comment, new { @class = "form-control" })
                                 </div>
                             </div>
                             }
@@ -106,7 +106,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextArea("Comment", Model.CurrentComment, new { @class = "span12" })
+                                    @Html.TextArea("Comment", Model.CurrentComment, new { @class = "form-control" })
                                 </div>
                             </div>
                             }
@@ -118,7 +118,7 @@
                                         @Html.LabelFor(model => model.Comment)
                                     </div>
                                     <div class="col-md-10">
-                                        @Html.TextArea("CurrentComment", Model.CurrentComment, new { @class = "span12" })
+                                        @Html.TextArea("CurrentComment", Model.CurrentComment, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 
@@ -136,7 +136,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-10">
-                                        @Html.DropDownList("cboLevelApprove", null, new { @class = "span12" })
+                                        @Html.DropDownList("cboLevelApprove", null, new { @class = "form-control" })
                                     </div>
                                 </div>
                             }

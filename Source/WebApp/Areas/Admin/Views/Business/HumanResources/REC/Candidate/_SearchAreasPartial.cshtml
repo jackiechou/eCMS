@@ -7,14 +7,14 @@
         @Html.LabelFor(model => model.CandidateCodeSearch)
     </div>
     <div class="col-md-4">
-        @Html.TextBoxFor(model => model.CandidateCodeSearch, new { @class = "span12" })
+        @Html.TextBoxFor(model => model.CandidateCodeSearch, new { @class = "form-control" })
     </div>
 
      <div class="col-md-2">
         @Html.LabelFor(model => model.FullNameSearch)
     </div>
     <div class="col-md-4">
-        @Html.TextBoxFor(model => model.FullNameSearch, new { @class = "span12" })
+        @Html.TextBoxFor(model => model.FullNameSearch, new { @class = "form-control" })
     </div>
 </div>
 
@@ -23,13 +23,13 @@
         @Html.LabelFor(model => model.IDNoSearch)
     </div>
     <div class="col-md-4">
-        @Html.TextBoxFor(model => model.IDNoSearch, new { @class = "span12" })
+        @Html.TextBoxFor(model => model.IDNoSearch, new { @class = "form-control" })
     </div>
     <div class="col-md-2">
         @Html.LabelFor(model => model.ResultSearch)
     </div>
     <div class="col-md-4">
-        @Html.DropDownList("ResultSearch", null, "-- " + Eagle.Resource.LanguageResource.Select + " --", new { @class = "span12" })
+        @Html.DropDownList("ResultSearch", null, "-- " + Eagle.Resource.LanguageResource.Select + " --", new { @class = "form-control" })
     </div>
 </div>
 
@@ -38,7 +38,7 @@
         @Html.LabelFor(model => model.GenderSearch)
     </div>
     <div class="col-md-4">
-        @Html.DropDownList("GenderSearch", null, "-- " + Eagle.Resource.LanguageResource.Select + " --", new { @class = "span12" })
+        @Html.DropDownList("GenderSearch", null, "-- " + Eagle.Resource.LanguageResource.Select + " --", new { @class = "form-control" })
     </div>
     <div class="col-md-2">
         @Html.LabelFor(model => model.LSLocationSearchID)

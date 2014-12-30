@@ -41,7 +41,7 @@
                                     @Html.RequiredLabelFor(model => model.SalaryScaleID)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBox("SelectSalaryScaleID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectSalaryScaleID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.SalaryScaleID)
                                     @Html.HiddenFor(model => model.ScaleName)
                                 </div>
@@ -53,7 +53,7 @@
                                     @Html.RequiredLabelFor(model => model.SalaryGradeID)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBox("SelectSalaryGradeID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectSalaryGradeID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.SalaryGradeID)
                                     @Html.HiddenFor(model => model.GradeName)
                                 </div>
@@ -62,7 +62,7 @@
                                     @Html.RequiredLabelFor(model => model.SalaryRankID)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBox("SelectSalaryRankID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectSalaryRankID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.SalaryRankID)
                                     @Html.HiddenFor(model => model.RankName)
                                 </div>
@@ -74,14 +74,14 @@
                                     @Html.RequiredLabelFor(model => model.BasicCoef)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.BasicCoef, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.BasicCoef, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.BasicCoef)
                                 </div>
                                 <div class="col-md-3">
                                     @Html.RequiredLabelFor(model => model.PercentBasicCoef)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.PercentBasicCoef, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.PercentBasicCoef, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.PercentBasicCoef)
                                 </div>
 
@@ -93,14 +93,14 @@
                                     @Html.RequiredLabelFor(model => model.ActualCoef)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.ActualCoef, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ActualCoef, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.ActualCoef)
                                 </div>
                                 <div class="col-md-3">
                                     @Html.RequiredLabelFor(model => model.InsuranceSalary)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.InsuranceSalary, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.InsuranceSalary, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.InsuranceSalary)
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-9">
-                                    @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Note)
                                 </div>
                             </div>

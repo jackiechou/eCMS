@@ -30,7 +30,7 @@
                                     @Html.LabelFor(model => model.EmpID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FullName, null, new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.FullName, null, new { @class = "form-control"})
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4"></div>
@@ -40,7 +40,7 @@
                                 @Html.LabelFor(model => model.LSTrainingCodeID)
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBox("SelectLSTrainingCodeID", null, new { @class = "span12"})                                        
+                                @Html.TextBox("SelectLSTrainingCodeID", null, new { @class = "form-control"})                                        
                                 @Html.HiddenFor(model => model.LSTrainingCodeID)       
                                 @Html.Hidden("TrainingCodeName")                                                                                                                                                                   
                             </div>
@@ -48,7 +48,7 @@
                                 @Html.LabelFor(model => model.LSTrainingCourseID)
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBox("SelectLSTrainingCourseID", null, new { @class = "span12"})                                        
+                                @Html.TextBox("SelectLSTrainingCourseID", null, new { @class = "form-control"})                                        
                                 @Html.HiddenFor(model => model.LSTrainingCourseID)     
                                 @Html.Hidden("TrainingCourseName")                                                                                                        
                             </div>                                                              

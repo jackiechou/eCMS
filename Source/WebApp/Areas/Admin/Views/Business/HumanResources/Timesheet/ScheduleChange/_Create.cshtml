@@ -47,7 +47,7 @@
                                             @Html.LabelFor(model => model.ScheduleID_From)
                                         </div>
                                         <div class="col-md-8">
-                                            @Html.TextBox("SelectScheduleIDFrom", null, new { @class = "span12" })
+                                            @Html.TextBox("SelectScheduleIDFrom", null, new { @class = "form-control" })
                                             @Html.HiddenFor(model => model.ScheduleName_From)
                                             @Html.HiddenFor(model => model.ScheduleID_From)
                                         </div>
@@ -57,7 +57,7 @@
                                             @Html.LabelFor(model => model.ScheduleID_To)
                                         </div>
                                         <div class="col-md-8">
-                                            @Html.TextBox("SelectScheduleIDTo", null, new { @class = "span12" })
+                                            @Html.TextBox("SelectScheduleIDTo", null, new { @class = "form-control" })
                                             @Html.HiddenFor(model => model.ScheduleName_To)
                                             @Html.HiddenFor(model => model.ScheduleID_To)
                                         </div>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="user-style">
-                                        <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "span12" })</h5>
+                                        <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "form-control" })</h5>
                                         <div class="control-group">
                                             @Html.ListBox("lstBox", ViewData["lstBox"] as MultiSelectList, new { @id = "lstBox" })
                                         </div>

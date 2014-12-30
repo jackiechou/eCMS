@@ -32,7 +32,7 @@
                                     <div class="col-md-4">
                                         <div class="input-append" id="InputstrEmpName">
                                                 @Html.HiddenFor(model => model.EmpID)
-                                                @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span8" })
+                                                @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.strEmpName)
                                                 <button class="btn btnPopupEmp" type="button">...</button>
                                         </div>
@@ -55,7 +55,7 @@
                                         @Html.RequiredLabelFor(model =>model.OnlineProcessID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(model =>model.OnlineProcessID, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model =>model.OnlineProcessID, null, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <!--end row-->

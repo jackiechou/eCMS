@@ -188,19 +188,15 @@
 <!--[if !IE ]><!-->
 <body>
     <!--<![endif]-->
-    <div id="container">
+    <div id="container" class="wrapper">
 
-        <div id="header" class="banner_top">
-            @Html.Partial("_TopHeaderPartial")     
-
-            <!-- start main menu -->
-            @Html.Action("LoadMainMenu", "Menu")
-            <!-- and main menu -->           
+        <div id="header" class="header">
+            @Html.Partial("_TopHeaderPartial")                  
         </div>
         <div class="clearboth"></div>
 
         <!-- start container -->
-        <div id="body">
+        <div id="body" class="body">
             @RenderBody()           
         </div>
         <div class="clearboth"></div>

@@ -25,7 +25,7 @@
                                         @Html.LabelFor(model => model.First().Year)
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.TextBoxFor(model => model.First().Year, new { @class = "span2" })
+                                        @Html.TextBoxFor(model => model.First().Year, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.First().Year)
                                         <input type="button" id="btnSearch" value=" @Eagle.Resource.LanguageResource.btnSearch" class="direct_bt btn btn-info btn-larg1e row-fluid" />
                                         
@@ -39,7 +39,7 @@
                                         @Html.Label("Year", Eagle.Resource.LanguageResource.Year, null)
                                     </div>
                                     <div class="col-md-8">
-                                        @Html.TextBox("Year", (int)ViewBag.iYear , new { @class = "span2" })
+                                        @Html.TextBox("Year", (int)ViewBag.iYear , new { @class = "form-control" })
                                         <input type="button" id="btnSearch" value=" @Eagle.Resource.LanguageResource.btnSearch" class="direct_bt btn btn-info btn-larg1e row-fluid" />
                                     </div>
                                 </div>

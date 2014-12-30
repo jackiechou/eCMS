@@ -34,7 +34,7 @@
                                     @Html.RequiredLabelFor(model => model.SalaryScale)
                                 </div>
                                 <div class="col-md-4">
-                                      @Html.TextBox("SelectSalaryScaleID", null, new { @class = "span12" })
+                                      @Html.TextBox("SelectSalaryScaleID", null, new { @class = "form-control" })
                                       @Html.HiddenFor(model => model.SalaryScale)
                                       @Html.HiddenFor(model => model.SalaryScaleIDNull)
                                       
@@ -43,7 +43,7 @@
                                     @Html.RequiredLabelFor(model => model.SalaryGradeCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.SalaryGradeCode, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Code, @class = "span12" })
+                                    @Html.TextBoxFor(model => model.SalaryGradeCode, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Code, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.SalaryGradeCode)
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                                     @Html.RequiredLabelFor(model => model.Name)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Name, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Name, @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Name, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Name, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Name)
 
                                 </div>
@@ -62,7 +62,7 @@
                                     @Html.RequiredLabelFor(model => model.VNName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.VNName, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.VNName, @class = "span12" })
+                                    @Html.TextBoxFor(model => model.VNName, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.VNName, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.VNName)
                                 </div>
 
@@ -74,7 +74,7 @@
                                     @Html.LabelFor(model => model.Rank)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.Rank, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Rank, @class = "span7" })
+                                    @Html.TextBoxFor(model => model.Rank, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Rank, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Rank)
 
                                 </div>
@@ -94,7 +94,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Note)
                                 </div>
                             </div>

@@ -34,7 +34,7 @@
                                     @Html.RequiredLabelFor(model => model.Type)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Type, null, new { @class = "span12" })
+                                    @Html.DropDownListFor(model => model.Type, null, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Type)
                                     @Html.HiddenFor(model => model.RewardID)
                                 </div>
@@ -53,7 +53,7 @@
                                     @Html.RequiredLabelFor(model => model.LSRewardID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("selectLSRewardID", null, new { @class = "span12" })
+                                    @Html.TextBox("selectLSRewardID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSRewardID)
                                     @Html.Hidden("LSRewardName")
                                     @Html.ValidationMessageFor(model => model.LSRewardID)
@@ -63,7 +63,7 @@
                                     @Html.RequiredLabelFor(model => model.LSRewardLevelID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.LSRewardLevelID, null, new { @class = "span12" })
+                                    @Html.DropDownListFor(model => model.LSRewardLevelID, null, new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -72,7 +72,7 @@
                                     @Html.LabelFor(model => model.Reason)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Reason, new { rows = 1, columns = 40, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Reason, new { rows = 1, columns = 40, @class = "form-control" })
                                 </div>
                             </div>
 
@@ -81,7 +81,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Note, new { rows = 1, columns = 40, maxlength=150, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { rows = 1, columns = 40, maxlength=150, @class = "form-control" })
                                 </div>
                             </div>
 
@@ -101,7 +101,7 @@
                                         @Html.LabelFor(model => model.DecisionNo)
                                     </div>
                                     <div class="col-md-10">
-                                        @Html.TextBoxFor(model => model.DecisionNo, new { @class = "span12" })
+                                        @Html.TextBoxFor(model => model.DecisionNo, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="row">

@@ -40,7 +40,7 @@
                                     @Html.RequiredLabelFor(model => model.LSCurrencyID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSLSCurrencyID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLSLSCurrencyID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSCurrencyID)
                                     @Html.HiddenFor(model => model.LSCurrencyName)
                                 </div>
@@ -52,7 +52,7 @@
                                     @Html.RequiredLabelFor(model => model.ExchangeRate)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.ExchangeRate, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ExchangeRate, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.ExchangeRate)
                                 </div>
                                 <div class="col-md-2">
@@ -67,7 +67,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Note)
                                 </div>
                             </div>

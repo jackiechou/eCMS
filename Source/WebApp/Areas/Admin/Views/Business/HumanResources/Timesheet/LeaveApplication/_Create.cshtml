@@ -163,7 +163,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLeaveDayTypeID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLeaveDayTypeID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSLeaveDayTypeName)
                                     @Html.HiddenFor(model => model.LSLeaveDayTypeID)
                                 </div>
@@ -173,7 +173,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("LeaveTakenView", null, new { @class = "span4", @disabled = "disabled" })
+                                    @Html.TextBox("LeaveTakenView", null, new { @class = "form-control", @disabled = "disabled" })
                                     @Html.Hidden("LeaveTaken")
                                     <input type="button" id="btnDetail" value=" ..." class="direct_bt btn btn-larg1e row-fluid launchConfirm" />
                                 </div>
@@ -212,7 +212,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Comment, new { @class = "form-control" })
                                 </div>
                             </div>
                             }
@@ -225,7 +225,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextArea("Comment", Model.CurrentComment, new { @class = "span12" })
+                                    @Html.TextArea("Comment", Model.CurrentComment, new { @class = "form-control" })
                                 </div>
                             </div>
                             }
@@ -237,7 +237,7 @@
                                         @Html.LabelFor(model => model.Comment)
                                     </div>
                                     <div class="col-md-10">
-                                        @Html.TextArea("CurrentComment", Model.CurrentComment, new { @class = "span12" })
+                                        @Html.TextArea("CurrentComment", Model.CurrentComment, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 

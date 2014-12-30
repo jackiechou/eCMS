@@ -31,7 +31,7 @@
                                     @Html.RequiredLabelFor(model => model.FileTitle)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.FileTitle, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.FileTitle, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.FileTitle)                                   
                                     @Html.HiddenFor(model => model.FileId)
                                     @Html.HiddenFor(model => model.FolderKey)                                   
@@ -46,7 +46,7 @@
                                             @Html.Raw(Eagle.Resource.LanguageResource.ChooseFile) <input id="FileUpload" name="FileUpload" type="file" class="col-md-12" required="required" />
                                         </span>
                                         <br />
-                                        @Html.HiddenFor(model => model.FileName, new { @class = "span12" })
+                                        @Html.HiddenFor(model => model.FileName, new { @class = "form-control" })
                                         @Html.Action("CreateDownloadLink", "FileManager", new { @FileId = Model.FileId })
 </div>
                             </div>
@@ -55,7 +55,7 @@
                                     @Html.LabelFor(model => model.FileDescription)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.FileDescription, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.FileDescription, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
                                 </div>
                             </div>                                      
                         </div>

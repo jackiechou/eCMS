@@ -30,13 +30,13 @@
                                     @Html.LabelFor(model => model.CandidateCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.CandidateCode, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.CandidateCode, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.FullName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FullName, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row">
@@ -44,13 +44,13 @@
                                     @Html.LabelFor(model => model.Gender)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownList("Gender", null ,"--"+ Eagle.Resource.LanguageResource.Select +"--" , new { @class = "span12" })
+                                    @Html.DropDownList("Gender", null ,"--"+ Eagle.Resource.LanguageResource.Select +"--" , new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Status)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownList("Status",null, new { @class = "span12" })
+                                    @Html.DropDownList("Status",null, new { @class = "form-control" })
                                 </div>
                             </div>
 

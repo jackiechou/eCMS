@@ -80,72 +80,90 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             return PartialView("../Sys/Menu/_Edit", entity);
         }
 
+        //[SessionExpiration]
+        //public ActionResult LoadDesktopMenu()
+        //{
+        //    string strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty;
+        //    int? iPageId = 0;
+        //    string signal = getUrl().ToLower();
+        //    signal = signal == "home" ? "" : signal;
+        //    int MenuTypeId = 0;
+
+        //    if (ScopeTypeId == 1)
+        //        MenuTypeId = 3;  //Host
+        //    else if (ScopeTypeId == 2)
+        //        MenuTypeId = 10; //Site Admin
+        //    else
+        //        MenuTypeId = 0;
+        //    if (Session[SettingKeys.MenuList] == null || Session[SettingKeys.MenuList].ToString() == string.Empty)
+        //    {
+        //        string Status = ThreeStatusString.Active;
+        //        List<MenuViewModel> menuList = MenuRepository.GetListByRoleIdScopeTypeIdStatus(RoleId, MenuTypeId, ScopeTypeId, Status);
+        //        if (menuList != null && menuList.Count > 0)
+        //        {
+        //            // Tim nhung node cha truoc
+        //            foreach (var item in menuList.Where(p => p.ParentId == null || p.ParentId == 0))
+        //            {
+        //                IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+        //                IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+
+        //                Icon = (item.IconFile != null) ? IconUrl : IconClass;
+
+        //                //MenuLink = (item.IsExtenalLink != null && item.IsExtenalLink == true) ? item.PageUrl : item.PagePath.ToLower();     
+        //                if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+        //                    MenuLink = item.PageUrl;
+        //                else
+        //                {
+        //                    if (!string.IsNullOrEmpty(item.PagePath))
+        //                        MenuLink = item.PagePath.ToLower();
+        //                }
+        //                iPageId = (item.PageId != null) ? item.PageId : 0;
+        //                MenuLink += "/" + iPageId + "/" + item.MenuId;
+
+        //                strResult += "<li>";
+        //                strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
+        //                strResult += LoopPage(item.MenuId, menuList);
+        //                strResult += "</li>";
+        //            }
+        //        }
+        //        Session[SettingKeys.MenuList] = strResult;
+        //    }
+        //    else
+        //    {
+        //        strResult = Session[SettingKeys.MenuList].ToString();
+
+        //    }
+        //    strResult = strResult.Replace("/" + signal + "'", "/" + signal + "' isview='1' ");
+        //    return PartialView("_MenuPartial", strResult);
+        //}
+
+        public ActionResult LoadDesktopMainMenu()
+        {
+            string strHTML = MenuRepository.LoadDesktopBootstrapMenu(13, 3);
+            return PartialView("Desktop/_DesktopMainMenu", strHTML);
+        }
+
+        public ActionResult LoadJsonDesktopMainMenu()
+        {
+            string strHTML = MenuRepository.LoadDesktopMegaMenu(13, 3);
+            return Json(strHTML, JsonRequestBehavior.AllowGet);
+        }
+
 
         [ChildActionOnly]
         [SessionExpiration]
-        public ActionResult LoadMainMenu()
+        public ActionResult LoadAdminMainMenu()
         {
-            string strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty;
-            int? iPageId = 0;
-            string signal = getUrl().ToLower();
-            signal = signal == "home" ? "" : signal;
             int MenuTypeId = 0;
-            
-            if(ScopeTypeId == 1)
+            if (ScopeTypeId == 1)
                 MenuTypeId = 3;  //Host
-            else if(ScopeTypeId == 2)
+            else if (ScopeTypeId == 2)
                 MenuTypeId = 10; //Site Admin
             else
-                MenuTypeId = 0;
-            if (Session[SettingKeys.MenuList]==null || Session[SettingKeys.MenuList].ToString() ==string.Empty)
-            {         
-                string Status = ThreeStatusString.Active;
-                List<MenuViewModel> menuList = MenuRepository.GetListByRoleIdScopeTypeIdStatus(RoleId, MenuTypeId, ScopeTypeId, Status);
-                if (menuList != null && menuList.Count > 0)
-                {
-                    // Truong hop la Admin thi ko can Check
-                    //if (Boolean.Parse(Session[SettingKeys.IsSuperUser].ToString()) == false)
-                    //{
-                    //    List<MenuPermissionViewModel> listAccessPage = (List<MenuPermissionViewModel>)Session[SettingKeys.MenuList];
-                    //    var MenuIDs = listAccessPage.Where(p => p.Read == 1).Select(p => p.MenuId).ToList();
-                    //    menuList = menuList.Where(o => MenuIDs.Contains(o.MenuId)).ToList();
-                    //}
-                    //ViewBag.allPage = menuList;
+                MenuTypeId = 15; //Desktop
 
-                    // Tim nhung node cha truoc
-                    foreach (var item in menuList.Where(p => p.ParentId == null || p.ParentId == 0))
-                    {
-                        IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                        IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
-
-                        Icon = (item.IconFile != null) ? IconUrl : IconClass;
-
-                        //MenuLink = (item.IsExtenalLink != null && item.IsExtenalLink == true) ? item.PageUrl : item.PagePath.ToLower();     
-                        if (item.IsExtenalLink != null && item.IsExtenalLink == true)
-                            MenuLink = item.PageUrl;
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(item.PagePath))
-                                MenuLink = item.PagePath.ToLower();  
-                        }
-                        iPageId = (item.PageId != null) ? item.PageId : 0;
-                        MenuLink += "/" + iPageId + "/" + item.MenuId;
-
-                        strResult += "<li>";
-                        strResult += "<a href='" + MenuLink + "'><span> " + Icon  + "  " + item.MenuTitle + "</span></a>";
-                        strResult += LoopPage(item.MenuId, menuList);
-                        strResult += "</li>";
-                    }
-                }
-                Session[SettingKeys.MenuList] = strResult;
-            }
-            else
-            {
-                strResult = Session[SettingKeys.MenuList].ToString();
-
-            }
-            strResult = strResult.Replace("/" + signal + "'", "/" + signal + "' isview='1' ");
-            return PartialView("_MenuPartial", strResult);
+            string strHTML = MenuRepository.LoadMenu(RoleId, MenuTypeId, ScopeTypeId);
+            return PartialView("_MenuPartial", strHTML);
         }
 
 
@@ -153,124 +171,17 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         [SessionExpiration]
         public ActionResult LoadLeftMainMenu()
         {
-            string strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty;
-            int? iPageId = 0;
-            string signal = getUrl().ToLower();
-            signal = signal == "home" ? "" : signal;
             int MenuTypeId = 0;
-
             if (ScopeTypeId == 1)
                 MenuTypeId = 3;  //Host
             else if (ScopeTypeId == 2)
                 MenuTypeId = 10; //Site Admin
             else
-                MenuTypeId = 0;
-            if (Session[SettingKeys.MenuList] == null || Session[SettingKeys.MenuList].ToString() == string.Empty)
-            {
-                string Status = ThreeStatusString.Active;
-                List<MenuViewModel> menuList = MenuRepository.GetListByRoleIdScopeTypeIdStatus(RoleId, MenuTypeId, ScopeTypeId, Status);
-                if (menuList != null && menuList.Count > 0)
-                {
-                    // Truong hop la Admin thi ko can Check
-                    //if (Boolean.Parse(Session[SettingKeys.IsSuperUser].ToString()) == false)
-                    //{
-                    //    List<MenuPermissionViewModel> listAccessPage = (List<MenuPermissionViewModel>)Session[SettingKeys.MenuList];
-                    //    var MenuIDs = listAccessPage.Where(p => p.Read == 1).Select(p => p.MenuId).ToList();
-                    //    menuList = menuList.Where(o => MenuIDs.Contains(o.MenuId)).ToList();
-                    //}
-                    //ViewBag.allPage = menuList;
-
-                    // Tim nhung node cha truoc
-                    foreach (var item in menuList.Where(p => p.ParentId == null || p.ParentId == 0))
-                    {
-                        IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                        IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
-                        
-                        Icon = (item.IconFile!=null) ? IconUrl : IconClass;
-     
-                        if (item.IsExtenalLink != null && item.IsExtenalLink == true)
-                            MenuLink = item.PageUrl;
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(item.PagePath))
-                                MenuLink = item.PagePath.ToLower();
-                        }
-
-                        iPageId = (item.PageId != null) ? item.PageId: 0;
-                        MenuLink += "/" + iPageId + "/" + item.MenuId;
-
-                        strResult += "<li>";
-                        strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
-                        strResult += LoopPage(item.MenuId, menuList);
-                        strResult += "</li>";
-                    }
-                }
-                Session[SettingKeys.MenuList] = strResult;
-            }
-            else
-            {
-                strResult = Session[SettingKeys.MenuList].ToString();
-
-            }
-            strResult = strResult.Replace("/" + signal + "'", "/" + signal + "' isview='1' ");
-            return PartialView("_LeftMainMenu", strResult);
-        }
-
-
-        private string getUrl()
-        {
-            var stop = false;
-            foreach (var item in Request.Url.AbsolutePath.Split('/'))
-            {
-                if (stop)
-                {
-                    return item;
-                }
-                if (item.ToLower().Contains("admin"))
-                {
-                    stop = true;
-                }
-            }
-            return "";
-        }
-        private string LoopPage(int PageId, List<MenuViewModel> lst)
-        {
-            string strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty;
-            int? iPageId = 0;
-            var _lst = lst.Where(p => p.ParentId == PageId);
-            if(_lst !=null && _lst.Count() > 0)
-            {
-                strResult = "<ul style='display:none;'>";
-                foreach (var item in lst.Where(p => p.ParentId == PageId))
-                {
-                    IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
-
-                    Icon = (item.IconFile != null) ? IconUrl : IconClass;
-                    //MenuLink = (item.IsExtenalLink != null && item.IsExtenalLink == true) ? item.PageUrl : item.PagePath;
-                    if (item.IsExtenalLink != null && item.IsExtenalLink == true)
-                        MenuLink = item.PageUrl;
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(item.PagePath))
-                            MenuLink = item.PagePath.ToLower();
-                    }
-
-                    iPageId = (item.PageId != null) ? item.PageId : 0;
-                    MenuLink += "/" + PageId + "/" + item.MenuId;
-
-                    strResult += "<li>";
-                    strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
-                    strResult += LoopPage(item.MenuId, lst);
-
-                    strResult += "</li>";
-                }
-
-                strResult += "</li>";
-                strResult += "</ul>";
-            }
-            return strResult;
-        }
+                MenuTypeId = 15;//Desktop
+            string strHTML = MenuRepository.LoadMenu(RoleId, MenuTypeId, ScopeTypeId);
+            return PartialView("_LeftMainMenu", strHTML);
+        }   
+    
 
         //string xslt_filepath = "~/Areas/Admin/Views/Home/MenuTransformer.xslt";
         //public string ExecuteXSLTransformation(int LanguageId = 41)

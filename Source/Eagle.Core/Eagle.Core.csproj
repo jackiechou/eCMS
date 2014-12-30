@@ -534,6 +534,9 @@
     <Compile Include="Menu_GetListByRoleUserTypeStatus_Result.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Menu_GetListByTypeStatus_Result.cs">
+      <DependentUpon>EntityDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Menu_GetParentNodesOfSelectedNodeByMenuCode_Result.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>

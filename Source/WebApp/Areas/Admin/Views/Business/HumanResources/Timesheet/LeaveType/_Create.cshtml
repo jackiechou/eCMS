@@ -34,7 +34,7 @@
                                         @Html.RequiredLabelFor(model => model.LSLeaveTypeCode)
                                     </div>
                                     <div class="col-md-3">
-                                            @Html.TextBoxFor(model => model.LSLeaveTypeCode, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Code, @class = "span7" })
+                                            @Html.TextBoxFor(model => model.LSLeaveTypeCode, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Code, @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LSLeaveTypeCode)
                                      
                                     </div>
@@ -42,7 +42,7 @@
                                         @Html.LabelFor(model => model.Name)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.Name, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Name, @class = "span12" })
+                                        @Html.TextBoxFor(model => model.Name, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Name, @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Name)
                                     </div>
                                     
@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="col-md-10">
                                         
-                                            @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+                                            @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.Note)
                                     </div>
                                 </div>

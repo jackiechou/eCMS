@@ -29,7 +29,7 @@
                 <div id="form_accordion" class="accordion-body collapse in">
                     <div class="accordion-inner">
                         <div class="accordion-content">
-                            <div class="row">
+                            <div class="form-group">
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Mail_Type_Id)
                                 </div>
@@ -47,16 +47,16 @@
                                     @Html.HiddenFor(model => model.Mail_Template_Id)
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-group">
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Mail_Template_Name)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.Mail_Template_Name, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Mail_Template_Name, new { @class = "span12 form-control" })
                                     @Html.ValidationMessageFor(model => model.Mail_Template_Name)
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-group">
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Mail_Template_Content)
                                 </div>
@@ -68,17 +68,17 @@
                                     @Html.ValidationMessageFor(model => model.Mail_Template_Content)
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-group">
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Mail_Template_Discontinued)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Mail_Template_Discontinued, null, new { @class = "span12" })
+                                    @Html.DropDownListFor(model => model.Mail_Template_Discontinued, null, new { @class = "span12 form-control" })
                                     @Html.ValidationMessageFor(model => model.Mail_Template_Discontinued)
                                 </div>
                             </div>
                             <!--/row-->
-                            <div class="row">
+                            <div class="form-group">
                                 <div class="footbar">
                                     <input type="button" id="btnEdit" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info edit" />
                                     <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" />

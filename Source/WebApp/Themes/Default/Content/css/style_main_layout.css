@@ -1,0 +1,27 @@
+﻿#LeftPane {
+display: block;
+float: left;
+position: relative;
+width: 20%;
+}
+
+#ContentPane {
+   /* margin-left: 220px;*/
+    margin-right: 0;
+    transition: margin-left 0.4s ease 0s;
+    width:79.2% !important;   
+   float:left;
+   margin-left:10px;
+  
+}
+
+.hide-sidebar #LeftPane {
+  display: none !important;
+  width:0%;
+  }
+  
+.hide-sidebar #ContentPane {
+    /*margin: auto  0px !important;*/
+    margin: 0px;
+	width:100% !important;
+}

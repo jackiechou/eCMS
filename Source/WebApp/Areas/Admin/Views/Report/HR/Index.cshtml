@@ -36,7 +36,7 @@
                          <label>@Html.Raw(Eagle.Resource.LanguageResource.StatisticDate)</label>
                     </div>
                     <div class="col-md-4">
-                       @* @Html.DropDownList("CareerStatus", null, new { @class = "span12" })*@
+                       @* @Html.DropDownList("CareerStatus", null, new { @class = "form-control" })*@
                          @Html.DateTimePicker("StatisticDate", null, DateTime.Now.ToString("dd/MM/yyyy"), false, new { @readonly = "readonly" })
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                         <fieldset class="leftCotent">
                             <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticFocus)</span></legend>
                             <div class="fielsetContent">
-                                @Html.ListBox("StatisticFocus", (MultiSelectList)ViewBag.StatisticFocus , new { @id = "StatisticFocus", @class = "span12", size = ((MultiSelectList)ViewBag.StatisticFocus).Count() })
+                                @Html.ListBox("StatisticFocus", (MultiSelectList)ViewBag.StatisticFocus , new { @id = "StatisticFocus", @class = "form-control", size = ((MultiSelectList)ViewBag.StatisticFocus).Count() })
                             </div>
                         </fieldset>
 

@@ -23,7 +23,7 @@
                                     @Html.LabelFor(model => model.ParentId)
                                 </div>
                                 <div class="col-md-10">
-                                    @*@Html.DropDownListFor(model => model.ParentId, null, new { @class = "span12" })*@
+                                    @*@Html.DropDownListFor(model => model.ParentId, null, new { @class = "form-control" })*@
 
                                     @*<select id="ParentId" name="ParentId" class="easyui-combotree" style="width:200px;"></select>*@
                                     @*<input id="ParentId" name="ParentId" type="text" class="easyui-combotree" value="0" style="width:200px;">*@
@@ -37,7 +37,7 @@
                                     @Html.LabelFor(model => model.Name)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "span12 form-control" })
                                     @Html.ValidationMessageFor(model => model.Name)
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                     @Html.LabelFor(model => model.Description)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Description, new { @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "span12 form-control" })
                                     @Html.ValidationMessageFor(model => model.Description)
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                     @Html.LabelFor(model => model.Status)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Status, null, new { @class = "span12" })
+                                    @Html.DropDownListFor(model => model.Status, null, new { @class = "span12 form-control" })
                                     @Html.ValidationMessageFor(model => model.Status)
                                 </div>
                             </div>   

@@ -42,13 +42,13 @@
             @Html.RequiredLabelFor(model => model.DemandCode)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.DemandCode, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.DemandCode, new { @class = "form-control" })
         </div>
          <div class="col-md-2">
             @Html.RequiredLabelFor(model => model.DemandQuantityAlowNull)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.DemandQuantityAlowNull, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.DemandQuantityAlowNull, new { @class = "form-control" })
         </div>  
     </div>
 
@@ -97,7 +97,7 @@
             @Html.RequiredLabelFor(model => model.LSPositionID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectLSPositionID", null, new { @class = "span12" })
+            @Html.TextBox("SelectLSPositionID", null, new { @class = "form-control" })
             
             @Html.HiddenFor(model => model.LSPositionID)
             @Html.HiddenFor(model => model.LSPositionName)
@@ -161,7 +161,7 @@
             @Html.LabelFor(model => model.OtherDemand)
         </div>
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.OtherDemand, new { @class = "span12" })
+            @Html.TextAreaFor(model => model.OtherDemand, new { @class = "form-control" })
         </div>
     </div>
     <div>
@@ -192,7 +192,7 @@
             @Html.LabelFor(model => model.Comment)
         </div>
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })
+            @Html.TextAreaFor(model => model.Comment, new { @class = "form-control" })
         </div>
     </div>
     

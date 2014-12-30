@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Eagle.Model.Mail;
+using Eagle.Repository.SYS.Session;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +12,37 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
     {
         //
         // GET: /Admin/MailServerProvider/
-
+        [SessionExpiration]
         public ActionResult Index()
         {
-            return View();
+            if (Request.IsAjaxRequest())
+                return PartialView("../Services/Mail/MailServerProvider/_Reset");
+            else
+                return View("../Services/Mail/MailServerProvider/Index");
+        }
+
+        [SessionExpiration]
+        public ActionResult Create()
+        {
+            return PartialView("../Services/Mail/MailServerProvider/_Edit");
+        }
+
+        [SessionExpiration]
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            MailServerProviderViewModel model = new MailServerProviderViewModel();
+            //MailServerProviderViewModel model = MailTypeRespository.GetDetails(id);          
+            //ViewBag.Status = CommonRepository.GenerateTwoStatusModeList(model.Status.ToString(), true);
+            return PartialView("../Services/Mail/MailServerProvider/_Edit", model);
+        }
+
+        [SessionExpiration]
+        public ActionResult List(int? TypeId)
+        {
+            List<MailServerProviderViewModel> lst = new List<MailServerProviderViewModel>();
+            //List<MailServerProviderViewModel> sources = MailTemplateRespository.GetListByTypeId(TypeId);
+            return PartialView("../Services/Mail/MailServerProvider/_List", lst);
         }
 
         //private void PopulateTabList()

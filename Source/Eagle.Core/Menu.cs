@@ -22,6 +22,7 @@ namespace Eagle.Core
         public int Depth { get; set; }
         public string Lineage { get; set; }
         public int ListOrder { get; set; }
+        public Nullable<bool> HasChild { get; set; }
         public string MenuName { get; set; }
         public string MenuTitle { get; set; }
         public string MenuAlias { get; set; }

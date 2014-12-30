@@ -42,7 +42,7 @@
                                     @Html.RequiredLabelFor(model => model.BasicSalary)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.BasicSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.BasicSalary,"{0:###}", new { @class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.BasicSalary)
                                 </div>
                             </div>
@@ -53,14 +53,14 @@
                                     @Html.RequiredLabelFor(model => model.PercentBasicSalary)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.PercentBasicSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.PercentBasicSalary,"{0:###}", new { @class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.PercentBasicSalary)
                                 </div>
                                 <div class="col-md-3">
                                     @Html.RequiredLabelFor(model => model.ActualSalary)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.ActualSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.ActualSalary,"{0:###}", new { @class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.ActualSalary)
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                     @Html.RequiredLabelFor(model => model.LSCurrencyID)
                                 </div>
                                 <div class="col-md-3">
-                                      @Html.TextBox("SelectLSLSCurrencyID", null, new { @class = "span12" })
+                                      @Html.TextBox("SelectLSLSCurrencyID", null, new { @class = "form-control" })
                                       @Html.HiddenFor(model => model.LSCurrencyID)
                                       @Html.HiddenFor(model => model.LSCurrencyName)
                                 </div>
@@ -91,14 +91,14 @@
                                     @Html.RequiredLabelFor(model => model.InsuranceSalary)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.InsuranceSalary,"{0:###}", new { @class = "span12"})
+                                    @Html.TextBoxFor(model => model.InsuranceSalary,"{0:###}", new { @class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.InsuranceSalary)
                                 </div>
                                 <div class="col-md-3">
                                     @Html.RequiredLabelFor(model => model.InsuranceLSCurrencyID)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBox("InsuranceSelectLSLSCurrencyID", null, new { @class = "span12" })
+                                    @Html.TextBox("InsuranceSelectLSLSCurrencyID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.InsuranceLSCurrencyID)
                                     @Html.HiddenFor(model => model.InsuranceLSCurrencyName)
                                 </div>                                
@@ -110,7 +110,7 @@
                                         @Html.LabelFor(model => model.Note)
                                     </div>
                                     <div class="col-md-9">
-                                            @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "span12" })
+                                            @Html.TextAreaFor(model => model.Note, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.Note, @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.Note)
                                     </div>
                                 </div>

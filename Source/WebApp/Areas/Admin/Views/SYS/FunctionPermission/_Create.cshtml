@@ -30,14 +30,14 @@
                                         @Html.RequiredLabelFor(model => model.GroupID)
                                     </div>
                                     <div class="col-md-4">
-                                            @Html.DropDownList("GroupID", ViewData["lstGroup"] as MultiSelectList,null, new { @id = "GroupID", @class = "span12"})
+                                            @Html.DropDownList("GroupID", ViewData["lstGroup"] as MultiSelectList,null, new { @id = "GroupID", @class = "form-control"})
                                             @Html.ValidationMessageFor(model => model.ModuleID)
                                     </div>
                                     <div class="col-md-2">
                                         @Html.RequiredLabelFor(model => model.ModuleID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.ModuleID,  null, new {@id="ddlModuleID", @class = "span12" })
+                                        @Html.TextBoxFor(model => model.ModuleID,  null, new {@id="ddlModuleID", @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.ModuleID)
                                     </div>
                                     

@@ -5765,4 +5765,10 @@
   <data name="Setting" xml:space="preserve">
     <value>Setting</value>
   </data>
+  <data name="MailManager" xml:space="preserve">
+    <value>Mail Manager</value>
+  </data>
+  <data name="MailServerProtocol" xml:space="preserve">
+    <value>Mail Server Protocol</value>
+  </data>
 </root>

@@ -15,7 +15,7 @@
                     </label>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("EmpCode", null, new { @class = "span12" })
+                    @Html.TextBox("EmpCode", null, new { @class = "form-control" })
                 </div>
                 <div class="col-md-2">
                     <label>
@@ -23,7 +23,7 @@
                     </label>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("FullName", null, new { @class = "span12" })
+                    @Html.TextBox("FullName", null, new { @class = "form-control" })
                 </div>
             </div>
             <!--end row-->
@@ -47,7 +47,7 @@
                     </label>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("SelectLSWorkPlace2ID", null, new { @class = "span12" })
+                    @Html.TextBox("SelectLSWorkPlace2ID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSWorkPlace2ID)
                     @Html.HiddenFor(model => model.LSWorkPlace2Name)
                 </div>

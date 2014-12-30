@@ -47,13 +47,13 @@
                 </div>
                 <div class="col-md-4">
                     <label class="reset-label" id="lblNoOfMonth">@Html.DisplayFor(model => model.NoOfMonth)</label>
-                    @Html.HiddenFor(model => model.NoOfMonth, new { @class = "span12" })
+                    @Html.HiddenFor(model => model.NoOfMonth, new { @class = "form-control" })
                 </div>
                 <div class="col-md-2">
                     @Html.RequiredLabelFor(model => model.CompanyName)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" })
                 </div>
             </div>
             <!--end row-->
@@ -63,13 +63,13 @@
                     @Html.LabelFor(model => model.Position)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Position, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.Position, new { @class = "form-control" })
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.Salary)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Salary,"{0:##0}", new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.Salary,"{0:##0}", new { @class = "form-control" })
                 </div>
             </div>
             <!--end row-->
@@ -79,7 +79,7 @@
                     @Html.LabelFor(model => model.Note)
                 </div>
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+                    @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
                 </div>
             </div>
         </form>

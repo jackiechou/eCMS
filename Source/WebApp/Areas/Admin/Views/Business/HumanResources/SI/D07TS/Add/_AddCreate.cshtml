@@ -3,7 +3,7 @@
 <div class="row" style="margin-bottom:5px;">
     <div class="col-md-2">@Html.RequiredLabelFor(model => model.FullName)</div>
     <div class="col-md-4">
-        @Html.TextBox("SelectEmpID", null, new { @class = "span12" })
+        @Html.TextBox("SelectEmpID", null, new { @class = "form-control" })
         @Html.HiddenFor(model => model.EmpID)
         @Html.HiddenFor(model => model.FullName)
     </div>
@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-2">@Html.RequiredLabelFor(model => model.ChangeTypeID)</div>
     <div class="col-md-4">
-        @Html.TextBox("SelectChangeTypeID", null, new { @class = "span12" })
+        @Html.TextBox("SelectChangeTypeID", null, new { @class = "form-control" })
         @Html.HiddenFor(model => model.ChangeTypeID)
         @Html.HiddenFor(model => model.ChangeTypeName)
     </div>

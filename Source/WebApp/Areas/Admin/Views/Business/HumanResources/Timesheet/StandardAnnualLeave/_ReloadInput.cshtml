@@ -32,14 +32,14 @@
             @Html.LabelFor(model => model.Year)
         </div>
         <div class="col-md-4">
-             @Html.TextBoxFor(model => model.Year, new { @class = "span12" })
+             @Html.TextBoxFor(model => model.Year, new { @class = "form-control" })
              @Html.ValidationMessageFor(model => model.Year)
         </div>
         <div class="col-md-2">
             @Html.LabelFor(model => model.Days)
         </div>
         <div class="col-md-4">
-             @Html.TextBoxFor(model => model.Days, new { @class = "span12" })
+             @Html.TextBoxFor(model => model.Days, new { @class = "form-control" })
              @Html.ValidationMessageFor(model => model.Days)
         </div>
     </div>
@@ -48,7 +48,7 @@
             @Html.LabelFor(model => model.Note)
         </div>
         <div class="col-md-10">
-             @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+             @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
         </div>
     </div>
 }

@@ -10,6 +10,7 @@ using Eagle.Model;
 using Eagle.Model.Mail;
 using Eagle.Repository.SYS.Session;
 using Eagle.Common.Settings;
+using Eagle.Model.SYS.User;
 
 namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
 {
@@ -20,29 +21,17 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
         [SessionExpiration]
         public ActionResult Index()
         {
-            AccountViewModel acc = (AccountViewModel)Session[SettingKeys.AccountInfo];
-            if (acc == null)
-            {
-                Response.RedirectToRoute("Admin_Login");
-                return null;
-            }
-            else
-            {
-                ViewBag.AccountId = acc.EmpId;
-            }
-
             if (Request.IsAjaxRequest())
-                return PartialView("../Mail/MailTemplate/_Reset");
+                return PartialView("../Services/Mail/MailTemplate/_Reset");
             else
-               // return View("../Mail/MailTemplate/Index");
-                return View("../Mail/MailTemplate/Index");
+                return View("../Services/Mail/MailTemplate/Index");
         }
 
         [SessionExpiration]
         public ActionResult List(int? TypeId)
         {
             IList<MailTemplateViewModel> sources = MailTemplateRespository.GetListByTypeId(TypeId);
-            return PartialView("../Mail/MailTemplate/_List", sources);
+            return PartialView("../Services/Mail/MailTemplate/_List", sources);
         }
 
         //
@@ -51,15 +40,8 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
         [SessionExpiration]
         public ActionResult Create()
         {
-            AccountViewModel acc = (AccountViewModel)Session[SettingKeys.AccountInfo];
-            if (acc == null)
-            {
-                Response.RedirectToRoute("Admin_Login");
-                return null;
-            }           
-            PopulateStatusToDropDownList(null);
-
-            return PartialView("../Mail/MailTemplate/_Create");
+            ViewBag.Mail_Template_Discontinued = Eagle.Repository.CommonRepository.GenerateTwoStatusModeList(null, false);
+            return PartialView("../Services/Mail/MailTemplate/_Create");
         }
 
        
@@ -103,18 +85,11 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            AccountViewModel acc = (AccountViewModel)Session[SettingKeys.AccountInfo];
-            if (acc == null)
-            {
-                Response.RedirectToRoute("Admin_Login");
-                return null;
-            }
-
             MailTemplateViewModel model = MailTemplateRespository.GetDetails(id);
             //ViewBag.Contents = HttpContext.Server.HtmlDecode(model.Mail_Template_Content);
             ViewBag.Contents = model.Mail_Template_Content;
-            PopulateStatusToDropDownList(model.Mail_Template_Discontinued);
-            return PartialView("../Mail/MailTemplate/_Edit", model);
+            ViewBag.Mail_Template_Discontinued = Eagle.Repository.CommonRepository.GenerateTwoStatusModeList(model.Mail_Template_Discontinued.ToString(), false);
+            return PartialView("../Services/Mail/MailTemplate/_Edit", model);
         }
         //
         // POST: /Admin/MailTemplate/Edit/5
@@ -163,16 +138,5 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
             return Content(result);
         }
 
-        #region Status =================================================================================
-        public void PopulateStatusToDropDownList(bool? selected_value)
-        {
-            Dictionary<bool?, string> dict = new Dictionary<bool?, string>();
-            //dict.Add(0, Eagle.Resource.LanguageResource.None);
-            dict.Add(true, Eagle.Resource.LanguageResource.Active);
-            dict.Add(false, Eagle.Resource.LanguageResource.InActive);
-
-            ViewBag.Mail_Template_Discontinued = new SelectList(dict, "Key", "Value", selected_value);
-        }
-        #endregion =====================================================================================
     }
 }

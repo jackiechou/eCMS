@@ -11,13 +11,13 @@
             @Html.LabelFor(model => model.PageId)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.PageId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.DropDownListFor(model => model.PageId, null, new { @class = "form-control", autocomplete = "off" })
         </div>
         <div class="col-md-2">
             @Html.RequiredLabelFor(model => model.MenuTypeId)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.MenuTypeId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.DropDownListFor(model => model.MenuTypeId, null, new { @class = "form-control", autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.MenuTypeId)
         </div>
     </div>
@@ -28,14 +28,14 @@
             @Html.RequiredLabelFor(model => model.MenuName)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.MenuName, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.MenuName, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.MenuName)
         </div>
         <div class="col-md-2">
             @Html.RequiredLabelFor(model => model.MenuTitle)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.MenuTitle, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.MenuTitle, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.MenuTitle)
         </div>
     </div>
@@ -47,7 +47,7 @@
             @Html.LabelFor(model => model.Description)
         </div>
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+            @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
         </div>
        
     </div>
@@ -68,7 +68,7 @@
             @Html.LabelFor(model => model.Target)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.Target, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.Target, new { @class = "form-control" })
         </div>
     </div>
     <!--end row-->
@@ -84,7 +84,7 @@
             @Html.LabelFor(model => model.CssClass)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.CssClass, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.CssClass, new { @class = "form-control" })
         </div>
     </div>
     <!--end row-->  

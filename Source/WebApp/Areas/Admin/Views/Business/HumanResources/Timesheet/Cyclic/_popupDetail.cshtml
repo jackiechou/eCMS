@@ -14,7 +14,7 @@
             <div class="row user-group-management">
                 <div class="col-md-5">
                     <div class="user-style">
-                        <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "span12" })</h5>
+                        <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "form-control" })</h5>
                         <div class="control-group">
                             @Html.ListBox("lstBox", ViewData["lstBox"] as MultiSelectList, new { @id = "lstBox" })
                         </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="user-style">
-                        <h5>@Eagle.Resource.LanguageResource.EmplistAssignedCyclic  @Html.TextBox("FilterEmplistAssigned", null, new { @class = "span12" })</h5>
+                        <h5>@Eagle.Resource.LanguageResource.EmplistAssignedCyclic  @Html.TextBox("FilterEmplistAssigned", null, new { @class = "form-control" })</h5>
                         <div class="control-group">
                             @Html.ListBox("lstBoxAssigned", ViewData["lstBoxAssigned"] as MultiSelectList, new { @id = "lstBoxAssigned" })
                         </div>

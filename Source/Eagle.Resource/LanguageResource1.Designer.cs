@@ -8116,6 +8116,15 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quản lý mail.
+        /// </summary>
+        public static string MailManager {
+            get {
+                return ResourceManager.GetString("MailManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mật khẩu.
         /// </summary>
         public static string MailPassword {
@@ -8130,6 +8139,15 @@ namespace Eagle.Resource {
         public static string MailSenderName {
             get {
                 return ResourceManager.GetString("MailSenderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giao thức mail.
+        /// </summary>
+        public static string MailServerProtocol {
+            get {
+                return ResourceManager.GetString("MailServerProtocol", resourceCulture);
             }
         }
         

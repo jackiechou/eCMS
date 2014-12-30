@@ -8,7 +8,7 @@
             @Html.LabelFor(model => model.LSEducationID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectLSEducationID", null, new { @class = "span12" })
+            @Html.TextBox("SelectLSEducationID", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.LSEducationName)
             @Html.HiddenFor(model => model.LSEducationID)
         </div>
@@ -16,7 +16,7 @@
             @Html.LabelFor(model => model.LSQualificationID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectLSQualificationID", null, new { @class = "span12" })
+            @Html.TextBox("SelectLSQualificationID", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.LSQualificationName)
             @Html.HiddenFor(model => model.LSQualificationID)
         </div>
@@ -30,7 +30,7 @@
             @Html.LabelFor(model => model.LSMajorID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectLSMajorID", null, new { @class = "span12" })
+            @Html.TextBox("SelectLSMajorID", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.LSMajorName)
             @Html.HiddenFor(model => model.LSMajorID)
         </div>
@@ -46,7 +46,7 @@
             <hr />
             <div class="row">
                 <div class="col-md-12">
-                    @Html.TextAreaFor(model => model.Favourite, 12, 500, new { @class = "span12" })
+                    @Html.TextAreaFor(model => model.Favourite, 12, 500, new { @class = "form-control" })
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             <hr />
             <div class="row">
                 <div class="col-md-12">
-                    @Html.TextAreaFor(model => model.Skill, 12, 500, new { @class = "span12" })
+                    @Html.TextAreaFor(model => model.Skill, 12, 500, new { @class = "form-control" })
                 </div>
             </div>
         </div>

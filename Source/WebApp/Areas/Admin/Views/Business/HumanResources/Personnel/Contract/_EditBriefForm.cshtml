@@ -9,7 +9,7 @@
                 @Html.RequiredLabelFor(model => model.ContractNo)
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.ContractNo, new { @class = "span12" })
+                @Html.TextBoxFor(model => model.ContractNo, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ContractNo)
                 @Html.HiddenFor(model => model.ContractID, new { @id = "ContractID" })
             </div>
@@ -18,7 +18,7 @@
                 @Html.RequiredLabelFor(model => model.LSContractTypeID)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("selectLSContractTypeID", null, new { @class = "span12" })
+                @Html.TextBox("selectLSContractTypeID", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LSContractTypeID)
                 @Html.Hidden("LSContractTypeName")
                 @Html.ValidationMessageFor(model => model.LSContractTypeID)                
@@ -37,7 +37,7 @@
                 @Html.RequiredLabelFor(model => model.ContractStatus)
             </div>
             <div class="col-md-4">
-                @Html.DropDownList("ContractStatus", null, new { @class = "span12" })
+                @Html.DropDownList("ContractStatus", null, new { @class = "form-control" })
             </div>            
         </div>
         <div class="row">         
@@ -52,7 +52,7 @@
                 @Html.RequiredLabelFor(model => model.PositionID)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("selectPosition", null, new { @class = "span12" })
+                @Html.TextBox("selectPosition", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.PositionID)
                 @Html.Hidden("PositionName")
                 @Html.ValidationMessageFor(model => model.PositionID)
@@ -71,7 +71,7 @@
                 @Html.RequiredLabelFor(model => model.LocationID)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("selectLocation", null, new { @class = "span12" })
+                @Html.TextBox("selectLocation", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LocationID)
                 @Html.Hidden("LocationName")
                 @Html.ValidationMessageFor(model => model.LocationID)
@@ -100,7 +100,7 @@
                 @Html.RequiredLabelFor(model => model.MethodPIT)
             </div>
             <div class="col-md-4">
-                @Html.DropDownList("MethodPIT", null, new { @class = "span12" })
+                @Html.DropDownList("MethodPIT", null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MethodPIT)
             </div>
 
@@ -109,7 +109,7 @@
                     @Html.LabelFor(model => model.PercentPIT)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PercentPIT, null, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.PercentPIT, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PercentPIT)
                 </div>
             </div>
@@ -129,14 +129,14 @@
                 @Html.LabelFor(model => model.ProbationSalary)
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.ProbationSalaryEdit, new { @class = "span12", Value = String.Format("{0:#.###}", Model.ProbationSalaryEdit) })
+                @Html.TextBoxFor(model => model.ProbationSalaryEdit, new { @class = "form-control", Value = String.Format("{0:#.###}", Model.ProbationSalaryEdit) })
             </div>
 
             <div class="col-md-2">
                 @Html.LabelFor(model => model.InsuranceSalary)
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.InsuranceSalaryEdit, new { @class = "span12", Value = String.Format("{0:#.###}", Model.InsuranceSalaryEdit) })
+                @Html.TextBoxFor(model => model.InsuranceSalaryEdit, new { @class = "form-control", Value = String.Format("{0:#.###}", Model.InsuranceSalaryEdit) })
             </div>
         </div>
         
@@ -145,7 +145,7 @@
                 @Html.LabelFor(model => model.Note)
             </div>
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150, @class = "span12" })
+                @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150, @class = "form-control" })
             </div>
         </div>   
 

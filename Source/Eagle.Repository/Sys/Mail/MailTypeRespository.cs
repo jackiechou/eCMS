@@ -19,6 +19,15 @@ namespace Eagle.Repository.Mail
 {
     public class MailTypeRespository
     {
+        public static SelectList PopulateStatusToDropDownList(string SelectedValue, bool IsShowSelectText = false)
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "True" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.InActive, Value = "False" });
+            if (IsShowSelectText)
+                lst.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.Select), Value = "" });
+            return new SelectList(lst, "Value", "Text", SelectedValue);
+        }
         public static string SerializeMailTypeToJson(int PortalId, string CultureCode, bool Status)
         {
             Dictionary<string, object> result_dict = new Dictionary<string, object>();

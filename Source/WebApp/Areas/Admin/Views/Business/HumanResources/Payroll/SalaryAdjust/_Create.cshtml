@@ -33,7 +33,7 @@
                                     @Html.RequiredLabelFor(model => model.LSSalaryAdjustCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.LSSalaryAdjustCode, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.LSSalaryAdjustCode, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.LSSalaryAdjustCode)
                                 </div>
                                 <div class="col-md-2">
@@ -49,14 +49,14 @@
                                     @Html.RequiredLabelFor(model => model.Name)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Name)
                                 </div>
                                 <div class="col-md-2">
                                     @Html.RequiredLabelFor(model => model.VNName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.VNName, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.VNName, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.VNName)
                                 </div>
                             </div>
@@ -65,13 +65,13 @@
                                     @Html.RequiredLabelFor(model => model.TypeAdd)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownList("TypeAdd", null, new { @class = "span12" })
+                                    @Html.DropDownList("TypeAdd", null, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.MaxNonPIT)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.MaxNonPIT, new { @autocomplete = "off", @class = "span12" })
+                                    @Html.TextBoxFor(model => model.MaxNonPIT, new { @autocomplete = "off", @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.MaxNoPITInfo)
                                 </div>
 
@@ -87,7 +87,7 @@
                                     @Html.RequiredLabelFor(model => model.Type)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownList("Type", null, new { @class = "span8" })
+                                    @Html.DropDownList("Type", null, new { @class = "form-control" })
                                 </div>
                             </div>*@
 
@@ -97,7 +97,7 @@
                                     @Html.LabelFor(model => model.Rank)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Rank, new { @autocomplete = "off", @class = "span4" })
+                                    @Html.TextBoxFor(model => model.Rank, new { @autocomplete = "off", @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Rank)
                                 </div>
                                 <div class="col-md-2">

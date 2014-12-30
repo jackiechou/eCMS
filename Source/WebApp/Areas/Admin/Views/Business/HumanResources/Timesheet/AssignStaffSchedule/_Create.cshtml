@@ -15,7 +15,7 @@
             @Html.LabelFor(model => model.ScheduleID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectScheduleID", null, new { @class = "span12" })
+            @Html.TextBox("SelectScheduleID", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.ScheduleName)
             @Html.HiddenFor(model => model.ScheduleID)
         </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-4">
 
-            @Html.TextBoxFor(model => model.Year, new { @class = "span12", @placeholder = @Eagle.Resource.LanguageResource.Year })
+            @Html.TextBoxFor(model => model.Year, new { @class = "form-control", @placeholder = @Eagle.Resource.LanguageResource.Year })
             @Html.ValidationMessageFor(model => model.Year)
 
         </div>
@@ -35,7 +35,7 @@
 
                 <div class="col-md-5">
                     <div class="user-style">
-                         <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "span12" })</h5>
+                         <h5>@Eagle.Resource.LanguageResource.Emplist  @Html.TextBox("FilterEmplist", null, new { @class = "form-control" })</h5>
                         <div class="control-group">
                            @Html.ListBox("lstBox", ViewData["lstBox"] as MultiSelectList, new { @id = "lstBox" })
                         </div>
@@ -58,7 +58,7 @@
                 
                 <div class="col-md-5">
                     <div class="user-style">
-                       <h5> @Eagle.Resource.LanguageResource.EmplistAssigned  @Html.TextBox("FilterEmplistAssigned", null, new { @class = "span12" })</h5>
+                       <h5> @Eagle.Resource.LanguageResource.EmplistAssigned  @Html.TextBox("FilterEmplistAssigned", null, new { @class = "form-control" })</h5>
                         <div class="control-group">
                               @Html.ListBox("lstBoxAssigned",ViewData["lstBoxAssigned"] as MultiSelectList, new { @id = "lstBoxAssigned" })
                         </div>

@@ -27,7 +27,7 @@
         <div class="col-md-4"> 
             <div class="input-append" id="InputstrEmpName" style="margin-bottom:-6px;">
                 <div class="input-append">
-                    @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span10" , @disabled = "disabled"})
+                    @Html.TextBoxFor(model => model.strEmpName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "form-control" , @disabled = "disabled"})
                     <button class="btn btnPopupEmp" type="button">...</button>
                 </div>                                            
             </div>
@@ -39,14 +39,14 @@
             @Html.RequiredLabelFor(model => model.SEQ)
         </div>
         <div class="col-md-3">
-            @Html.TextBoxFor(model => model.SEQ, new { @class = "span8" })
+            @Html.TextBoxFor(model => model.SEQ, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.SEQ)
         </div>
         <div class="col-md-3" id="divLSRecruitmentTournamentID">
             @Html.RequiredLabelFor(model => model.LSRecruitmentTournamentID)
         </div>
         <div class="col-md-3">
-            @Html.TextBox("SelectLSRecruitmentTournamentIDAlowNull", null, new { @class = "span12" })
+            @Html.TextBox("SelectLSRecruitmentTournamentIDAlowNull", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.LSRecruitmentTournamentName)
             @Html.HiddenFor(model => model.LSRecruitmentTournamentIDAlowNull)
         </div>

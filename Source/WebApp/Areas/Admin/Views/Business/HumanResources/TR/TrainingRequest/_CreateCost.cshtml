@@ -10,7 +10,7 @@
         @Html.LabelFor(model => model.LSTrainingExpenseID)
     </div>
     <div class="col-md-3">
-        @Html.TextBox("SelectLSTrainingExpenseID", null, new { @class = "span12" })                                        
+        @Html.TextBox("SelectLSTrainingExpenseID", null, new { @class = "form-control" })                                        
         @Html.HiddenFor(model => model.LSTrainingExpenseIDAllowNull)   
         @Html.HiddenFor(model => model.TrainingExpenseName)                                           
     </div>
@@ -18,7 +18,7 @@
         @Html.LabelFor(model => model.LSCurrencyID)
     </div>
     <div class="col-md-3">
-        @Html.TextBox("SelectLSTrainingCurrencyID", null, new { @class = "span12" })                                        
+        @Html.TextBox("SelectLSTrainingCurrencyID", null, new { @class = "form-control" })                                        
         @Html.HiddenFor(model => model.LSCurrencyIDAllowNull)   
         @Html.HiddenFor(model => model.TrainingCurrencyName)                                           
     </div>                                                                    
@@ -26,7 +26,7 @@
         @Html.LabelFor(model => model.Cost)
     </div>
     <div class="col-md-3">
-        @Html.TextBoxFor(model => model.Cost, new { @autocomplete = "off", @class = "span4" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        @Html.TextBoxFor(model => model.Cost, new { @autocomplete = "off", @class = "form-control" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button" id="btnAddExpense" value="@Eagle.Resource.LanguageResource.btnAdd" class="btn btn-info AddModel"  @ViewBag.EnableSaveAndSendForApproval />                                                                        
     </div>
 </div>       

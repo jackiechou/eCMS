@@ -1,16 +1,15 @@
 ﻿@{
     ViewBag.Title = Eagle.Resource.LanguageResource.MailTemplate;
-    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.FullMainLayout; 
 }
 @model List<Mail_Templates>
 @Html.Hidden("AccountId")
 @section ContentSection
 {
 <div id="MainBody" class="main_box">
-    @Html.Partial("../Mail/MailTemplate/_Reset")
+    @Html.Partial("../Services/Mail/MailTemplate/_Reset")
 </div>
-    }
-<!--Confirm box-->
+    <!--Confirm box-->
 @Html.Action("ConfirmPopup", "Common", null)
 
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
@@ -80,9 +79,9 @@
                         async: false
                     });
                 },
-                InitializeCotrols: function () {                   
+                InitializeCotrols: function () {
                     DataMgr.PopulateTypeListWithDrillDown();
-                    
+
                     CKEDITOR.replace('Contents', {
                         toolbar: [
                                  { name: 'document', items: ['Source', '-', 'NewPage', 'Preview', '-', 'Templates'] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
@@ -102,8 +101,8 @@
                     CKEDITOR.instances['Contents'].on('change', function () {
                         var contents = this.getData();
                         $('input[name=Mail_Template_Content][type=hidden]').val(contents);
-                    });                   
-                   
+                    });
+
                     $("#modalEdit").draggable({ handle: ".modal-header" });
                 },
                 BindEvents: function () {
@@ -120,7 +119,7 @@
                         if (!$("#myform").valid()) { // Not Valid
                             return false;
                         } else {
-                            //Add new Item      
+                            //Add new Item
                             CKEDITOR.instances['Contents'].updateElement();
                             $('input[name=Mail_Template_Content][type=hidden]').val(CKEDITOR.instances['Contents'].getData());
 
@@ -150,12 +149,12 @@
                     // Click edit (get)
                     $(document).on("click", ".editItem", function () {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        DataMgr.config.mode = 1;                        
+                        DataMgr.config.mode = 1;
                         DataMgr.GetDetails(ID);
-                      
+
 
                         DataMgr.PopulateTypeListWithDrillDown();
-                        CKEDITOR.replace('Contents', {    
+                        CKEDITOR.replace('Contents', {
                             toolbar: [
                                  { name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },	// Defines toolbar group with name (used to create voice label) and items in 3 subgroups.
                                  { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord','Clipboard', '-', 'Undo', 'Redo'] },			// Defines toolbar group without name.
@@ -163,7 +162,7 @@
                                  { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] },
 	                             { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
                                  { name: 'basicstyles', items: ['Paragraph', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat', '-', 'MyButton'] },
-                                 { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },   
+                                 { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe'] },
                                   '/',// Line break - next group will be placed in new line.
                                  { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'] }
                             ],
@@ -199,10 +198,10 @@
                 },
                 BuildUL:function(parent, items){
                     $.each(items, function () {
-                        if (this.name) { // create LI element and append it to the parent element.                        
+                        if (this.name) { // create LI element and append it to the parent element.
                             var anchor = $('<a />', { id: this.id, text: this.name, href: 'javascript:void(0);', rel: this.id });
                             var li = $('<li/>', { html: anchor, "id": "li_"+ this.id }).appendTo(parent);
-                            // if there are sub items, call the buildUL function. 
+                            // if there are sub items, call the buildUL function.
                             if (this.items && this.items.length > 0) {
                                 var ul = $("<ul id='MultipleSelectBox_DropDown'></ul>");
                                 ul.appendTo(li);
@@ -211,7 +210,7 @@
                         }
                     });
                 },
-                PopuplateTemplateListByTypeId: function (TypeId) {                    
+                PopuplateTemplateListByTypeId: function (TypeId) {
                     //$("#ReportTemplate_List").empty();
                     //var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + "/services/report_services.asmx/LoadReportTemplateByTypeId";
                     //$.ajax({
@@ -241,10 +240,10 @@
                     //    }, error: function (xhr, ajaxOptions, thrownError) {
                     //        $('#message_box').append(xhr.responseText); return false;
                     //    }
-                    //});   
+                    //});
                 },
                 BindDataToList:function(data){
-                    var source = []; var items = []; // build hierarchical source. 
+                    var source = []; var items = []; // build hierarchical source.
                     for (i = 0; i < data.length; i++) {
                         var item = data[i];
                         var id = item["id"];
@@ -255,34 +254,34 @@
                             if (!items[parentid].items) { items[parentid].items = []; } items[parentid].items[items[parentid].items.length] = item; items[id] = item;
                         }
                         else { items[id] = { id: id, parentid: parentid, name: name, item: item }; source[id] = items[id]; }
-                    } 
+                    }
                     var ul = $("<ul id='MultipleSelectBox_DropDown'></ul>");
                     DataMgr.BuildUL(ul, source);
                     return ul;
                 },
-                PopulateTypeListWithDrillDown: function () {                   
+                PopulateTypeListWithDrillDown: function () {
                     var base_url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
                     var serviceUrl =  base_url + "/Admin/MailType/GetActiveList";
                     var selectBox = $('#hierarchy');
                     var divContainer = $('#DropDownDivContainer');
-                    divContainer.empty();                   
-                  
+                    divContainer.empty();
+
                     $.ajax({
                         type: "GET",
-                        url: serviceUrl,  
+                        url: serviceUrl,
                       //  beforeSend: function (xhr) { xhr.setRequestHeader("Content-type", "application/json; charset=utf-8"); },
                        // contentType: "application/json; charset=utf-8",
                         dataType: "json",
-                        success: function (data) {                            
+                        success: function (data) {
                             var list = $.parseJSON(data);
                             var data = [];
                             $.each(list, function (i) {
                                 data[i] = list[i];
                             });
                             var ulTags = DataMgr.BindDataToList(data);
-                            ulTags.appendTo(divContainer);                            
+                            ulTags.appendTo(divContainer);
                             //==================================================================================
-                            //Trigger=========================================================================== 
+                            //Trigger===========================================================================
                             selectBox.menu({
                                 content: selectBox.next().html(),
                                 flyOut: true,
@@ -297,7 +296,7 @@
                                     $('.spanSelectedText').html($(item).text());
                                     $('input[class=spanSelectedValue][type=hidden]').val($(item).attr('rel'));
                                     DataMgr.PopuplateTemplateListByTypeId($(item).attr('rel'));
-                                    //var link = $(item).attr('href');		
+                                    //var link = $(item).attr('href');
                                     //if (link != "#" || link != "javascript:void(0);")
                                     //    location.href = $(item).attr('href');
                                     //$('#{id}').html(
@@ -309,7 +308,7 @@
 
                                     //
                                     //$('input[class=spanSelectedValue][type=hidden]').val($(item).attr('rel'));
-                                    //var link = $(item).attr('href');		
+                                    //var link = $(item).attr('href');
                                     //if (link != "#" || link != "javascript:void(0);")
                                     //    location.href = $(item).attr('href');
                                 }
@@ -326,8 +325,8 @@
                             handleAjaxErrors(jqXHR, textStatus, errorThrown);
                         }
                     });
-                   
-                },               
+
+                },
                 ConvertFormToJSON: function (form) {
                     var array = $("#" + form).serializeArray();
                     var json = {};
@@ -335,7 +334,7 @@
                         json[this.name] = this.value || '';
                     });
                     return JSON.stringify(json);
-                },   
+                },
                 AddData: function (data) {
                     this.config.method = "Create";
                     this.config.data = data;
@@ -353,7 +352,7 @@
                     this.config.url = this.config.baseURL + this.config.method;
                     this.config.ajaxCallMode = 1;
                     this.ajaxCall(this.config);
-                },              
+                },
                 BindDetails: function (data) {
                     $('#divEdit').html(data);
                 },
@@ -436,3 +435,4 @@
         $.createDataBuilder(base_settings);
     })(jQuery);
 </script>
+    }

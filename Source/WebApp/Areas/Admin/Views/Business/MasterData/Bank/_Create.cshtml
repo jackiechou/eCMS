@@ -20,7 +20,7 @@
                     @Html.RequiredLabelFor(model => model.LSBankCode)
                 </div>
                 <div class="col-md-4">
-                     @Html.TextBoxFor(model => model.LSBankCode, new { @class = "span12" })                   
+                     @Html.TextBoxFor(model => model.LSBankCode, new { @class = "form-control" })                   
                     @Html.ValidationMessageFor(model => model.LSBankCode)
                      @Html.HiddenFor(model => model.LSBankID)
                 </div>
@@ -28,7 +28,7 @@
                     @Html.RequiredLabelFor(model => model.ProvinceID)
                 </div>
                 <div class="col-md-4">                                    
-                    @Html.TextBox("selectProvince", null, new { @class = "span12" })
+                    @Html.TextBox("selectProvince", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.ProvinceID)
                     @Html.Hidden("ProvinceName")
                     @Html.ValidationMessageFor(model => model.ProvinceID)
@@ -39,14 +39,14 @@
                     @Html.RequiredLabelFor(model => model.Name)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Name,new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.Name,new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Name)
                 </div>
                 <div class="col-md-2">
                     @Html.RequiredLabelFor(model => model.VNName)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.VNName,new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.VNName,new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.VNName)
                 </div>                                      
             </div>
@@ -70,7 +70,7 @@
                     @Html.LabelFor(model => model.Note)
                 </div>
                 <div class="col-md-10">                                            
-                    @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "span12" })
+                    @Html.TextAreaFor(model => model.Note, new { rows= 2, columns= 40, maxlength=150, @class = "form-control" })
                 </div>                                           
             </div>            
          </div>    

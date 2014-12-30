@@ -23,7 +23,7 @@
                     @Html.RequiredLabelFor(model => model.FileTitle)
                 </div>
                 <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.FileTitle, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.FileTitle, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.FileTitle)
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     @Html.LabelFor(model => model.Keywords)
                 </div>
                 <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.Keywords, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.Keywords, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Keywords)
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     @Html.LabelFor(model => model.FileDescription)
                 </div>
                 <div class="col-md-8">
-                    @Html.TextAreaFor(model => model.FileDescription, new { @class = "span12" })
+                    @Html.TextAreaFor(model => model.FileDescription, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.FileDescription)
                 </div>
             </div>

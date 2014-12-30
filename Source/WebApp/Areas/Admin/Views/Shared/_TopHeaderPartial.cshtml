@@ -1,12 +1,19 @@
-﻿<div class="row">
-    <div id="LogoPane" class="col-md-6 logo-pane">
-        <div class="logo-container"><a class="brand" href="/"><img src="/Images/logo.png" alt="logo" class="logo" /></a></div>
-        <div class="slogan-container"><h3 class="slogan">@Html.Raw(Eagle.Resource.LanguageResource.AdministratorSystem)</h3></div>
-    </div>
-
-    <div id="BannerPane" class="col-md-6 banner">
-        <div id="TopMenu" class="top-menu">
-            @Html.Partial("_TopMenu")
+﻿<div class="header-container">
+    <div class="row">
+        <div id="LogoPane" class="col-md-7 logo-pane">
+            <div class="logo-container"><a class="brand" href="/"><img src="/Images/logo.png" alt="logo" class="logo" /></a></div>
+            <div class="slogan-container"><h4 class="slogan">@Html.Raw(Eagle.Resource.LanguageResource.AdministratorSystem)</h4></div>
         </div>
+
+        <div id="BannerPane" class="col-md-5 banner">
+            <div id="TopMenu" class="top-menu">
+                @Html.Partial("_TopMenu")
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- start main menu -->
+        @Html.Action("LoadAdminMainMenu", "Menu")
+        <!-- and main menu -->
     </div>
 </div>

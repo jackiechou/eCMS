@@ -9287,5 +9287,22 @@ namespace Eagle.Core
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TransactionMethods_UpdateDiscontinued", transactionMethod_IDParameter, discontinuedParameter, o_return);
         }
+    
+        public virtual ObjectResult<Menu_GetListByTypeStatus_Result> Menu_GetListByTypeStatus(Nullable<int> menuTypeId, Nullable<int> scopeTypeId, string status)
+        {
+            var menuTypeIdParameter = menuTypeId.HasValue ?
+                new ObjectParameter("MenuTypeId", menuTypeId) :
+                new ObjectParameter("MenuTypeId", typeof(int));
+    
+            var scopeTypeIdParameter = scopeTypeId.HasValue ?
+                new ObjectParameter("ScopeTypeId", scopeTypeId) :
+                new ObjectParameter("ScopeTypeId", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Menu_GetListByTypeStatus_Result>("Menu_GetListByTypeStatus", menuTypeIdParameter, scopeTypeIdParameter, statusParameter);
+        }
     }
 }

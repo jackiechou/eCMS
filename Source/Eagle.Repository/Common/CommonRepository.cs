@@ -496,7 +496,18 @@ namespace Eagle.Repository
             return new SelectList(lst, "Value", "Text", SelectedValue);
         }
 
-        public static SelectList GenerateThreeStatusModeList(string OptionText = null, bool? IsShowSelectText = true)
+        public static SelectList GenerateThreeStatusModeList(string SelectedValue = null, bool? IsShowSelectText = true)
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.Published, Value = "2" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "1" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.InActive, Value = "0" });
+            if (IsShowSelectText != null && IsShowSelectText == true)
+                lst.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.Select), Value = "" });
+            return new SelectList(lst, "Value", "Text", null);
+        }
+
+        public static SelectList GenerateThreeStatusModeListWithOptionText(string OptionText = null, bool? IsShowSelectText = true)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
             lst.Add(new SelectListItem { Text = Resource.LanguageResource.Published, Value = "2" });
@@ -507,7 +518,7 @@ namespace Eagle.Repository
             return new SelectList(lst, "Value", "Text", null);
         }
 
-        public static SelectList GenerateThreeStatusModeList(string SelectedValue = null, string OptionText = null, bool? IsShowSelectText = true)
+        public static SelectList GenerateThreeStatusModeListWithOptionText(string SelectedValue = null, string OptionText = null, bool? IsShowSelectText = true)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
             lst.Add(new SelectListItem { Text = Resource.LanguageResource.Published, Value = "2" });
@@ -526,8 +537,23 @@ namespace Eagle.Repository
             lst.Add(new SelectListItem { Text = Resource.LanguageResource.InActive, Value = "0" });
             return new SelectList(lst, "Value", "Text", null);
         }
-
-        public static SelectList GenerateTwoStatusModeList(string OptionText = null, bool? IsShowSelectText = true)
+        public static SelectList GenerateTwoStatusModeList(string SelectedValue)
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "1" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.InActive, Value = "0" });
+            return new SelectList(lst, "Value", "Text", SelectedValue);
+        }   
+        public static SelectList GenerateTwoStatusModeList(string SelectedValue = null, bool? IsShowSelectText = false)
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "True" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.InActive, Value = "False" });
+            if (IsShowSelectText != null && IsShowSelectText == true)
+                lst.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.Select), Value = "" });
+            return new SelectList(lst, "Value", "Text", SelectedValue);
+        }
+        public static SelectList GenerateTwoStatusModeListWithOptionText(string OptionText = null, bool? IsShowSelectText = true)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
             lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "1" });
@@ -537,15 +563,7 @@ namespace Eagle.Repository
 
             return new SelectList(lst, "Value", "Text", null);
         }
-        public static SelectList GenerateTwoStatusModeList(string SelectedValue)
-        {
-            List<SelectListItem> lst = new List<SelectListItem>();
-            lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "1" });
-            lst.Add(new SelectListItem { Text = Resource.LanguageResource.InActive, Value = "0" });
-            return new SelectList(lst, "Value", "Text", SelectedValue);
-        }
-
-        public static SelectList GenerateTwoStatusModeList(string SelectedValue=null, string OptionText = null, bool? IsShowSelectText = true)
+        public static SelectList GenerateTwoStatusModeListWithOptionText(string SelectedValue = null, string OptionText = null, bool? IsShowSelectText = true)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
             lst.Add(new SelectListItem { Text = Resource.LanguageResource.Active, Value = "1" });

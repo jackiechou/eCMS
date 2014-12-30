@@ -1,0 +1,32 @@
+﻿@model string
+<div id="MainMenu" class="main-menu">
+    @Html.Raw(Model)
+</div>
+
+<link href="~/Scripts/app/plugins/yamm_menu/yamm.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(function () {
+        ////DESKTOP MAIN MENU ------------------------------------------------------------------------------------------------
+        //PopulateMainMenu();
+        //function PopulateMainMenu() {
+        //    var menu_container = $(".main-menu");
+        //    $.getJSON("/Admin/Menu/LoadJsonDesktopMainMenu",
+        //        function (data) {
+        //            alert(data);
+        //            if (data.length > 0) {
+        //                menu_container.html(data);
+        //                $('ul.sf-menu').superfish({
+        //                    speed: "fast"
+        //                });
+        //            } else
+        //                menu_container.html("Error Data");
+        //        });
+        //}
+
+        //$('ul.sf-menu').superfish({
+        //    speed: "fast"
+        //});
+        //MAIN MENU END =====================================================================================================
+    });
+</script> 

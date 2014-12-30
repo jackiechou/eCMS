@@ -41,7 +41,7 @@
                     @Html.RequiredLabelFor(model => model.ScopeTypeId)
                 </div>
                 <div class="col-md-8">
-                    @Html.EnumDropDownListFor(model => model.SelectedScopeType, true, new { @class = "span12" })
+                    @Html.EnumDropDownListFor(model => model.SelectedScopeType, true, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.SelectedScopeType)
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     @Html.RequiredLabelFor(model => model.MenuTypeName)
                 </div>
                 <div class="col-md-8">
-                    @Html.TextBoxFor(model => model.MenuTypeName, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.MenuTypeName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.MenuTypeName)
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     @Html.LabelFor(model => model.Description)
                 </div>
                 <div class="col-md-8">
-                    @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
                 </div>
             </div>
             <div class="row">

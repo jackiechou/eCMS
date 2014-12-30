@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="reset-label">
-                                        @Html.DisplayFor(model => model.FullName, new { @class = "span12"})
+                                        @Html.DisplayFor(model => model.FullName, new { @class = "form-control"})
                                     </label>
                                 </div>
                                 <div class="col-md-2">
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="reset-label">
-                                        @Html.DisplayFor(model => model.ApplyDate, new { @class = "span12"})
+                                        @Html.DisplayFor(model => model.ApplyDate, new { @class = "form-control"})
                                     </label>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                         @Html.RequiredLabelFor(model => model.LSPositionID)
                                     </div>
                                     <div class="col-md-4">
-                                         @Html.TextBox("SelectLSPositionID",null, new { @class = "span12" })
+                                         @Html.TextBox("SelectLSPositionID",null, new { @class = "form-control" })
                                         @Html.HiddenFor(model => model.LSPositionID)
                                         @Html.HiddenFor(model => model.LSPositionName)
                                     </div>
@@ -95,7 +95,7 @@
                                         @Html.LabelFor(model => model.LineManagerID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("SelectLineManagerID",null, new { @class = "span12" })
+                                        @Html.TextBox("SelectLineManagerID",null, new { @class = "form-control" })
                                         @Html.HiddenFor(model => model.LineManagerID)
                                         @Html.HiddenFor(model => model.LineManagerName)
                                     </div>

@@ -36,14 +36,14 @@
                                     @Html.RequiredLabelFor(model => model.ModuleID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.ModuleID, null, new { @class = "span12" })
+                                    @Html.DropDownListFor(model => model.ModuleID, null, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.ModuleID)
                                 </div>
                                 <div class="col-md-2">
                                     @Html.RequiredLabelFor(model => model.Parent)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Parent, null, new { @class = "span12" })
+                                    @Html.DropDownListFor(model => model.Parent, null, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Parent)
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                     @Html.RequiredLabelFor(model => model.FunctionName)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.FunctionName, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.FunctionName, null, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.FunctionName)
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                     @Html.RequiredLabelFor(model => model.TitleV)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.TitleV, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.TitleV, null, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -78,7 +78,7 @@
                                     @Html.RequiredLabelFor(model => model.TitleE)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.TitleE, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.TitleE, null, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -95,7 +95,7 @@
                                     @Html.LabelFor(model => model.Left_Horizontal)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Left_Horizontal, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Left_Horizontal, null, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -106,13 +106,13 @@
                                     @Html.LabelFor(model => model.cssClass)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.cssClass, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.cssClass, null, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.LookId)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.LookId, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.LookId, null, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -123,13 +123,13 @@
                                     @Html.LabelFor(model => model.AscxParent)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.AscxParent, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.AscxParent, null, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Tooltips)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Tooltips, null, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Tooltips, null, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -146,7 +146,7 @@
                                     @Html.LabelFor(model => model.FunctionDefault)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.EditorFor(model => model.FunctionDefault, new { @class = "span12", min = "0", max = "100" })
+                                    @Html.EditorFor(model => model.FunctionDefault, new { @class = "form-control", min = "0", max = "100" })
                                 </div>
                             </div>
                             <!--end row-->

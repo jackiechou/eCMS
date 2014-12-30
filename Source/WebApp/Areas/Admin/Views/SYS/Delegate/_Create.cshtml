@@ -32,7 +32,7 @@
                                     @Html.RequiredLabelFor(model => model.DMQuiTrinhID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.DMQuiTrinhID, null, new { @class = "span12"  })
+                                    @Html.DropDownListFor(model => model.DMQuiTrinhID, null, new { @class = "form-control"  })
                                     @Html.ValidationMessageFor(model => model.DMQuiTrinhID)
                                 </div>
                                 <div class="col-md-2">
@@ -78,7 +78,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.Note, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Note)
                                 </div>
                             </div>

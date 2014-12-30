@@ -37,14 +37,14 @@
                                             @Html.RequiredLabelFor(model => model.LSLeaveTypeID)
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.LSLeaveTypeID, new { @class = "span12" })
+                                            @Html.TextBoxFor(model => model.LSLeaveTypeID, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LSLeaveTypeID)
                                         </div>
                                         <div class="col-md-2">
                                             @Html.RequiredLabelFor(model => model.LSLeaveDayTypeCode)
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.LSLeaveDayTypeCode, new { @class = "span12", @placeholder = @Eagle.Resource.LanguageResource.Code })
+                                            @Html.TextBoxFor(model => model.LSLeaveDayTypeCode, new { @class = "form-control", @placeholder = @Eagle.Resource.LanguageResource.Code })
                                             @Html.ValidationMessageFor(model => model.LSLeaveDayTypeCode)
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
                                             @Html.RequiredLabelFor(model => model.Name)
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.Name, new { @class = "span12", @placeholder = @Eagle.Resource.LanguageResource.Name })
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Eagle.Resource.LanguageResource.Name })
                                             @Html.ValidationMessageFor(model => model.Name)
                                         </div>
                                         <div class="col-md-2">
@@ -72,7 +72,7 @@
                                             <label>@Eagle.Resource.LanguageResource.DaysPerYear</label>
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.DaysPerYear, new { @class = "span5" })
+                                            @Html.TextBoxFor(model => model.DaysPerYear, new { @class = "form-control" })
                                             @Eagle.Resource.LanguageResource.NumOfDay
                                             @Html.ValidationMessageFor(model => model.DaysPerYear)
                                         </div>
@@ -80,7 +80,7 @@
                                             <label>@Eagle.Resource.LanguageResource.DaysPerPeriod</label>
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.DaysPerPeriod, new { @class = "span5" })
+                                            @Html.TextBoxFor(model => model.DaysPerPeriod, new { @class = "form-control" })
                                             @Eagle.Resource.LanguageResource.NumOfDay
                                             @Html.ValidationMessageFor(model => model.DaysPerPeriod)
                                         </div>
@@ -92,7 +92,7 @@
                                             <label>@Eagle.Resource.LanguageResource.ConvalescenceLeave</label>
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.ConvalescenceLeave, new { @class = "span5" })
+                                            @Html.TextBoxFor(model => model.ConvalescenceLeave, new { @class = "form-control" })
                                             @Eagle.Resource.LanguageResource.NumOfDay
                                             @Html.ValidationMessageFor(model => model.ConvalescenceLeave)
                                         </div>
@@ -100,7 +100,7 @@
                                             <label>@Eagle.Resource.LanguageResource.PercentSI</label>
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.PercentSI, new { @class = "span5" })
+                                            @Html.TextBoxFor(model => model.PercentSI, new { @class = "form-control" })
                                              @Html.ValidationMessageFor(model => model.PercentSI)
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
                                             <label>@Eagle.Resource.LanguageResource.Note</label>
                                         </div>
                                         <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+                                            @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
                                         </div>
 
                                     </div>

@@ -53,7 +53,7 @@
                                     <div class="col-md-6">
                                         @Html.Hidden("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].CandidateTournamentID", Model.CandidateTournamentID)
                                         @Html.Hidden("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].InterviewCriteriaID", item.InterviewCriteriaID)
-                                        @Html.TextArea("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].Note", item.Note, new { @class = "span12" })
+                                        @Html.TextArea("model.REC_tblCandidateTournament_InterviewCriteria[" + k.ToString() + "].Note", item.Note, new { @class = "form-control" })
                                     </div>
                                     <div class="col-md-2">
                                         <label>@Eagle.Resource.LanguageResource.Point</label>
@@ -71,13 +71,13 @@
                                     <label>@Eagle.Resource.LanguageResource.Note</label>
                                 </div>
                                 <div class="col-md-6">
-                                    @Html.TextArea("model.Note", Model.Note, new { @class = "span12" })
+                                    @Html.TextArea("model.Note", Model.Note, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     <label>@Eagle.Resource.LanguageResource.Result</label>
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="reset-label">@Html.DropDownList("Result", null, "--" + Eagle.Resource.LanguageResource.Select + "--", new { @class = "span12", @style = "margin-top: -6px;", @data_val = "true", @data_val_required = string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.Result) })</label>
+                                    <label class="reset-label">@Html.DropDownList("Result", null, "--" + Eagle.Resource.LanguageResource.Select + "--", new { @class = "form-control", @style = "margin-top: -6px;", @data_val = "true", @data_val_required = string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.Result) })</label>
                                 </div>
                             </div>
 

@@ -34,14 +34,14 @@
                                         @Html.RequiredLabelFor(model => model.LSTrainingAnswerTypeCode)
                                 </div>
                                 <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.LSTrainingAnswerTypeCode, new { @class = "span12" }) 
+                                        @Html.TextBoxFor(model => model.LSTrainingAnswerTypeCode, new { @class = "form-control" }) 
                                         @Html.ValidationMessageFor(model => model.LSTrainingAnswerTypeCode)                                 
                                 </div>
                                 <div class="col-md-2">
                                         @Html.RequiredLabelFor(model => model.Name)
                                 </div>
                                 <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "span12" }) 
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" }) 
                                         @Html.ValidationMessageFor(model => model.Name)
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                      @Html.LabelFor(model => model.Rank)
                                 </div>
                                 <div class="col-md-4">
-                                     @Html.TextBoxFor(model => model.Rank, new { @class = "span12" }) 
+                                     @Html.TextBoxFor(model => model.Rank, new { @class = "form-control" }) 
                                      @Html.ValidationMessageFor(model => model.Rank)                                 
                                 </div>      
                              </div>                          
@@ -77,7 +77,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">                                          
-                                    @Html.TextAreaFor(model => model.Note, new { @class = "span12" })                                   
+                                    @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })                                   
                                 </div>
                             </div>
                       

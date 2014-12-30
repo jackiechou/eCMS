@@ -47,7 +47,7 @@
                     @Html.LabelFor(model => model.LSHospitalID)
                 </div>
                 <div class="col-md-10">
-                    @Html.TextBox("SelectLSHospitalID", null, new { @class = "span10" })
+                    @Html.TextBox("SelectLSHospitalID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSHospitalID)
                     @Html.HiddenFor(model => model.LSHospitalName)
                     @Html.CheckBox("ChangePlace", false, new { style="margin: 7px 0px 0px 7px;" })
@@ -58,7 +58,7 @@
                     @Html.LabelFor(model => model.Note)
                 </div>
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Note, new { @class = "span10", @style="margin-top: 7px;" })
+                    @Html.TextAreaFor(model => model.Note, new { @class = "form-control", @style="margin-top: 7px;" })
                 </div>
             </div>
         </form>

@@ -31,14 +31,14 @@
                                     @Html.LabelFor(model => model.CandidateCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.CandidateCode, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.CandidateCode, new { @class = "form-control" })
                                 </div>
 
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Result)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownList("Result", null ,"--"+ Eagle.Resource.LanguageResource.Select +"--" , new { @class = "span12" })
+                                    @Html.DropDownList("Result", null ,"--"+ Eagle.Resource.LanguageResource.Select +"--" , new { @class = "form-control" })
                                     
                                 </div>
                             </div>
@@ -48,14 +48,14 @@
                                     @Html.LabelFor(model => model.FirstName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
                                 </div>
 
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.LastName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.LastName, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -64,7 +64,7 @@
                                     @Html.LabelFor(model => model.Gender)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DropDownList("Gender", null ,"--"+ Eagle.Resource.LanguageResource.Select +"--" , new { @class = "span12" })
+                                    @Html.DropDownList("Gender", null ,"--"+ Eagle.Resource.LanguageResource.Select +"--" , new { @class = "form-control" })
                                 </div>
 
                                 <div class="col-md-2">
@@ -88,7 +88,7 @@
                                         @Html.LabelFor(model => model.LSPositionID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("SelectLSPositionID", null, new { @class = "span12" })
+                                        @Html.TextBox("SelectLSPositionID", null, new { @class = "form-control" })
                                         @Html.HiddenFor(model => model.LSPositionID)
                                         @Html.HiddenFor(model => model.LSPositionName)
                                     </div>
@@ -101,7 +101,7 @@
                                         @Html.LabelFor(model => model.LSPositionID_Probation1)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("SelectLSPositionID_Probation1", null, new { @class = "span12" })
+                                        @Html.TextBox("SelectLSPositionID_Probation1", null, new { @class = "form-control" })
                                         @Html.HiddenFor(model => model.LSPositionID_Probation1)
                                         @Html.HiddenFor(model => model.LSPositionID_Probation1Name)
                                     </div>
@@ -109,7 +109,7 @@
                                         @Html.LabelFor(model => model.LSPositionID_Probation2)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBox("SelectLSPositionID_Probation2", null, new { @class = "span12" })
+                                        @Html.TextBox("SelectLSPositionID_Probation2", null, new { @class = "form-control" })
                                         @Html.HiddenFor(model => model.LSPositionID_Probation2)
                                         @Html.HiddenFor(model => model.LSPositionID_Probation2Name)
                                     </div>

@@ -88,6 +88,7 @@ namespace Eagle.WebApp
                 "~/Themes/Default/Content/css/font-awesome.css",
                 "~/Themes/Default/Content/css/bootstrap-datetimepicker.css",
                 "~/Themes/Default/Content/css/style.css",
+                "~/Themes/Default/Content/css/style_main_layout.css",
                 "~/Themes/Default/Content/css/style_custom.css",
                "~/Themes/Default/Content/css/select2.css",
 
@@ -117,6 +118,7 @@ namespace Eagle.WebApp
                 //"~/Themes/Default/Content/css/bootstrap.css",
                 "~/Themes/Default/Content/css/font-awesome.css",                
                 "~/Themes/Default/Content/css/bootstrap-datetimepicker.css",
+                "~/Themes/Default/Content/css/style.css",
                 "~/Themes/Default/Content/css/style_full_layout.css",
                 "~/Themes/Default/Content/css/style_custom.css",
                  "~/Themes/Default/Content/css/select2.css",
@@ -190,8 +192,9 @@ namespace Eagle.WebApp
                 "~/Scripts/app/plugins/bootstrap/bootstrap-datetimepicker.js",
                 "~/Scripts/app/plugins/bootstrap/bootstrap-contextmenu.js",
 
-                "~/Scripts/app/plugins/superfish/js/superfish.js",
                 "~/Scripts/app/plugins/superfish/js/hoverIntent.js",
+                "~/Scripts/app/plugins/superfish/js/superfish.js",
+                "~/Scripts/app/plugins/superfish/js/supersubs.js",
 
                 "~/Scripts/app/plugins/qtip/js/jquery.qtip.js",
                 "~/Scripts/app/plugins/qtip/js/jquery.qtip.custom.js",

@@ -6,13 +6,13 @@
         @Html.LabelFor(model => model.EmpCode)
     </div>
     <div class="col-md-4">
-        @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "span12" })
+        @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "form-control" })
     </div>
     <div class="col-md-2">
         @Html.LabelFor(model => model.FullName)
     </div>
     <div class="col-md-4">
-        @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "span12" })
+        @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "form-control" })
     </div>
 </div>
 <!--end row-->
@@ -45,7 +45,7 @@
         @Html.LabelFor(model => model.LSPositionID)
     </div>
     <div class="col-md-4">
-        @Html.TextBox("selectLSPositionID", null, new { @class = "span12" })
+        @Html.TextBox("selectLSPositionID", null, new { @class = "form-control" })
         @Html.HiddenFor(model => model.LSPositionIDNull)
         @Html.HiddenFor(model => model.LSPositionName)
         @Html.ValidationMessageFor(model => model.LSPositionIDNull)
@@ -81,7 +81,7 @@
         @Html.LabelFor(model => model.LSDeductSalaryIDNullSearch)
     </div>
     <div class="col-md-4">
-        @Html.TextBox("selectLSDeductionSalarySearch", null, new { @class = "span12" })
+        @Html.TextBox("selectLSDeductionSalarySearch", null, new { @class = "form-control" })
         @Html.HiddenFor(model => model.LSDeductSalaryIDNullSearch)
         @Html.HiddenFor(model => model.LSDeductSalaryNameSearch)
         @Html.ValidationMessageFor(model => model.LSDeductSalaryIDNullSearch)

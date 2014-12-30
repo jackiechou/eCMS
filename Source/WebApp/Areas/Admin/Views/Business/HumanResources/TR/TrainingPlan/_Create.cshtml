@@ -47,7 +47,7 @@
                                     @Html.RequiredLabelFor(model => model.LSTrainingCodeID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingCodeID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingCodeID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingCodeIDAllowNull)                                                         
                                     @Html.HiddenFor(model => model.TrainingCodeName)                                                                                                                             
                                 </div>
@@ -55,7 +55,7 @@
                                     @Html.RequiredLabelFor(model => model.LSTrainingCourseID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingCourseID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingCourseID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingCourseIDAllowNull)   
                                     @Html.HiddenFor(model => model.TrainingCourseName)                                                                                                                    
                                 </div>                                
@@ -65,7 +65,7 @@
                                         @Html.LabelFor(model => model.LearningObjective)
                                 </div>
                                 <div class="col-md-10">
-                                         @Html.TextAreaFor(model => model.LearningObjective, new { @class = "span12" })                                        
+                                         @Html.TextAreaFor(model => model.LearningObjective, new { @class = "form-control" })                                        
                                 </div>
                             </div>                                       
                             <div class="row">
@@ -73,7 +73,7 @@
                                     @Html.RequiredLabelFor(model => model.LSTrainingCategoryID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingCategoryID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingCategoryID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingCategoryIDAllowNull)   
                                     @Html.HiddenFor(model => model.TrainingCategoryName)                                         
                                 </div>
@@ -81,7 +81,7 @@
                                     @Html.LabelFor(model => model.LSProviderID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingProviderID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingProviderID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSProviderID)   
                                     @Html.HiddenFor(model => model.TrainingProviderName)     
                                 </div>
@@ -91,7 +91,7 @@
                                     @Html.RequiredLabelFor(model => model.LSTrainingTypeID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingTypeID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingTypeID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingTypeIDAllowNull)   
                                     @Html.HiddenFor(model => model.TrainingTypeName)                                             
                                 </div>
@@ -99,7 +99,7 @@
                                     @Html.LabelFor(model => model.LSTrainingFormID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingFormID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingFormID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingFormID)   
                                     @Html.HiddenFor(model => model.TrainingFormName)         
                                 </div>
@@ -109,7 +109,7 @@
                                     @Html.LabelFor(model => model.LSTrainingLocationID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSTrainingLocationID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingLocationID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingLocationID)   
                                     @Html.HiddenFor(model => model.TrainingLocationName)         
                                 </div>
@@ -138,7 +138,7 @@
                                     @Html.RequiredLabelFor(model => model.NumOfStaff)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.NumOfStaffAllNull, new { @autocomplete = "off", @class = "span4" })                                                                          
+                                    @Html.TextBoxFor(model => model.NumOfStaffAllNull, new { @autocomplete = "off", @class = "form-control" })                                                                          
                                 </div>                                
                             </div>                                                                       
                             <div class="row">
@@ -146,13 +146,13 @@
                                     @Html.LabelFor(model => model.PlanDays)
                                 </div>
                                 <div class="col-md-4">
-                                     @Html.TextBoxFor(model => model.PlanDays, new { @autocomplete = "off", @class = "span4", @onkeydown="CheckNumber(this)", @onkeyup="CheckNumber(this)" })                                                                                        
+                                     @Html.TextBoxFor(model => model.PlanDays, new { @autocomplete = "off", @class = "form-control", @onkeydown = "CheckNumber(this)", @onkeyup = "CheckNumber(this)" })                                                                                        
                                 </div>
                                 <div class="col-md-2">
                                         @Html.LabelFor(model => model.PlanHours)
                                 </div>
                                 <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.PlanHours, new { @autocomplete = "off", @class = "span4" })    
+                                        @Html.TextBoxFor(model => model.PlanHours, new { @autocomplete = "off", @class = "form-control" })    
                                         @Html.ValidationMessageFor(model => model.PlanHours)                                 
                                 </div>
                             </div>                
@@ -189,7 +189,7 @@
                                     @Html.LabelFor(model => model.Comment)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Comment, new { @class = "span12" })                                    
+                                    @Html.TextAreaFor(model => model.Comment, new { @class = "form-control" })                                    
                                 </div>
                             </div>                                                             
                             <h6>@Eagle.Resource.LanguageResource.TrainingExpense</h6>
@@ -199,7 +199,7 @@
                                     @Html.LabelFor(model => model.LSTrainingExpenseID)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBox("SelectLSTrainingExpenseID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingExpenseID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSTrainingExpenseID)   
                                     @Html.HiddenFor(model => model.TrainingExpenseName)                                           
                                 </div>                                                                
@@ -207,7 +207,7 @@
                                     @Html.LabelFor(model => model.LSCurrencyID)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBox("SelectLSTrainingCurrencyID", null, new { @class = "span12" })                                        
+                                    @Html.TextBox("SelectLSTrainingCurrencyID", null, new { @class = "form-control" })                                        
                                     @Html.HiddenFor(model => model.LSCurrencyID)   
                                     @Html.HiddenFor(model => model.TrainingCurrencyName)                                             
                                 </div>
@@ -215,7 +215,7 @@
                                     @Html.LabelFor(model => model.Cost)
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.TextBoxFor(model => model.Cost, new { @autocomplete = "off", @class = "span4" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                             
+                                    @Html.TextBoxFor(model => model.Cost, new { @autocomplete = "off", @class = "form-control" }) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                             
                                     <input type="button" id="btnAddExpense" value="@Eagle.Resource.LanguageResource.btnAdd" class="btn btn-info AddModel" @ViewBag.EnableSaveAndSendForApproval/>                                                                                                          
                                 </div>
                             </div>                                   

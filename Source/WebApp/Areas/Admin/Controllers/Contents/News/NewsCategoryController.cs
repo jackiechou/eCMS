@@ -56,7 +56,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Contents
         public ActionResult Edit(int id)
         {
             NewsCategoryViewModel model = NewsCategoryRepository.GetDetails(id);
-            ViewBag.Status = CommonRepository.GenerateThreeStatusModeList(model.Status.ToString(), null, true);
+            ViewBag.Status = CommonRepository.GenerateThreeStatusModeList(model.Status.ToString(),null);
             return PartialView("../Contents/NewsCategory/_Edit", model);
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eagle.Repository.SYS.Session;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,13 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
     {
         //
         // GET: /Admin/MailManager/
-
+        [SessionExpiration]
         public ActionResult Index()
         {
             if (Request.IsAjaxRequest())
-                return PartialView("../Services/Mail/_Reset");
+                return PartialView("../Services/Mail/MailManager/_Reset");
             else
-                return View("../Services/Mail/Index");
+                return View("../Services/Mail/MailManager/Index");
         }
 
     }

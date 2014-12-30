@@ -33,13 +33,13 @@
                                     @Html.RequiredLabelFor(model => model.LSHospitalCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.LSHospitalCode, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.LSHospitalCode, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     <label>@Eagle.Resource.LanguageResource.Province (<span class="color-red">*</span>)</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLSProvinceID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLSProvinceID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSProvinceID)
                                     @Html.HiddenFor(model => model.LSProvinceName)
                                 </div>
@@ -51,13 +51,13 @@
                                     @Html.RequiredLabelFor(model => model.VNName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.VNName, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.VNName, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.RequiredLabelFor(model => model.Name)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->
@@ -67,7 +67,7 @@
                                     @Html.LabelFor(model => model.Rank)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Rank, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Rank, new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.Used)
@@ -83,7 +83,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!--end row-->

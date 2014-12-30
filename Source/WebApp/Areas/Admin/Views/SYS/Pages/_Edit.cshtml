@@ -20,14 +20,14 @@
                     @Html.RequiredLabelFor(model => model.ContentItemId)
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "span12", autocomplete = "off" })
+                    @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "form-control", autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.ContentItemId)
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.SkinId)
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.SkinId, null, new { @class = "span12", autocomplete = "off" })
+                    @Html.DropDownListFor(model => model.SkinId, null, new { @class = "form-control", autocomplete = "off" })
                 </div>
             </div>
             <!--end row-->
@@ -37,14 +37,14 @@
                     @Html.RequiredLabelFor(model => model.PageTitle)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PageTitle, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.PageTitle, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PageTitle)
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.PageName)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PageName, null, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.PageName, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PageName)
                 </div>
             </div>
@@ -57,14 +57,14 @@
                     @Html.LabelFor(model => model.PageUrl)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PageUrl, null, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.PageUrl, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PageUrl)
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.PagePath)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PagePath, null, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.PagePath, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PagePath)
                 </div>
             </div>
@@ -153,7 +153,7 @@
                     @Html.LabelFor(model => model.Description)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Description)
                 </div>
             </div>
@@ -184,14 +184,14 @@
                     @Html.LabelFor(model => model.PageHeadText)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextAreaFor(model => model.PageHeadText, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.TextAreaFor(model => model.PageHeadText, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PageHeadText)               
                  </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.PageFooterText)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextAreaFor(model => model.PageFooterText, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                    @Html.TextAreaFor(model => model.PageFooterText, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PageFooterText)                    
                 </div>
             </div>

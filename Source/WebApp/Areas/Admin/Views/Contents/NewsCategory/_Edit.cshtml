@@ -39,7 +39,7 @@
                                         @Html.RequiredLabelFor(model => model.CategoryCode)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.TextBoxFor(model => model.CategoryCode, null, new { @class = "span12" })
+                                        @Html.TextBoxFor(model => model.CategoryCode, null, new { @class = "form-control" })
                                         @Html.HiddenFor(model => model.CategoryId)
                                         @Html.ValidationMessageFor(model => model.CategoryCode)
                                     </div>                                                                
@@ -50,7 +50,7 @@
                                         @Html.RequiredLabelFor(model => model.CategoryName)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.TextBoxFor(model => model.CategoryName, null, new { @class = "span12" })
+                                        @Html.TextBoxFor(model => model.CategoryName, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.CategoryName)
                                     </div>                               
                                 </div>
@@ -80,7 +80,7 @@
                                         @Html.LabelFor(model => model.NavigateUrl)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.TextBoxFor(model => model.NavigateUrl, null, new { @class = "span12" })
+                                        @Html.TextBoxFor(model => model.NavigateUrl, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.NavigateUrl)
                                     </div>                         
                                 </div>
@@ -90,7 +90,7 @@
                                         @Html.LabelFor(model => model.Description)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, @class = "span12" })
+                                        @Html.TextAreaFor(model => model.Description, new { rows = 2, columns = 40, @class = "form-control" })
                                     </div>
                                 </div>
 
@@ -100,7 +100,7 @@
                                         @Html.LabelFor(model => model.Status)
                                     </div>
                                     <div class="col-md-9">
-                                        @Html.DropDownListFor(model => model.Status, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model => model.Status, null, new { @class = "form-control" })
                                     </div>
                                 </div>
 

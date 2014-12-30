@@ -37,7 +37,7 @@
                                         @Html.LabelFor(model => model.LSChangeStatusID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(model => model.LSChangeStatusID, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model => model.LSChangeStatusID, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.LSChangeStatusID)
                                     </div>
 
@@ -55,7 +55,7 @@
                                         @Html.LabelFor(model => model.LSLocationID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(model => model.LSLocationID, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model => model.LSLocationID, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.LSLocationID)
                                     </div>
 
@@ -63,7 +63,7 @@
                                         @Html.LabelFor(model => model.LSPositionID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(model => model.LSPositionID, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model => model.LSPositionID, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.LSPositionID)
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         @Html.LabelFor(model => model.LSGradeID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(model => model.LSGradeID, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model => model.LSGradeID, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.LSGradeID)
                                     </div>
 
@@ -82,7 +82,7 @@
                                         @Html.LabelFor(model => model.LineManagerID)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.DropDownListFor(model => model.LineManagerID, null, new { @class = "span12" })
+                                        @Html.DropDownListFor(model => model.LineManagerID, null, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.LineManagerID)
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                         @Html.LabelFor(model => model.Note)
                                     </div>
                                     <div class="col-md-10">
-                                        @Html.TextAreaFor(model => model.Note, new { @class = "span12", @cols = "20", @rows = "3", maxlength=150 })
+                                        @Html.TextAreaFor(model => model.Note, new { @class = "form-control", @cols = "20", @rows = "3", maxlength=150 })
                                     </div>
                                 </div>
 
@@ -114,7 +114,7 @@
                                             @Html.LabelFor(model => model.DecisionNo)
                                         </div>
                                         <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.DecisionNo, new { @class = "span12" })
+                                            @Html.TextBoxFor(model => model.DecisionNo, new { @class = "form-control" })
                                         </div>
                                         <div class="col-md-2">
                                             @Html.LabelFor(model => model.FileId)

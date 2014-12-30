@@ -55,14 +55,14 @@
                                         @Html.LabelFor(model => model.OTLimit)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.OTLimit, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.OTLimit, @class = "span6" })
+                                        @Html.TextBoxFor(model => model.OTLimit, new { @autocomplete = "off", @placeholder = @Eagle.Resource.LanguageResource.OTLimit, @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.OTLimit)
                                     </div>
                                     <div class="col-md-2">
                                         @Html.LabelFor(model => model.StandardAnnualLeave)
                                     </div>
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.StandardAnnualLeave, new { @placeholder = @Eagle.Resource.LanguageResource.StandardAnnualLeave, @class = "span5" })
+                                        @Html.TextBoxFor(model => model.StandardAnnualLeave, new { @placeholder = @Eagle.Resource.LanguageResource.StandardAnnualLeave, @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.StandardAnnualLeave)
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                         @Html.LabelFor(model => model.DayOfLongTerm)
                                     </div>
                                     <div class="col-md-2">
-                                        @Html.TextBoxFor(model => model.DayOfLongTerm ,  new { @class = "span12" }) 
+                                        @Html.TextBoxFor(model => model.DayOfLongTerm ,  new { @class = "form-control" }) 
                                         @Html.ValidationMessageFor(model => model.DayOfLongTerm)
                                     </div>
                                     <div class="col-md-8" style="font-style:italic; font-size:small;">

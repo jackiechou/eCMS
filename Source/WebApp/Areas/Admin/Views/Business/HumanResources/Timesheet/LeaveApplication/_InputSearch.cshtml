@@ -55,7 +55,7 @@
                                     @Html.LabelFor(model => model.Year)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("Year",(int)ViewBag.Year,new { @class = "span4" })
+                                    @Html.TextBox("Year", (int)ViewBag.Year, new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row">
@@ -63,13 +63,13 @@
                                     @Html.LabelFor(model => model.EmpCode)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "span12" })
+                                    @Html.TextBoxFor(model => model.EmpCode, new { @Id = "SearchEmpCode", @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.FullName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "span12" })
+                                    @Html.TextBoxFor(model => model.FullName, new { @Id = "SearchFullName", @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row">
@@ -77,7 +77,7 @@
                                     @Html.LabelFor(model => model.LSLeaveDayTypeID)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBox("SelectLeaveDayTypeID", null, new { @class = "span12" })
+                                    @Html.TextBox("SelectLeaveDayTypeID", null, new { @class = "form-control" })
                                     @Html.HiddenFor(model => model.LSLeaveDayTypeName)
                                     @Html.HiddenFor(model => model.LSLeaveDayTypeID)
                                 </div>

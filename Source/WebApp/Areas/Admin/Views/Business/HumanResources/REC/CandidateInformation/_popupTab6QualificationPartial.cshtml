@@ -15,14 +15,14 @@
                     @Html.RequiredLabelFor(model => model.QualificationNo)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.QualificationNo, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.QualificationNo, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.QualificationNo)
                 </div>
                 <div class="col-md-2">
                     @Html.RequiredLabelFor(model => model.LSQualificationID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectLSQualificationIDAlowNull", null, new { @class = "span12" })
+                    @Html.TextBox("selectLSQualificationIDAlowNull", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSQualificationIDAlowNull)
                     @Html.HiddenFor(model => model.LSQualificationIDAlowNullName)
 
@@ -41,7 +41,7 @@
                     @Html.LabelFor(model => model.AttachFile)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.AttachFile, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.AttachFile, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.AttachFile)
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     @Html.LabelFor(model => model.LSSchoolID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectLSSchoolID", null, new { @class = "span12" })
+                    @Html.TextBox("selectLSSchoolID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSSchoolID)
                     @Html.HiddenFor(model => model.LSSchoolName)
                 </div>
@@ -74,7 +74,7 @@
                     @Html.LabelFor(model => model.OtherSchool)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.OtherSchool, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.OtherSchool, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.OtherSchool)
                 </div>
             </div>
@@ -83,7 +83,7 @@
                     @Html.LabelFor(model => model.LSFacultyID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectLSFacultyID", null, new { @class = "span12" })
+                    @Html.TextBox("selectLSFacultyID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSFacultyID)
                     @Html.HiddenFor(model => model.LSFacultyName)
                 </div>
@@ -91,7 +91,7 @@
                     @Html.LabelFor(model => model.OtherFaculty)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.OtherFaculty, new { @class = "span12" })
+                    @Html.TextBoxFor(model => model.OtherFaculty, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.OtherFaculty)
                 </div>
             </div>
@@ -101,7 +101,7 @@
                     @Html.LabelFor(model => model.LSMajorID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectLSMajorID", null, new { @class = "span12" })
+                    @Html.TextBox("selectLSMajorID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSMajorID)
                     @Html.HiddenFor(model => model.LSMajorName)
                 </div>
@@ -109,7 +109,7 @@
                     @Html.LabelFor(model => model.LSTrainingTypeID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectLSTrainingTypeID", null, new { @class = "span12" })
+                    @Html.TextBox("selectLSTrainingTypeID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSTrainingTypeID)
                     @Html.HiddenFor(model => model.LSTrainingTypeName)
                 </div>
@@ -119,14 +119,14 @@
                     @Html.LabelFor(model => model.TrainingPlace)
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.TrainingPlace, null, new { @class = "span12" })
+                    @Html.DropDownListFor(model => model.TrainingPlace, null, new { @class = "form-control" })
                 </div>
 
                 <div class="col-md-2">
                     @Html.RequiredLabelFor(model => model.PriorityAlowNull)
                 </div>
                 <div class="col-md-4">
-                    @Html.EditorFor(model => model.PriorityAlowNull, new { @class = "span12" })
+                    @Html.EditorFor(model => model.PriorityAlowNull, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.PriorityAlowNull)
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     @Html.LabelFor(model => model.LSCountryID)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBox("selectLSCountryID", null, new { @class = "span12" })
+                    @Html.TextBox("selectLSCountryID", null, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.LSCountryID)
                     @Html.HiddenFor(model => model.LSCountryName)
                 </div>
@@ -147,7 +147,7 @@
                     @Html.LabelFor(model => model.Note)
                 </div>
                 <div class="col-md-4">
-                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, @class = "span12" })
+                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, @class = "form-control" })
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.PayByCompany)

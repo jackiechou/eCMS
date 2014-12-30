@@ -21,7 +21,7 @@
             @Html.RequiredLabelFor(model => model.LSRecruitmentFeeIDAlowNull)
         </div>
         <div class="col-md-4"> 
-            @Html.TextBox("SelectLSRecruitmentFeeIDAlowNull", null, new { @class = "span12" })
+            @Html.TextBox("SelectLSRecruitmentFeeIDAlowNull", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.LSRecruitmentFeeIDAlowNull)
             @Html.HiddenFor(model => model.LSRecruitmentFeeName)
         </div>
@@ -32,13 +32,13 @@
             @Html.RequiredLabelFor(model => model.AmountAlowNull)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.AmountAlowNull, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.AmountAlowNull, new { @class = "form-control" })
         </div>
         <div class="col-md-2">
             @Html.RequiredLabelFor(model => model.CurrencyID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectCurrencyIDAlowNull", null, new { @class = "span12" })
+            @Html.TextBox("SelectCurrencyIDAlowNull", null, new { @class = "form-control" })
             @Html.HiddenFor(model => model.CurrencyIDAlowNull)
             @Html.HiddenFor(model => model.CurrencyName)
         </div>

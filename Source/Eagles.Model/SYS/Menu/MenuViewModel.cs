@@ -95,6 +95,8 @@ namespace Eagle.Model.SYS.Menu
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "Status")]
         public int MenuStatus { get; set; }
 
+        public bool HasChild { get; set; }
+
         //Modified ====================================================================================
         public string IconUrl { get; set; }
         public Nullable<bool> IsExtenalLink { get; set; }

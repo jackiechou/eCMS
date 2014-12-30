@@ -36,14 +36,14 @@
                                     @Html.RequiredLabelFor(model => model.FirstName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FirstName, null, new { @class = "span12", autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.FirstName, null, new { @class = "form-control", autocomplete = "off" })
                                     @Html.ValidationMessageFor(model => model.FirstName)
                                 </div>
                                 <div class="col-md-2">
                                     @Html.RequiredLabelFor(model => model.LastName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.LastName, null, new { @class = "span12", autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.LastName, null, new { @class = "form-control", autocomplete = "off" })
                                     @Html.ValidationMessageFor(model => model.LastName)
                                 </div>
 
@@ -54,7 +54,7 @@
                                     @Html.RequiredLabelFor(model => model.LSRelationshipID)
                                 </div>
                                 <div class="col-md-4">                                    
-                                    @Html.TextBox("selectLSRelationshipID", null, new { @class = "span12" })
+                                    @Html.TextBox("selectLSRelationshipID", null, new { @class = "form-control" })
                                     @Html.Hidden("LSRelationshipID", string.Empty)
                                     @Html.Hidden("LSRelationshipName")
                                     @Html.ValidationMessageFor(model => model.LSRelationshipID)
@@ -64,8 +64,8 @@
                                     @Html.RequiredLabelFor(model => model.Gender)
                                 </div>
                                 <div class="col-md-4">
-                                    @*@Html.DropDownList("Gender", ViewBag.Gender as SelectList, "--" + Eagle.Resource.LanguageResource.Select + "--", new { @class = "span12" })*@
-                                    @Html.DropDownList("Gender", ViewBag.Gender as SelectList, new { @class = "span12" })
+                                    @*@Html.DropDownList("Gender", ViewBag.Gender as SelectList, "--" + Eagle.Resource.LanguageResource.Select + "--", new { @class = "form-control" })*@
+                                    @Html.DropDownList("Gender", ViewBag.Gender as SelectList, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Gender)
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                             @Html.DateTimePickerFor(model => model.DOB)
                                         </div>
                                         <div id="dpYOB" style="display:none">
-                                            @Html.TextBoxFor(model => model.YOB, new { @class = "span4" })
+                                            @Html.TextBoxFor(model => model.YOB, new { @class = "form-control" })
                                         </div> 
                                     </div>                              
                                 </div>                               
@@ -96,13 +96,13 @@
                                     <label>@Eagle.Resource.LanguageResource.Telephone</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Telephone, null, new { @class = "span12", autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.Telephone, null, new { @class = "form-control", autocomplete = "off" })
                                 </div>
                                  <div class="col-md-2">
                                     <label>@Eagle.Resource.LanguageResource.IDNo</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "span12", autocomplete = "off" })
+                                    @Html.TextBoxFor(model => model.IDNo, new { @name = "IDNo", @class = "form-control", autocomplete = "off" })
                                 </div>
                             </div>
 
@@ -111,7 +111,7 @@
                                     <label>@Eagle.Resource.LanguageResource.Address</label>
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Address, new { rows = 2, columns = 40, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Address, new { rows = 2, columns = 40, @class = "form-control" })
                                 </div>
                             </div>
                             <div class="row">
@@ -119,7 +119,7 @@
                                     <label>@Eagle.Resource.LanguageResource.WokPlace</label>
                                 </div>
                                 <div class="col-md-10">                                   
-                                    @Html.TextAreaFor(model => model.WokPlace, new { rows = 2, columns = 40, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.WokPlace, new { rows = 2, columns = 40, @class = "form-control" })
                                 </div>
                             </div>
                            <div class="row">
@@ -173,7 +173,7 @@
                                     <label>@Eagle.Resource.LanguageResource.Before75</label>
                                 </div>
                                <div class="col-md-10">
-                                 @Html.TextAreaFor(model => model.Before75, new { rows = 2, columns = 40, @class = "span12" })
+                                 @Html.TextAreaFor(model => model.Before75, new { rows = 2, columns = 40, @class = "form-control" })
                                </div>
                            </div>
 
@@ -182,7 +182,7 @@
                                     <label>@Eagle.Resource.LanguageResource.After75</label>
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.After75, new { rows = 2, columns = 40, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.After75, new { rows = 2, columns = 40, @class = "form-control" })
                                 </div>                              
                             </div>
 
@@ -192,7 +192,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150, @class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150, @class = "form-control" })
                                 </div>
                             </div>
 

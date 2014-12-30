@@ -468,8 +468,10 @@
     <Compile Include="Areas\Admin\Controllers\Sys\Users\UserGroupController.cs" />
     <Compile Include="Areas\Admin\Controllers\Sys\Users\ChangePasswordController.cs" />
     <Compile Include="Areas\Admin\Controllers\Sys\Users\UserController.cs" />
-    <Compile Include="Areas\Admin\Controllers\UI\Skins\SkinController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UI\Skins\SkinBackgroundController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UI\Skins\SkinPackageController.cs" />
     <Compile Include="Areas\Admin\Controllers\Common\ThemeControllerBase.cs" />
+    <Compile Include="Areas\Admin\Controllers\UI\Skins\SkinTemplateController.cs" />
     <Compile Include="Areas\Admin\Controllers\UI\Skins\ThemeController.cs" />
     <Compile Include="Areas\Admin\Reports\HR\CAFR\CAFDetailXtraReport.cs">
       <SubType>Component</SubType>
@@ -1794,6 +1796,9 @@
     <Content Include="Scripts\app\plugins\superfishmenu\js\superfish.js" />
     <Content Include="Scripts\app\plugins\superfishmenu\js\supersubs.js" />
     <Content Include="Scripts\app\plugins\superfishmenu\MIT-LICENSE.txt" />
+    <Content Include="Scripts\app\plugins\yamm_menu\demo.html" />
+    <Content Include="Scripts\app\plugins\yamm_menu\index.html" />
+    <Content Include="Scripts\app\plugins\yamm_menu\yamm.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
@@ -2788,6 +2793,7 @@
     <Content Include="Themes\Default\Content\css\report.css" />
     <Content Include="Themes\Default\Content\css\style.css" />
     <Content Include="Themes\Default\Content\css\style_custom.css" />
+    <Content Include="Themes\Default\Content\css\style_main_layout.css" />
     <Content Include="Themes\Default\Content\css\tagmanager.css" />
     <Content Include="Themes\Default\Content\css\validate.css" />
     <Content Include="Themes\Default\Content\fonts\fontawesome-webfont.svg" />
@@ -3816,6 +3822,16 @@
     <Content Include="Areas\Admin\Views\Services\Mail\MailManager\_List.cshtml" />
     <Content Include="Areas\Admin\Views\Services\Mail\MailManager\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Services\Mail\MailManager\_Reset.cshtml" />
+    <Content Include="Areas\Admin\Views\Services\Mail\MailAccount\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Services\Mail\MailAccount\_Reset.cshtml" />
+    <Content Include="Areas\Admin\Views\Services\Mail\MailServerProvider\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\UI\Skins\SkinPackages\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UI\Skins\SkinBackgrounds\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UI\Skins\SkinTemplates\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UI\Skins\SkinBackgrounds\_Reset.cshtml" />
+    <Content Include="Areas\Admin\Views\UI\Skins\SkinPackages\_Reset.cshtml" />
+    <Content Include="Areas\Admin\Views\UI\Skins\SkinTemplates\_Reset.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Desktop\_DesktopMainMenu.cshtml" />
     <None Include="Scripts\app\plugins\validation\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\app\plugins\validation\jquery.validate.js" />
     <Content Include="Scripts\app\plugins\validation\jquery.validate.unobtrusive.js" />
@@ -7446,12 +7462,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Controllers\Business\HumanResources\Settings\" />
-    <Folder Include="Areas\Admin\Controllers\HR\" />
     <Folder Include="Areas\Admin\Views\Business\HumanResources\REC\CandidateQualification\" />
     <Folder Include="Areas\Admin\Views\Business\HumanResources\REC\WorkingBackground\" />
     <Folder Include="Areas\Admin\Views\Business\HumanResources\REC\WorkingExpectation\" />
     <Folder Include="Areas\Admin\Views\Common\MasterData\" />
     <Folder Include="Areas\Admin\Views\Report\PR\" />
+    <Folder Include="Areas\Admin\Views\Shared\Admin\" />
     <Folder Include="Files\.tmb_Files\" />
     <Folder Include="Files\.tmb_Program Files\" />
     <Folder Include="Files\documents\.tmb_documents\" />

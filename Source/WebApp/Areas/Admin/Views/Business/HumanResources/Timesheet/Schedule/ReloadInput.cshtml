@@ -29,7 +29,7 @@
         </div>
         <div class="col-md-4">
             <span style="width: 60px; float: left; padding-right: 5px;">
-                @Html.TextBoxFor(model => model.Year, new { @class = "span12" })
+                @Html.TextBoxFor(model => model.Year, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Year)
             </span>
             <span style="float: left;">
@@ -64,7 +64,7 @@
         <label>@Eagle.Resource.LanguageResource.ShiftName</label>
     </div>
     <div class="col-md-3">
-        @Html.TextBox("LSShiftIDName", null, new { @class = "span12" })
+        @Html.TextBox("LSShiftIDName", null, new { @class = "form-control" })
         @Html.Hidden("LSShiftIDtmp")
         @*@Html.TextBox("LSShiftID", null, new { @id="LSShiftID", @name="LSShiftID", @class="col-md-12"})*@
     </div>

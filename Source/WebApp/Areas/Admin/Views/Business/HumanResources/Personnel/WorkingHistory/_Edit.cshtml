@@ -35,7 +35,7 @@
                                     @Html.RequiredLabelFor(model => model.WorkFor)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.WorkFor, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.WorkFor, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.WorkFor)
                                     @Html.HiddenFor(model => model.WorkingHistoryID, new { @id = "WorkingHistoryID" })
                                 </div>
@@ -44,7 +44,7 @@
                                     @Html.RequiredLabelFor(model => model.Position)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Position, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Position, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Position)
                                 </div>
                             </div>
@@ -54,14 +54,14 @@
                                     @Html.RequiredLabelFor(model => model.Duty)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Duty, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.Duty, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Duty)
                                 </div>
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.LeaveReason)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.LeaveReason, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.LeaveReason, new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -87,7 +87,7 @@
                                     @Html.LabelFor(model => model.ContactPersonName)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.ContactPersonName)
                                 </div>
 
@@ -95,7 +95,7 @@
                                     @Html.LabelFor(model => model.FormerCompanyAddress)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.FormerCompanyAddress, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.FormerCompanyAddress, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.FormerCompanyAddress)
                                 </div>                               
                             </div>
@@ -105,14 +105,14 @@
                                     @Html.LabelFor(model => model.ContactPersonPosition)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.ContactPersonPosition, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ContactPersonPosition, new { @class = "form-control" })
                                 </div>
 
                                 <div class="col-md-2">
                                     @Html.LabelFor(model => model.ContactPersonPhone)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.ContactPersonPhone, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ContactPersonPhone, new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -121,7 +121,7 @@
                                     @Html.LabelFor(model => model.ContactPersonEmail)
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.ContactPersonEmail, new { @class = "span12" })
+                                    @Html.TextBoxFor(model => model.ContactPersonEmail, new { @class = "form-control" })
                                 </div>
                             </div>
 
@@ -130,7 +130,7 @@
                                     @Html.LabelFor(model => model.Note)
                                 </div>
                                 <div class="col-md-10">
-                                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150,@class = "span12" })
+                                    @Html.TextAreaFor(model => model.Note, new { rows = 2, columns = 40, maxlength=150,@class = "form-control" })
                                 </div>
                             </div>
                             <!--/row-->

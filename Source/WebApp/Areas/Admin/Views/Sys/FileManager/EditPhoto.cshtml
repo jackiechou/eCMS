@@ -25,7 +25,7 @@
                        <label>@Html.Raw(Eagle.Resource.LanguageResource.FileTitle)</label>
                     </div>
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.FileTitle, new { @class = "span12" })
+                        @Html.TextBoxFor(model => model.FileTitle, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.FileTitle)  
                     </div>
                 </div>*@
@@ -50,7 +50,7 @@
                     </div>
                     <div class="fileupload span10">
                             <input id="FileUploadName" name="FileUploadName" type="file" class="col-md-12" required="required" />
-                            @Html.HiddenFor(model => model.FileName, new { @class = "span12" })                                       
+                            @Html.HiddenFor(model => model.FileName, new { @class = "form-control" })                                       
                     </div>
                 </div>
               @*  <div class="row">
@@ -58,7 +58,7 @@
                         <label>@Html.Raw(Eagle.Resource.LanguageResource.FileDescription)</label>
                     </div>
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.FileDescription, new { rows = 2, columns = 40, maxlength = 150, @class = "span12" })
+                        @Html.TextAreaFor(model => model.FileDescription, new { rows = 2, columns = 40, maxlength = 150, @class = "form-control" })
                     </div>
                 </div>                  *@                    
            

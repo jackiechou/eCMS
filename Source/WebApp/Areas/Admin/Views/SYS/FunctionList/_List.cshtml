@@ -18,13 +18,13 @@
                                 <label for="ModuleID">@Eagle.Resource.LanguageResource.Group</label>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.ModuleID, null, new { @class = "span12" })
+                                @Html.DropDownListFor(model => model.ModuleID, null, new { @class = "form-control" })
                             </div>
                             <div class="col-md-2">
                                 <label for="Parent">@Eagle.Resource.LanguageResource.Parent</label>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownList("Parent", null, new { @class = "span12" })
+                                @Html.DropDownList("Parent", null, new { @class = "form-control" })
                             </div>
                         </div>
                         <!--end row-->
@@ -34,7 +34,7 @@
                                 <label for="Title">@Eagle.Resource.LanguageResource.Title</label>
                             </div>
                             <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.Title, null, new { @class = "span12" })
+                                @Html.TextBoxFor(model => model.Title, null, new { @class = "form-control" })
                             </div>
                         </div>
                         <!--end row-->
@@ -44,7 +44,7 @@
                                 <label for="FunctionName">@Eagle.Resource.LanguageResource.FunctionName</label>
                             </div>
                             <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.FunctionName, null, new { @class = "span12" })
+                                @Html.TextBoxFor(model => model.FunctionName, null, new { @class = "form-control" })
                             </div>
                         </div>
                         <!--end row-->

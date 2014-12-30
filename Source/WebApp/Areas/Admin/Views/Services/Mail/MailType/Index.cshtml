@@ -1,23 +1,10 @@
 ﻿@{
     ViewBag.Title = Eagle.Resource.LanguageResource.MailType;
-    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
+    Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.FullMainLayout; 
 }
 @section ContentSection
 {
 <div id="MainBody" class="main_box">   
-    <div id="alertMessageBox">
-        @if (ViewBag.DisplayErrorMessage == true)
-        {
-            <div class="@ViewBag.CssClass    ">
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                <strong>@ViewBag.SortMessage !</strong>
-                <div class="padding-left">
-                    @Html.Raw(Server.HtmlDecode(ViewBag.Message))
-                </div>
-            </div>
-        }
-    </div>
-   
     <div id="out-box" class="row">
         <!--/left_box-->
         <div id="left_box" class="col-md-4">
@@ -33,20 +20,8 @@
         </div>
     </div> 
 </div>
-    }
-<!--Confirm box-->
+    <!--Confirm box-->
 @Html.Action("ConfirmPopup", "Common", null)
-@Html.Action("jqueryval", "Common", null)
-<style type="text/css">
-    #left_box {
-        float:left;
-        overflow-x:hidden;
-    }
-     #right_box {
-        float:left;
-    }
-</style>
-
 
 <script type="text/javascript">
     (function ($) {
@@ -76,6 +51,7 @@
                 init: function (config) {
                     DataMgr.InitializeCotrols();
                     DataMgr.BindEvents();
+                    
                 },
                 ajaxSuccess: function (data) {
                     switch (parseInt(DataMgr.config.ajaxCallMode)) {
@@ -108,7 +84,7 @@
                 },
                 InitializeCotrols: function () {
                     $("input:hidden[name=Mode]").val(0);
-                   
+
                     DataMgr.RemoveQtip();
                     DataMgr.HandleAddEditMode();
                     DataMgr.PopulateTypeComboBoxTree();
@@ -137,8 +113,7 @@
                         } else {
                             DataMgr.RemoveQtip();
                             //Add new Item
-                            var data = DataMgr.ConvertFormToJSON("myform");
-                            DataMgr.AddData(data);
+                            DataMgr.AddData();
                         }
                     });
 
@@ -148,8 +123,7 @@
                         } else {
                             DataMgr.RemoveQtip();
                             // Update Item
-                            var data = DataMgr.ConvertFormToJSON("myform");
-                            DataMgr.UpdateData(data);
+                            DataMgr.UpdateData();
                         }
                     });
 
@@ -258,8 +232,9 @@
                         var id = $('input:hidden[name=ParentId]').val();
                         selectBox.combotree('setValue', id);
                     }
-                },               
-                AddData: function (data) {
+                },
+                AddData: function () {
+                    var data = DataMgr.ConvertFormToJSON("myform");
                     this.config.method = "Create";
                     this.config.data = data;
                     this.config.url = DataMgr.config.baseURL + this.config.method;
@@ -282,7 +257,8 @@
                     DataMgr.HandleAddEditMode();
                     DataMgr.PopulateTypeComboBoxTree();
                 },
-                UpdateData: function (data) {
+                UpdateData: function () {
+                    var data = DataMgr.ConvertFormToJSON("myform");
                     this.config.method = "Edit";
                     this.config.type = "POST";
                     this.config.dataType = "json";
@@ -377,7 +353,7 @@
                         //validateObj.find('input[type="number"]').val(0);
                         //validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
                     }
-                }              
+                }
             };
             DataMgr.init();
         }
@@ -391,3 +367,5 @@
         $.createDataBuilder(base_settings);
     })(jQuery);
 </script>
+
+    }

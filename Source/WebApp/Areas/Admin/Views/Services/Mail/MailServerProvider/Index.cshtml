@@ -3,11 +3,10 @@
     Layout = Request.IsAjaxRequest() ? null : Eagle.Repository.UI.Layout.LayoutType.MainLayout; 
 }
 @model List<Mail_Templates>
-@Html.Hidden("AccountId")
 @section ContentSection
 {
 <div id="MainBody" class="main_box">
-    @Html.Partial("../Mail/MailServerProvider/_Reset")
+    @Html.Partial("../Services/Mail/MailServerProvider/_Reset")
 </div>
     }
 <!--Confirm box-->
@@ -101,18 +100,14 @@
     </div>
 </section>
 <section id="notice_board">
-    <div id="message_box" clientidmode="Static" runat="server">
+    <div id="message_box">
     </div>
 </section>
 <section id="content_box">
     <div id="accordion">
         <h3>Thêm Mail Server Provider</h3>
         <div id="add_box">
-            <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" runat="server">
-                <triggers>
-                    <asp:postbacktrigger controlid="btnAdd" />
-                </triggers>
-                <contenttemplate>
+   
                     <table cellpadding="2" cellspacing="2" width="100%">
                         <tr>
                             <td style="width:180px">
@@ -196,13 +191,12 @@
                             </td>
                         </tr>
                     </table>
-                </contenttemplate>
-            </asp:UpdatePanel>
+            
             <div style="clear:both"></div>
         </div>
 
         <h3>Cập nhật Mail Server Provider</h3>
-        <div id="tabs" runat="server" clientidmode="Static">
+        <div id="tabs">
         </div>
     </div>
 </section>

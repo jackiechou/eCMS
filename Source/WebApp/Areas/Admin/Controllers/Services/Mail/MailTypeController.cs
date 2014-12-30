@@ -12,6 +12,7 @@ using Eagle.Model.Common;
 using Eagle.Repository.SYS.Session;
 using Eagle.Model.Mail;
 using Eagle.Common.Settings;
+using Eagle.Repository;
 
 namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
 {
@@ -21,24 +22,11 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
         // GET: /Admin/MailType/
         [SessionExpiration]
         public ActionResult Index(int? Mode)
-        {
-            AccountViewModel acc = (AccountViewModel)Session[SettingKeys.AccountInfo];
-            if (acc != null)
-            {
-                if (Request.IsAjaxRequest())
-                {
-                    return PartialView("../Mail/MailType/_Edit");
-                }
-                else
-                {
-                    return View("../Mail/MailType/Index");    
-                }   
-            }
+        {           
+            if (Request.IsAjaxRequest())
+                return PartialView("../Services/Mail/MailType/_Edit");
             else
-            {
-                Response.RedirectToRoute("Admin_Login");
-                return null;               
-            }
+                return View("../Services/Mail/MailType/Index");            
         }
 
         // Get Companies
@@ -57,18 +45,11 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
         {
             MailTypeViewModel model = new MailTypeViewModel();
             model.ParentId = 0;
-            if (Session[SettingKeys.AccountInfo] != null)
-            {   
-               // PopulateHierachyTypeList(null);
-                PopulateStatusToDropDownList(null);
-            }else
-                Response.RedirectToRoute("Admin_Login");
+            ViewBag.Status = CommonRepository.GenerateTwoStatusModeList(null, true);
 
-            return PartialView("../Mail/MailType/_Edit", model);
+            return PartialView("../Services/Mail/MailType/_Edit", model);
         }
-
-
-
+        
         //
         // POST: /Admin/MailType/Create
 
@@ -107,23 +88,10 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
         public ActionResult Details(int id)
         {
             MailTypeViewModel model = MailTypeRespository.GetDetails(id);
-            if (Session[SettingKeys.AccountInfo] != null)
-            {                
-               // PopulateHierachyTypeList(model.ParentId);
-                //ViewBag.ParentId = model.ParentId;
-                try
-                {
-                    bool Status = model.Status;
-                    PopulateStatusToDropDownList(Status);
-                }
-                catch (NullReferenceException ex) { ex.ToString(); }
-                
-            }
-            else
-            {
-                Response.RedirectToRoute("Admin_Login");
-            } 
-            return PartialView("../Mail/MailType/_Edit", model);
+            // PopulateHierachyTypeList(model.ParentId);
+            //ViewBag.ParentId = model.ParentId;
+            ViewBag.Status = CommonRepository.GenerateTwoStatusModeList(model.Status.ToString(), true);
+            return PartialView("../Services/Mail/MailType/_Edit", model);
         }
         //
         // POST: /Admin/MailType/Edit/5
@@ -201,20 +169,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Services.Mail
       
         #endregion ===============================================================================================================
 
-
-
-        #region Status =================================================================================
-        public void PopulateStatusToDropDownList(bool? selected_value)
-        {            
-            Dictionary<bool?, string> dict = new Dictionary<bool?, string>();
-            dict.Add(true, Eagle.Resource.LanguageResource.Active);
-            dict.Add(false, Eagle.Resource.LanguageResource.InActive);
-
-            ViewBag.Status = new SelectList(dict, "Key", "Value", selected_value);             
-        }
-        #endregion =====================================================================================
-
-
+        
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetList()
         {

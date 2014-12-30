@@ -145,30 +145,38 @@ namespace Eagle.Repository.UI.Skins
 
         public override ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
         {
-            string[] strArray;
-            string[] strArray2;
-
-            if (controllerContext == null)
+            try
             {
-                throw new ArgumentNullException("controllerContext");
+                string[] strArray;
+                string[] strArray2;
+
+                if (controllerContext == null)
+                {
+                    throw new ArgumentNullException("controllerContext");
+                }
+                if (string.IsNullOrEmpty(viewName))
+                {
+                    throw new ArgumentException("viewName must be specified.", "viewName");
+                }
+
+                var themeName = GetThemeToUse(controllerContext);
+
+                var requiredString = controllerContext.RouteData.GetRequiredString("controller");
+
+                var viewPath = GetPath(controllerContext, ViewLocationFormats, "ViewLocationFormats", viewName, themeName, requiredString, "View", useCache, out strArray);
+                var masterPath = GetPath(controllerContext, MasterLocationFormats, "MasterLocationFormats", masterName, themeName, requiredString, "Master", useCache, out strArray2);
+
+                if (!string.IsNullOrEmpty(viewPath) && (!string.IsNullOrEmpty(masterPath) || string.IsNullOrEmpty(masterName)))
+                {
+                    return new ViewEngineResult(CreateView(controllerContext, viewPath, masterPath), this);
+                }
+                return new ViewEngineResult(strArray.Union(strArray2));
             }
-            if (string.IsNullOrEmpty(viewName))
+            catch (Exception ex)
             {
-                throw new ArgumentException("viewName must be specified.", "viewName");
+                return null;
             }
-
-            var themeName = GetThemeToUse(controllerContext);
-
-            var requiredString = controllerContext.RouteData.GetRequiredString("controller");
-
-            var viewPath = GetPath(controllerContext, ViewLocationFormats, "ViewLocationFormats", viewName, themeName, requiredString, "View", useCache, out strArray);
-            var masterPath = GetPath(controllerContext, MasterLocationFormats, "MasterLocationFormats", masterName, themeName, requiredString, "Master", useCache, out strArray2);
-
-            if (!string.IsNullOrEmpty(viewPath) && (!string.IsNullOrEmpty(masterPath) || string.IsNullOrEmpty(masterName)))
-            {
-                return new ViewEngineResult(CreateView(controllerContext, viewPath, masterPath), this);
-            }
-            return new ViewEngineResult(strArray.Union(strArray2));
+          
         }
 
         public override ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)

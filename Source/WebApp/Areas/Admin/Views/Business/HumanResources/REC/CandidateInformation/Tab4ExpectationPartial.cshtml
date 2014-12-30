@@ -14,7 +14,7 @@
                 @Html.LabelFor(model => model.LSPositionID)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SelectLSPositionID", null, new { @class = "span12" })
+                @Html.TextBox("SelectLSPositionID", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LSPositionName)
                 @Html.HiddenFor(model => model.LSPositionID)
             </div>
@@ -30,7 +30,7 @@
                 @Html.LabelFor(model => model.LSPositionID_Probation1)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SelectLSPositionID_Probation1", null, new { @class = "span12" })
+                @Html.TextBox("SelectLSPositionID_Probation1", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LSPositionID_Probation1Name)
                 @Html.HiddenFor(model => model.LSPositionID_Probation1)
             </div>
@@ -38,7 +38,7 @@
                 @Html.LabelFor(model => model.LSPositionID_Probation2)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SelectLSPositionID_Probation2", null, new { @class = "span12" })
+                @Html.TextBox("SelectLSPositionID_Probation2", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LSPositionID_Probation2Name)
                 @Html.HiddenFor(model => model.LSPositionID_Probation2)
             </div>
@@ -59,13 +59,13 @@
                 @Html.LabelFor(model => model.ExpectationSalary)
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.ExpectationSalary, new { @class = "span12" })
+                @Html.TextBoxFor(model => model.ExpectationSalary, new { @class = "form-control" })
             </div>
             <div class="col-md-2">
                 @Html.LabelFor(model => model.LSCurrencyID)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SelectLSCurrencyID", null, new { @class = "span12" })
+                @Html.TextBox("SelectLSCurrencyID", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LSCurrencyName)
                 @Html.HiddenFor(model => model.LSCurrencyID)
             </div>
@@ -78,13 +78,13 @@
                 @Html.LabelFor(model => model.MinSalary)
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.MinSalary, new { @class = "span12" })
+                @Html.TextBoxFor(model => model.MinSalary, new { @class = "form-control" })
             </div>
             <div class="col-md-2">
                 @Html.LabelFor(model => model.CurrentSalary)
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.CurrentSalary, new { @class = "span12" })
+                @Html.TextBoxFor(model => model.CurrentSalary, new { @class = "form-control" })
             </div>
         </div>
         <!--end row-->
@@ -102,13 +102,13 @@
                 @Html.LabelFor(model => model.WorkType)
             </div>
             <div class="col-md-4">
-                @Html.DropDownList("WorkType", new SelectList(Repository.Library.GetWorkTypeList(),"Key","Value",Model.WorkType), new { @class = "span12" })
+                @Html.DropDownList("WorkType", new SelectList(Repository.Library.GetWorkTypeList(),"Key","Value",Model.WorkType), new { @class = "form-control" })
             </div>
             <div class="col-md-2">
                 @Html.LabelFor(model => model.LSLocationID)
             </div>
             <div class="col-md-4">
-                @Html.TextBox("SelectLSLocationID", null, new { @class = "span12" })
+                @Html.TextBox("SelectLSLocationID", null, new { @class = "form-control" })
                 @Html.HiddenFor(model => model.LSLocationName)
                 @Html.HiddenFor(model => model.LSLocationID)
             </div>
@@ -121,13 +121,13 @@
                 @Html.LabelFor(model => model.OtherExpectation)
             </div>
             <div class="col-md-4">
-                @Html.TextAreaFor(model => model.OtherExpectation, new { @class = "span12" })
+                @Html.TextAreaFor(model => model.OtherExpectation, new { @class = "form-control" })
             </div>
             <div class="col-md-2">
                 @Html.LabelFor(model => model.Note)
             </div>
             <div class="col-md-4">
-                @Html.TextAreaFor(model => model.Note, new { @class = "span12" })
+                @Html.TextAreaFor(model => model.Note, new { @class = "form-control" })
             </div>
 
         </div>

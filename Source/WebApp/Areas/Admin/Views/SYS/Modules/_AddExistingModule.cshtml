@@ -11,13 +11,13 @@
             @Html.LabelFor(model => model.PageId)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.PageId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.DropDownListFor(model => model.PageId, null, new { @class = "form-control", autocomplete = "off" })
         </div>
         <div class="col-md-2">
             @Html.RequiredLabelFor(model => model.ContentItemId)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "form-control", autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.ContentItemId)
         </div>
     </div>
@@ -28,7 +28,7 @@
             @Html.RequiredLabelFor(model => model.ModuleId)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.ModuleId, null, new { @class = "span12", autocomplete = "off" })
+            @Html.DropDownListFor(model => model.ModuleId, null, new { @class = "form-control", autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.ModuleId)
         </div>
     </div>
@@ -39,14 +39,14 @@
             @Html.RequiredLabelFor(model => model.ModuleTitle)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.ModuleTitle, new { @class = "span12" })
+            @Html.TextBoxFor(model => model.ModuleTitle, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ModuleTitle)
         </div>
         <div class="col-md-2">
             @Html.LabelFor(model => model.Visibility)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Visibility, null, new { @class = "span12" })
+            @Html.DropDownListFor(model => model.Visibility, null, new { @class = "form-control" })
         </div>
     </div>
     <!--end row-->
@@ -62,14 +62,14 @@
             @Html.LabelFor(model => model.Pane)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Pane, null, new { @class = "span12" })
+            @Html.DropDownListFor(model => model.Pane, null, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Pane)
         </div>
         <div class="col-md-2">
             @Html.LabelFor(model => model.InsertedPosition)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.InsertedPosition, null, new { @class = "span12" })
+            @Html.DropDownListFor(model => model.InsertedPosition, null, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.InsertedPosition)
         </div>
     </div>
@@ -80,7 +80,7 @@
             @Html.LabelFor(model => model.Alignment)
         </div>
         <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Alignment, null, new { @class = "span12" })
+            @Html.DropDownListFor(model => model.Alignment, null, new { @class = "form-control" })
         </div>
         <div class="col-md-2">
             @Html.LabelFor(model => model.Border)

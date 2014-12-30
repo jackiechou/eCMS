@@ -1,6 +1,7 @@
 ﻿using Eagle.Common.Settings;
 using Eagle.Common.Utilities;
 using Eagle.Core;
+using Eagle.Model.Common;
 using Eagle.Model.SYS.Menu;
 using Eagle.Repository.Sys.Menus;
 using System;
@@ -348,6 +349,386 @@ namespace Eagle.Repository.SYS.Menus
         }
         #endregion ===============================================================================================================================
 
+
+        #region Desktop Mega Menu ====================================================================================================================
+        public static string LoadDesktopMegaMenu(int MenuTypeId, int ScopeTypeId)
+        {
+            string strHtml = string.Empty, strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty, liStyle = string.Empty; ;
+            int? iPageId = 0;
+            string signal = GetUrl().ToLower();
+            signal = signal == "home" ? "" : signal;
+
+            if (HttpContext.Current.Session[SettingKeys.MenuList] == null || HttpContext.Current.Session[SettingKeys.MenuList].ToString() == string.Empty)
+            {
+                List<MenuViewModel> menuList = MenuRepository.GetListByScopeTypeStatus(MenuTypeId, ScopeTypeId, ThreeStatusString.Active);
+                if (menuList != null && menuList.Count > 0)
+                {
+                    bool first = true;
+                    var parentList = menuList.Where(p => p.ParentId == null || p.ParentId == 0);
+                    if (parentList.Count() > 0)
+                    {
+                        int i = 1;
+                        foreach (var item in parentList)
+                        {
+                            if (first)
+                            {
+                                liStyle = "class='current'";
+                                first = false;
+                            }
+                            else
+                                liStyle = string.Empty;
+
+                            IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                            IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+
+                            Icon = (item.IconFile != null) ? IconUrl : IconClass;
+
+                            if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                                MenuLink = item.PageUrl;
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(item.PagePath))
+                                    MenuLink = item.PagePath.ToLower();
+                            }
+                            iPageId = (item.PageId != null) ? item.PageId : 0;
+                            MenuLink += "/" + iPageId + "/" + item.MenuId;
+
+                            strResult += "<li " + liStyle + ">";                           
+                            strResult += "<a href='" + MenuLink + "' >" + Icon + "  " + item.MenuTitle + "</a>";
+                            strResult += LoopMegaMenu(item.MenuId, item.MenuTitle, menuList);
+                            strResult += "</li>";
+                        }
+                    }
+
+                    strHtml = "<ul id='nav' style='display: -moz-box; width: 100%' class='sf-menu'>" + strResult + "</ul>";
+                }
+                HttpContext.Current.Session[SettingKeys.MenuList] = strHtml;
+            }
+            else
+                strHtml = HttpContext.Current.Session[SettingKeys.MenuList].ToString();
+            return strHtml;
+        }
+        private static string LoopMegaMenu(int PageId, string PageName, List<MenuViewModel> lst)
+        {
+            string strHtml = string.Empty, strResult = string.Empty, MenuName= string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty, divStyle = string.Empty;
+            int? iPageId = 0;
+            var _lst = lst.Where(p => p.ParentId == PageId);
+            if (_lst != null && _lst.Count() > 0)
+            {
+                foreach (var item in _lst)
+                {
+                    IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+
+                    Icon = (item.IconFile != null) ? IconUrl : IconClass;
+                    if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                        MenuLink = item.PageUrl;
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.PagePath))
+                            MenuLink = item.PagePath.ToLower();
+                    }
+
+                    iPageId = (item.PageId != null) ? item.PageId : 0;
+                    MenuLink += "/" + PageId + "/" + item.MenuId;
+                    MenuName = item.MenuTitle;
+          
+                    strResult += "<div class='sf-mega'>";
+                    strResult += "<div class='sf-mega-section'>";
+                    strResult += "<h2>" + MenuName + "</h2>";
+                    strResult += "<ul>";
+                    strResult += "<li>";
+                    strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
+                    strResult += LoopMegaMenu(item.MenuId, item.MenuTitle, lst);
+                    strResult += "</li>";
+                    strResult += "</ul>";
+                    strResult += "</div>";
+                    strResult += "</div>";         
+                }
+            }
+            return strResult;
+        }
+
+        private static string LoopSubMegaMenu(int PageId, string PageName, List<MenuViewModel> lst)
+        {
+            string strHtml = string.Empty, strResult = string.Empty, MenuName = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty, divStyle = string.Empty;
+            int? iPageId = 0;
+            var _lst = lst.Where(p => p.ParentId == PageId);
+            if (_lst != null && _lst.Count() > 0)
+            {
+
+                foreach (var item in _lst)
+                {
+                    IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+
+                    Icon = (item.IconFile != null) ? IconUrl : IconClass;
+                    if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                        MenuLink = item.PageUrl;
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.PagePath))
+                            MenuLink = item.PagePath.ToLower();
+                    }
+
+                    iPageId = (item.PageId != null) ? item.PageId : 0;
+                    MenuLink += "/" + PageId + "/" + item.MenuId;
+                    MenuName = item.MenuTitle;
+
+                    strResult += "<div class='sf-mega-section'>";
+                    strResult += "<h2>" + MenuName + "</h2>";
+                    strResult += "<ul>";
+                    strResult += "<li>";
+                    strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
+                    strResult += LoopSubMegaMenu(item.MenuId, item.MenuTitle, lst);
+                    strResult += "</li>";
+                    strResult += "</ul>";
+                    strResult += "</div>";
+                }
+            }
+            return strResult;
+        }
+        #endregion =================================================================================================================================
+
+        #region Desktop Bootstrap Menu =============================================================================================================
+        public static string LoadDesktopBootstrapMenu(int MenuTypeId, int ScopeTypeId)
+        {
+            string strHtml = string.Empty, strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty, liStyle = string.Empty; ;
+            int? iPageId = 0;
+            string signal = GetUrl().ToLower();
+            signal = signal == "home" ? "" : signal;
+
+            if (HttpContext.Current.Session[SettingKeys.MenuList] == null || HttpContext.Current.Session[SettingKeys.MenuList].ToString() == string.Empty)
+            {
+                List<MenuViewModel> menuList = MenuRepository.GetListByScopeTypeStatus(MenuTypeId, ScopeTypeId, ThreeStatusString.Active);
+                if (menuList != null && menuList.Count > 0)
+                {
+                    bool first = true;
+                    var parentList = menuList.Where(p => p.ParentId == null || p.ParentId == 0);
+                    if (parentList.Count() > 0)
+                    {
+                        int i=1;
+                        foreach (var item in parentList)
+                        {
+                            if (first)
+                            {
+                                liStyle = "class='current'";
+                                first = false;
+                            }
+                            else
+                                liStyle = string.Empty;
+
+                            IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                            IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+
+                            Icon = (item.IconFile != null) ? IconUrl : IconClass;
+
+                            if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                                MenuLink = item.PageUrl;
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(item.PagePath))
+                                    MenuLink = item.PagePath.ToLower();
+                            }
+                            iPageId = (item.PageId != null) ? item.PageId : 0;
+                            MenuLink += "/" + iPageId + "/" + item.MenuId;
+
+                            strResult += "<div id='navbar-collapse-" + (i++) + "' class='navbar-collapse collapse'>";
+                            strResult += "<ul class='nav navbar-nav'>";       
+                            strResult += "<li class='dropdown'>";
+                            if(item.HasChild)
+                                strResult += "<a href='" + MenuLink + "' data-toggle='dropdown' class='dropdown-toggle'>" + Icon + "  " + item.MenuTitle + "<b class='caret'></b></a>";
+                            else
+                                strResult += "<a href='" + MenuLink + "' >" + Icon + "  " + item.MenuTitle + "</a>";
+                            strResult += LoopMegaBootstrapMenu(item.MenuId, item.MenuTitle, menuList);
+                            strResult += "</li>";
+                            strResult += "</ul>";
+                            strResult += "</div>";
+                        }
+                    }
+
+                    strHtml = "<div class='navbar yamm navbar-default'><div class='container'>" + strResult + "</div></div>";
+                }
+                HttpContext.Current.Session[SettingKeys.MenuList] = strHtml;
+            }
+            else
+                strHtml = HttpContext.Current.Session[SettingKeys.MenuList].ToString();
+            return strHtml;
+        }
+
+        private static string LoopMegaBootstrapMenu(int PageId, string PageName, List<MenuViewModel> lst)
+        {
+            string strHtml = string.Empty, strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty, divStyle = string.Empty;
+            int? iPageId = 0;
+            var _lst = lst.Where(p => p.ParentId == PageId);
+            if (_lst != null && _lst.Count() > 0)
+            {                
+                foreach (var item in _lst)
+                {
+                    IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+
+                    Icon = (item.IconFile != null) ? IconUrl : IconClass;
+                    if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                        MenuLink = item.PageUrl;
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.PagePath))
+                            MenuLink = item.PagePath.ToLower();
+                    }
+
+                    iPageId = (item.PageId != null) ? item.PageId : 0;
+                    MenuLink += "/" + PageId + "/" + item.MenuId;
+
+                    strResult += "<ul class='dropdown-menu'>";
+                    strResult += "<li>";
+                    strResult += "<div class='yamm-content'>";
+                    strResult += "<div class='row'>";
+                    strResult += "<ul class='col-sm-4 list-unstyled'>";
+                    strResult += "<li>";
+                    strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
+                    strResult += LoopSubMegaBootstrapMenu(item.MenuId, item.MenuTitle, lst);
+                    strResult +="</li>";
+                    strResult += "</ul>";          
+                    strResult += "</div>";
+                    strResult += "</div>";
+                    strResult += "</li>";
+                    strResult += "</ul>";
+                }
+            }
+            return strResult;
+        }
+
+        private static string LoopSubMegaBootstrapMenu(int PageId, string PageName, List<MenuViewModel> lst)
+        {
+            string strHtml = string.Empty, strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty, divStyle = string.Empty;
+            int? iPageId = 0;
+            var _lst = lst.Where(p => p.ParentId == PageId);
+            if (_lst != null && _lst.Count() > 0)
+            {
+
+                foreach (var item in _lst)
+                {
+                    IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+
+                    Icon = (item.IconFile != null) ? IconUrl : IconClass;
+                    if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                        MenuLink = item.PageUrl;
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.PagePath))
+                            MenuLink = item.PagePath.ToLower();
+                    }
+
+                    iPageId = (item.PageId != null) ? item.PageId : 0;
+                    MenuLink += "/" + PageId + "/" + item.MenuId;
+                   
+                    strResult += "<ul>";
+                    strResult += "<li class='list-unstyled'>";
+                    strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";                   
+                    strResult += "</li>";
+                    strResult += "</ul>";
+                }
+            }
+            return strResult;
+        }
+        #endregion =======================================================================================================================
+
+        #region Menu =====================================================================================================================
+      
+        public static string LoadMenu(int RoleId, int MenuTypeId, int ScopeTypeId)
+        {
+            string strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty;
+            int? iPageId = 0;
+            string signal = GetUrl().ToLower();
+            signal = signal == "home" ? "" : signal;
+
+            if (HttpContext.Current.Session[SettingKeys.MenuList] == null || HttpContext.Current.Session[SettingKeys.MenuList].ToString() == string.Empty)
+            {
+                List<MenuViewModel> menuList = MenuRepository.GetListByRoleIdScopeTypeIdStatus(RoleId, MenuTypeId, ScopeTypeId, ThreeStatusString.Active);
+                if (menuList != null && menuList.Count > 0)
+                {
+                    foreach (var item in menuList.Where(p => p.ParentId == null || p.ParentId == 0))
+                    {
+                        IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                        IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+
+                        Icon = (item.IconFile != null) ? IconUrl : IconClass;
+
+                        if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                            MenuLink = item.PageUrl;
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(item.PagePath))
+                                MenuLink = item.PagePath.ToLower();
+                        }
+                        iPageId = (item.PageId != null) ? item.PageId : 0;
+                        MenuLink += "/" + iPageId + "/" + item.MenuId;
+
+                        strResult += "<li>";
+                        strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
+                        strResult += LoopPage(item.MenuId, menuList);
+                        strResult += "</li>";
+                    }
+                }
+                HttpContext.Current.Session[SettingKeys.MenuList] = strResult;
+            }
+            else
+                strResult = HttpContext.Current.Session[SettingKeys.MenuList].ToString();            
+            strResult = strResult.Replace("/" + signal + "'", "/" + signal + "' isview='1' ");
+            return strResult;
+        }
+        private static string GetUrl()
+        {
+            var flag = false;
+            foreach (var item in HttpContext.Current.Request.Url.AbsolutePath.Split('/'))
+            {
+                if (flag)
+                    return item;
+                if (item.ToLower().Contains("admin"))
+                    flag = true;
+            }
+            return "";
+        }
+        private static string LoopPage(int PageId, List<MenuViewModel> lst)
+        {
+            string strResult = string.Empty, MenuLink = string.Empty, Icon = string.Empty, IconUrl = string.Empty, IconClass = string.Empty;
+            int? iPageId = 0;
+            var _lst = lst.Where(p => p.ParentId == PageId);
+            if (_lst != null && _lst.Count() > 0)
+            {
+                strResult = "<ul style='display:none;'>";
+                foreach (var item in lst.Where(p => p.ParentId == PageId))
+                {
+                    IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+
+                    Icon = (item.IconFile != null) ? IconUrl : IconClass;
+                    //MenuLink = (item.IsExtenalLink != null && item.IsExtenalLink == true) ? item.PageUrl : item.PagePath;
+                    if (item.IsExtenalLink != null && item.IsExtenalLink == true)
+                        MenuLink = item.PageUrl;
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.PagePath))
+                            MenuLink = item.PagePath.ToLower();
+                    }
+
+                    iPageId = (item.PageId != null) ? item.PageId : 0;
+                    MenuLink += "/" + PageId + "/" + item.MenuId;
+
+                    strResult += "<li>";
+                    strResult += "<a href='" + MenuLink + "'><span> " + Icon + "  " + item.MenuTitle + "</span></a>";
+                    strResult += LoopPage(item.MenuId, lst);
+                    strResult += "</li>";
+                }
+
+                //strResult += "</li>";
+                strResult += "</ul>";
+            }
+            return strResult;
+        }
+        #endregion =======================================================================================================================
         public static IEnumerable<MenuViewModel> Search(string strSearch)
         {
             using (EntityDataContext context = new EntityDataContext())
@@ -476,7 +857,18 @@ namespace Eagle.Repository.SYS.Menus
                 }
             }
         }
-         public static List<MenuViewModel> GetListByRoleIdScopeTypeIdStatus(int RoleId, int MenuTypeId, int ScopeTypeId, string Status)
+
+         public static List<MenuViewModel> GetListByScopeTypeStatus(int MenuTypeId, int ScopeTypeId, string Status)
+         {
+             using (EntityDataContext context = new EntityDataContext())
+             {
+                 List<MenuViewModel> lst = new List<MenuViewModel>();
+                 string strCommand = @"EXEC Cms.Menu_GetListByTypeStatus @MenuTypeId = {0}, @ScopeTypeId = {1},@Status = {2}";
+                 lst = context.Database.SqlQuery<MenuViewModel>(strCommand, MenuTypeId, ScopeTypeId, Status).ToList();
+                 return lst;
+             }
+         }
+        public static List<MenuViewModel> GetListByRoleIdScopeTypeIdStatus(int RoleId, int MenuTypeId, int ScopeTypeId, string Status)
         {
             using (EntityDataContext context = new EntityDataContext())
             {
@@ -670,7 +1062,9 @@ namespace Eagle.Repository.SYS.Menus
         public string PopulateSiteMapByMenuId(string MenuId)
         {
             string strHTML = "", result = string.Empty;
-            if (!string.IsNullOrEmpty(MenuId) && MenuId != "Index")
+            int _MenuId;
+            bool flag = Int32.TryParse(MenuId, out _MenuId);
+            if (flag)
             {
                 DataTable dt = GetParentNodesOfSelectedNodeByMenuId(Convert.ToInt32(MenuId)).Tables[0];
                 if (dt.Rows.Count > 0)
@@ -692,6 +1086,7 @@ namespace Eagle.Repository.SYS.Menus
                     }
                 }
             }
+
             result = "<ul class='breadcrumb'>";
             result += "<li><a href='/Admin/Home/Index'>";
             result += "<span><i class='icon-home'></i> " + Eagle.Resource.LanguageResource.Home + "</span></a> <small><i class='icon-chevron-right'></i></small>";
