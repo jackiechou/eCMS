@@ -7,14 +7,7 @@
 
 # MIME type			Extension
 application/andrew-inset ez
-application/chemtool cht
-application/dicom dcm
-application/docbook+xml docbook
-application/ecmascript ecma
-application/flash-video flv
-application/illustrator ai
-application/javascript js
-application/mac-binhex40
+
 application/mathematica nb
 application/msword doc
 application/octet-stream bin
