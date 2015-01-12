@@ -1,5 +1,7 @@
 ﻿using Eagle.Core;
+using Eagle.Model.SYS.Content;
 using Eagle.Model.SYS.Modules;
+using Eagle.Repository.SYS.Contents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +12,6 @@ namespace Eagle.Repository.SYS.Modules
 {
     public class ModuleRepository
     {
-       
-
         public EntityDataContext context { get; set; }
 
         public ModuleRepository(EntityDataContext context)
@@ -39,7 +39,7 @@ namespace Eagle.Repository.SYS.Modules
         //                   ModuleKey = p.ModuleKey,
         //                   ModuleTitle = p.ModuleTitle,
         //                   ModuleName = p.ModuleName,
-        //                   AllTabs = p.AllTabs,
+        //                   AllPages = p.AllPages,
         //                   IsAdmin = p.IsAdmin,
         //                   IsDeleted = p.IsDeleted,
         //                   InheritViewPermissions = p.InheritViewPermissions,
@@ -99,8 +99,7 @@ namespace Eagle.Repository.SYS.Modules
                 lst.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.Select), Value = "" });
             return new SelectList(lst, "Value", "Text", SelectedValue);
         }
-
-        
+                
         public static SelectList PopulateVisibilityList(string SelectedValue, bool IsShowSelectText = false)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
@@ -150,16 +149,18 @@ namespace Eagle.Repository.SYS.Modules
             {
                 List<ModuleViewModel> lst = new List<ModuleViewModel>();
                 lst = (from p in context.Modules
+                       join c in context.ContentItems on p.ModuleId equals c.ModuleId into ModuleContentList
+                       from pc in ModuleContentList.DefaultIfEmpty()
                        select new ModuleViewModel
                        {
                            ApplicationId = p.ApplicationId,
-                           ContentItemId = p.ContentItemId,
+                           ContentItemId = pc.ContentItemId,
                            ModuleId = p.ModuleId,
                            ModuleCode = p.ModuleCode,
                            ModuleKey = p.ModuleKey,
                            ModuleTitle = p.ModuleTitle,
                            ModuleName = p.ModuleName,
-                           AllTabs = p.AllTabs,
+                           AllPages = p.AllPages,
                            IsAdmin = p.IsAdmin,
                            IsDeleted = p.IsDeleted,
                            InheritViewPermissions = p.InheritViewPermissions,
@@ -190,25 +191,27 @@ namespace Eagle.Repository.SYS.Modules
             using(EntityDataContext context = new EntityDataContext())
             {
                 List<ModuleViewModel> lst = new List<ModuleViewModel>();
-                lst = (from c in context.Modules
+                lst = (from m in context.Modules
+                       join c in context.ContentItems on m.ModuleId equals c.ModuleId into ModuleContentList
+                       from pc in ModuleContentList.DefaultIfEmpty()
                        select new ModuleViewModel()
                        {
-                           ApplicationId = c.ApplicationId,
-                           ContentItemId = c.ContentItemId,
-                           ModuleId = c.ModuleId,
-                           ModuleCode = c.ModuleCode,
-                           ModuleKey = c.ModuleKey,
-                           ModuleTitle = c.ModuleTitle,
-                           ModuleName = c.ModuleName,
-                           AllTabs = c.AllTabs,
-                           IsAdmin = c.IsAdmin,
-                           IsDeleted = c.IsDeleted,
-                           InheritViewPermissions = c.InheritViewPermissions,
-                           Header = c.Header,
-                           Footer = c.Footer,
-                           StartDate = c.StartDate,
-                           EndDate = c.EndDate
-                       }).OrderByDescending(c => c.ModuleId).ToList();
+                           ApplicationId = m.ApplicationId,
+                           ContentItemId = pc.ContentItemId,
+                           ModuleId = m.ModuleId,
+                           ModuleCode = m.ModuleCode,
+                           ModuleKey = m.ModuleKey,
+                           ModuleTitle = m.ModuleTitle,
+                           ModuleName = m.ModuleName,
+                           AllPages = m.AllPages,
+                           IsAdmin = m.IsAdmin,
+                           IsDeleted = m.IsDeleted,
+                           InheritViewPermissions = m.InheritViewPermissions,
+                           Header = m.Header,
+                           Footer = m.Footer,
+                           StartDate = m.StartDate,
+                           EndDate = m.EndDate
+                       }).OrderByDescending(m => m.ModuleId).ToList();
 
                 return lst;
             }            
@@ -222,17 +225,19 @@ namespace Eagle.Repository.SYS.Modules
                 lst = (from pm in context.PageModules
                        join m in context.Modules on pm.ModuleId equals m.ModuleId into module_lst
                        from ml in module_lst.DefaultIfEmpty()
+                       join c in context.ContentItems on ml.ModuleId equals c.ModuleId into ModuleContentList
+                       from pc in ModuleContentList.DefaultIfEmpty()                       
                        where pm.PageId == PageId
                        select new ModuleViewModel()
                        {
                            ApplicationId = ml.ApplicationId,
-                           ContentItemId = ml.ContentItemId,
+                           ContentItemId = pc.ContentItemId,
                            ModuleId = ml.ModuleId,
                            ModuleCode = ml.ModuleCode,
                            ModuleKey = ml.ModuleKey,
                            ModuleTitle = ml.ModuleTitle,
                            ModuleName = ml.ModuleName,
-                           AllTabs = ml.AllTabs,
+                           AllPages = ml.AllPages,
                            IsAdmin = ml.IsAdmin,
                            IsDeleted = ml.IsDeleted,
                            InheritViewPermissions = ml.InheritViewPermissions,
@@ -244,47 +249,50 @@ namespace Eagle.Repository.SYS.Modules
                            ModuleOrder = pm.ModuleOrder,
                            Alignment = pm.Alignment,
                            Color = pm.Color,
-                           Border = pm.Border,
-                           Icon = pm.Icon
+                           Border = pm.Border
                        }).OrderByDescending(pm => pm.ModuleOrder).ToList();
 
                 return lst;
             }
         }
-        public static List<ModuleViewModel> GetListByPageIdAndIsAdmin(int PageId, bool? IsAdmin)
+        public static List<ModuleViewModel> GetListByPageIdAndIsAdmin(int? ScopeTypeId, int? PageId, bool? IsAdmin)
         {
             using (EntityDataContext context = new EntityDataContext())
             {
                 List<ModuleViewModel> lst = new List<ModuleViewModel>();
-                lst = (from pm in context.PageModules
-                       join m in context.Modules on pm.ModuleId equals m.ModuleId into module_lst
-                       from ml in module_lst.DefaultIfEmpty()
-                       where pm.PageId == PageId && (ml.IsAdmin == IsAdmin || IsAdmin == null)
-                       select new ModuleViewModel()
-                       {
-                           ApplicationId = ml.ApplicationId,
-                           ContentItemId = ml.ContentItemId,
-                           ModuleId = ml.ModuleId,
-                           ModuleCode = ml.ModuleCode,
-                           ModuleKey = ml.ModuleKey,
-                           ModuleTitle = ml.ModuleTitle,
-                           ModuleName = ml.ModuleName,
-                           AllTabs = ml.AllTabs,
-                           IsAdmin = ml.IsAdmin,
-                           IsDeleted = ml.IsDeleted,
-                           InheritViewPermissions = ml.InheritViewPermissions,
-                           Header = ml.Header,
-                           Footer = ml.Footer,
-                           StartDate = ml.StartDate,
-                           EndDate = ml.EndDate,
-                           Pane = pm.Pane,
-                           ModuleOrder = pm.ModuleOrder,
-                           Alignment = pm.Alignment,
-                           Color = pm.Color,
-                           Border = pm.Border,
-                           Icon = pm.Icon
-                       }).OrderByDescending(pm => pm.ModuleOrder).ToList();
-
+                var query = (from m in context.Modules
+                             join c in context.ContentItems on m.ModuleId equals c.ModuleId into ModuleContentList
+                             from pc in ModuleContentList.DefaultIfEmpty()
+                               join pm in context.PageModules
+                               on m.ModuleId equals pm.ModuleId into module_lst
+                               from pml in module_lst.DefaultIfEmpty()
+                               where (pml.PageId == PageId || PageId == null) && (m.IsAdmin == IsAdmin || IsAdmin == null)
+                               select new ModuleViewModel()
+                               {
+                                   ApplicationId = m.ApplicationId,
+                                   ContentItemId = pc.ContentItemId,
+                                   ScopeTypeId = m.ScopeTypeId,
+                                   ModuleId = m.ModuleId,
+                                   ModuleCode = m.ModuleCode,
+                                   ModuleKey = m.ModuleKey,
+                                   ModuleTitle = m.ModuleTitle,
+                                   ModuleName = m.ModuleName,
+                                   AllPages = m.AllPages,
+                                   IsAdmin = m.IsAdmin,
+                                   IsDeleted = m.IsDeleted,
+                                   InheritViewPermissions = m.InheritViewPermissions,
+                                   Header = m.Header,
+                                   Footer = m.Footer,
+                                   StartDate = m.StartDate,
+                                   EndDate = m.EndDate,
+                                   Pane = pml.Pane,
+                                   ModuleOrder = pml.ModuleOrder,
+                                   Alignment = pml.Alignment,
+                                   Color = pml.Color,
+                                   Border = pml.Border
+                               }).OrderByDescending(pm => pm.ModuleOrder).ToList();
+                if (ScopeTypeId == 1)
+                    lst = query.Where(p => p.ScopeTypeId == ScopeTypeId).ToList();
                 return lst;
             }
         }
@@ -296,18 +304,20 @@ namespace Eagle.Repository.SYS.Modules
                 lst = (from pm in context.PageModules
                        join m in context.Modules on pm.ModuleId equals m.ModuleId into module_lst
                        from ml in module_lst.DefaultIfEmpty()
+                       join c in context.ContentItems on ml.ModuleId equals c.ModuleId into ModuleContentList
+                       from pc in ModuleContentList.DefaultIfEmpty()   
                        where pm.PageId == PageId && (ml.IsAdmin == IsAdmin || IsAdmin == null)
                        && (ml.ModuleTitle == Keywords || Keywords == null) && (ml.ModuleKey == Keywords || Keywords == null)
                        select new ModuleViewModel()
                        {
                            ApplicationId = ml.ApplicationId,
-                           ContentItemId = ml.ContentItemId,                          
+                           ContentItemId = pc.ContentItemId,                          
                            ModuleId = ml.ModuleId,
                            ModuleCode = ml.ModuleCode,
                            ModuleKey = ml.ModuleKey,
                            ModuleTitle = ml.ModuleTitle,
                            ModuleName = ml.ModuleName,
-                           AllTabs = ml.AllTabs,
+                           AllPages = ml.AllPages,
                            IsAdmin = ml.IsAdmin,
                            IsDeleted = ml.IsDeleted,
                            InheritViewPermissions = ml.InheritViewPermissions,
@@ -319,8 +329,7 @@ namespace Eagle.Repository.SYS.Modules
                            ModuleOrder = pm.ModuleOrder,
                            Alignment = pm.Alignment,
                            Color = pm.Color,
-                           Border = pm.Border,
-                           Icon = pm.Icon
+                           Border = pm.Border
                        }).OrderByDescending(pm => pm.ModuleOrder).ToList();
 
                 return lst;
@@ -334,25 +343,27 @@ namespace Eagle.Repository.SYS.Modules
                 ModuleViewModel entity = new ModuleViewModel();
                 try
                 {                   
-                    entity = (from c in context.Modules
-                              where c.ModuleId == Id
+                    entity = (from m in context.Modules
+                              join c in context.ContentItems on m.ModuleId equals c.ModuleId into ModuleContentList
+                              from pc in ModuleContentList.DefaultIfEmpty()   
+                              where m.ModuleId == Id
                               select new ModuleViewModel()
                               {
-                                  ApplicationId = c.ApplicationId,
-                                  ContentItemId = c.ContentItemId,
-                                  ModuleId = c.ModuleId,
-                                  ModuleCode = c.ModuleCode,
-                                  ModuleKey = c.ModuleKey,
-                                  ModuleTitle = c.ModuleTitle,
-                                  ModuleName = c.ModuleName,
-                                  AllTabs = c.AllTabs,
-                                  IsAdmin = c.IsAdmin,
-                                  IsDeleted = c.IsDeleted,
-                                  InheritViewPermissions = c.InheritViewPermissions,
-                                  Header = c.Header,
-                                  Footer = c.Footer,
-                                  StartDate = c.StartDate,
-                                  EndDate = c.EndDate
+                                  ApplicationId = m.ApplicationId,
+                                  ContentItemId = pc.ContentItemId,
+                                  ModuleId = m.ModuleId,
+                                  ModuleCode = m.ModuleCode,
+                                  ModuleKey = m.ModuleKey,
+                                  ModuleTitle = m.ModuleTitle,
+                                  ModuleName = m.ModuleName,
+                                  AllPages = m.AllPages,
+                                  IsAdmin = m.IsAdmin,
+                                  IsDeleted = m.IsDeleted,
+                                  InheritViewPermissions = m.InheritViewPermissions,
+                                  Header = m.Header,
+                                  Footer = m.Footer,
+                                  StartDate = m.StartDate,
+                                  EndDate = m.EndDate
                               }).FirstOrDefault();
                     
                 }
@@ -380,19 +391,19 @@ namespace Eagle.Repository.SYS.Modules
                 {
                     Module model = new Module();
                     model.ApplicationId = add_model.ApplicationId;
-                    model.ContentItemId = add_model.ContentItemId;
                     model.ModuleId = add_model.ModuleId;
                     model.ModuleCode = add_model.ModuleCode;
                     model.ModuleKey = add_model.ModuleKey;
                     model.ModuleTitle = add_model.ModuleTitle;
                     model.ModuleName = add_model.ModuleName;
-                    model.AllTabs = add_model.AllTabs;
+                    model.AllPages = add_model.AllPages;
                     model.IsAdmin = add_model.IsAdmin;
                     model.IsDeleted = add_model.IsDeleted;
                     model.InheritViewPermissions = add_model.InheritViewPermissions;
                     model.Header = add_model.Header;
                     model.Footer = add_model.Footer;
                     model.StartDate = add_model.StartDate;
+
                     int affectedRow = 0;
                     context.Entry(model).State = System.Data.Entity.EntityState.Added;
                     affectedRow = context.SaveChanges();
@@ -430,13 +441,12 @@ namespace Eagle.Repository.SYS.Modules
                     Module model = Find(edit_model.ModuleId);
                     if (model != null)
                     {                    
-                        model.ContentItemId = edit_model.ContentItemId;
                         model.ModuleId = edit_model.ModuleId;
                         model.ModuleCode = edit_model.ModuleCode;
                         model.ModuleKey = edit_model.ModuleKey;
                         model.ModuleTitle = edit_model.ModuleTitle;
                         model.ModuleName = edit_model.ModuleName;
-                        model.AllTabs = edit_model.AllTabs;
+                        model.AllPages = edit_model.AllPages;
                         model.IsAdmin = edit_model.IsAdmin;
                         model.IsDeleted = edit_model.IsDeleted;
                         model.InheritViewPermissions = edit_model.InheritViewPermissions;
@@ -448,6 +458,8 @@ namespace Eagle.Repository.SYS.Modules
                         int affectedRows = context.SaveChanges();
                         if (affectedRows == 1)
                         {
+                            if (edit_model.ContentItemId !=null)
+                                ContentItemRepository.UpdateModuleContentItem((int)edit_model.ContentItemId, edit_model.ModuleId, edit_model.ModuleName, edit_model.ModuleTitle, out Message);
                             Message = Eagle.Resource.LanguageResource.UpdateSuccess;
                             result = true;
                         }

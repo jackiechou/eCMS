@@ -8,7 +8,7 @@
    @Html.Partial("../Business/HumanResources/REC/TransferCandidate/_Reset")
 </div>
 
-@Html.Action("ConfirmPopup","Common",null)
+
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -44,79 +44,75 @@
     $(document).on("click", ".btnDeny", function () {
         var candidateID = $(this).data("id");
 
-        $('#confirm')
-       .modal({ backdrop: 'static', keyboard: false })
-       .one('click', '[data-value]', function (e) {
-           if ($(this).data('value')) {
-               $("body").addClass("loading");
-               $.ajax({
-                   type: "POST",
-                   url: "Deny?CandidateID=" + candidateID,
-                   success: function (data) {
-                       if (data == "success") {
-                           $("#btnAdd").trigger("click");
-                           AlterUpdateSuccess();
-                       } else {
-                           AlterError(data);
-                       }
-                   }
-               });
-               return false;
-           }
-       });
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "Deny?CandidateID=" + candidateID,
+                    success: function (data) {
+                        if (data == "success") {
+                            $("#btnAdd").trigger("click");
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterError(data);
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+
+      
 
     });
 
     $(document).on("click", ".btnWaitingForTransferToStaff", function () {
         var candidateID = $(this).data("id");
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "TransferToWaiting?CandidateID=" + candidateID,
+                    success: function (data) {
+                        if (data == "success") {
+                            $("#btnAdd").trigger("click");
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterError(data);
+                        }
+                    }
+                });
+                return false;
+            }
+        });
 
-        $('#confirm')
-       .modal({ backdrop: 'static', keyboard: false })
-       .one('click', '[data-value]', function (e) {
-           if ($(this).data('value')) {
-               $("body").addClass("loading");
-               $.ajax({
-                   type: "POST",
-                   url: "TransferToWaiting?CandidateID=" + candidateID,
-                   success: function (data) {
-                       if (data == "success") {
-                           $("#btnAdd").trigger("click");
-                           AlterUpdateSuccess();
-                       } else {
-                           AlterError(data);
-                       }
-                   }
-               });
-               return false;
-           }
-       });
+
 
     });
     
     $(document).on("click", ".btnPotentialCandidate", function () {
         var candidateID = $(this).data("id");
-        $('#confirm')
-       .modal({ backdrop: 'static', keyboard: false })
-       .one('click', '[data-value]', function (e) {
-           if ($(this).data('value')) {
-               $("body").addClass("loading");
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $("body").addClass("loading");
 
-               $.ajax({
-                   type: "POST",
-                   url: "PotentialCandidate?CandidateID=" + candidateID,
-                   success: function (data) {
-                       if (data == "success") {
-                           AlterUpdateSuccess();
-                           $("#btnAdd").trigger("click");
-                       } else {
-                           AlterError(data);
-                       }
-                   }
-               });
-               return false;
-           }
-       });
-
+                $.ajax({
+                    type: "POST",
+                    url: "PotentialCandidate?CandidateID=" + candidateID,
+                    success: function (data) {
+                        if (data == "success") {
+                            AlterUpdateSuccess();
+                            $("#btnAdd").trigger("click");
+                        } else {
+                            AlterError(data);
+                        }
+                    }
+                });
+                return false;
+            }
+        });
 
     });
 

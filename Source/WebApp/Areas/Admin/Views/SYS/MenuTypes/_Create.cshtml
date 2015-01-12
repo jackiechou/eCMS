@@ -1,7 +1,7 @@
 ﻿@model Eagle.Model.SYS.Menu.MenuTypeViewModel
 
 <div id="FormContainer" class="form-container">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform", autocomplete = "off", @class = "form-horizontal" }))
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "MenuTypeForm", name = "MenuTypeForm", autocomplete = "off", @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)

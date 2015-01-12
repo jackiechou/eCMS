@@ -50,14 +50,14 @@
                     @Html.LabelFor(model => model.FromMonth)
                 </div>
                 <div class="col-md-4">
-                    @Html.MonthPickerFor(model => model.FromMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 valid" })
+                    @Html.MonthPickerFor(model => model.FromMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker col-md-7 valid" })
                     @Html.ValidationMessageFor(model => model.FromMonth)
                 </div>
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.ToMonth)
                 </div>
                 <div class="col-md-4">
-                    @Html.MonthPickerFor(model => model.ToMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker span7 valid" })
+                    @Html.MonthPickerFor(model => model.ToMonth, null, new { @class = "mtz-monthpicker-widgetcontainer monthPicker col-md-7 valid" })
                     @Html.ValidationMessageFor(model => model.ToMonth)
                 </div>
             </div>

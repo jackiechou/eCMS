@@ -14,7 +14,7 @@ namespace Eagle.Core
     
     public partial class Role
     {
-        public Nullable<int> ApplicationId { get; set; }
+        public int ApplicationId { get; set; }
         public Nullable<int> RoleGroupId { get; set; }
         public int RoleId { get; set; }
         public Nullable<System.Guid> RoleCode { get; set; }

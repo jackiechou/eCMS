@@ -51,44 +51,43 @@
 </table>
 </div>
 <!--Hien popup Confirm khi delete-->
-@Html.Action("ConfirmPopup","Common",null)
+
 <script>
     // region click delete
     $('.launchConfirmAdjust').on('click', function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
         
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                var EmpID = $(".popupDetail input[name='EmpID']").val();
+                var url = areas + '/StandardAnnualLeave/_DeletePopup?ALAdjustID=' + lsID;
+                var urlCreate = '/StandardAnnualLeave/_ListAdjust?EmpID=' + EmpID;
 
-                    var EmpID = $(".popupDetail input[name='EmpID']").val();
-                    var url = areas + '/StandardAnnualLeave/_DeletePopup?ALAdjustID=' + lsID;
-                    var urlCreate = '/StandardAnnualLeave/_ListAdjust?EmpID=' + EmpID;
-                    
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        success: function (data) {
-                            if (data == 'success') {
-                                $.ajax({
-                                    type: "GET",
-                                    url: areas + urlCreate,
-                                    success: function (data) {
-                                        $('#divList').html(data);
-                                        AlterUpdateSuccessWithErrorID("alertMessageBox2");
-                                        return false;
-                                    }
-                                });
-                            } else {
-                                $('#divList').html(data);
-                                return false;
-                            }
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    $('#divList').html(data);
+                                    AlterUpdateSuccessWithErrorID("alertMessageBox2");
+                                    return false;
+                                }
+                            });
+                        } else {
+                            $('#divList').html(data);
+                            return false;
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
+
+
     });
 
   

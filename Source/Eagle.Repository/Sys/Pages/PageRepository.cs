@@ -25,7 +25,29 @@ namespace Eagle.Repository.SYS
         }
         #endregion ==========================================================================================================================
 
+      
         #region Load Data====================================================================================================================
+
+        public static SelectList PopulatePageSelectList(int ScopeTypeId, bool? IsSecured, string SelectedValue = null, bool IsShowSelectText = false)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                var query = context.Pages.Where(p => p.ScopeTypeId == ScopeTypeId);
+                if (IsSecured != null && IsSecured == true)
+                    query = query.Where(p=> p.IsSecured == true);
+
+                List<SelectListItem> list = query.AsEnumerable().Select(p => new SelectListItem()
+                {
+                    Text = p.PageTitle,
+                    Value = p.PageId.ToString()
+                }).ToList();                
+
+                if (IsShowSelectText)
+                    list.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.NoneSpecified), Value = "" });
+                return new SelectList(list, "Value", "Text", SelectedValue);
+            }
+        }
+
         public static SelectList PopulatePageSelectList(bool IsSecured, string SelectedValue, bool IsShowSelectText = false)
         {
             using (EntityDataContext context = new EntityDataContext())
@@ -103,7 +125,7 @@ namespace Eagle.Repository.SYS
                        {
                            ApplicationId = p.ApplicationId,
                            ContentItemId = p.ContentItemId,
-                           SkinId = p.SkinId,
+                           TemplateId = p.TemplateId,
                            ScopeTypeId = p.ScopeTypeId,
                            LanguageCode = p.LanguageCode,
                            PageId = p.PageId,
@@ -147,7 +169,7 @@ namespace Eagle.Repository.SYS
                        {
                            ApplicationId = p.ApplicationId,
                            ContentItemId = p.ContentItemId,
-                           SkinId = p.SkinId,
+                           TemplateId = p.TemplateId,
                            ScopeTypeId = p.ScopeTypeId,
                            LanguageCode = p.LanguageCode,
                            PageId = p.PageId,
@@ -195,12 +217,14 @@ namespace Eagle.Repository.SYS
             using (EntityDataContext context = new EntityDataContext())
             {
                 var entity = (from p in context.Pages
+                              join c in context.ContentItems on p.PageId equals c.PageId into PageContentList
+                              from pc in PageContentList.DefaultIfEmpty()
                               where p.PageId == Id
                               select new PageViewModel
                               {
                                   ApplicationId = p.ApplicationId,
-                                  ContentItemId = p.ContentItemId,
-                                  SkinId = p.SkinId,
+                                  ContentItemId = pc.ContentItemId,
+                                  TemplateId = p.TemplateId,
                                   ScopeTypeId = p.ScopeTypeId,
                                   LanguageCode = p.LanguageCode,
                                   PageId = p.PageId,
@@ -243,7 +267,7 @@ namespace Eagle.Repository.SYS
                        {
                            ApplicationId = p.ApplicationId,
                            ContentItemId = p.ContentItemId,
-                           SkinId = p.SkinId,
+                           TemplateId = p.TemplateId,
                            ScopeTypeId = p.ScopeTypeId,
                            LanguageCode = p.LanguageCode,
                            PageId = p.PageId,
@@ -279,8 +303,8 @@ namespace Eagle.Repository.SYS
         {
             using (EntityDataContext context = new EntityDataContext())
             {
-                string strCommand = @"EXEC Cms.Pages_GetAll @PageTitle = {0}, @ParentId = {1}, @IsVisible = {2}, @Lang = {3}";
-                return context.Database.SqlQuery<PageViewModel>(strCommand, obj.PageTitle, obj.ParentId, obj.IsVisible, strLanguage).ToList();
+                string strCommand = @"EXEC Cms.Pages_GetAll @PageTitle = {0},@IsVisible = {2}, @Lang = {3}";
+                return context.Database.SqlQuery<PageViewModel>(strCommand, obj.PageTitle,obj.IsVisible, strLanguage).ToList();
             }
         }
 
@@ -295,8 +319,8 @@ namespace Eagle.Repository.SYS
             {
                 try
                 {
-                    string strCommand = @" EXEC Cms.Pages_Insert @PageName = {0}, @PageTitle = {1}, @PageUrl = {2}, @ListOrder = {3}, @Icon = {4}, @IsVisible = {5}, @ParentId = {6}";
-                    int result = context.Database.SqlQuery<int>(strCommand, model.PageName, model.PageTitle, model.PageUrl, model.ListOrder, model.Icon, MathUtils.ParseBooleanToIntReturnNull(model.IsVisible), model.ParentId).FirstOrDefault();
+                    string strCommand = @" EXEC Cms.Pages_Insert @PageGroupId = {6}, @PageName = {0}, @PageTitle = {1}, @PageUrl = {2}, @ListOrder = {3}, @Icon = {4}, @IsVisible = {5}";
+                    int result = context.Database.SqlQuery<int>(strCommand, model.PageGroupId, model.PageName, model.PageTitle, model.PageUrl, model.ListOrder, model.Icon, MathUtils.ParseBooleanToIntReturnNull(model.IsVisible)).FirstOrDefault();
                     if (result > 0)
                         flag = true;
                 }
@@ -315,8 +339,8 @@ namespace Eagle.Repository.SYS
             {
                 try
                 {
-                    string strCommand = @" EXEC Cms.Pages_Update @PageName = {0}, @PageTitle = {1}, @PageUrl = {2}, @OrderBy = {3}, @Icon = {4}, @IsVisible = {5}, @ParentId = {6}, @PageId = {7}";
-                    int result = context.Database.SqlQuery<int>(strCommand, model.PageName, model.PageTitle, model.PageUrl, model.ListOrder, model.Icon, MathUtils.ParseBooleanToIntReturnNull(model.IsVisible), model.ParentId, model.PageId).FirstOrDefault();
+                    string strCommand = @" EXEC Cms.Pages_Update @PageId = {0}, @PageGroupId = {1},@PageName = {2}, @PageTitle = {3}, @PageUrl = {4}, @ListOrder = {5}, @Icon = {6}, @IsVisible = {7}";
+                    int result = context.Database.SqlQuery<int>(strCommand, model.PageId, model.PageGroupId, model.PageName, model.PageTitle, model.PageUrl, model.ListOrder, model.Icon, MathUtils.ParseBooleanToIntReturnNull(model.IsVisible)).FirstOrDefault();
                     if (result > 0)
                         flag = true;
                 }

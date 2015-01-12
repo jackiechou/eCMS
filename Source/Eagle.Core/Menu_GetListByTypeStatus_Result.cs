@@ -20,6 +20,7 @@ namespace Eagle.Core
         public Nullable<int> ParentId { get; set; }
         public int Depth { get; set; }
         public int ListOrder { get; set; }
+        public Nullable<bool> HasChild { get; set; }
         public string MenuName { get; set; }
         public string MenuTitle { get; set; }
         public string MenuAlias { get; set; }

@@ -1,112 +1,142 @@
 ﻿@model Eagle.Model.SYS.Modules.ModuleViewModel
 
-<div class="add-new-module">
-    <div>
-        <h6>@Eagle.Resource.LanguageResource.ModuleSelection</h6>
-    </div>
-    <hr />
-    <!--start row-->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.PageId)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.PageId, null, new { @class = "form-control", autocomplete = "off" })
-        </div>
-        <div class="col-md-2">
-            @Html.RequiredLabelFor(model => model.ContentItemId)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "form-control", autocomplete = "off" })
-            @Html.ValidationMessageFor(model => model.ContentItemId)
-        </div>
-    </div>
-    <!--end row-->
-    <!--start row-->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.RequiredLabelFor(model => model.ModuleId)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.ModuleId, null, new { @class = "form-control", autocomplete = "off" })
-            @Html.ValidationMessageFor(model => model.ModuleId)
-        </div>
-    </div>
-    <!--end row-->
-    <!--start row-->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.RequiredLabelFor(model => model.ModuleTitle)
-        </div>
-        <div class="col-md-4">
-            @Html.TextBoxFor(model => model.ModuleTitle, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ModuleTitle)
-        </div>
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.Visibility)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Visibility, null, new { @class = "form-control" })
-        </div>
-    </div>
-    <!--end row-->
-
-
-    <div>
-        <h6>@Eagle.Resource.LanguageResource.ModuleLocation</h6>
-    </div>
-    <hr />
-    <!--start row-->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.Pane)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Pane, null, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Pane)
-        </div>
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.InsertedPosition)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.InsertedPosition, null, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.InsertedPosition)
-        </div>
-    </div>
-    <!--end row-->
-    <!--start row-->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.Alignment)
-        </div>
-        <div class="col-md-4">
-            @Html.DropDownListFor(model => model.Alignment, null, new { @class = "form-control" })
-        </div>
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.Border)
-        </div>
-        <div class="col-md-4">
-            <div class="border-range">
-                <input class="single-slider" id="Border" type="hidden" value="0" />
+<div class="add-existing-module">
+    <div class="sub-container">
+        <div class="sub-header-container">
+            <div class="sub-heading-title">
+                <h6>@Eagle.Resource.LanguageResource.ModuleSelection</h6>
             </div>
         </div>
+        <div class="sub-body-container">
+            <!--start row-->
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.PageId)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.PageId, null, new { @class = "form-control", autocomplete = "off" })
+                </div>
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ContentItemId)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ContentItemId, null, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.ContentItemId)
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.RequiredLabelFor(model => model.ModuleId)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ModuleId, null, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.ModuleId)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Visibility)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Visibility, null, new { @class = "form-control" })
+                </div>
+
+            </div>
+            <!--end row-->
+        </div>
     </div>
-    <!--end row-->
-    <!--start row-->
-    <div class="row">
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.Color)
+
+    <div class="sub-container">
+        <div class="sub-header-container">
+            <div class="sub-heading-title">
+                <h6>@Eagle.Resource.LanguageResource.ModuleLocation</h6>
+            </div>
         </div>
-        <div class="col-md-4">
-            <input id="Color" class="col-md-11 color-picker" value="#31859b" style="border: 1px solid #cccccc; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); padding: 4px 6px; height: 20px; border-radius:4px;" />
-        </div>
-        <div class="col-md-2">
-            @Html.LabelFor(model => model.Icon)
-        </div>
-        <div class="col-md-4">
-            @Html.TextBoxFor(model => model.Icon, new { type = "file", @class = "span12 file" })
+        <div class="sub-body-container">
+            <!--start row-->
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Pane)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Pane, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Pane)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.InsertedPosition)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.InsertedPosition, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.InsertedPosition)
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Alignment)
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Alignment, null, new { @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Border)
+                </div>
+                <div class="col-md-4">
+                    <div class="border-range">
+                        <input class="single-slider" id="Border" type="hidden" value="0" />
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Color)
+                </div>
+                <div class="col-md-4">
+                    <input id="Color" class="col-md-11 color-picker" value="#31859b" style="border: 1px solid #cccccc; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); padding: 4px 6px; height: 20px; border-radius:4px;" />
+                </div>
+            </div>
+            <!--end row-->
+            <!--start row-->
+            <div class="form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.IconClass)
+                </div>
+                <div class="col-md-4">
+                    <button id="btnIconPicker" class="btn btn-default" data-rows="3" data-cols="6" role="iconpicker" data-arrow-class="btn-success"
+                            data-iconset="glyphicon|ionicon|fontawesome|weathericon|mapicon|octicon|typicon|elusiveicon" data-icon="glyphicon-picture"></button>
+                    <input type="hidden" id="IconClass" name="IconClass" />
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+            <!--end row-->
+            @Html.Action("LoadModuleRolePermission", "Permission")
         </div>
     </div>
-    <!--end row-->
-    @Html.Action("GetRolePermission", "Role")
 </div>
+<link href="~/Scripts/app/plugins/colorpicker/css/evol.colorpicker.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/elusive-icons-2.0.0/css/elusive-icons.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/ionicons-1.5.2/css/ionicons.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/map-icons-2.1.0/css/map-icons.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/octicons-2.1.2/css/octicons.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/typicons-2.0.6/css/typicons.min.css" rel="stylesheet" />
+<link href="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/icon-fonts/weather-icons-1.2.0/css/weather-icons.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/app/plugins/colorpicker/js/evol.colorpicker.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-elusiveicon-2.0.0.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-glyphicon.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-ionicon-1.5.2.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-mapicon-2.1.0.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-octicon-2.1.2.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-typicon-2.0.6.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-weathericon-1.2.0.min.js"></script>
+<script src="~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.min.js"></script>
+

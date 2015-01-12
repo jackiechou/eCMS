@@ -17,7 +17,7 @@ namespace Eagle.Core
         public int MenuPermissionId { get; set; }
         public int MenuId { get; set; }
         public int PermissionId { get; set; }
-        public Nullable<int> RoleId { get; set; }
+        public int RoleId { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<bool> AllowAccess { get; set; }
     }

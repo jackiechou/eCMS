@@ -2,68 +2,88 @@
     Layout = Eagle.Repository.UI.Layout.LayoutType.MasterLayout;
 }
 
-@section HeaderStyle{
+@section Meta{
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+}
+
+@section HeaderStyles{
     @Styles.Render("~/Themes/Default/TwoColumnAdminStyle")
 }
 
+@section HeaderScripts{
+   @Scripts.Render("~/Scripts/App/HeaderScript", "~/Scripts/App/Validation")
+}
+
 <div id="BodyContainer">
-    <!--start left -->
-    <div id="LeftPane">
-        @Html.Action("LoadLeftMainMenu", "Menu")
-    </div>
-    <!--end left -->
-    <!--start content -->
-    <div id="ContentPane">
-        <div id="SiteMap" class="navbar-header site-map"></div>
-        <div id="HeaderContainer" class="heading">
-            <div class="row">
-                <div class="col-md-10">
-                    @if (IsSectionDefined("TitleSection"))
-                    {
-                        @RenderSection("TitleSection", required: false)
-                    }
-                    else
-                    {
-                        <h4>@ViewBag.Title</h4>
-                    }
-                </div>
-                <div class="col-md-2">
-                    <div class="top-toolbar">
-                        @if (IsSectionDefined("TopActionButtons"))
+    <div class="PaneContainer">
+
+        <!--start left ------------>
+        <div id="LeftPane">
+            @Html.Action("LoadLeftMainMenu", "Menu")
+        </div>
+        <!--end left -------------->
+
+        <!--start content ------------->
+        <div id="ContentPane">
+            <div id="SiteMap" class="navbar-header site-map"></div>
+            <div id="HeaderContainer" class="heading">
+                <div class="row">
+                    <div class="col-md-10">
+                        @if (IsSectionDefined("TitleSection"))
                         {
-                            @RenderSection("TopActionButtons", required: false)
+                            @RenderSection("TitleSection", required: false)
                         }
+                        else
+                        {
+                            <h4>@ViewBag.Title</h4>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <div class="top-toolbar">
+                            @if (IsSectionDefined("TopActionButtons"))
+                            {
+                                @RenderSection("TopActionButtons", required: false)
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="MainContainer">
-            @if (IsSectionDefined("MessageSection"))
-            {
-                @RenderSection("MessageSection", required: false)
-            }else
-            {
-                 @Html.Partial("_MessagePartial")     
-            }
-                      
-            @RenderSection("ContentSection")
-
-            @if (IsSectionDefined("SubContentSection"))
-            {
-                @RenderSection("SubContentSection", required: false)
-            }
-        </div>
-
-        <div id="FooterContainer">           
-            <div class="bottom-toolbar">
-                @if (IsSectionDefined("BottomActionButtons"))
+            <div id="MainContainer">
+                @if (IsSectionDefined("MessageSection"))
                 {
-                   @RenderSection("BottomActionButtons", required: false)
+                    @RenderSection("MessageSection", required: false)
+                }else
+                {
+                    @Html.Partial("_MessagePartial")
                 }
-            </div>            
+
+                @RenderSection("ContentSection")
+
+                @if (IsSectionDefined("SubContentSection"))
+                {
+                    @RenderSection("SubContentSection", required: false)
+                }
+            </div>
+
+            <div id="FooterContainer">
+                <div class="bottom-toolbar">
+                    @if (IsSectionDefined("BottomActionButtons"))
+                    {
+                        @RenderSection("BottomActionButtons", required: false)
+                    }
+                </div>
+            </div>
+
         </div>
+        <!--end content --------------->
 
     </div>
-    <!--end content -->
+
 </div>

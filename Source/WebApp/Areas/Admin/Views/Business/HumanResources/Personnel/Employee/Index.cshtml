@@ -117,15 +117,14 @@
                     // Click delete (get)
                     $(document).on("click", ".changeStatusItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    
-                                    DataMgr.UpdateStatus(ID);
-                                    return false;
-                                }
-                            });
+
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                DataMgr.UpdateStatus(ID);
+                                return false;
+                            }
+                        });
+
                     });
                 },
                 ConvertFormToJSON: function (form) {

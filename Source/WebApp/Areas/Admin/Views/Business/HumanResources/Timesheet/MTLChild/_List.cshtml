@@ -97,26 +97,24 @@
     // region click delete
     $('.launchConfirm').on('click', function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-
-                    var urlCreate = '/MTLChild/_List';
-                    $.ajax({
-                        type: "POST",
-                        url: areas + '/MTLChild/_Delete' + '/' + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                $('#btnSearch').trigger('click');
-                                AlterDeleteSuccess();
-                            } else {
-                                $('#divEdit').html(data);
-                            }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                var urlCreate = '/MTLChild/_List';
+                $.ajax({
+                    type: "POST",
+                    url: areas + '/MTLChild/_Delete' + '/' + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            $('#btnSearch').trigger('click');
+                            AlterDeleteSuccess();
+                        } else {
+                            $('#divEdit').html(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
+
     });
 </script>

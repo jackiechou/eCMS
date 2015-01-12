@@ -16,12 +16,13 @@ namespace Eagle.Core
     {
         public int ApplicationId { get; set; }
         public Nullable<int> ContentItemId { get; set; }
+        public Nullable<int> ScopeTypeId { get; set; }
         public int ModuleId { get; set; }
         public System.Guid ModuleCode { get; set; }
         public string ModuleKey { get; set; }
         public string ModuleTitle { get; set; }
         public string ModuleName { get; set; }
-        public bool AllTabs { get; set; }
+        public bool AllPages { get; set; }
         public bool IsAdmin { get; set; }
         public bool IsDeleted { get; set; }
         public bool InheritViewPermissions { get; set; }

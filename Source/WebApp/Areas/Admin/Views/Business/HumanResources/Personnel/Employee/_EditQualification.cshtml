@@ -24,7 +24,6 @@
         </div>
     </div>
 </div>
-@Html.Action("ConfirmPopup", "Common", null)
 
 <link href="~/Scripts/plugins/tablednd/tablednd_custom.css" rel="stylesheet" />
 <script src="~/Scripts/plugins/tablednd/js/jquery.tablednd.js"></script>
@@ -220,14 +219,14 @@
                     $(document).on("click", ".deleteItem_Qualification", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
                        
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .on('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {                                   
-                                    DataMgr.DeleteData(ID);
-                                    return false;
-                                }
-                            });
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                DataMgr.DeleteData(ID);
+                                return false;
+                            }
+                        });
+
+                       
                     });
 
                     // Reset form

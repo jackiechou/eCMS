@@ -14,7 +14,7 @@
                     @Html.RequiredLabelFor(model => model.ContentTypeId)
                 </div>
                 <div class="col-sm-9">
-                    @Html.DropDownListFor(model => model.ContentTypeId, null, new { @class = "span12 form-control" })
+                    @Html.DropDownListFor(model => model.ContentTypeId, null, new { @class = "col-md-12 form-control" })
                     @Html.ValidationMessageFor(model => model.ContentTypeId)
                 </div>               
             </div>
@@ -23,7 +23,7 @@
                     @Html.RequiredLabelFor(model => model.ContentKey)
                 </div>
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(model => model.ContentKey, null, new { @class = "span12 form-control" })
+                    @Html.TextBoxFor(model => model.ContentKey, null, new { @class = "col-md-12 form-control" })
                     @Html.ValidationMessageFor(model => model.ContentKey)
                 </div>               
             </div>
@@ -32,7 +32,7 @@
                     @Html.LabelFor(model => model.Content)
                 </div>
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(model => model.Content, null, new { @class = "span12 tags form-control" })
+                    @Html.TextBoxFor(model => model.Content, null, new { @class = "col-md-12 tags form-control" })
                     @Html.ValidationMessageFor(model => model.Content)
                 </div>               
             </div>

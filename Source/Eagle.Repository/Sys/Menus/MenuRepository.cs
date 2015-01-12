@@ -4,6 +4,7 @@ using Eagle.Core;
 using Eagle.Model.Common;
 using Eagle.Model.SYS.Menu;
 using Eagle.Repository.Sys.Menus;
+using Eagle.Repository.Sys.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -379,7 +380,7 @@ namespace Eagle.Repository.SYS.Menus
                                 liStyle = string.Empty;
 
                             IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                            IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+                            IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-large'></i>";
 
                             Icon = (item.IconFile != null) ? IconUrl : IconClass;
 
@@ -418,7 +419,7 @@ namespace Eagle.Repository.SYS.Menus
                 foreach (var item in _lst)
                 {
                     IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-large'></i>";
 
                     Icon = (item.IconFile != null) ? IconUrl : IconClass;
                     if (item.IsExtenalLink != null && item.IsExtenalLink == true)
@@ -460,7 +461,7 @@ namespace Eagle.Repository.SYS.Menus
                 foreach (var item in _lst)
                 {
                     IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-large'></i>";
 
                     Icon = (item.IconFile != null) ? IconUrl : IconClass;
                     if (item.IsExtenalLink != null && item.IsExtenalLink == true)
@@ -519,7 +520,7 @@ namespace Eagle.Repository.SYS.Menus
                                 liStyle = string.Empty;
 
                             IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                            IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+                            IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-large'></i>";
 
                             Icon = (item.IconFile != null) ? IconUrl : IconClass;
 
@@ -566,7 +567,7 @@ namespace Eagle.Repository.SYS.Menus
                 foreach (var item in _lst)
                 {
                     IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-list'></i>";
 
                     Icon = (item.IconFile != null) ? IconUrl : IconClass;
                     if (item.IsExtenalLink != null && item.IsExtenalLink == true)
@@ -610,7 +611,7 @@ namespace Eagle.Repository.SYS.Menus
                 foreach (var item in _lst)
                 {
                     IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-list'></i>";
 
                     Icon = (item.IconFile != null) ? IconUrl : IconClass;
                     if (item.IsExtenalLink != null && item.IsExtenalLink == true)
@@ -652,7 +653,7 @@ namespace Eagle.Repository.SYS.Menus
                     foreach (var item in menuList.Where(p => p.ParentId == null || p.ParentId == 0))
                     {
                         IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                        IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+                        IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-large'></i>";
 
                         Icon = (item.IconFile != null) ? IconUrl : IconClass;
 
@@ -702,7 +703,7 @@ namespace Eagle.Repository.SYS.Menus
                 foreach (var item in lst.Where(p => p.ParentId == PageId))
                 {
                     IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th'></i>";
+                    IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-list'></i>";
 
                     Icon = (item.IconFile != null) ? IconUrl : IconClass;
                     //MenuLink = (item.IsExtenalLink != null && item.IsExtenalLink == true) ? item.PageUrl : item.PagePath;
@@ -934,32 +935,62 @@ namespace Eagle.Repository.SYS.Menus
             }
         }
 
+        public static List<MenuTreeModel> GetListByScopeTypeId(int ScopeTypeId)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                List<MenuTreeModel> list = context.Menus.Where(m => m.ScopeTypeId == ScopeTypeId).OrderBy(m => m.ListOrder).Select(m => new MenuTreeModel()
+                {
+                    id = m.MenuId,
+                    key = m.MenuId,
+                    parentId = m.ParentId,
+                    name = m.MenuName,
+                    text = m.MenuTitle,
+                    title = m.MenuTitle,
+                    tooltip = m.Description,
+                    isParent = m.HasChild,
+                    open = (m.ParentId == 0) ? true : false
+                }).ToList();
+                return list;
+            }
+        }
+
         public static List<MenuTreeModel> GetTreeList(int ScopeTypeId)
         { 
             using (EntityDataContext context = new EntityDataContext())
             {
-                List<MenuTreeModel> list = context.Menus.OrderBy(m => m.ListOrder).Where(m => m.ScopeTypeId == ScopeTypeId).Select(m => new MenuTreeModel()
-               {
-                   id = m.MenuId,
-                   parentid = m.ParentId,
-                   text = m.MenuTitle,
-                   value = m.MenuCode
-               }).ToList();
+                List<MenuTreeModel> list = context.Menus.Where(m => m.ScopeTypeId == ScopeTypeId).OrderBy(m => m.ListOrder).Select(m => new MenuTreeModel()
+                    {
+                        id = m.MenuId,
+                        key = m.MenuId,
+                        parentId = m.ParentId,
+                        name = m.MenuName,
+                        text = m.MenuTitle,
+                        title = m.MenuTitle,
+                        tooltip = m.Description,
+                        isParent = m.HasChild,
+                        open = (m.ParentId == 0)?true:false
+                    }).ToList();
                 List<MenuTreeModel> recursiveObjects = RecursiveFillTree(list, 0);
-                return recursiveObjects;          
-            }
-            
+                return recursiveObjects; 
+            }            
         }
 
         public static List<MenuTreeModel> RecursiveFillTree(List<MenuTreeModel> list, int? id)
         {
-            List<MenuTreeModel> nodes = list.Where(m => m.parentid == id).Select(
+            List<MenuTreeModel> items = new List<MenuTreeModel>();
+            List<MenuTreeModel> nodes = list.Where(m => m.parentId == id).Select(
                m => new MenuTreeModel
                {
                    id = m.id,
-                   parentid = m.parentid,
+                   key = m.key,
+                   parentId = m.parentId,
+                   name = m.name,
                    text = m.text,
-                   value = m.value
+                   title = m.title,
+                   tooltip = m.tooltip,
+                   isParent = m.isParent,
+                   open = m.open
                }).ToList();
 
             if (nodes.Count > 0)
@@ -970,58 +1001,25 @@ namespace Eagle.Repository.SYS.Menus
                     MenuTreeModel node = new MenuTreeModel()
                     {
                         id = child.id,
-                        parentid = child.parentid,
+                        key = child.key,
+                        parentId = child.parentId,
+                        name = child.name,
                         text = child.text,
-                        value = child.value,
+                        title = child.title,
+                        tooltip = child.tooltip,
+                        isParent = child.isParent,
+                        open = child.open,
                         children = RecursiveFillTree(list, child.id)
                     };
+                    items.Add(node);
                 }                
             }
-            return nodes;
+            return items;
         }
         public Menu Find(int id)
         {
             return context.Menus.Find(id);
-        }
-        public bool Add(MenuViewModel add_model)
-        {
-            try
-            {
-                Menu model = new Menu();
-                model.MenuId = add_model.MenuId;
-                model.MenuName = add_model.MenuName;
-                context.Entry(model).State = System.Data.Entity.EntityState.Added;
-                context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public bool Update(MenuViewModel edit_model)
-        {
-            bool flag = false;
-            try
-            {
-                Menu model = Find(edit_model.MenuId);
-                if (model != null)
-                {
-                    model.MenuId = edit_model.MenuId;                  
-                    model.MenuName = edit_model.MenuName;
-                    context.Entry(model).State = System.Data.Entity.EntityState.Modified;
-                    context.SaveChanges();
-                    flag = true;
-                }
-            }
-            catch
-            {
-                flag = false;
-            }
-            return flag;
-        }
-
-
+        }   
 
         //=================================================================================================================================================================
 
@@ -1045,14 +1043,14 @@ namespace Eagle.Repository.SYS.Menus
                             MenuLink = dt.Rows[i]["PagePath"].ToString().ToLower() + "/" + dt.Rows[i]["MenuId"].ToString();
 
                         strHTML += "<li>";
-                        strHTML += "<a href='" + MenuLink + "'><span>" + MenuTitle + "</span></a> <small><i class='icon-chevron-right'></i></small>";
+                        strHTML += "<a href='" + MenuLink + "'><span>" + MenuTitle + "</span></a> <small><i class='glyphicon glyphicon-chevron-right'></i></small>";
                         strHTML += "</li>";
                     }
                 }
             }
             result = "<ul class='breadcrumb'>";
             result += "<li><a href='/Admin/Home/Index'>";
-            result += "<span><i class='icon-home'></i> " + Eagle.Resource.LanguageResource.Home + "</span></a> <small><i class='icon-chevron-right'></i></small>";
+            result += "<span><i class='glyphicon glyphiconicon-home'></i> " + Eagle.Resource.LanguageResource.Home + "</span></a> <small><i class='glyphicon glyphicon-chevron-right'></i></small>";
             result += "</li>";
             result += strHTML;
             result += "</ul>";
@@ -1081,7 +1079,7 @@ namespace Eagle.Repository.SYS.Menus
                             MenuLink = dt.Rows[i]["PagePath"].ToString().ToLower() + "/" + dt.Rows[i]["MenuId"].ToString();
 
                         strHTML += "<li>";
-                        strHTML += "<a href='" + MenuLink + "'><span>" + MenuTitle + "</span></a> <small><i class='icon-chevron-right'></i></small>";
+                        strHTML += "<a href='" + MenuLink + "'><span>" + MenuTitle + "</span></a> <small><i class='glyphicon glyphicon-chevron-right'></i></small>";
                         strHTML += "</li>";
                     }
                 }
@@ -1089,7 +1087,7 @@ namespace Eagle.Repository.SYS.Menus
 
             result = "<ul class='breadcrumb'>";
             result += "<li><a href='/Admin/Home/Index'>";
-            result += "<span><i class='icon-home'></i> " + Eagle.Resource.LanguageResource.Home + "</span></a> <small><i class='icon-chevron-right'></i></small>";
+            result += "<span><i class='glyphicon glyphicon-home'></i> " + Eagle.Resource.LanguageResource.Home + "</span></a> <small><i class='glyphicon glyphicon-chevron-right'></i></small>";
             result += "</li>";
             result += strHTML;
             result += "</ul>";
@@ -1244,7 +1242,7 @@ namespace Eagle.Repository.SYS.Menus
             }
         }
 
-        public int GetMenuDepth(int MenuId)
+        public int GetMenuLevel(int? MenuId)
         {
             SqlCommand cmd = new SqlCommand("Menu_GetMenuLevelByMenuId", con) { CommandType = CommandType.StoredProcedure, CommandTimeout = SystemSettings.CommandTimeout };
             cmd.Parameters.AddWithValue("@MenuId", MenuId);
@@ -1258,79 +1256,176 @@ namespace Eagle.Repository.SYS.Menus
             return Depth;
         }
 
-        ////INSERT- UPDATE - DELETE 
-        public int Insert(int MenuTypeId, int ParentId, string MenuName, int? PageId, string Target, int IconFile, string IconClass, string CssClass, string Description, int Status)
+        public static int GetMenuDepth(int? MenuId)
         {
-            string PageAlias = StringUtils.convertTitle2Link(MenuName);
-            int Depth = GetMenuDepth(ParentId) + 1;
-            int id = 0;
-            int returnValue = 0;
-
-            using (System.Transactions.TransactionScope transcope = new System.Transactions.TransactionScope())
-            {
-                int ListOrder = (from u in context.Menus select u.ListOrder).DefaultIfEmpty(0).Max() + 1;
-                Menu entity = new Menu();
-                entity.MenuTypeId = MenuTypeId;
-                entity.ParentId = ParentId;
-                entity.Depth = Depth;
-                entity.ListOrder = ListOrder;
-                entity.PageId = PageId;
-                entity.MenuName = MenuName;
-                entity.MenuAlias = PageAlias;
-                entity.Target = Target;
-                entity.IconFile = IconFile;
-                entity.IconClass = IconClass;
-                entity.CssClass = CssClass;
-                entity.Description = Description;
-                entity.MenuStatus = Status;
-                context.Menus.Add(entity);
-                returnValue = context.SaveChanges();
-                transcope.Complete();
-                id = entity.MenuId;
-            }
-
-            return id;
-        }
-
-        public static int Update(int MenuId, string MenuName, int PageId, string Target, int IconFile, string IconClass, string CssClass, string Description, int Status)
-        {
-            string MenuAlias = StringUtils.convertTitle2Link(MenuName);
-            int i = 0;
             using (EntityDataContext context = new EntityDataContext())
             {
-                using (System.Transactions.TransactionScope transcope = new System.Transactions.TransactionScope())
-                {
-                    Menu entity = context.Menus.Single(x => x.MenuId == MenuId);
-                    entity.PageId = PageId;
-                    entity.MenuName = MenuName;
-                    entity.MenuAlias = MenuAlias;
-                    entity.Target = Target;
-                    entity.IconFile = IconFile;
-                    entity.IconClass = IconClass;
-                    entity.CssClass = CssClass;
-                    entity.Description = Description;
-                    entity.MenuStatus = Status;
-                    i = context.SaveChanges();                   
-                    transcope.Complete();
-                }
+                int Depth = 0;
+                Depth = (from x in context.Menus where x.MenuId == MenuId select x.Depth).FirstOrDefault();
+                return Depth;
             }
-            return i;
         }
 
-        public static int Delete(int MenuId)
-        {
-            MenuPermissionRepository.Delete(MenuId);
-            DeleteChildByParentId(MenuId);
-            using (System.Transactions.TransactionScope transcope = new System.Transactions.TransactionScope())
+        ////INSERT- UPDATE - DELETE 
+        public static bool Insert(MenuViewModel add_model, out int MenuId , out string message)
+        {            
+            using (EntityDataContext context = new EntityDataContext())
             {
-                using (EntityDataContext context = new EntityDataContext())
+                string PageAlias = StringUtils.convertTitle2Link(add_model.MenuName);
+                int Depth = GetMenuDepth(add_model.ParentId) + 1;
+                bool result = false;
+                message = string.Empty;
+                MenuId = 0;
+
+                try
                 {
-                    Menu entity = context.Menus.Single(x => x.MenuId == MenuId);
-                    context.Menus.Remove(entity);
-                    int i = context.SaveChanges();
-                    transcope.Complete();
-                    return i;
+                    using (System.Transactions.TransactionScope transcope = new System.Transactions.TransactionScope())
+                    {
+                        int ListOrder = (from u in context.Menus select u.ListOrder).DefaultIfEmpty(0).Max() + 1;
+                        Menu entity = new Menu();
+                        entity.MenuTypeId = add_model.MenuTypeId;
+                        entity.ParentId = add_model.ParentId;
+                        entity.Depth = Depth;
+                        entity.ListOrder = ListOrder;
+                        entity.PageId = add_model.PageId;
+                        entity.MenuName = add_model.MenuName;
+                        entity.MenuAlias = PageAlias;
+                        entity.Target = add_model.Target;
+                        entity.IconFile = add_model.IconFile;
+                        entity.IconClass = add_model.IconClass;
+                        entity.CssClass = add_model.CssClass;
+                        entity.Description = add_model.Description;
+                        entity.MenuStatus = add_model.MenuStatus;
+                        context.Menus.Add(entity);
+                        int i = context.SaveChanges();
+                        if (i > 0)
+                        {
+                            result = true;
+                            MenuId = entity.MenuId;
+                            foreach (var item in add_model.RolePermissionList)
+                            {
+                                MenuPermissionRepository.Insert(MenuId, item.PermissionId, item.RoleId, add_model.UserId, true);
+                            }
+                            message = Eagle.Resource.LanguageResource.CreateSuccess;
+                        }
+                        else
+                            message = Eagle.Resource.LanguageResource.CreateFailure;
+                        transcope.Complete();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    ex.ToString();
+                    message = Eagle.Resource.LanguageResource.SystemError;
+                }
+                return result;
+            }
+        }
+
+        public static bool Update(MenuViewModel edit_model, out string message)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                message = string.Empty;
+                bool result = false;
+                string MenuAlias = StringUtils.convertTitle2Link(edit_model.MenuName);
+                using (System.Transactions.TransactionScope transcope = new System.Transactions.TransactionScope())
+                {
+                    Menu entity = context.Menus.FirstOrDefault(x => x.MenuId ==edit_model.MenuId);
+                    if(entity !=null)
+                    {
+                        entity.PageId = edit_model.PageId;
+                        entity.MenuName = edit_model.MenuName;
+                        entity.MenuAlias = edit_model.MenuAlias;
+                        entity.Target = edit_model.Target;
+                        entity.IconFile = edit_model.IconFile;
+                        entity.IconClass = edit_model.IconClass;
+                        entity.CssClass = edit_model.CssClass;
+                        entity.Description = edit_model.Description;
+                        entity.MenuStatus = edit_model.MenuStatus;
+                        int i = context.SaveChanges();
+                        if(i>0)
+                        {
+                            result = true;
+                            message = Eagle.Resource.LanguageResource.UpdateSuccess;
+                        }else
+                        {
+                            message = Eagle.Resource.LanguageResource.UpdateFailure;
+                        }
+                        transcope.Complete();
+                    }
+                }
+                return result;
+            }            
+        }
+
+        public bool UpdatePosition(MenuPositionModel edit_model, out string message)
+        {
+            message = string.Empty;
+            bool result = false;
+
+            SqlCommand cmd = new SqlCommand("[Cms].[Menu_UpdatePosition]", con) { CommandType = CommandType.StoredProcedure, CommandTimeout = SystemSettings.CommandTimeout };
+            cmd.Parameters.AddWithValue("@MenuId", edit_model.MenuId);
+            cmd.Parameters.AddWithValue("@ParentId", edit_model.ParentId);
+            cmd.Parameters.AddWithValue("@LastModifiedByUserId", edit_model.LastModifiedByUserId);
+            cmd.Parameters.Add(new SqlParameter("@o_return", SqlDbType.Int) { Direction = ParameterDirection.Output });
+            con.Open();
+            cmd.ExecuteNonQuery();
+            int retunvalue = (int)cmd.Parameters["@o_return"].Value;
+            if (retunvalue > 0)
+            {
+                result = true;
+                message = Eagle.Resource.LanguageResource.UpdateSuccess;
+            }else
+                message = Eagle.Resource.LanguageResource.UpdateFailure;
+            con.Close();
+            return result;
+        }
+        //public JsonResult UpdateListOrder(string Ids)
+        //{
+        //    string message = string.Empty;
+        //    bool flag = false;
+        //    List<int> lst = Ids.Split(',').Select(s => int.Parse(s)).ToList();
+        //    if (lst.Count() > 0)
+        //    {
+        //        int id = 0;
+        //        for (int i = 0; i < lst.Count(); i++)
+        //        {
+        //            id = lst[i];
+        //            flag = PageRepository.UpdateListOrder(id, i + 1, out message);
+        //        }
+        //    }
+        //    return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        //}
+        public static bool Delete(int id, out string message)
+        {
+            MenuPermissionRepository.Delete(id);
+            DeleteChildByParentId(id);
+
+            using (EntityDataContext context = new EntityDataContext())
+            {               
+                bool result = false;
+                message = string.Empty;
+
+                using (System.Transactions.TransactionScope transcope = new System.Transactions.TransactionScope())
+                {                    
+                    Menu entity = context.Menus.Single(x => x.MenuId == id);
+                    if (entity != null)
+                    {
+                        context.Menus.Remove(entity);
+                        int i = context.SaveChanges();
+                        if (i > 0)
+                        {
+                            result = true;
+                            message = Eagle.Resource.LanguageResource.DeleteSuccess;
+                        }
+                    }else
+                    {
+                        message = Eagle.Resource.LanguageResource.IDNoExistsErrorMessage;
+                    }                   
+                    transcope.Complete();                    
+                }
+                return result;
             }
         }
 

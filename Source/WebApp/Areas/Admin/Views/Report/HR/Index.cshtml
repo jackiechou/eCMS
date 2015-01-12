@@ -29,7 +29,7 @@
                         </label>
                     </div>
                     <div class="col-md-4">
-                      @*  <input id="LSCompanyID" name="LSCompanyID" type="text" value="0" class="easyui-combotree span2" />*@
+                      @*  <input id="LSCompanyID" name="LSCompanyID" type="text" value="0" class="easyui-combotree col-md-2" />*@
                         <select id="LSCompanyID" name="LSCompanyID" class="col-md-12 selectpicker"></select>
                     </div>
                     <div class="col-md-2">
@@ -43,22 +43,23 @@
              
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="related span3">
-                         @*    <fieldset class="leftCotent">
-                            <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticTypes)</span></legend>
-                            <div class="fielsetContent">                               
-                                @Html.RadioButtonsForEnum("StatisticType", typeof(Eagle.Model.Report.Common.StatisticTypeEntity))
-                            </div>
-                        </fieldset>*@
+                        <div class="related col-md-3">
+                            @*    <fieldset class="leftCotent">
+                <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticTypes)</span></legend>
+                <div class="fielsetContent">
+                    @Html.RadioButtonsForEnum("StatisticType", typeof(Eagle.Model.Report.Common.StatisticTypeEntity))
+                </div>
+            </fieldset>*@
 
-                        <fieldset class="leftCotent">
-                            <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticFocus)</span></legend>
-                            <div class="fielsetContent">
-                                @Html.ListBox("StatisticFocus", (MultiSelectList)ViewBag.StatisticFocus , new { @id = "StatisticFocus", @class = "form-control", size = ((MultiSelectList)ViewBag.StatisticFocus).Count() })
-                            </div>
-                        </fieldset>
+                            <fieldset class="leftCotent">
+                                <legend class="col-md-11"><span>@Html.Raw(Eagle.Resource.LanguageResource.StatisticFocus)</span></legend>
+                                <div class="fielsetContent">
+                                    @Html.ListBox("StatisticFocus", (MultiSelectList)ViewBag.StatisticFocus, new { @id = "StatisticFocus", @class = "form-control", size = ((MultiSelectList)ViewBag.StatisticFocus).Count() })
+                                </div>
+                            </fieldset>
 
                         </div>
+
                         <div class="col-md-9 marginLeftZero">
                             <ul class="nav nav-tabs" id="myTabs">
                                 <li id="tab-1" class="active"><a href="#pane-1" data-toggle="tab">@Eagle.Resource.LanguageResource.GeneralInfo</a></li>

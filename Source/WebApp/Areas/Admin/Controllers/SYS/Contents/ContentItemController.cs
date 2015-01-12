@@ -55,6 +55,22 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Contents
              return PartialView("../Sys/Contents/_List", lst);
          }
 
+         [SessionExpiration]
+         [HttpGet]
+         public ActionResult GetListByPage()
+         {
+             List<ContentTreeModel> lst = ContentItemRepository.GetTreeList((int)ContentTypeSetting.Page, ScopeTypeId);
+             return base.Json(lst, JsonRequestBehavior.AllowGet);
+         }
+
+         [SessionExpiration]
+         [HttpGet]
+         public ActionResult GetListByModule()
+         {
+             List<ContentTreeModel> lst = ContentItemRepository.GetTreeList((int)ContentTypeSetting.Module, ScopeTypeId);
+             return base.Json(lst, JsonRequestBehavior.AllowGet);
+         }
+
          #region autocomplete DropDownList ============================================================================================
          /// <summary>
          /// Dùng cho viec binding du lieu cho dropdownlist autocomplete
@@ -98,6 +114,8 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Contents
 
          #endregion ===================================================================================================================
         
+
+
         // POST: /Admin/Contract/Create
         [AcceptVerbs(HttpVerbs.Post)]
          public ActionResult Create(ContentItemViewModel add_model)

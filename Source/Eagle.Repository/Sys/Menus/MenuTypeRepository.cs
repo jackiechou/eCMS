@@ -35,7 +35,7 @@ namespace Eagle.Repository.Sys.Menus
                 list = lst.Select(m => new SelectListItem()
                 {
                     Text = m.MenuTypeName,
-                    Value = m.MenuTypeCode.ToString(),
+                    Value = m.MenuTypeId.ToString(),
                 }).ToList();
                 if (IsShowSelectText)
                     list.Insert(0, new SelectListItem() { Value = "", Text = string.Format("-- {0} --", Eagle.Resource.LanguageResource.Select) });

@@ -147,104 +147,101 @@
     });
     // confirm Delete 
     $('.launchConfirm').on('click', function (e) {
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    var selectedValue = $('#lstBoxAssigned').val();
-                    var requestAssigned = { lstBoxAssigned: selectedValue }
-                    //Nếu không chọn schedule thì báo lỗi
-                    if (selectedValue == null) {
-                        $('#alert').removeClass("hidden");
-                        if (LanguageId == 124) {
-                            // showMessageWithTitle('warning!', "Please choose staff to assign", 'warning');
-                            $('#sAlert').html("Please choose staff to remove");
-                        } else {
-                            // showMessageWithTitle('Error!', "Chọn nhân viên để gán chu kỳ chấm công", 'warning');
-                            $('#sAlert').html("Chọn nhân viên để xóa khỏi chu kỳ chấm công");
-                        }
-                        return false;
-                    } else if ($('#btnDeletestaff').hasClass("DeleteModel")) {
-                        var url = areas + '/Cyclic/DeleteStaff';
-                        // get sau khi action Save trong controller thuc hien
-                        var CyclicID = $('#CyclicID').val();
-                        var urlCreate = '/Cyclic/_PopupDetail?CyclicID=' + CyclicID;
-
-                        $.ajax({
-                            type: "POST",
-                            data: JSON.stringify(requestAssigned),
-                            url: url,
-                            data: $("#frmCyclic").serialize(),
-                            success: function (data) {
-                                if (data == 'success') {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: areas + urlCreate,
-                                        success: function (data) {
-                                            var userList = $('#lstBox');
-                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
-                                                userList.append($('<option/>', {
-                                                    value: itemData,
-                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
-                                                }));
-                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
-                                            });
-                                        }
-                                    });
-                                }
-                            }
-                        }); // end ajax
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                var selectedValue = $('#lstBoxAssigned').val();
+                var requestAssigned = { lstBoxAssigned: selectedValue }
+                //Nếu không chọn schedule thì báo lỗi
+                if (selectedValue == null) {
+                    $('#alert').removeClass("hidden");
+                    if (LanguageId == 124) {
+                        // showMessageWithTitle('warning!', "Please choose staff to assign", 'warning');
+                        $('#sAlert').html("Please choose staff to remove");
+                    } else {
+                        // showMessageWithTitle('Error!', "Chọn nhân viên để gán chu kỳ chấm công", 'warning');
+                        $('#sAlert').html("Chọn nhân viên để xóa khỏi chu kỳ chấm công");
                     }
+                    return false;
+                } else if ($('#btnDeletestaff').hasClass("DeleteModel")) {
+                    var url = areas + '/Cyclic/DeleteStaff';
+                    // get sau khi action Save trong controller thuc hien
+                    var CyclicID = $('#CyclicID').val();
+                    var urlCreate = '/Cyclic/_PopupDetail?CyclicID=' + CyclicID;
+
+                    $.ajax({
+                        type: "POST",
+                        data: JSON.stringify(requestAssigned),
+                        url: url,
+                        data: $("#frmCyclic").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        var userList = $('#lstBox');
+                                        $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                            userList.append($('<option/>', {
+                                                value: itemData,
+                                                text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                            }));
+                                            $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    }); // end ajax
                 }
-            });
+            }
+        });
+      
     });
     // su kien Delete  all  item duoc chon trong listbox
     $('.launchConfirmAll').on('click', function (e) {
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    //Nếu không chọn group thì báo lỗi
-                    if ($('#btnDeleteAllstaff').hasClass("DeleteModel")) {
-                        var url = areas + '/Cyclic/DeleteStaff';
-                        // get sau khi action Save trong controller thuc hien
-                        var CyclicID = $('#CyclicID').val();
-                        var urlCreate = '/Cyclic/_PopupDetail?CyclicID=' + CyclicID;
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                //Nếu không chọn group thì báo lỗi
+                if ($('#btnDeleteAllstaff').hasClass("DeleteModel")) {
+                    var url = areas + '/Cyclic/DeleteStaff';
+                    // get sau khi action Save trong controller thuc hien
+                    var CyclicID = $('#CyclicID').val();
+                    var urlCreate = '/Cyclic/_PopupDetail?CyclicID=' + CyclicID;
 
-                        var lstBoxAssignedName = $("#lstBoxAssigned");
-                        $("option", lstBoxAssignedName).attr('selected', true);
+                    var lstBoxAssignedName = $("#lstBoxAssigned");
+                    $("option", lstBoxAssignedName).attr('selected', true);
 
-                        var selectedValue = $('#lstBoxAssigned').val();
-                        var requestAssigned = { lstBoxAssigned: selectedValue }
-                        $.ajax({
-                            type: "POST",
-                            data: JSON.stringify(requestAssigned),
-                            url: url,
-                            data: $("#frmCyclic").serialize(),
-                            success: function (data) {
-                                if (data == 'success') {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: areas + urlCreate,
-                                        success: function (data) {
-                                            var userList = $('#lstBox');
-                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
-                                                userList.append($('<option/>', {
-                                                    value: itemData,
-                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
-                                                }));
-                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
-                                            });
-                                        }
-                                    });
-                                }
+                    var selectedValue = $('#lstBoxAssigned').val();
+                    var requestAssigned = { lstBoxAssigned: selectedValue }
+                    $.ajax({
+                        type: "POST",
+                        data: JSON.stringify(requestAssigned),
+                        url: url,
+                        data: $("#frmCyclic").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        var userList = $('#lstBox');
+                                        $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                            userList.append($('<option/>', {
+                                                value: itemData,
+                                                text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                            }));
+                                            $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                        });
+                                    }
+                                });
                             }
-                        }); // end ajax
-                    }
-                } else {
-
+                        }
+                    }); // end ajax
                 }
-            });
+            }
+        });
+
+   
     });
     $(document).on("keyup", "#FilterEmplist", function () {
         if (!$("#frmCyclic").valid())

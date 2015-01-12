@@ -1,16 +1,30 @@
-﻿using System;
+﻿using CommonLibrary.UI.Skins;
+using Eagle.Common.Settings;
+using Eagle.Model.UI.Skins;
+using Eagle.Repository.UI.Layout;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-public abstract class ThemeControllerBase : Controller
+public abstract class ThemeControllerBase : BaseController
 {
     protected override void Execute(System.Web.Routing.RequestContext requestContext)
     {
-        var themeName = ConfigurationManager.AppSettings["DefaultThemeName"];
-        var themeSrc = ConfigurationManager.AppSettings["DefaultThemeSource"];
+        string themeName = string.Empty, themeSrc = string.Empty;
+        if (Session[SettingKeys.ThemeName] == null || Session[SettingKeys.ThemeName].ToString() == string.Empty)
+        {
+            SkinViewModel skin_obj = SkinRepository.GetSelectedTheme(ApplicationId);
+            themeName = skin_obj.SkinPackageName;
+            themeSrc = skin_obj.SkinPackageSrc;
+        }
+        else
+        {
+            themeName = Session[SettingKeys.ThemeName].ToString();
+            themeSrc = Session[SettingKeys.ThemeSrc].ToString();
+        }
 
         if (requestContext.HttpContext.Items[themeName] == null)
         {

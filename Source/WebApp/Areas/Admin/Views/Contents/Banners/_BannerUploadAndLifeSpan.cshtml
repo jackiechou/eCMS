@@ -9,11 +9,11 @@
         <div class="col-md-4">
             @if (ViewBag.BannerTypeId == 1)
             {
-                 @Html.TextBoxFor(model => model.BannerContent, new { @type="file", @class = "span12 ignored" })
+                 @Html.TextBoxFor(model => model.BannerContent, new { @type = "file", @class = "col-md-12 ignored" })
             }
             else 
             {
-                 @Html.TextBoxFor(model => model.BannerContent, new { @class = "span12 ignored" })
+                 @Html.TextBoxFor(model => model.BannerContent, new { @class = "col-md-12 ignored" })
             }           
             @Html.ValidationMessageFor(model => model.BannerContent)
         </div>
@@ -24,14 +24,14 @@
             @Html.LabelFor(model => model.StartDate)
         </div>
         <div class="col-md-4">
-           @Html.TextBoxFor(model => model.StartDate, new { @class = "span12 ignored" })
+           @Html.TextBoxFor(model => model.StartDate, new { @class = "col-md-12 ignored" })
         </div>
 
         <div class="col-md-2">
             @Html.LabelFor(model => model.EndDate)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.EndDate, new { @class = "span12 ignored" })
+            @Html.TextBoxFor(model => model.EndDate, new { @class = "col-md-12 ignored" })
         </div>
     </div>
 

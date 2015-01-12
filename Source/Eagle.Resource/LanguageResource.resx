@@ -5518,13 +5518,13 @@
     <value>Có thể xóa</value>
   </data>
   <data name="ModuleCode" xml:space="preserve">
-    <value>Mã module</value>
+    <value>Module</value>
   </data>
   <data name="ModuleId" xml:space="preserve">
-    <value>Mã module</value>
+    <value>Module</value>
   </data>
   <data name="ModuleKey" xml:space="preserve">
-    <value>Từ khóa module</value>
+    <value>Từ khóa</value>
   </data>
   <data name="ModuleTitle" xml:space="preserve">
     <value>Tên module</value>
@@ -5677,7 +5677,7 @@
     <value>Loại danh mục</value>
   </data>
   <data name="CssClass" xml:space="preserve">
-    <value>Lớp css</value>
+    <value>Lớp CSS</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
     <value>Tên hiển thị</value>
@@ -5722,7 +5722,7 @@
     <value>Trang</value>
   </data>
   <data name="ContentItemId" xml:space="preserve">
-    <value>Hạng mục</value>
+    <value>Nhóm</value>
   </data>
   <data name="CreateForm" xml:space="preserve">
     <value>Mẫu biểu kiến tạo</value>
@@ -5854,10 +5854,10 @@
     <value>Chọn menu</value>
   </data>
   <data name="IconClass" xml:space="preserve">
-    <value>Icon Class</value>
+    <value>Lớp biểu tượng</value>
   </data>
   <data name="IconFile" xml:space="preserve">
-    <value>Icon Attachment</value>
+    <value>Đính kèm</value>
   </data>
   <data name="Administration" xml:space="preserve">
     <value>Quản trị</value>
@@ -5894,5 +5894,59 @@
   </data>
   <data name="MailServerProtocol" xml:space="preserve">
     <value>Giao thức mail</value>
+  </data>
+  <data name="IconColor" xml:space="preserve">
+    <value>Màu sắc</value>
+  </data>
+  <data name="LoadInANewWindow" xml:space="preserve">
+    <value>_blank - Tải trang trong cửa sổ mới</value>
+  </data>
+  <data name="LoadInTheFullBodyOfTheWindow" xml:space="preserve">
+    <value>_top - Tải trong toàn bộ thân của khung cửa sổ</value>
+  </data>
+  <data name="LoadInTheParentFrameset" xml:space="preserve">
+    <value>_parent - Tải trong khung trang cha</value>
+  </data>
+  <data name="LoadInTheSameFrameAsItWasClicked" xml:space="preserve">
+    <value>_self - Tải trang trong cùng khung</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>Danh mục</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Mã Menu</value>
+  </data>
+  <data name="PageAlias" xml:space="preserve">
+    <value>Biệt danh</value>
+  </data>
+  <data name="PageFooterText" xml:space="preserve">
+    <value>Phần cuối</value>
+  </data>
+  <data name="PageGroupId" xml:space="preserve">
+    <value>Nhóm trang</value>
+  </data>
+  <data name="PageHeadText" xml:space="preserve">
+    <value>Phần đầu</value>
+  </data>
+  <data name="PageName" xml:space="preserve">
+    <value>Tên trang</value>
+  </data>
+  <data name="PagePath" xml:space="preserve">
+    <value>Đường dẫn</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Tiêu để trang</value>
+  </data>
+  <data name="PageUrl" xml:space="preserve">
+    <value>Địa chỉ tài nguyên</value>
+  </data>
+  <data name="SkinId" xml:space="preserve">
+    <value>Lớp vỏ</value>
+  </data>
+  <data name="TemplateId" xml:space="preserve">
+    <value>Khuôn</value>
+  </data>
+  <data name="ModuleName" xml:space="preserve">
+    <value>Tên chức năng</value>
   </data>
 </root>

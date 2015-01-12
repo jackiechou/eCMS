@@ -62,8 +62,11 @@
     <Compile Include="SYS\Menu\MenuInfo.cs" />
     <Compile Include="SYS\Menu\MenuTypeViewModel.cs" />
     <Compile Include="SYS\Pages\PageBannerViewModel.cs" />
+    <Compile Include="SYS\Pages\PageGroupViewModel.cs" />
     <Compile Include="SYS\Permission\FolderPermissionViewModel.cs" />
+    <Compile Include="SYS\Permission\RolePermissionViewModel.cs" />
     <Compile Include="SYS\Roles\RoleModulePermissionViewModel.cs" />
+    <Compile Include="SYS\Roles\RoleViewModel.cs" />
     <Compile Include="SYS\User\ChangePasswordViewModel.cs" />
     <Compile Include="Common\CommonViewModel.cs" />
     <Compile Include="Common\ConditionViewModel.cs" />

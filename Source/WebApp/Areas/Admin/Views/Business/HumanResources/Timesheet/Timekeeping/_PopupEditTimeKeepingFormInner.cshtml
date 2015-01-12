@@ -75,31 +75,30 @@
     $('.launchConfirmPopup').on('click', function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
         var lsValue = $(this).data('value');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $("body").addClass("loading");
-                    $.ajax({
-                        type: "POST",
-                        url: areas + '/Timekeeping/_DeletePopup?TimekeepingID=' + lsID + '&MMYYYY=' + lsValue,
-                        data: $("#frmAdd").serialize(),
-                        success: function (data) {
-                            if (data == 'success') {
-                                $.ajax({
-                                    type: "GET",
-                                    url: areas + '/Timekeeping/_PopupEditTimeKeepingFormInner?EmpID=' + $('#PopupEmpID').val() + '&MMYYYY=' + $('#PopupMMYYYY').val(),
-                                    success: function (data) {
-                                        $('#popupTable').html(data);
-                                    }
-                                })
-                            } else {
-                                $('#divEdit').html(data);
-                            }
+
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: areas + '/Timekeeping/_DeletePopup?TimekeepingID=' + lsID + '&MMYYYY=' + lsValue,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + '/Timekeeping/_PopupEditTimeKeepingFormInner?EmpID=' + $('#PopupEmpID').val() + '&MMYYYY=' + $('#PopupMMYYYY').val(),
+                                success: function (data) {
+                                    $('#popupTable').html(data);
+                                }
+                            })
+                        } else {
+                            $('#divEdit').html(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
     });
 </script>

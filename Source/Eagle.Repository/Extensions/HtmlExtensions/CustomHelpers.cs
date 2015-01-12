@@ -223,7 +223,7 @@ namespace System.Web.Mvc.Html
             }
 
             TagBuilder div = new TagBuilder("div");
-            div.Attributes.Add("class", "input-append date ignored datetimepicker");
+            div.Attributes.Add("class", "input-group date ignored datetimepicker");
             div.Attributes.Add("data-id", propertyName);
             //div.Attributes.Add("data-date-format", Format);
 
@@ -261,12 +261,12 @@ namespace System.Web.Mvc.Html
                 }
 
                 input.Attributes.Add("data-val-required", Required);
-                input.Attributes.Add("class", "input-small input-validation-error");
+                input.Attributes.Add("class", "form-control input-validation-error");
                 input.Attributes.Add("data-val", "true");
             }
             else
             {
-                input.Attributes.Add("class", "input-small");
+                input.Attributes.Add("class", "form-control");
             }
             if (LanguageId == 124)
             {
@@ -284,7 +284,7 @@ namespace System.Web.Mvc.Html
             }
 
             div.InnerHtml += input.ToString()
-                + "<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>";
+                + "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>";
             return new MvcHtmlString(div.ToString() + input2.ToString());
         }
 
@@ -312,7 +312,7 @@ namespace System.Web.Mvc.Html
             }
 
             TagBuilder div = new TagBuilder("div");
-            div.Attributes.Add("class", "input-append date datetimepicker2");
+            div.Attributes.Add("class", "input-group date datetimepicker2");
             div.Attributes.Add("data-id", propertyName);
             //div.Attributes.Add("data-date-format", Format);
 
@@ -350,12 +350,12 @@ namespace System.Web.Mvc.Html
                 }
 
                 input.Attributes.Add("data-val-required", Required);
-                input.Attributes.Add("class", "input-small input-validation-error");
+                input.Attributes.Add("class", "form-control input-validation-error");
                 input.Attributes.Add("data-val", "true");
             }
             else
             {
-                input.Attributes.Add("class", "input-small");
+                input.Attributes.Add("class", "form-control");
             }
             if (LanguageId == 124)
             {
@@ -373,7 +373,7 @@ namespace System.Web.Mvc.Html
             }
 
             div.InnerHtml += input.ToString()
-                + "<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>";
+                + "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>";
             return new MvcHtmlString(div.ToString() + input2.ToString());
         }
 
@@ -402,7 +402,7 @@ namespace System.Web.Mvc.Html
             }
 
             TagBuilder div = new TagBuilder("div");
-            div.Attributes.Add("class", "input-append date datetimepicker2");
+            div.Attributes.Add("class", "input-group date datetimepicker2");
             div.Attributes.Add("data-id", propertyName);
             //div.Attributes.Add("data-date-format", Format);
 
@@ -440,12 +440,12 @@ namespace System.Web.Mvc.Html
                 }
 
                 input.Attributes.Add("data-val-required", Required);
-                input.Attributes.Add("class", "input-small input-validation-error");
+                input.Attributes.Add("class", "form-control input-validation-error");
                 input.Attributes.Add("data-val", "true");
             }
             else
             {
-                input.Attributes.Add("class", "input-small");
+                input.Attributes.Add("class", "form-control");
             }
             if (LanguageId == 124)
             {
@@ -463,7 +463,7 @@ namespace System.Web.Mvc.Html
             }
 
             div.InnerHtml += input.ToString()
-                + "<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>";
+                + "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>";
             return new MvcHtmlString(div.ToString() + input2.ToString());
         }
 
@@ -491,7 +491,7 @@ namespace System.Web.Mvc.Html
             }
 
             TagBuilder div = new TagBuilder("div");
-            div.Attributes.Add("class", "input-append date DatepickerFromList");
+            div.Attributes.Add("class", "input-group date DatepickerFromList");
             div.Attributes.Add("data-id", propertyName);
             //div.Attributes.Add("data-date-format", Format);
 
@@ -529,12 +529,12 @@ namespace System.Web.Mvc.Html
                 }
 
                 input.Attributes.Add("data-val-required", Required);
-                input.Attributes.Add("class", "input-small input-validation-error");
+                input.Attributes.Add("class", "form-control input-validation-error");
                 input.Attributes.Add("data-val", "true");
             }
             else
             {
-                input.Attributes.Add("class", "input-small");
+                input.Attributes.Add("class", "form-control");
             }
             if (LanguageId == 124)
             {
@@ -552,7 +552,7 @@ namespace System.Web.Mvc.Html
             }
 
             div.InnerHtml += input.ToString()
-                + "<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>";
+                + "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>";
             return new MvcHtmlString(div.ToString() + input2.ToString());
         }
 
@@ -606,7 +606,7 @@ namespace System.Web.Mvc.Html
             }
 
             TagBuilder div = new TagBuilder("div");
-            div.Attributes.Add("class", "input-append date datetimepicker");
+            div.Attributes.Add("class", "input-group date datetimepicker");
             div.Attributes.Add("data-id", propertyName);
             div.Attributes.Add("data-date", _SelectedDate);
             div.Attributes.Add("data-date-format", Format);
@@ -617,7 +617,7 @@ namespace System.Web.Mvc.Html
             TagBuilder input = new TagBuilder("input");
             input.Attributes.Add("id", propertyName + "Picker");
             input.Attributes.Add("name", propertyName + "Picker");
-            input.Attributes.Add("class", "input-small date ignore");
+            input.Attributes.Add("class", "form-control date ignore");
             input.Attributes.Add("size", "19");
             input.Attributes.Add("placeholder", Format.ToLower());
             input.Attributes.Add("type", "text");
@@ -651,7 +651,7 @@ namespace System.Web.Mvc.Html
             }
 
             div.InnerHtml += input.ToString() + input2.ToString()
-                + "<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>";
+                + "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>";
             return new MvcHtmlString(div.ToString());
         }
 
@@ -678,7 +678,7 @@ namespace System.Web.Mvc.Html
             }
 
             TagBuilder div = new TagBuilder("div");
-            div.Attributes.Add("class", "input-append date ignored datetimepicker");
+            div.Attributes.Add("class", "input-group date ignored datetimepicker");
             div.Attributes.Add("data-id", controlName);
             div.Attributes.Add("data-date", _SelectedDate);
             div.Attributes.Add("data-date-format", Format);
@@ -689,7 +689,7 @@ namespace System.Web.Mvc.Html
             TagBuilder input = new TagBuilder("input");
             input.Attributes.Add("id", controlName + "Picker");
             input.Attributes.Add("name", controlName + "Picker");
-            input.Attributes.Add("class", "input-small date ignored");
+            input.Attributes.Add("class", "form-control date ignored");
             input.Attributes.Add("size", "19");
             input.Attributes.Add("placeholder", Format.ToLower());
             input.Attributes.Add("type", "text");
@@ -719,7 +719,7 @@ namespace System.Web.Mvc.Html
             }
 
             div.InnerHtml += input.ToString() + input2.ToString()
-                + "<span class=\"add-on\"><i class=\"icon-calendar\"></i></span>";
+                + "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span>";
             return new MvcHtmlString(div.ToString());
         }
 

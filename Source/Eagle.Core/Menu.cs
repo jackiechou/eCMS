@@ -29,10 +29,11 @@ namespace Eagle.Core
         public int ScopeTypeId { get; set; }
         public string Description { get; set; }
         public string Target { get; set; }
-        public Nullable<int> IconFile { get; set; }
         public string IconClass { get; set; }
+        public Nullable<int> IconFile { get; set; }
         public string Color { get; set; }
         public string CssClass { get; set; }
+        public Nullable<bool> IsSecured { get; set; }
         public int MenuStatus { get; set; }
         public Nullable<System.DateTime> CreatedOnDate { get; set; }
         public Nullable<System.DateTime> LastModifiedOnDate { get; set; }

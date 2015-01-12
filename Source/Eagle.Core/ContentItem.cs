@@ -17,9 +17,17 @@ namespace Eagle.Core
         public Nullable<int> PageId { get; set; }
         public Nullable<int> ModuleId { get; set; }
         public int ContentTypeId { get; set; }
+        public Nullable<int> ScopeTypeId { get; set; }
         public int ContentItemId { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public Nullable<int> Depth { get; set; }
+        public string Lineage { get; set; }
+        public Nullable<int> ListOrder { get; set; }
+        public string ContentItemName { get; set; }
+        public string ContentItemTitle { get; set; }
         public string ContentKey { get; set; }
         public string Content { get; set; }
-        public bool Indexed { get; set; }
+        public Nullable<bool> IsParent { get; set; }
+        public bool IsActive { get; set; }
     }
 }

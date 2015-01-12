@@ -4,375 +4,512 @@
 }
 @model List<Eagle.Model.SYS.Menu.MenuViewModel>
 
+
 @section TitleSection {
     <h4>@Html.Raw(Eagle.Resource.LanguageResource.Menu)</h4>
 }
 
 @section ContentSection
 {
-    <div id="content_box" class="row">
-        <!-- START LEFT FRAME  -->
-        <div id="left_box" class="left-box col-md-4">
-            <div id="divMenuList">
-                @Html.Partial("../Sys/Menu/_ListBox")
-            </div>
-            <div class="clearboth"></div>
-            <div id="divMenuType">
-                @Html.Action("Create", "MenuType")
-            </div>
-        </div>
-        <div id="right_box" class="right-box span8">
-            <div id="divEdit">
-                @Html.Action("Edit", "Menu", null)
-            </div>
-        </div>
-    </div>
-}    
-    <!--Confirm box-->
-    @Html.Action("ConfirmPopup", "Common", null)
+   <div id="MainBody">
+       @Html.Partial("../Sys/Menu/_Reset")>
+  </div>
+<link type="text/css"  href="~/Scripts/app/plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/app/plugins/zTree/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="~/Scripts/app/plugins/zTree/js/jquery.ztree.excheck-3.5.js"></script>
+<script type="text/javascript" src="~/Scripts/app/plugins/zTree/js/jquery.ztree.exedit.js"></script>
 
-    <script type="text/javascript">
-            (function ($) {
-                $.createDataBuilder = function (p) {
-                    var DataMgr = {
-                        config: {
-                            isPostBack: false,
-                            async: true,
-                            cache: false,
-                            processData: false,
-                            mimeType: "multipart/form-data",
-                            type: 'POST',
-                            contentType: "application/json; charset=utf-8",
-                            data: '{}',
-                            dataType: 'json',
-                            baseURL: p.BaseURL,
-                            method: "",
-                            url: "",
-                            ajaxCallMode: 0,
-                            isValid: false,
-                            mode: 0,
-                            key: 0,
-                            ContainerClientID: p.ContainerClientID
+<script type="text/javascript">
+    (function ($) {
+        $.createDataBuilder = function (p) {
+            var DataMgr = {
+                config: {
+                    isPostBack: false,
+                    async: true,
+                    cache: false,
+                    processData: false,
+                    mimeType: "multipart/form-data",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: 'json',
+                    baseURL: p.BaseURL,
+                    method: "",
+                    url: "",
+                    ajaxCallMode: 0,
+                    isValid: false,
+                    mode: 0,
+                    key: 0,
+                    ContainerClientID: p.ContainerClientID
+                },
+                messages:
+                {
+                    nomenu: "No Data"
+                },
+                init: function (config) {
+                    DataMgr.InitializeCotrols();
+                    DataMgr.BindEvents();
+                },
+                ajaxSuccess: function (data) {
+                    if (data.message == "timeout")
+                        window.location.reload();
+                    else {
+                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
+                            //case 0:
+                            //    DataMgr.GetList();
+                            case 1:
+                                DataMgr.BindDetails(data);
+                                break;
+                            case 2:
+                                DataMgr.ReloadData(data);
+                                break;
+                        }
+                    }
+                },
+                ajaxFailure: function (jqXHR, textStatus, errorThrown) {
+                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                },
+                ajaxCall: function (config) {
+                    $.ajax({
+                        type: DataMgr.config.type,
+                        contentType: DataMgr.config.contentType,
+                        cache: DataMgr.config.cache,
+                        url: DataMgr.config.url,
+                        data: DataMgr.config.data,
+                        dataType: DataMgr.config.dataType,
+                        success: DataMgr.ajaxSuccess,
+                        error: DataMgr.ajaxFailure,
+                        async: false
+                    });
+                },
+                InitializeCotrols: function () {
+                    handleCheckBox('chkVIEW');
+                    handleCheckBox('chkEDIT');
+
+                    $.validator.methods["date"] = function (value, element) { return true; }
+                    // Instanciate colorpickers
+                    $('.color-picker').colorpicker();
+                   
+                    DataMgr.LoadTreeMenu();
+                    @*InvokeDataTable();
+                    DataMgr.LoadContent('@Url.Action("AddNewModule", "Module")', '#pane-1');*@
+                    //handleCheckBox("chkContractStatus");
+                    //  $("#modalEdit").draggable('disable');
+                },
+                BindEvents: function () {
+                    $(document).on('change', '#ScopeTypeId', function () {
+                        $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        DataMgr.LoadTreeMenu();
+                    });
+
+                   
+
+                    $('#myTab a').click(function (e) {
+                        e.preventDefault()
+                        var pageID = $(this).attr("href");
+                        var pageUrl = $(this).data("url");
+                        //$(pageID).load(pageUrl);
+                        DataMgr.LoadContent(pageUrl, pageID);
+                        $(this).tab('show');
+                    });
+
+                  
+
+                    $(document).on("click", "#btnTest", function () {
+                        var Ids = [];
+                        $('#tree').each(function (index, field) {
+                            //var itemorder = $(this).sortable('toArray').join(',');
+                            alert(field);
+                            Ids.push(index);
+                        });
+                       // alert(Ids.toString());
+                    });
+
+                    //Add and update post action
+                    $(document).on("click", ".addMenu", function () {
+                        //if (!$("#MenuForm").valid()) { // Not Valid
+                        //    return false;
+                        //} else {
+                            DataMgr.AddData();
+                        //}
+                    });
+
+                    $(document).on("click", ".editMenu", function () {
+                        if (!$("#MenuForm").valid()) { // Not Valid
+                            return false;
+                        } else {
+                            DataMgr.UpdateData(data);
+                        }
+                    });
+
+
+                    // Reset form
+                    $(document).on("click", "#btnReset", function () {
+                        DataMgr.ResetControls();
+                    });
+
+                    // Click edit (get)
+                    $(document).on("click", ".edit", function () {
+                        var t = $('#tt');
+                        var id = t.tree('getSelected').id;
+                        DataMgr.GetDetails(id);
+
+                        //Go to top
+                        $('html, body').animate({ scrollTop: 0 }, 'fast');
+                        return false;
+                    });
+
+                    // Click delete (get)
+                    $(document).on("click", ".delete", function (e) {
+                        var t = $('#tt');
+                        var ID = t.tree('getSelected').id;
+
+                        bootbox.dialog({
+                            message: "@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)",
+                            title: "@Html.Raw(Eagle.Resource.LanguageResource.Delete)",
+                            buttons: {                                   
+                                danger: {
+                                    label: "@Html.Raw(Eagle.Resource.LanguageResource.Okay)",
+                                    className: "btn-danger",
+                                    callback: function () {
+                                        // $("body").addClass("loading");
+                                        DataMgr.config.mode = 2;
+                                        DataMgr.DeleteData(ID);
+                                        return false;
+                                    }
+                                },
+                                cancel: {
+                                    label: "@Html.Raw(Eagle.Resource.LanguageResource.Cancel)",
+                                    className: "btn-default"
+                                }
+                            }
+                        });
+                    });
+
+                },            
+                LoadTreeMenu: function () {
+                    var treeId = "tree";
+                    var menu_setting = {
+                        view: {
+                            dblClickExpand: false,
+                            showLine: true,
+                            selectedMulti: false
                         },
-                        messages:
-                        {
-                            nomenu: "No Data"
+                        edit: {
+                            enable: true,
+                            editNameSelectAll: false,
+                            showRemoveBtn: true,
+                            showRenameBtn: true
                         },
-                        init: function (config) {
-                            DataMgr.InitializeCotrols();
-                            DataMgr.BindEvents();
+                        data: {
+                            simpleData: {
+                                enable: true,
+                                idKey: "id",
+                                pIdKey: "parentId",
+                                rootPId: ""
+                            }
                         },
-                        ajaxSuccess: function (data) {
+                        callback: {
+                            beforeDrag: DataMgr.beforeDragMenuItem,
+                            beforeDrop: DataMgr.beforeDropMenuItem,
+                            /*Edit and delete callback*/
+                            beforeEditName: DataMgr.beforeEditMenuItem,
+                            beforeRemove: DataMgr.beforeRemoveMenuItem,
+                            onRemove: DataMgr.onRemoveMenuItem,
+                            onDrop:DataMgr.onDropMenuItem,
+                            beforeClick: function (treeId, treeNode) {
+                                var zTree = $.fn.zTree.getZTreeObj("tree");
+                                if (treeNode.isParent) {
+                                    zTree.expandNode(treeNode);
+                                    return false;
+                                }
+                            }
+                        }
+                    };
+
+                    var ScopeTypeId = $("#ScopeTypeId").val();
+                    $.ajax({
+                        async: false,
+                        cache: false,
+                        type: 'GET',
+                        dataType: "json",
+                        url: '/Admin/Menu/PopulateListBox?iScopeTypeId=' + ScopeTypeId,//The action path making request
+                        error: function (jqXHR, textStatus, errorThrown) { //The request failed processing function making
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        },
+                        success: function (data) { //Request success post processing function.     
+                            var zTree = $("#tree");
+                            zTree = $.fn.zTree.init(zTree, menu_setting, data);
+                            ////zTree.selectNode(zTree.getNodeByParam("id", 101));
+                        }
+                    });
+                  
+                },
+                beforeEditMenuItem: function(treeId, treeNode) {
+                    var className = "dark";
+                    className = (className === "dark" ? "" : "dark");
+                    var zTree = $.fn.zTree.getZTreeObj("tree");
+                    zTree.selectNode(treeNode);
+                    DataMgr.GetDetails(treeNode.id);
+                },
+                beforeRemoveMenuItem: function (treeId, treeNode) {
+                    var className = "dark";
+                    className = (className === "dark" ? "" : "dark");
+                    var zTree = $.fn.zTree.getZTreeObj("tree");
+                    zTree.selectNode(treeNode);
+                    return confirm("Confirm delete node '" + treeNode.name + " - " + treeNode.id + "' it?");
+                },
+                onRemoveMenuItem: function (e, treeId, treeNode) {
+                    DataMgr.DeleteData(treeNode.id);
+                },  
+
+                beforeDragMenuItem: function (treeId, treeNodes) {
+                    for (var i = 0, l = treeNodes.length; i < l; i++) {
+                        if (treeNodes[i].drag === false) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                beforeDropMenuItem: function (treeId, treeNodes, targetNode, moveType) {                  
+                    return targetNode ? targetNode.drop !== false : true;
+                },
+                onDropMenuItem: function (event, treeId, treeNodes, targetNode, moveType) {
+                    //var Ids = [];
+                    //var zTree = $.fn.zTree.getZTreeObj(treeId);
+                    //var nodes = zTree.getNodes();
+                    //Ids = DataMgr.expandNodes(treeId, nodes);
+                   // alert(Ids.length);
+                   // JSON.stringify({ 'Ids': Ids.toString() }
+
+                    DataMgr.UpdatePosition(treeNodes[0].id, targetNode.id);
+                    //alert(treeNodes.length+ "," + treeNodes[0].id  + " - " + targetNode.id+ "," + (targetNode ? (targetNode.tId + ", " + targetNode.name) : "isRoot" ));
+                    return true;
+                },
+                //expandNodes: function (treeId, nodes) {
+			    //    if (!nodes) return;
+			    //    var Ids = [];
+			    //    alert(nodes.length);
+			    //    //for (var i = 0, l = nodes.length; i < l; i++) {
+			    //    //   Ids.push(nodes[i].id);
+			    //    //   if (nodes[i].children.length > 0)
+			    //    //   {
+			    //    //       //for (var j = 0, k = nodes[i].children.length; j < k; j++) {
+			    //    //       //   // alert(nodes[i].children[j].id);
+			    //    //       //    Ids.push(nodes[i].children[j].id);
+			    //    //       //    DataMgr.expandNodes(treeId, nodes[i].children[j]);
+			    //    //       //}			               
+			    //    //       DataMgr.expandNodes(treeId, nodes[i].children);
+			    //    //   }
+			    //    //}			       
+			    //    return Ids;
+                //},
+                ConvertFormToJSON: function (form) {
+                    var tableData = DataMgr.GetJsonDataFromRolePermissionTable();
+                    var formData = $('#' + form + ' :not(".excluded")').serializeArray();
+                    var json = {};
+                    $.each(formData, function (index, field) {
+                            json[field.name] = field.value || '';
+                    });
+                    json["RolePermissionList"] = tableData;
+                    return JSON.stringify(json);
+                },
+                BindDetails: function (data) {
+                    $('#divEdit').html(data);
+                    DataMgr.InitializeCotrols();
+                },
+                GetJsonDataFromRolePermissionTable: function () {
+                    var res = [];           
+                    // function now expects an id string passed
+                    $('tbody tr', '#tblRolePermission').each(function (i, field) {
+                        var RoleId = $(this).find('input[type=hidden][id="hdnRoleId_'+ i+'"]').val().replace(/\./g, '');
+                        var View = $(this).find('input[type=checkbox][id="chkVIEW_' + i + '"]').is(":checked");
+                        var Edit = $(this).find('input[type=checkbox][id="chkEDIT_' + i + '"]').is(":checked");
+
+                        if (View == true)
+                            res.push({'RoleId': RoleId,'PermissionId':3 });                          
+                                    
+                        if (Edit == true) {
+                            res.push({ 'RoleId': RoleId, 'PermissionId': 4 });
+                        }                             
+                    });                           
+                    return res;
+                },
+                LoadBorderSlider:function(){
+                    $(".slider-range-max").slider({
+                        range: "max",
+                        min: 0,
+                        max: 10,
+                        value: 0,
+                        slide: function (event, ui) {
+                            $(".border-amount").text(ui.value + " px");
+                        }
+                    });
+                    $(".slider-range-max").width(100);
+                    $(".border-amount").text($(".slider-range-max").slider("value") + " px");
+                },
+                LoadContent: function (url, container) {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "html",
+                        url: url,
+                        success: function (data, statusCode, xhr) {
                             if (data.message == "timeout")
                                 window.location.reload();
                             else {
-                                switch (parseInt(DataMgr.config.ajaxCallMode)) {
-                                    //case 0:
-                                    //    DataMgr.GetList();
-                                    case 1:
-                                        DataMgr.BindDetails(data);
-                                        break;
-                                    case 2:
-                                        DataMgr.ReloadData(data);
-                                        break;
-                                }
-                            }
-                        },
-                        ajaxFailure: function (jqXHR, textStatus, errorThrown) {
-                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
-                        },
-                        ajaxCall: function (config) {
-                            $.ajax({
-                                type: DataMgr.config.type,
-                                contentType: DataMgr.config.contentType,
-                                cache: DataMgr.config.cache,
-                                url: DataMgr.config.url,
-                                data: DataMgr.config.data,
-                                dataType: DataMgr.config.dataType,
-                                success: DataMgr.ajaxSuccess,
-                                error: DataMgr.ajaxFailure,
-                                async: false
-                            });
-                        },
-                        InitializeCotrols: function () {
-                            $('#tt').tree({
-                                formatter:function(node){
-                                    var s = node.text;
-                                    if (node.children){
-                                        s += '&nbsp;<span style=\'color:blue\'>(' + node.children.length + ')</span>';
-                                    }
-                                    return s;
-                                },
-                                onClick: function (node) {
-                                    // alert(node.value);  // $(this).tree('beginEdit',node.target);
-                                },
-                                onContextMenu: function (e, node) {
-                                    e.preventDefault();
-                                    // select the node
-                                    $('#tt').tree('select', node.target);
-                                    // display context menu
-                                    $('#mm').menu('show', {
-                                        left: e.pageX,
-                                        top: e.pageY
-                                    });
-                                },
-                                onDrop: function (targetNode, source, point) {
-                                    var targetId = $(target).tree('getNode', targetNode).id;
-                                    $.ajax({
-                                        url: '...',
-                                        type: 'post',
-                                        dataType: 'json',
-                                        data: {
-                                            id: source.id,
-                                            targetId: targetId,
-                                            point: point
-                                        }
-                                    });
-                                }
-                            });
+                                $(container).html(data);
+                                DataMgr.LoadBorderSlider();
+                                // Instanciate colorpickers
+                                $('.color-picker').colorpicker();
 
-                            @*InvokeDataTable();
-
-                            DataMgr.LoadContent('@Url.Action("AddNewModule", "Module")', '#pane-1');*@
-
-
-                            //handleCheckBox("chkContractStatus");
-                            //  $("#modalEdit").draggable('disable');
-                        },
-                        BindEvents: function () {
-                            $('#myTab a').click(function (e) {
-                                e.preventDefault()
-                                var pageID = $(this).attr("href");
-                                var pageUrl = $(this).data("url");
-                                //$(pageID).load(pageUrl);
-                                DataMgr.LoadContent(pageUrl, pageID);
-                                $(this).tab('show');
-                            });
-
-
-
-                            //Add and update post action
-                            $(document).on("click", "#btnAdd", function () {
-                                if (!$("#myform").valid()) { // Not Valid
-                                    return false;
-                                } else {
-
-                                    DataMgr.AddData();
-
-                                }
-                            });
-
-                            $(document).on("click", "#btnEdit", function () {
-                                if (!$("#myform").valid()) { // Not Valid
-                                    return false;
-                                } else {
-                                    DataMgr.UpdateData(data);
-                                }
-                            });
-
-
-                            // Reset form
-                            $(document).on("click", "#btnReset", function () {
-                                DataMgr.ResetControls();
-                            });
-
-                            // Click edit (get)
-                            $(document).on("click", ".editItem", function () {
-                                var ID = $(this).data('id');  // ID cua dong du lieu
-                                DataMgr.GetDetails(ID);
-
-                                //Go to top
-                                $('html, body').animate({ scrollTop: 0 }, 'fast');
-                                return false;
-                            });
-
-                            // Click delete (get)
-                            $(document).on("click", ".deleteItem", function (e) {
-                                var ID = $(this).data('id');  // ID cua dong du lieu
-                                $('#confirm')
-                                    .modal({ backdrop: 'static', keyboard: false })
-                                    .one('click', '[data-value]', function (e) {
-                                        if ($(this).data('value')) {
-                                            DataMgr.config.mode = 2;
-                                            DataMgr.DeleteData(ID);
-                                            return false;
-                                        }
-                                    });
-                            });
-
-                        },
-                        ConvertFormToJSON: function (form) {
-                            var array = $("#" + form).serializeArray();
-                            var json = {};
-                            $.each(array, function () {
-                                json[this.name] = this.value || '';
-                            });
-                            return JSON.stringify(json);
-                        },
-                        BindDetails: function (data) {
-                            $('#divEdit').html(data);
-                            DataMgr.InitializeCotrols();
-                        },
-                        LoadBorderSlider:function(){
-                            $(".slider-range-max").slider({
-                                range: "max",
-                                min: 0,
-                                max: 10,
-                                value: 0,
-                                slide: function (event, ui) {
-                                    $(".border-amount").text(ui.value + " px");
-                                }
-                            });
-                            $(".slider-range-max").width(100);
-                            $(".border-amount").text($(".slider-range-max").slider("value") + " px");
-                        },
-                        LoadContent: function (url, container) {
-                            $.ajax({
-                                type: "GET",
-                                dataType: "html",
-                                url: url,
-                                success: function (data, statusCode, xhr) {
-                                    if (data.message == "timeout")
-                                        window.location.reload();
-                                    else {
-                                        $(container).html(data);
-                                        DataMgr.LoadBorderSlider();
-                                        // Instanciate colorpickers
-                                        $('.color-picker').colorpicker();
-
-                                        //Set UploadFile
-                                        $("#Icon").fileinput({
-                                            showPreview: false,
-                                            showCaption: false,
-                                            showRemove: false,
-                                            showUpload: false,
-                                            //allowedFileExtensions: ["jpg", "gif", "png"],
-                                            layoutTemplates: {
-                                                main1: "{preview}\n" +
-                                                "<div class='input-group {class}'>\n" +
-                                                "   <div class='input-group-btn'>\n" +
-                                                "       {browse}\n" +
-                                                "       {remove}\n" +
-                                                "   </div>\n" +
-                                                "   {caption}\n" +
-                                                "</div>"
-                                            }
-                                        });
-
-                                    }
-                                }, error: function (jqXHR, textStatus, errorThrown) {
-                                    handleAjaxErrors(jqXHR, textStatus, errorThrown);
-                                }
-                            });
-                        },
-                        AddData: function () {
-                            var data = DataMgr.ConvertFormToJSON("myform");
-                            this.config.method = "Create";
-                            this.config.data = data;
-                            this.config.url = DataMgr.config.baseURL + this.config.method;
-                            this.config.ajaxCallMode = 2;
-                            this.ajaxCall(this.config);
-                        },
-                        GetDetails: function (id) {
-                            DataMgr.config.mode = 1;
-                            DataMgr.config.key = id;
-
-                            var data = { "id": id };
-                            this.config.method = "Edit";
-                            this.config.data = data;
-                            this.config.type = "GET";
-                            this.config.dataType = "html";
-                            this.config.url = this.config.baseURL + this.config.method;
-                            this.config.ajaxCallMode = 1;
-                            this.ajaxCall(this.config);
-                        },
-                        UpdateData: function () {
-                            var data = DataMgr.ConvertFormToJSON("myform");
-                            this.config.method = "Edit";
-                            this.config.type = "POST";
-                            this.config.dataType = "json";
-                            this.config.data = data;
-                            this.config.url = DataMgr.config.baseURL + this.config.method;
-                            this.config.ajaxCallMode = 2;
-                            this.ajaxCall(this.config);
-                        },
-                        DeleteData: function (ID) {
-                            this.config.method = "Delete";
-                            this.config.data = JSON.stringify({ "id": ID });
-                            this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
-                            this.config.ajaxCallMode = 2;
-                            this.ajaxCall(this.config);
-                        },
-                        ReloadData: function (data) {
-                            var mode = DataMgr.config.mode;
-                            var titleSuccess = "", titleFailure = "", titleAjaxError = "";
-                            titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
-                            if (mode == 0) {
-                                titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
-                                titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
-                            }
-                            else if (mode == 1) {
-                                titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
-                                titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
-                            } else if (mode == 2) {
-                                titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
-                                titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
-                            } else {
-                                titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
-                                titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
-                            }
-
-                            var result = JSON.parse(data);
-                            // var result = $.parseJSON(data);
-                            if (result.flag == 'true') {
-                                //Reload page after success
-                                this.config.method = "Index";
-                                $.ajax({
-                                    type: "GET",
-                                    url: DataMgr.config.baseURL + this.config.method,
-                                    success: function (data, statusCode, xhr) {
-                                        if (data.message == "timeout") {
-                                            window.location.reload();
-                                        } else {
-                                            $('#' + DataMgr.config.ContainerClientID).html(data);
-                                            DataMgr.InitializeCotrols();
-                                            showMessageWithTitle(titleSuccess, result.message, "success", 20000);
-                                        }
-                                    }, error: function (jqXHR, textStatus, errorThrown) {
-                                        handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                                //Set UploadFile
+                                $("#Icon").fileinput({
+                                    showPreview: false,
+                                    showCaption: false,
+                                    showRemove: false,
+                                    showUpload: false,
+                                    //allowedFileExtensions: ["jpg", "gif", "png"],
+                                    layoutTemplates: {
+                                        main1: "{preview}\n" +
+                                        "<div class='input-group {class}'>\n" +
+                                        "   <div class='input-group-btn'>\n" +
+                                        "       {browse}\n" +
+                                        "       {remove}\n" +
+                                        "   </div>\n" +
+                                        "   {caption}\n" +
+                                        "</div>"
                                     }
                                 });
-                            } else {
-                                showMessageWithTitle(titleFailure, result.message, "error");
-                                hideMessageWithTitle(20000);
-                            }
-                        },
-                        ResetControls: function () {
-                            var mode = DataMgr.config.mode;
-                            if (mode == 0) {
-                                var validateObj = $('#myform');
-                                validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
-                                validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
-                                validateObj.find('input[type="number"]').val(0);
-                                validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
-                                validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
-                                validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
-                            } else {
-                                var key = DataMgr.config.key;
-                                DataMgr.GetDetails(key);
-                            }
-                            DataMgr.InitializeCotrols();
-                        },
-                    };
-                    DataMgr.init();
-                }
 
-                var Controller = 'Menu';
-                var BaseURL = areas + "/" + Controller + "/";
-                var base_settings = {
-                    ContainerClientID: "MainBody",
-                    BaseURL: BaseURL
-                };
-                $.createDataBuilder(base_settings);
-            })(jQuery);
-        </script>
+                            }
+                        }, error: function (jqXHR, textStatus, errorThrown) {
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+                },
+                AddData: function () { 
+                    var data = DataMgr.ConvertFormToJSON("MenuForm");
+                    //alert(data);
+                    this.config.method = "Insert";
+                    this.config.data = data;
+                    this.config.type = "POST";
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                GetDetails: function (id) {
+                    DataMgr.config.mode = 1;
+                    DataMgr.config.key = id;
+
+                    var data = { "id": id };
+                    this.config.method = "Edit";
+                    this.config.data = data;
+                    this.config.type = "GET";
+                    this.config.dataType = "html";
+                    this.config.url = this.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 1;
+                    this.ajaxCall(this.config);
+                },
+                UpdateData: function () {
+                    var data = DataMgr.ConvertFormToJSON("MenuForm");
+                    this.config.method = "Update";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                UpdatePosition: function (id, parentId) {
+                    var data = JSON.stringify({ "MenuId": id, "ParentId": parentId });
+                    this.config.method = "UpdatePosition";
+                    this.config.type = "POST";
+                    this.config.dataType = "json";
+                    this.config.data = data;
+                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                DeleteData: function (ID) {
+                    this.config.method = "Delete";
+                    this.config.data = JSON.stringify({ "id": ID });
+                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.ajaxCallMode = 2;
+                    this.ajaxCall(this.config);
+                },
+                ReloadData: function (data) {
+                    var mode = DataMgr.config.mode;
+                    var titleSuccess = "", titleFailure = "", titleAjaxError = "";
+                    titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
+                    if (mode == 0) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.CreateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.CreateFailure";
+                    }
+                    else if (mode == 1) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    } else if (mode == 2) {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.DeleteSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.DeleteFailure";
+                    } else {
+                        titleSuccess = "@Eagle.Resource.LanguageResource.UpdateSuccess";
+                        titleFailure = "@Eagle.Resource.LanguageResource.UpdateFailure";
+                    }
+
+                    var result = JSON.parse(data);
+                    // var result = $.parseJSON(data);
+                    if (result.flag == 'true') {
+                        //Reload page after success
+                        this.config.method = "Index";
+                        $.ajax({
+                            type: "GET",
+                            url: DataMgr.config.baseURL + this.config.method,
+                            success: function (data, statusCode, xhr) {
+                                if (data.message == "timeout") {
+                                    window.location.reload();
+                                } else {
+                                    $('#' + DataMgr.config.ContainerClientID).html(data);
+                                    DataMgr.InitializeCotrols();
+                                    showMessageWithTitle(titleSuccess, result.message, "success", 20000);
+                                }
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    } else {
+                        showMessageWithTitle(titleFailure, result.message, "error");
+                        hideMessageWithTitle(20000);
+                    }
+                },
+                ResetControls: function () {
+                    var mode = DataMgr.config.mode;
+                    if (mode == 0) {
+                        var validateObj = $('#MenuForm');
+                        validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
+                        validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+                        validateObj.find('input[type="number"]').val(0);
+                        validateObj.find('select').find('option:first').attr('selected', true).siblings().attr('selected', false);
+                        validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
+                        validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
+                    } else {
+                        var key = DataMgr.config.key;
+                        DataMgr.GetDetails(key);
+                    }
+                    DataMgr.InitializeCotrols();
+                },
+            };
+            DataMgr.init();
+        }
+
+        var Controller = 'Menu';
+        var BaseURL = areas + "/" + Controller + "/";
+        var base_settings = {
+            ContainerClientID: "MainBody",
+            BaseURL: BaseURL
+        };
+        $.createDataBuilder(base_settings);
+    })(jQuery);
+</script>
+
+}    
+    

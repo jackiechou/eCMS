@@ -5,6 +5,14 @@ using System.Text;
 
 namespace Eagle.Model.SYS.Permission
 {
+    public static class PermissionCodeStatus
+    {
+        public static string SYSTEM_PAGE = "SYSTEM_PAGE";
+        public static string SYSTEM_MENU = "SYSTEM_MENU";
+        public static string SYSTEM_MODULE = "SYSTEM_MODULE";
+        public static string SYSTEM_FUNCTION = "SYSTEM_FUNCTION";
+    }
+
     public class MenuPermissionViewModel : TreeGridViewModel
     {
         public int MenuTypeId { get; set; }

@@ -679,3 +679,6 @@ display: block;
 .table input[type="text"] {
 margin-bottom:0px;
 }
+
+/*ZTREE-------------------------------------------------------*/
+ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f0f6e4;width:400px;height:300px;overflow-y:scroll;overflow-x:auto;}

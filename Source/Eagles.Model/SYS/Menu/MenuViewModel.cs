@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eagle.Model.SYS.Permission;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,20 +10,20 @@ namespace Eagle.Model.SYS.Menu
     public class MenuTreeModel
     {
         public int id { get; set; }
-
-        public int? parentid { get; set; }
-
+        public int key { get; set; }
+        public int? parentId { get; set; }     
+        public string name { get; set; }
+        public string title { get; set; }
         public string text { get; set; }
-
-        public Guid value { get; set; }
-
+        public string tooltip { get; set; }
+        public bool? isParent { get; set; }
+        public bool? open { get; set; }
         public List<MenuTreeModel> children { get; set; }
 
         public MenuTreeModel()
         {
             children = new List<MenuTreeModel>();
         }
-
     }
 
     public class MenuModel
@@ -36,6 +37,14 @@ namespace Eagle.Model.SYS.Menu
         {
             MenuList = new List<MenuModel>();
         }
+    }
+
+    public class MenuPositionModel
+    {
+        public int MenuId { get; set; }
+        public int? ParentId { get; set; }
+        public int? CreatedByUserId { get; set; }
+        public int? LastModifiedByUserId { get; set; }
     }
     public class MenuViewModel
     {       
@@ -98,11 +107,14 @@ namespace Eagle.Model.SYS.Menu
         public bool HasChild { get; set; }
 
         //Modified ====================================================================================
+        public int UserId { get; set; }
         public string IconUrl { get; set; }
         public Nullable<bool> IsExtenalLink { get; set; }
         public string PageUrl { get; set; }
         public string PagePath { get; set; }
         public List<MenuViewModel> MenuChildren { get; set; }
         public List<MenuTypeViewModel> MenuTypeList { get; set; }
+
+        public List<RolePermissionViewModel> RolePermissionList { get; set; }
     }
 }

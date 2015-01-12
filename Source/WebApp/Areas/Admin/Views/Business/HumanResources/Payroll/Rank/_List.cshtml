@@ -73,7 +73,7 @@
         </tbody>
 </table>
 </div>
-@Html.Action("ConfirmPopup","Common",null)
+
 <script>
     InvokeDataTables();
 </script>
@@ -82,32 +82,34 @@
     // region click delete
     $('.launchConfirm').on('click', function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
 
-                    var urlCreate = '/Rank/Index';
-                    $.ajax({
-                        type: "POST",
-                        url: areas + '/Rank/_Delete' + '/' + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                $.ajax({
-                                    type: "GET",
-                                    url: areas + urlCreate,
-                                    success: function (data) {
-                                        $('#main-data').html(data);
-                                        AlterUpdateSuccess();
-                                    }
-                                });
-                            } else {
-                                $('#divEdit').html(data);
-                            }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+              
+                var urlCreate = '/Rank/Index';
+                $.ajax({
+                    type: "POST",
+                    url: areas + '/Rank/_Delete' + '/' + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: areas + urlCreate,
+                                success: function (data) {
+                                    $('#main-data').html(data);
+                                    AlterUpdateSuccess();
+                                }
+                            });
+                        } else {
+                            $('#divEdit').html(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                })
+                return false;
+
+            }
+        });
+
+
     });
 </script>

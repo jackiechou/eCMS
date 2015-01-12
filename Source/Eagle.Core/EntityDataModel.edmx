@@ -150,10 +150,18 @@
           <Property Name="PageId" Type="int" />
           <Property Name="ModuleId" Type="int" />
           <Property Name="ContentTypeId" Type="int" Nullable="false" />
+          <Property Name="ScopeTypeId" Type="int" />
           <Property Name="ContentItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Depth" Type="int" />
+          <Property Name="Lineage" Type="varchar" MaxLength="250" />
+          <Property Name="ListOrder" Type="int" />
+          <Property Name="ContentItemName" Type="nvarchar" MaxLength="150" />
+          <Property Name="ContentItemTitle" Type="nvarchar" MaxLength="150" />
           <Property Name="ContentKey" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Content" Type="nvarchar(max)" />
-          <Property Name="Indexed" Type="bit" Nullable="false" />
+          <Property Name="IsParent" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ContentTypes">
           <Key>
@@ -259,10 +267,11 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           <Property Name="ScopeTypeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="4000" />
           <Property Name="Target" Type="char" MaxLength="10" />
-          <Property Name="IconFile" Type="int" />
           <Property Name="IconClass" Type="nvarchar" MaxLength="50" />
+          <Property Name="IconFile" Type="int" />
           <Property Name="Color" Type="nvarchar" MaxLength="50" />
           <Property Name="CssClass" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsSecured" Type="bit" />
           <Property Name="MenuStatus" Type="int" Nullable="false" />
           <Property Name="CreatedOnDate" Type="datetime" />
           <Property Name="LastModifiedOnDate" Type="datetime" />
@@ -276,7 +285,7 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           <Property Name="MenuPermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MenuId" Type="int" Nullable="false" />
           <Property Name="PermissionId" Type="int" Nullable="false" />
-          <Property Name="RoleId" Type="int" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="AllowAccess" Type="bit" />
         </EntityType>
@@ -380,12 +389,13 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           </Key>
           <Property Name="ApplicationId" Type="int" Nullable="false" />
           <Property Name="ContentItemId" Type="int" />
+          <Property Name="ScopeTypeId" Type="int" />
           <Property Name="ModuleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ModuleCode" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ModuleKey" Type="nvarchar" MaxLength="50" />
           <Property Name="ModuleTitle" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="ModuleName" Type="nvarchar" MaxLength="128" />
-          <Property Name="AllTabs" Type="bit" Nullable="false" />
+          <Property Name="AllPages" Type="bit" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="InheritViewPermissions" Type="bit" Nullable="false" />
@@ -490,19 +500,6 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           <Property Name="BannerId" Type="int" />
           <Property Name="PageId" Type="int" />
         </EntityType>
-        <EntityType Name="PageGroups">
-          <Key>
-            <PropertyRef Name="GroupId" />
-          </Key>
-          <Property Name="ApplicationId" Type="int" Nullable="false" />
-          <Property Name="LanguageCode" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="ScopeTypeId" Type="int" />
-          <Property Name="GroupId" Type="int" Nullable="false" />
-          <Property Name="GroupCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="GroupName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="ListOrder" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="500" />
-        </EntityType>
         <EntityType Name="PageMeta">
           <Key>
             <PropertyRef Name="MetaId" />
@@ -525,6 +522,7 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           <Property Name="Color" Type="nvarchar" MaxLength="20" />
           <Property Name="Border" Type="nvarchar" MaxLength="1" />
           <Property Name="InsertedPosition" Type="nvarchar" MaxLength="50" />
+          <Property Name="IconClass" Type="nvarchar" MaxLength="50" />
           <Property Name="Icon" Type="int" />
           <Property Name="ModuleOrder" Type="int" />
           <Property Name="IsVisible" Type="bit" />
@@ -564,19 +562,19 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
             <PropertyRef Name="PageId" />
           </Key>
           <Property Name="ApplicationId" Type="int" />
-          <Property Name="LanguageCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ContentItemId" Type="int" />
-          <Property Name="SkinId" Type="int" />
+          <Property Name="LanguageCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TemplateId" Type="int" />
           <Property Name="ScopeTypeId" Type="int" />
           <Property Name="PageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PageCode" Type="uniqueidentifier" />
-          <Property Name="PageGroupCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PageGroupId" Type="int" />
           <Property Name="PageTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="PageName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="PageAlias" Type="nvarchar" MaxLength="200" />
           <Property Name="PagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="PageUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="Icon" Type="int" />
           <Property Name="ListOrder" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Keywords" Type="nvarchar" MaxLength="500" />
@@ -591,7 +589,6 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           <Property Name="EndDate" Type="datetime" />
           <Property Name="PageHeadText" Type="nvarchar" MaxLength="500" />
           <Property Name="PageFooterText" Type="nvarchar(max)" />
-          <Property Name="Icon" Type="int" />
           <Property Name="CreatedByUserId" Type="uniqueidentifier" />
           <Property Name="CreatedOnDate" Type="datetime" />
           <Property Name="LastModifiedByUserId" Type="uniqueidentifier" />
@@ -640,7 +637,7 @@ warning 6002: The table/view '5eagles_eCMS.Cms.Logs' does not have a primary key
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="ApplicationId" Type="int" />
+          <Property Name="ApplicationId" Type="int" Nullable="false" />
           <Property Name="RoleGroupId" Type="int" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="RoleCode" Type="uniqueidentifier" />
@@ -7463,6 +7460,9 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
         <Function Name="Menu_GetSubNodesByMenuId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Cms">
           <Parameter Name="MenuId" Type="int" Mode="In" />
         </Function>
+        <Function Name="Menu_GetTreeNodesByMenuId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Cms">
+          <Parameter Name="MenuId" Type="int" Mode="In" />
+        </Function>
         <Function Name="Menu_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Cms">
           <Parameter Name="PageId" Type="int" Mode="In" />
           <Parameter Name="MenuTypeId" Type="int" Mode="In" />
@@ -7501,7 +7501,13 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Parameter Name="MenuId" Type="int" Mode="In" />
           <Parameter Name="ParentId" Type="int" Mode="In" />
           <Parameter Name="ListOrder" Type="int" Mode="In" />
-          <Parameter Name="LastModifiedByUserId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="LastModifiedByUserId" Type="int" Mode="In" />
+          <Parameter Name="o_return" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="Menu_UpdatePosition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Cms">
+          <Parameter Name="MenuId" Type="int" Mode="In" />
+          <Parameter Name="ParentId" Type="int" Mode="In" />
+          <Parameter Name="LastModifiedByUserId" Type="int" Mode="In" />
           <Parameter Name="o_return" Type="int" Mode="InOut" />
         </Function>
         <Function Name="ModulePermissions_GetPivotList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Cms">
@@ -7763,8 +7769,8 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Parameter Name="ApplicationId" Type="int" Mode="In" />
           <Parameter Name="SkinId" Type="int" Mode="In" />
           <Parameter Name="ScopeTypeId" Type="int" Mode="In" />
-          <Parameter Name="ContentItemId" Type="int" Mode="In" />
           <Parameter Name="LanguageCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageGroupId" Type="int" Mode="In" />
           <Parameter Name="PageName" Type="nvarchar" Mode="In" />
           <Parameter Name="PageAlias" Type="nvarchar" Mode="In" />
           <Parameter Name="PageTitle" Type="nvarchar" Mode="In" />
@@ -7794,6 +7800,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Parameter Name="SkinId" Type="int" Mode="In" />
           <Parameter Name="ScopeTypeId" Type="int" Mode="In" />
           <Parameter Name="LanguageCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageGroupId" Type="int" Mode="In" />
           <Parameter Name="PageId" Type="int" Mode="In" />
           <Parameter Name="PageName" Type="nvarchar" Mode="In" />
           <Parameter Name="PageAlias" Type="nvarchar" Mode="In" />
@@ -10361,7 +10368,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <EntitySet Name="NewsCategories" EntityType="Self.NewsCategories" Schema="Cms" store:Type="Tables" />
           <EntitySet Name="NewsComments" EntityType="Self.NewsComments" Schema="Cms" store:Type="Tables" />
           <EntitySet Name="PageBanners" EntityType="Self.PageBanners" Schema="Cms" store:Type="Tables" />
-          <EntitySet Name="PageGroups" EntityType="Self.PageGroups" Schema="Cms" store:Type="Tables" />
           <EntitySet Name="PageMeta" EntityType="Self.PageMeta" Schema="Cms" store:Type="Tables" />
           <EntitySet Name="PageModules" EntityType="Self.PageModules" Schema="Cms" store:Type="Tables" />
           <EntitySet Name="PageModuleSettings" EntityType="Self.PageModuleSettings" Schema="Cms" store:Type="Tables" />
@@ -11900,6 +11906,11 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <Parameter Name="ScopeTypeId" Mode="In" Type="Int32" />
             <Parameter Name="Status" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="Menu_GetListByTypeStatus" ReturnType="Collection(Eagle.Core.Menu_GetListByTypeStatus_Result)">
+            <Parameter Name="MenuTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="ScopeTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="Menu_GetMenuLevelByMenuId">
             <Parameter Name="MenuId" Mode="In" Type="Int32" />
             <Parameter Name="Depth" Mode="InOut" Type="Int32" />
@@ -11914,6 +11925,9 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Parameter Name="PagePath" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Menu_GetSubNodesByMenuId" ReturnType="Collection(Eagle.Core.Menu_GetSubNodesByMenuId_Result)">
+          <Parameter Name="MenuId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Menu_GetTreeNodesByMenuId" ReturnType="Collection(Eagle.Core.Menu_GetTreeNodesByMenuId_Result)">
           <Parameter Name="MenuId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Menu_Insert" ReturnType="Collection(String)">
@@ -11950,11 +11964,17 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <Parameter Name="LastModifiedByUserId" Mode="In" Type="Int32" />
             <Parameter Name="o_return" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="Menu_UpdateListOrder">
+          <FunctionImport Name="Menu_UpdateListOrder" ReturnType="Collection(String)">
             <Parameter Name="MenuId" Mode="In" Type="Int32" />
             <Parameter Name="ParentId" Mode="In" Type="Int32" />
             <Parameter Name="ListOrder" Mode="In" Type="Int32" />
-            <Parameter Name="LastModifiedByUserId" Mode="In" Type="Guid" />
+            <Parameter Name="LastModifiedByUserId" Mode="In" Type="Int32" />
+            <Parameter Name="o_return" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Menu_UpdatePosition" ReturnType="Collection(String)">
+            <Parameter Name="MenuId" Mode="In" Type="Int32" />
+            <Parameter Name="ParentId" Mode="In" Type="Int32" />
+            <Parameter Name="LastModifiedByUserId" Mode="In" Type="Int32" />
             <Parameter Name="o_return" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ModulePermissions_GetPivotList">
@@ -12206,8 +12226,8 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <Parameter Name="ApplicationId" Mode="In" Type="Int32" />
             <Parameter Name="SkinId" Mode="In" Type="Int32" />
             <Parameter Name="ScopeTypeId" Mode="In" Type="Int32" />
-            <Parameter Name="ContentItemId" Mode="In" Type="Int32" />
             <Parameter Name="LanguageCode" Mode="In" Type="String" />
+            <Parameter Name="PageGroupId" Mode="In" Type="Int32" />
             <Parameter Name="PageName" Mode="In" Type="String" />
             <Parameter Name="PageAlias" Mode="In" Type="String" />
             <Parameter Name="PageTitle" Mode="In" Type="String" />
@@ -12237,6 +12257,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <Parameter Name="SkinId" Mode="In" Type="Int32" />
             <Parameter Name="ScopeTypeId" Mode="In" Type="Int32" />
             <Parameter Name="LanguageCode" Mode="In" Type="String" />
+            <Parameter Name="PageGroupId" Mode="In" Type="Int32" />
             <Parameter Name="PageId" Mode="In" Type="Int32" />
             <Parameter Name="PageName" Mode="In" Type="String" />
             <Parameter Name="PageAlias" Mode="In" Type="String" />
@@ -12932,13 +12953,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <FunctionImport Name="TR_sprptTrainingPlanExpense" ReturnType="Collection(Eagle.Core.TR_sprptTrainingPlanExpense_Result)">
             <Parameter Name="p_LSTrainingCodeID" Mode="In" Type="Int32" />
             <Parameter Name="p_LSTrainingCourseID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ReportType_UpdateListOrder">
-            <Parameter Name="TypeId" Mode="In" Type="Int32" />
-            <Parameter Name="ParentId" Mode="In" Type="Int32" />
-            <Parameter Name="Depth" Mode="In" Type="Int32" />
-            <Parameter Name="ListOrder" Mode="In" Type="Int32" />
-            <Parameter Name="o_return" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Contact_CheckEmail">
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -13919,6 +13933,13 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <Parameter Name="VendorId" Mode="In" Type="Int32" />
             <Parameter Name="o_return" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="ReportType_UpdateListOrder">
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="ParentId" Mode="In" Type="Int32" />
+            <Parameter Name="Depth" Mode="In" Type="Int32" />
+            <Parameter Name="ListOrder" Mode="In" Type="Int32" />
+            <Parameter Name="o_return" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="Currency_GetDetails" ReturnType="Collection(Eagle.Core.Currency_GetDetails_Result)">
           <Parameter Name="CurrencyCode" Mode="In" Type="String" />
           </FunctionImport>
@@ -14588,7 +14609,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <EntitySet Name="NewsCategories" EntityType="Eagle.Core.NewsCategory" />
           <EntitySet Name="NewsComments" EntityType="Eagle.Core.NewsComment" />
           <EntitySet Name="PageBanners" EntityType="Eagle.Core.PageBanner" />
-          <EntitySet Name="PageGroups" EntityType="Eagle.Core.PageGroup" />
           <EntitySet Name="PageMetas" EntityType="Eagle.Core.PageMeta" />
           <EntitySet Name="PageModules" EntityType="Eagle.Core.PageModule" />
           <EntitySet Name="PageModuleSettings" EntityType="Eagle.Core.PageModuleSetting" />
@@ -15624,12 +15644,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <End Role="REC_tblInterviewCriteria" EntitySet="REC_tblInterviewCriteria" />
             <End Role="REC_tblProjectTournament" EntitySet="REC_tblProjectTournament" />
           </AssociationSet>
-          <FunctionImport Name="Menu_GetListByTypeStatus" ReturnType="Collection(Eagle.Core.Menu_GetListByTypeStatus_Result)">
-            <Parameter Name="MenuTypeId" Mode="In" Type="Int32" />
-            <Parameter Name="ScopeTypeId" Mode="In" Type="Int32" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-          </FunctionImport>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="Menu_GetHierarchicalTreeByRoleIdUserIdTypeIdStatus_Result">
           <Property Type="Int32" Name="MenuId" Nullable="false" />
           <Property Type="Int32" Name="MenuTypeId" Nullable="false" />
@@ -15685,6 +15700,35 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Type="Int32" Name="ParentId" Nullable="true" />
           <Property Type="Int32" Name="Depth" Nullable="false" />
           <Property Type="Int32" Name="ListOrder" Nullable="false" />
+          <Property Type="String" Name="MenuName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MenuTitle" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MenuAlias" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Target" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="IconFile" Nullable="true" />
+          <Property Type="String" Name="IconClass" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="IconUrl" Nullable="true" MaxLength="401" />
+          <Property Type="String" Name="CssClass" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="MenuStatus" Nullable="false" />
+          <Property Type="Int32" Name="ApplicationId" Nullable="false" />
+          <Property Type="Int32" Name="ScopeTypeId" Nullable="false" />
+          <Property Type="String" Name="LanguageCode" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="MenuTypeName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="SkinId" Nullable="true" />
+          <Property Type="String" Name="PageTitle" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="PageUrl" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PagePath" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Keywords" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="Menu_GetListByTypeStatus_Result">
+          <Property Type="Int32" Name="PageId" Nullable="true" />
+          <Property Type="Int32" Name="MenuTypeId" Nullable="false" />
+          <Property Type="Int32" Name="MenuId" Nullable="false" />
+          <Property Type="Guid" Name="MenuCode" Nullable="false" />
+          <Property Type="Int32" Name="ParentId" Nullable="true" />
+          <Property Type="Int32" Name="Depth" Nullable="false" />
+          <Property Type="Int32" Name="ListOrder" Nullable="false" />
+          <Property Type="Boolean" Name="HasChild" Nullable="true" />
           <Property Type="String" Name="MenuName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="MenuTitle" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="MenuAlias" Nullable="false" MaxLength="255" />
@@ -15794,6 +15838,33 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Type="Int32" Name="ParentId" Nullable="true" />
           <Property Type="String" Name="MenuName" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="Level" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Menu_GetTreeNodesByMenuId_Result">
+          <Property Type="Int32" Name="PageId" Nullable="true" />
+          <Property Type="Int32" Name="MenuTypeId" Nullable="false" />
+          <Property Type="Int32" Name="MenuId" Nullable="false" />
+          <Property Type="Guid" Name="MenuCode" Nullable="false" />
+          <Property Type="Int32" Name="ParentId" Nullable="true" />
+          <Property Type="Int32" Name="Depth" Nullable="false" />
+          <Property Type="String" Name="Lineage" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="ListOrder" Nullable="false" />
+          <Property Type="Boolean" Name="HasChild" Nullable="true" />
+          <Property Type="String" Name="MenuName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="MenuTitle" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MenuAlias" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="ScopeTypeId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Target" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="IconClass" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IconFile" Nullable="true" />
+          <Property Type="String" Name="Color" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CssClass" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="IsSecured" Nullable="true" />
+          <Property Type="Int32" Name="MenuStatus" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOnDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="LastModifiedOnDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CreatedByUserId" Nullable="true" />
+          <Property Type="Int32" Name="LastModifiedByUserId" Nullable="true" />
         </ComplexType>
         <ComplexType Name="News_GetDetailByAlias_Result">
           <Property Type="Int32" Name="ApplicationId" Nullable="false" />
@@ -16252,7 +16323,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Type="Int32" Name="ScopeTypeId" Nullable="true" />
           <Property Type="Int32" Name="PageId" Nullable="false" />
           <Property Type="Guid" Name="PageCode" Nullable="true" />
-          <Property Type="String" Name="PageGroupCode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PageGroupId" Nullable="true" />
           <Property Type="String" Name="PageTitle" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="PageName" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="PageAlias" Nullable="true" MaxLength="200" />
@@ -16285,6 +16356,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Type="Int32" Name="ScopeTypeId" Nullable="true" />
           <Property Type="String" Name="LanguageCode" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="PageId" Nullable="false" />
+          <Property Type="Int32" Name="PageGroupId" Nullable="true" />
           <Property Type="Guid" Name="PageCode" Nullable="true" />
           <Property Type="String" Name="PageTitle" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="PageName" Nullable="false" MaxLength="200" />
@@ -18934,10 +19006,18 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Name="PageId" Type="Int32" />
           <Property Name="ModuleId" Type="Int32" />
           <Property Name="ContentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ScopeTypeId" Type="Int32" />
           <Property Name="ContentItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Depth" Type="Int32" />
+          <Property Name="Lineage" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ListOrder" Type="Int32" />
+          <Property Name="ContentItemName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContentItemTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ContentKey" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Indexed" Type="Boolean" Nullable="false" />
+          <Property Name="IsParent" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ContentType">
           <Key>
@@ -19022,10 +19102,11 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Name="ScopeTypeId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="Target" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="IconFile" Type="Int32" />
           <Property Name="IconClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IconFile" Type="Int32" />
           <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CssClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsSecured" Type="Boolean" />
           <Property Name="MenuStatus" Type="Int32" Nullable="false" />
           <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
@@ -19039,7 +19120,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Name="MenuPermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MenuId" Type="Int32" Nullable="false" />
           <Property Name="PermissionId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="AllowAccess" Type="Boolean" />
         </EntityType>
@@ -19143,12 +19224,13 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           </Key>
           <Property Name="ApplicationId" Type="Int32" Nullable="false" />
           <Property Name="ContentItemId" Type="Int32" />
+          <Property Name="ScopeTypeId" Type="Int32" />
           <Property Name="ModuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ModuleCode" Type="Guid" Nullable="false" />
           <Property Name="ModuleKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModuleTitle" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="ModuleName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="AllTabs" Type="Boolean" Nullable="false" />
+          <Property Name="AllPages" Type="Boolean" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="InheritViewPermissions" Type="Boolean" Nullable="false" />
@@ -19253,19 +19335,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Name="BannerId" Type="Int32" />
           <Property Name="PageId" Type="Int32" />
         </EntityType>
-        <EntityType Name="PageGroup">
-          <Key>
-            <PropertyRef Name="GroupId" />
-          </Key>
-          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
-          <Property Name="LanguageCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="ScopeTypeId" Type="Int32" />
-          <Property Name="GroupId" Type="Int32" Nullable="false" />
-          <Property Name="GroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ListOrder" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="PageMeta">
           <Key>
             <PropertyRef Name="MetaId" />
@@ -19288,6 +19357,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Name="Color" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Border" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="InsertedPosition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IconClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Icon" Type="Int32" />
           <Property Name="ModuleOrder" Type="Int32" />
           <Property Name="IsVisible" Type="Boolean" />
@@ -19327,19 +19397,19 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
             <PropertyRef Name="PageId" />
           </Key>
           <Property Name="ApplicationId" Type="Int32" />
-          <Property Name="LanguageCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ContentItemId" Type="Int32" />
-          <Property Name="SkinId" Type="Int32" />
+          <Property Name="LanguageCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TemplateId" Type="Int32" />
           <Property Name="ScopeTypeId" Type="Int32" />
           <Property Name="PageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PageCode" Type="Guid" />
-          <Property Name="PageGroupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PageGroupId" Type="Int32" />
           <Property Name="PageTitle" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PageName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PageAlias" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PagePath" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PageUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="Int32" />
           <Property Name="ListOrder" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -19354,7 +19424,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="PageHeadText" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PageFooterText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Icon" Type="Int32" />
           <Property Name="CreatedByUserId" Type="Guid" />
           <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedByUserId" Type="Guid" />
@@ -19403,7 +19472,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="ApplicationId" Type="Int32" />
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" />
           <Property Name="RoleGroupId" Type="Int32" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="RoleCode" Type="Guid" />
@@ -26300,35 +26369,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <End Type="Eagle.Core.REC_tblInterviewCriteria" Role="REC_tblInterviewCriteria" Multiplicity="*" />
           <End Type="Eagle.Core.REC_tblProjectTournament" Role="REC_tblProjectTournament" Multiplicity="*" />
         </Association>
-        <ComplexType Name="Menu_GetListByTypeStatus_Result">
-          <Property Type="Int32" Name="PageId" Nullable="true" />
-          <Property Type="Int32" Name="MenuTypeId" Nullable="false" />
-          <Property Type="Int32" Name="MenuId" Nullable="false" />
-          <Property Type="Guid" Name="MenuCode" Nullable="false" />
-          <Property Type="Int32" Name="ParentId" Nullable="true" />
-          <Property Type="Int32" Name="Depth" Nullable="false" />
-          <Property Type="Int32" Name="ListOrder" Nullable="false" />
-          <Property Type="String" Name="MenuName" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="MenuTitle" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="MenuAlias" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="Target" Nullable="true" MaxLength="10" />
-          <Property Type="Int32" Name="IconFile" Nullable="true" />
-          <Property Type="String" Name="IconClass" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="IconUrl" Nullable="true" MaxLength="401" />
-          <Property Type="String" Name="CssClass" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="MenuStatus" Nullable="false" />
-          <Property Type="Int32" Name="ApplicationId" Nullable="false" />
-          <Property Type="Int32" Name="ScopeTypeId" Nullable="false" />
-          <Property Type="String" Name="LanguageCode" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="MenuTypeName" Nullable="false" MaxLength="255" />
-          <Property Type="Int32" Name="SkinId" Nullable="true" />
-          <Property Type="String" Name="PageTitle" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="PageUrl" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="PagePath" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="Keywords" Nullable="true" MaxLength="500" />
-        </ComplexType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -26471,6 +26512,39 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Menu_GetListByTypeStatus" FunctionName="Eagle.Core.Store.Menu_GetListByTypeStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Eagle.Core.Menu_GetListByTypeStatus_Result">
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="MenuTypeId" ColumnName="MenuTypeId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="MenuCode" ColumnName="MenuCode" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Depth" ColumnName="Depth" />
+                <ScalarProperty Name="ListOrder" ColumnName="ListOrder" />
+                <ScalarProperty Name="HasChild" ColumnName="HasChild" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+                <ScalarProperty Name="MenuAlias" ColumnName="MenuAlias" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="IconFile" ColumnName="IconFile" />
+                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
+                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
+                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
+                <ScalarProperty Name="MenuStatus" ColumnName="MenuStatus" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="MenuTypeName" ColumnName="MenuTypeName" />
+                <ScalarProperty Name="SkinId" ColumnName="SkinId" />
+                <ScalarProperty Name="PageTitle" ColumnName="PageTitle" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="PagePath" ColumnName="PagePath" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Menu_GetMenuLevelByMenuId" FunctionName="Eagle.Core.Store.Menu_GetMenuLevelByMenuId" />
           <FunctionImportMapping FunctionImportName="Menu_GetParentNodesOfSelectedNodeByMenuCode" FunctionName="Eagle.Core.Store.Menu_GetParentNodesOfSelectedNodeByMenuCode">
             <ResultMapping>
@@ -26578,9 +26652,41 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Menu_GetTreeNodesByMenuId" FunctionName="Eagle.Core.Store.Menu_GetTreeNodesByMenuId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Eagle.Core.Menu_GetTreeNodesByMenuId_Result">
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="MenuTypeId" ColumnName="MenuTypeId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="MenuCode" ColumnName="MenuCode" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Depth" ColumnName="Depth" />
+                <ScalarProperty Name="Lineage" ColumnName="Lineage" />
+                <ScalarProperty Name="ListOrder" ColumnName="ListOrder" />
+                <ScalarProperty Name="HasChild" ColumnName="HasChild" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+                <ScalarProperty Name="MenuAlias" ColumnName="MenuAlias" />
+                <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
+                <ScalarProperty Name="IconFile" ColumnName="IconFile" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
+                <ScalarProperty Name="IsSecured" ColumnName="IsSecured" />
+                <ScalarProperty Name="MenuStatus" ColumnName="MenuStatus" />
+                <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+                <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Menu_Insert" FunctionName="Eagle.Core.Store.Menu_Insert" />
           <FunctionImportMapping FunctionImportName="Menu_Update" FunctionName="Eagle.Core.Store.Menu_Update" />
           <FunctionImportMapping FunctionImportName="Menu_UpdateListOrder" FunctionName="Eagle.Core.Store.Menu_UpdateListOrder" />
+          <FunctionImportMapping FunctionImportName="Menu_UpdatePosition" FunctionName="Eagle.Core.Store.Menu_UpdatePosition" />
           <FunctionImportMapping FunctionImportName="ModulePermissions_GetPivotList" FunctionName="Eagle.Core.Store.ModulePermissions_GetPivotList" />
           <FunctionImportMapping FunctionImportName="News_Delete" FunctionName="Eagle.Core.Store.News_Delete" />
           <FunctionImportMapping FunctionImportName="News_GetDataByConditions" FunctionName="Eagle.Core.Store.News_GetDataByConditions" />
@@ -27127,7 +27233,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="PageCode" ColumnName="PageCode" />
-                <ScalarProperty Name="PageGroupCode" ColumnName="PageGroupCode" />
+                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
                 <ScalarProperty Name="PageTitle" ColumnName="PageTitle" />
                 <ScalarProperty Name="PageName" ColumnName="PageName" />
                 <ScalarProperty Name="PageAlias" ColumnName="PageAlias" />
@@ -27164,6 +27270,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
                 <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
                 <ScalarProperty Name="PageCode" ColumnName="PageCode" />
                 <ScalarProperty Name="PageTitle" ColumnName="PageTitle" />
                 <ScalarProperty Name="PageName" ColumnName="PageName" />
@@ -28516,7 +28623,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ReportType_UpdateListOrder" FunctionName="Eagle.Core.Store.ReportType_UpdateListOrder" />
           <FunctionImportMapping FunctionImportName="Contact_CheckEmail" FunctionName="Eagle.Core.Store.Contact_CheckEmail" />
           <FunctionImportMapping FunctionImportName="Contact_GetDetailByID" FunctionName="Eagle.Core.Store.Contact_GetDetailByID" />
           <FunctionImportMapping FunctionImportName="Contact_GetListByVendorId" FunctionName="Eagle.Core.Store.Contact_GetListByVendorId" />
@@ -29987,6 +30093,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <FunctionImportMapping FunctionImportName="Vendors_Insert" FunctionName="Eagle.Core.Store.Vendors_Insert" />
           <FunctionImportMapping FunctionImportName="Vendors_Update" FunctionName="Eagle.Core.Store.Vendors_Update" />
           <FunctionImportMapping FunctionImportName="Vendors_Update_ClickThroughs" FunctionName="Eagle.Core.Store.Vendors_Update_ClickThroughs" />
+          <FunctionImportMapping FunctionImportName="ReportType_UpdateListOrder" FunctionName="Eagle.Core.Store.ReportType_UpdateListOrder" />
           <FunctionImportMapping FunctionImportName="Currency_GetDetails" FunctionName="Eagle.Core.Store.Currency_GetDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Eagle.Core.Currency_GetDetails_Result">
@@ -30668,10 +30775,18 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
           <EntitySetMapping Name="ContentItems">
             <EntityTypeMapping TypeName="Eagle.Core.ContentItem">
               <MappingFragment StoreEntitySet="ContentItems">
-                <ScalarProperty Name="Indexed" ColumnName="Indexed" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="ContentKey" ColumnName="ContentKey" />
+                <ScalarProperty Name="ContentItemTitle" ColumnName="ContentItemTitle" />
+                <ScalarProperty Name="ContentItemName" ColumnName="ContentItemName" />
+                <ScalarProperty Name="ListOrder" ColumnName="ListOrder" />
+                <ScalarProperty Name="Lineage" ColumnName="Lineage" />
+                <ScalarProperty Name="Depth" ColumnName="Depth" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="ContentItemId" ColumnName="ContentItemId" />
+                <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
                 <ScalarProperty Name="ContentTypeId" ColumnName="ContentTypeId" />
                 <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
@@ -30755,10 +30870,11 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
                 <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
                 <ScalarProperty Name="MenuStatus" ColumnName="MenuStatus" />
+                <ScalarProperty Name="IsSecured" ColumnName="IsSecured" />
                 <ScalarProperty Name="CssClass" ColumnName="CssClass" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
                 <ScalarProperty Name="IconFile" ColumnName="IconFile" />
+                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
                 <ScalarProperty Name="Target" ColumnName="Target" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
@@ -30901,12 +31017,13 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="InheritViewPermissions" ColumnName="InheritViewPermissions" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="AllTabs" ColumnName="AllTabs" />
+                <ScalarProperty Name="AllPages" ColumnName="AllPages" />
                 <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
                 <ScalarProperty Name="ModuleTitle" ColumnName="ModuleTitle" />
                 <ScalarProperty Name="ModuleKey" ColumnName="ModuleKey" />
                 <ScalarProperty Name="ModuleCode" ColumnName="ModuleCode" />
                 <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+                <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
                 <ScalarProperty Name="ContentItemId" ColumnName="ContentItemId" />
                 <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
               </MappingFragment>
@@ -31012,20 +31129,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PageGroups">
-            <EntityTypeMapping TypeName="Eagle.Core.PageGroup">
-              <MappingFragment StoreEntitySet="PageGroups">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ListOrder" ColumnName="ListOrder" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="GroupCode" ColumnName="GroupCode" />
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
-                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PageMetas">
             <EntityTypeMapping TypeName="Eagle.Core.PageMeta">
               <MappingFragment StoreEntitySet="PageMeta">
@@ -31043,6 +31146,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
                 <ScalarProperty Name="ModuleOrder" ColumnName="ModuleOrder" />
                 <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
                 <ScalarProperty Name="InsertedPosition" ColumnName="InsertedPosition" />
                 <ScalarProperty Name="Border" ColumnName="Border" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
@@ -31094,7 +31198,6 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
                 <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
                 <ScalarProperty Name="PageFooterText" ColumnName="PageFooterText" />
                 <ScalarProperty Name="PageHeadText" ColumnName="PageHeadText" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
@@ -31109,19 +31212,19 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
                 <ScalarProperty Name="Keywords" ColumnName="Keywords" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ListOrder" ColumnName="ListOrder" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
                 <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
                 <ScalarProperty Name="PagePath" ColumnName="PagePath" />
                 <ScalarProperty Name="PageAlias" ColumnName="PageAlias" />
                 <ScalarProperty Name="PageName" ColumnName="PageName" />
                 <ScalarProperty Name="PageTitle" ColumnName="PageTitle" />
-                <ScalarProperty Name="PageGroupCode" ColumnName="PageGroupCode" />
+                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
                 <ScalarProperty Name="PageCode" ColumnName="PageCode" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
                 <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
-                <ScalarProperty Name="SkinId" ColumnName="SkinId" />
-                <ScalarProperty Name="ContentItemId" ColumnName="ContentItemId" />
                 <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="ContentItemId" ColumnName="ContentItemId" />
                 <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -35678,39 +35781,7 @@ warning 6002: The table/view '5eagles_eCMS.dbo.vTimeKeeping' does not have a pri
               <ScalarProperty Name="InterviewCriteriaID" ColumnName="InterviewCriteriaID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="Menu_GetListByTypeStatus" FunctionName="Eagle.Core.Store.Menu_GetListByTypeStatus">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Eagle.Core.Menu_GetListByTypeStatus_Result">
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="MenuTypeId" ColumnName="MenuTypeId" />
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="MenuCode" ColumnName="MenuCode" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="Depth" ColumnName="Depth" />
-                <ScalarProperty Name="ListOrder" ColumnName="ListOrder" />
-                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
-                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
-                <ScalarProperty Name="MenuAlias" ColumnName="MenuAlias" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Target" ColumnName="Target" />
-                <ScalarProperty Name="IconFile" ColumnName="IconFile" />
-                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
-                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
-                <ScalarProperty Name="CssClass" ColumnName="CssClass" />
-                <ScalarProperty Name="MenuStatus" ColumnName="MenuStatus" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="ScopeTypeId" ColumnName="ScopeTypeId" />
-                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
-                <ScalarProperty Name="MenuTypeName" ColumnName="MenuTypeName" />
-                <ScalarProperty Name="SkinId" ColumnName="SkinId" />
-                <ScalarProperty Name="PageTitle" ColumnName="PageTitle" />
-                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
-                <ScalarProperty Name="PagePath" ColumnName="PagePath" />
-                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -256,14 +256,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
          //    ViewBag.LSLevel2ID = new SelectList(_list, "LSLevel2ID", "Name");
          //}
         #endregion -------------------------------------------------------------------------------
-
-        #region Confirm box -----------------------------------------------
-        public ActionResult ConfirmPopup()
-        {
-            return PartialView("./Common/ConfirmPopup");
-        }
-        #endregion
-
+        
         #region Employee box -----------------------------------------------
         public PartialViewResult Employee()
         {
@@ -322,11 +315,6 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
             return Content(Eagle.Common.Utilities.StringUtils.GetMd5Sum(id));
         }
         #endregion =====================================================================================
-        public PartialViewResult jqueryval()
-        {
-            return PartialView("../Common/Common/jqueryval");
-        }
-
 
         private void AddItemToTree(List<LS_tblCompanyViewModel> List, List<TreeView> treeList, int root, int LanguageId)
         {

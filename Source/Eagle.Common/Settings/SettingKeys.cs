@@ -60,10 +60,12 @@ namespace Eagle.Common.Settings
         public static string UserId = "UserId";
         public static string UserCode = "UserCode";
         public static string UserName = "UserName";
+        public static string DisplayName = "DisplayName";
         public static string UserInfo = "UserInfo";
         public static string IsSuperUser = "IsSuperUser";
         public static string ScopeTypeId = "ScopeTypeId";
-
+        
+        
         public static string EmpId = "EmpId";
         public static string EmpCode = "EmpCode";
         public static string EmpInfo = "EmpInfo";
@@ -71,6 +73,21 @@ namespace Eagle.Common.Settings
 
         
         #endregion Session Key Settings ==================================
+        public static string _ThemeName = "ThemeName";
+        public static string _ThemeSrc = "ThemeSrc";
+        public static string ThemeName
+        {
+            get { return _ThemeName; }
+            set { _ThemeName = value; }
+        }
+
+        public static string ThemeSrc
+        {
+            get { return _ThemeSrc; }
+            set { _ThemeSrc = value; }
+        }
+
+
         public static string _MasterName = "MasterName";
         public static string _MasterSrc = "MasterSrc";
 

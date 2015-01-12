@@ -22,6 +22,7 @@ namespace Eagle.Core
         public string Color { get; set; }
         public string Border { get; set; }
         public string InsertedPosition { get; set; }
+        public string IconClass { get; set; }
         public Nullable<int> Icon { get; set; }
         public Nullable<int> ModuleOrder { get; set; }
         public Nullable<bool> IsVisible { get; set; }

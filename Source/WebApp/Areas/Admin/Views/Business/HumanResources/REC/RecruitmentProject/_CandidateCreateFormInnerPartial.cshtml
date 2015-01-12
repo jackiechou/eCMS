@@ -61,7 +61,7 @@
             @Html.LabelFor(model => model.LSLocationID)
         </div>
         <div class="col-md-4">
-            @Html.TextBox("SelectLSLocationID", null, new { @class = "span12 autocomplete-select2" })
+            @Html.TextBox("SelectLSLocationID", null, new { @class = "col-md-12 autocomplete-select2" })
             @Html.HiddenFor(model => model.LSLocationID)
             @Html.HiddenFor(model => model.LSLocationName)
         </div>
@@ -106,7 +106,7 @@
     </div>
 
 </form>
-@Html.Action("jqueryval", "Common", null)
+
 <script>
     //InvokeDateTimePicker();
 

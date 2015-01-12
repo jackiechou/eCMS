@@ -127,7 +127,7 @@
             </div>
         </div>
         
-@Html.Action("ConfirmPopup","Common",null)           
+           
 
     </form>
 <script>
@@ -265,121 +265,112 @@
 
     // confirm Delete 
     $('.launchConfirm').on('click', function (e) {
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                hideCustomAlter();
-                if ($(this).data('value')) {
-                    
-
-                    var selectedValue = $('#lstBoxAssigned').val();
-                    var requestAssigned = { lstBoxAssigned: selectedValue }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                var selectedValue = $('#lstBoxAssigned').val();
+                var requestAssigned = { lstBoxAssigned: selectedValue }
 
 
-                    //Nếu không chọn group thì báo lỗi
-                    if ($('#ddlGroupID').val() == '') {
-                        AlterUpdateWarningChooseGroup();
-                    }else if (selectedValue == null) {
-                        AlterUpdateWarning();
-                    }else if ($('#btnDelete').hasClass("DeleteModel")) {
+                //Nếu không chọn group thì báo lỗi
+                if ($('#ddlGroupID').val() == '') {
+                    AlterUpdateWarningChooseGroup();
+                } else if (selectedValue == null) {
+                    AlterUpdateWarning();
+                } else if ($('#btnDelete').hasClass("DeleteModel")) {
 
-                        var GroupId = $('#ddlGroupID').val();
+                    var GroupId = $('#ddlGroupID').val();
 
-                        //Add new Account
-                        var url = areas + '/UserGroup/Delete/?GroupID=' + GroupId;
-                        // get sau khi action Save trong controller thuc hien
-                        var urlCreate = '/UserGroup/_Create';
+                    //Add new Account
+                    var url = areas + '/UserGroup/Delete/?GroupID=' + GroupId;
+                    // get sau khi action Save trong controller thuc hien
+                    var urlCreate = '/UserGroup/_Create';
 
 
-                        $.ajax({
-                            type: "POST",
-                            data: JSON.stringify(requestAssigned),
-                            url: url,
-                            data: $("#frmAdd").serialize(),
-                            success: function (data) {
-                                if (data == 'success') {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: areas + urlCreate,
-                                        success: function (data) {
-                                            var userList = $('#lstBox');
-                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
-                                                userList.append($('<option/>', {
-                                                    value: itemData,
-                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
-                                                }));
-                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
-                                            });
-                                            AlterUpdateSuccess();
-                                        }
-                                    });
-                                }
+                    $.ajax({
+                        type: "POST",
+                        data: JSON.stringify(requestAssigned),
+                        url: url,
+                        data: $("#frmAdd").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        var userList = $('#lstBox');
+                                        $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                            userList.append($('<option/>', {
+                                                value: itemData,
+                                                text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                            }));
+                                            $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                        });
+                                        AlterUpdateSuccess();
+                                    }
+                                });
                             }
-                        }); // end ajax
-                    }
-                } else {
-                    
+                        }
+                    }); // end ajax
                 }
-            });
+            }
+        });
+
+  
     });
 
     // su kien Delete  all  item duoc chon trong listbox
     $('.launchConfirmAll').on('click', function (e) {
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                hideCustomAlter();
-                if ($(this).data('value')) {
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                //Nếu không chọn group thì báo lỗi
+                if ($('#ddlGroupID').val() == '') {
+                    AlterUpdateWarningChooseGroup();
+                } else if ($('#btnDeleteAll').hasClass("DeleteModel")) {
+
+                    var GroupId = $('#ddlGroupID').val();
+
+                    //Add new Account
+                    var url = areas + '/UserGroup/Delete/?GroupID=' + GroupId;
+                    // get sau khi action Save trong controller thuc hien
+                    var urlCreate = '/UserGroup/_Create';
+
+                    var lstBoxAssignedName = $("#lstBoxAssigned");
+                    $("option", lstBoxAssignedName).attr('selected', true);
 
 
-                    //Nếu không chọn group thì báo lỗi
-                    if ($('#ddlGroupID').val() == '') {
-                        AlterUpdateWarningChooseGroup();
-                    } else if ($('#btnDeleteAll').hasClass("DeleteModel")) {
+                    var selectedValue = $('#lstBoxAssigned').val();
+                    var requestAssigned = { lstBoxAssigned: selectedValue }
 
-                        var GroupId = $('#ddlGroupID').val();
-
-                        //Add new Account
-                        var url = areas + '/UserGroup/Delete/?GroupID=' + GroupId;
-                        // get sau khi action Save trong controller thuc hien
-                        var urlCreate = '/UserGroup/_Create';
-
-                        var lstBoxAssignedName = $("#lstBoxAssigned");
-                        $("option", lstBoxAssignedName).attr('selected', true);
-
-
-                        var selectedValue = $('#lstBoxAssigned').val();
-                        var requestAssigned = { lstBoxAssigned: selectedValue }
-
-                        $.ajax({
-                            type: "POST",
-                            data: JSON.stringify(requestAssigned),
-                            url: url,
-                            data: $("#frmAdd").serialize(),
-                            success: function (data) {
-                                if (data == 'success') {
-                                    $.ajax({
-                                        type: "GET",
-                                        url: areas + urlCreate,
-                                        success: function (data) {
-                                            var userList = $('#lstBox');
-                                            $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
-                                                userList.append($('<option/>', {
-                                                    value: itemData,
-                                                    text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
-                                                }));
-                                                $("#lstBoxAssigned option[value=" + itemData + "]").remove();
-                                            });
-                                            AlterUpdateSuccess();
-                                        }
-                                    });
-                                }
+                    $.ajax({
+                        type: "POST",
+                        data: JSON.stringify(requestAssigned),
+                        url: url,
+                        data: $("#frmAdd").serialize(),
+                        success: function (data) {
+                            if (data == 'success') {
+                                $.ajax({
+                                    type: "GET",
+                                    url: areas + urlCreate,
+                                    success: function (data) {
+                                        var userList = $('#lstBox');
+                                        $.each(requestAssigned.lstBoxAssigned, function (index, itemData) {
+                                            userList.append($('<option/>', {
+                                                value: itemData,
+                                                text: $("#lstBoxAssigned option[value=" + itemData + "]").text()
+                                            }));
+                                            $("#lstBoxAssigned option[value=" + itemData + "]").remove();
+                                        });
+                                        AlterUpdateSuccess();
+                                    }
+                                });
                             }
-                        }); // end ajax
-            }
-            } else {
+                        }
+                    }); // end ajax
+                } else {
 
+                }
             }
         });
+
     });
 </script>

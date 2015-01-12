@@ -48,9 +48,9 @@
                         <div class="col-md-2">
                         <label>@Html.Raw(Eagle.Resource.LanguageResource.Attachment)</label>
                     </div>
-                    <div class="fileupload span10">
-                            <input id="FileUploadName" name="FileUploadName" type="file" class="col-md-12" required="required" />
-                            @Html.HiddenFor(model => model.FileName, new { @class = "form-control" })                                       
+                    <div class="fileupload col-md-10">
+                        <input id="FileUploadName" name="FileUploadName" type="file" class="col-md-12" required="required" />
+                        @Html.HiddenFor(model => model.FileName, new { @class = "form-control" })
                     </div>
                 </div>
               @*  <div class="row">
@@ -78,7 +78,7 @@
     </div>
 }
 
-@Html.Action("jqueryval", "Common", null)
+
 <script type="text/javascript">
     (function ($) {
         $.createDataBuilder = function (p) {

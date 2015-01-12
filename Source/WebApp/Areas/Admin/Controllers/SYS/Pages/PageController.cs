@@ -17,6 +17,8 @@ using Eagle.Repository.SYS.Session;
 using Eagle.Common.Utilities;
 using Eagle.Repository.SYS.Contents;
 using CommonLibrary.UI.Skins;
+using CommonLibrary.Modules.Dashboard.Components.Skins;
+
 
 namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
 {
@@ -53,9 +55,9 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
         public ActionResult Create()
         {
             PageViewModel model = new PageViewModel();
-            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByPageToDropDownList(null, false);
-            ViewBag.SkinId = SkinRepository.PopulateActiveSkinSelectList(model.SkinId.ToString(), false);
-            ViewBag.LanguageCode = LanguageRepository.PopulateActiveLanguages(null, false);
+            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByPageToDropDownList(null, true);
+            ViewBag.SkinId = SkinRepository.PopulateActiveSkinSelectList(model.SkinId.ToString(), true);
+            ViewBag.TemplateId = SkinTemplateRepository.PopulateTemplateSelectListBySelectedSkin(null, true);
             return PartialView("../Sys/Pages/_Edit", model);
         }
 
@@ -67,7 +69,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
             PageViewModel model = PageRepository.GetDetails(Id);
             ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByPageToDropDownList(model.ContentItemId.ToString(), false);
             ViewBag.SkinId = SkinRepository.PopulateActiveSkinSelectList(model.SkinId.ToString(), false);
-            ViewBag.LanguageCode = LanguageRepository.PopulateActiveLanguages(null, false);
+            ViewBag.TemplateId = SkinTemplateRepository.PopulateTemplateSelectListBySelectedSkin(model.TemplateId.ToString(), true);
             return PartialView("../Sys/Pages/_Edit", model);
         }
 
@@ -77,7 +79,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
         {
             List<PageViewModel> sources = PageRepository.GetListByScopeTypeId(ScopeTypeId);
             return PartialView("../Sys/Pages/_List", sources);
-        }
+        }  
 
         [SessionExpiration]
         public JsonResult GetList(string Keywords, bool? IsSecured)
@@ -148,8 +150,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS
                                 cell = new[] {
                                     record.PageId.ToString(),
                                     record.PageTitle,
-                                    record.PageName,
-                                    record.ParentList,
+                                    record.PageName,                                   
                                     record.PageUrl,
                                     record.ListOrder.ToString(),
                                     record.Icon.ToString(),

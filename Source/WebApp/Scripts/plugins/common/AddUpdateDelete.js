@@ -96,32 +96,32 @@ $(document).on("click", ".editItem", function () {
 // Click delete (get)
 $(document).on("click", ".deleteItem", function (e) {
     var lsID = $(this).data('id');  // ID cua dong du lieu
-    $('#confirm')
-        .modal({ backdrop: 'static', keyboard: false })
-        .one('click', '[data-value]', function (e) {
-            if ($(this).data('value')) {
-                $("body").addClass("loading");
-                $.ajax({
-                    type: "POST",
-                    url: urlDelete + lsID,
-                    success: function (data) {
-                        if (data == 'success') {
-                            $.ajax({
-                                type: "GET",
-                                url: urlReset,
-                                success: function (data) {
-                                    $('#MainBody').html(data);
-                                    AlterUpdateSuccess();
-                                    $('html, body').animate({ scrollTop: 80 }, 'slow');
-                                }
-                            });
-                        } else {
-                            $('#divEdit').html(data);
-                            $('html, body').animate({ scrollTop: 80 }, 'slow');
-                        }
+    bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+        if (result) {
+            $("body").addClass("loading");
+            $.ajax({
+                type: "POST",
+                url: urlDelete + lsID,
+                success: function (data) {
+                    if (data == 'success') {
+                        $.ajax({
+                            type: "GET",
+                            url: urlReset,
+                            success: function (data) {
+                                $('#MainBody').html(data);
+                                AlterUpdateSuccess();
+                                $('html, body').animate({ scrollTop: 80 }, 'slow');
+                            }
+                        });
+                    } else {
+                        $('#divEdit').html(data);
+                        $('html, body').animate({ scrollTop: 80 }, 'slow');
                     }
-                })
-                return false;
-            }
-        });
+                }
+            });
+            return false;
+        }
+    });
+
+
 });

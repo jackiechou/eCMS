@@ -24,9 +24,6 @@ namespace Eagle.WebApp
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
-
-
-
             #region elFinder bundles
             bundles.Add(new StyleBundle("~/Content/elfinder").Include(
                             "~/Scripts/plugins/elfinder/css/elfinder.full.css",
@@ -42,62 +39,56 @@ namespace Eagle.WebApp
             #region desktop header css and javacript ==============================
             bundles.Add(new StyleBundle("~/Themes/Default/DesktopStyle").Include(
                "~/Content/themes/base/jquery-ui.css",
-               "~/Themes/Default/Content/css/style_desktop.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap-theme.css",
-                 "~/Themes/Default/Content/js/bootstrap/dist/css/font-awesome.css",
-                 
-                 "~/Scripts/app/plugins/superfish/css/megafish.css",
-                 "~/Scripts/app/plugins/superfish/css/superfish.css",
-                 "~/Scripts/app/plugins/superfish/css/superfish-vertical.css",
-                 "~/Scripts/app/plugins/superfish/css/superfish-navbar.css",
-                 "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css"
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap-theme.css",
+                //"~/Scripts/app/plugins/bootstrap/bootstrap-core/css/font-awesome.css",
+
+                "~/Scripts/app/plugins/superfish/css/megafish.css",
+                "~/Scripts/app/plugins/superfish/css/superfish.css",
+                "~/Scripts/app/plugins/superfish/css/superfish-vertical.css",
+                "~/Scripts/app/plugins/superfish/css/superfish-navbar.css",
+                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css",
+
+               "~/Themes/Default/Content/css/style_desktop.css"    
               ));
 
             bundles.Add(new ScriptBundle("~/Themes/Default/DesktopScript").Include(
-               "~/Themes/Default/Content/js/jquery-1.11.1.js",
-               "~/Themes/Default/Content/js/bootstrap/dist/js/bootstrap.js",
-                //"~/Themes/Default/Content/js/bootstrap/dist/js/moment.js",
-               //"~/Themes/Default/Content/js/bootstrap-datepicker.js",
-               //"~/Themes/Default/Content/js/bootstrap-datetimepicker.js",
-               "~/Themes/Default/Content/js/datatables/js/jquery.dataTables.js",
-               "~/Themes/Default/Content/js/json2.js",
-              "~/Themes/Default/Content/js/utility.js",
-              "~/Scripts/app/plugins/superfish/js/superfish.js",
-              "~/Scripts/app/plugins/superfish/js/hoverIntent.js",
-              "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.js"
+                "~/Scripts/app/common/jquery-1.11.1.js",
+                "~/Scripts/app/common/jquery-ui-1.10.4.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/js/bootstrap.js",            
+           
+                "~/Scripts/app/plugins/superfish/js/superfish.js",
+                "~/Scripts/app/plugins/superfish/js/hoverIntent.js",
+                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.js",
+                "~/Scripts/app/plugins/datatables/js/jquery.dataTables.js",
+                "~/Scripts/app/common/json2.js",
+                "~/Scripts/app/common/utility.js"
            ));
             #endregion ========================================================================== 
     
             #region ADMIN STYLE SHHEET ==========================================================
             //LOGIN STYLE
             bundles.Add(new StyleBundle("~/Themes/Default/LoginStyle").Include(
-               "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap.css",
-               "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap-theme.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/font-awesome.css",
-               "~/Themes/Default/Content/css/login.css"
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap-theme.css",
+                //"~/Scripts/app/plugins/bootstrap/bootstrap-core/css/font-awesome.css",
+                "~/Themes/Default/Content/css/login.css"
            ));
 
             //MAIN LAYOUT TYPE
             bundles.Add(new StyleBundle("~/Themes/Default/TwoColumnAdminStyle").Include(
-                "~/Content/themes/base/jquery-ui.css",
-                 "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap.css",
-               "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap-theme.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/font-awesome.css",
-                //"~/Themes/Default/Content/css/bootstrap.css",
-                "~/Themes/Default/Content/css/font-awesome.css",
-                "~/Themes/Default/Content/css/bootstrap-datetimepicker.css",
-                "~/Themes/Default/Content/css/style.css",
-                "~/Themes/Default/Content/css/style_main_layout.css",
-                "~/Themes/Default/Content/css/style_custom.css",
-               "~/Themes/Default/Content/css/select2.css",
+                "~/Scripts/app/plugins/jqueryui/themes/base/jquery-ui.css",
+                 "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap-theme.css",
+                //"~/Scripts/app/plugins/bootstrap/bootstrap-core/css/font-awesome.css",           
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-select/css/bootstrap-select.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css", 
 
                 "~/Scripts/app/plugins/superfish/css/megafish.css",
                 "~/Scripts/app/plugins/superfish/css/superfish.css",
                 "~/Scripts/app/plugins/superfish/css/superfish-vertical.css",
-                "~/Scripts/app/plugins/superfish/css/superfish-navbar.css",
-
-                "~/Scripts/app/plugins/bootstrap-select/css/bootstrap-select.css",
+                "~/Scripts/app/plugins/superfish/css/superfish-navbar.css",                
 
                 "~/Scripts/app/plugins/qtip/css/jquery.qtip.css",
                 "~/Scripts/app/plugins/datatables/css/jquery.dataTables_themeroller.css",
@@ -106,30 +97,29 @@ namespace Eagle.WebApp
                 "~/Scripts/app/plugins/easyui/themes/default/easyui.css",
                 "~/Scripts/app/plugins/easyui/themes/icon.css",
                 "~/Scripts/app/plugins/contextmenu/jquery.contextMenu.css",
-                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css"
+                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css",
+                "~/Scripts/app/plugins/select2/css/select2.css",
+
+                "~/Themes/Default/Content/css/style.css",
+                "~/Themes/Default/Content/css/style_main_layout.css",
+                "~/Themes/Default/Content/css/style_custom.css"
             ));
 
             //FULL LAYOUT TYPE
             bundles.Add(new StyleBundle("~/Themes/Default/FullScreenAdminStyle").Include(
-               "~/Content/themes/base/jquery-ui.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap.css",
-               "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap-theme.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/font-awesome.css",
-                //"~/Themes/Default/Content/css/bootstrap.css",
-                "~/Themes/Default/Content/css/font-awesome.css",                
-                "~/Themes/Default/Content/css/bootstrap-datetimepicker.css",
-                "~/Themes/Default/Content/css/style.css",
-                "~/Themes/Default/Content/css/style_full_layout.css",
-                "~/Themes/Default/Content/css/style_custom.css",
-                 "~/Themes/Default/Content/css/select2.css",
+                "~/Scripts/app/plugins/jqueryui/themes/base/jquery-ui.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap-theme.css",
+                //"~/Scripts/app/plugins/bootstrap/bootstrap-core/css/font-awesome.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-select/css/bootstrap-select.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css", 
 
                 "~/Scripts/app/plugins/superfish/css/megafish.css",
                 "~/Scripts/app/plugins/superfish/css/superfish.css",
                 "~/Scripts/app/plugins/superfish/css/superfish-vertical.css",
                 "~/Scripts/app/plugins/superfish/css/superfish-navbar.css",
 
-                 "~/Scripts/app/plugins/bootstrap-select/css/bootstrap-select.css",
-               // "~/Scripts/app/plugins/datepicker/css/datepicker.css",
                 "~/Scripts/app/plugins/qtip/css/jquery.qtip.css",
                 "~/Scripts/app/plugins/datatables/css/jquery.dataTables_themeroller.css",
                 "~/Scripts/app/plugins/datatables/css/jquery.dataTables.css",
@@ -137,30 +127,29 @@ namespace Eagle.WebApp
                 "~/Scripts/app/plugins/easyui/themes/default/easyui.css",
                 "~/Scripts/app/plugins/easyui/themes/icon.css",
                 "~/Scripts/app/plugins/contextmenu/jquery.contextMenu.css",
-                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css"
-                ));
+                 "~/Scripts/app/plugins/select2/css/select2.css",
+                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css",                
+                
+                "~/Themes/Default/Content/css/style.css",
+                "~/Themes/Default/Content/css/style_full_layout.css",
+                "~/Themes/Default/Content/css/style_custom.css"
+            ));
 
 
             //REPORT STYLE
             bundles.Add(new StyleBundle("~/Themes/Default/ReportStyle").Include(
-               "~/Content/themes/base/jquery-ui.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap.css",
-               "~/Themes/Default/Content/js/bootstrap/dist/css/bootstrap-theme.css",
-                "~/Themes/Default/Content/js/bootstrap/dist/css/font-awesome.css",
-                //"~/Themes/Default/Content/css/bootstrap.css",
-                "~/Themes/Default/Content/css/font-awesome.css",
-                "~/Themes/Default/Content/css/bootstrap-datetimepicker.css",
-                "~/Themes/Default/Content/css/report.css",
-                "~/Themes/Default/Content/css/style_custom.css",
-                 "~/Themes/Default/Content/css/select2.css",
+                "~/Scripts/app/plugins/jqueryui/themes/base/jquery-ui.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/css/bootstrap-theme.css",
+                //"~/Scripts/app/plugins/bootstrap/bootstrap-core/css/font-awesome.css",           
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-select/css/bootstrap-select.css",                  
 
                 "~/Scripts/app/plugins/superfish/css/megafish.css",
                 "~/Scripts/app/plugins/superfish/css/superfish.css",
                 "~/Scripts/app/plugins/superfish/css/superfish-vertical.css",
                 "~/Scripts/app/plugins/superfish/css/superfish-navbar.css",
 
-
-                //"~/Scripts/app/plugins/datepicker/css/datepicker.css",
                 "~/Scripts/app/plugins/qtip/css/jquery.qtip.css",
                 "~/Scripts/app/plugins/datatables/css/jquery.dataTables_themeroller.css",
                 "~/Scripts/app/plugins/datatables/css/jquery.dataTables.css",
@@ -168,7 +157,11 @@ namespace Eagle.WebApp
                 "~/Scripts/app/plugins/easyui/themes/default/easyui.css",
                 "~/Scripts/app/plugins/easyui/themes/icon.css",
                 "~/Scripts/app/plugins/contextmenu/jquery.contextMenu.css",
-                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css"
+                "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.css",
+                "~/Scripts/app/plugins/select2/css/select2.css",
+
+                "~/Themes/Default/Content/css/report.css",
+                "~/Themes/Default/Content/css/style_custom.css"
                 ));
             #endregion ======================================================================
 
@@ -184,13 +177,17 @@ namespace Eagle.WebApp
                 "~/Scripts/app/common/jquery-1.11.1.js",
                 "~/Scripts/app/common/jquery-migrate-1.2.1.js",
                 "~/Scripts/app/common/jquery-ui-1.10.4.js",
-                "~/Scripts/app/common/json2.js",
+                "~/Scripts/app/common/jquery-ui-1.10.4.js",
+                "~/Scripts/app/common/jquery.cookie.js",
 
-                "~/Themes/Default/Content/js/bootstrap/dist/js/bootstrap.js",
-                //"~/Scripts/app/plugins/bootstrap/bootstrap.js",
-                //"~/Scripts/app/plugins/bootstrap/bootstrap-datepicker.js",
-                "~/Scripts/app/plugins/bootstrap/bootstrap-datetimepicker.js",
-                "~/Scripts/app/plugins/bootstrap/bootstrap-contextmenu.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-core/js/bootstrap.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootbox.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-contextmenu.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js",              
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-select/js/bootstrap-select.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootstrap-tagsinput/js/bootstrap-select.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/select2/select2.js",
+                "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/select2/select2custom.js",
 
                 "~/Scripts/app/plugins/superfish/js/hoverIntent.js",
                 "~/Scripts/app/plugins/superfish/js/superfish.js",
@@ -198,12 +195,7 @@ namespace Eagle.WebApp
 
                 "~/Scripts/app/plugins/qtip/js/jquery.qtip.js",
                 "~/Scripts/app/plugins/qtip/js/jquery.qtip.custom.js",
-                //"~/Scripts/app/plugins/qtip/js/imagesloaded.pkg.js",   
-
-                "~/Scripts/app/plugins/select2/select2.js",
-                "~/Scripts/app/plugins/select2/select2custom.js",
-
-                "~/Scripts/app/plugins/bootstrap-select/js/bootstrap-select.js",
+                //"~/Scripts/app/plugins/qtip/js/imagesloaded.pkg.js",                                              
 
                 "~/Scripts/app/plugins/datatables/js/jquery.dataTables.js",
                 "~/Scripts/plugins/tablednd/js/jquery.tablednd.js",

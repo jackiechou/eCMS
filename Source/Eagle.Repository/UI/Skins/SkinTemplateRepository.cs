@@ -5,11 +5,90 @@ using System.Text;
 using System.Data;
 using Eagle.Core;
 using Eagle.Model.UI.Skins;
+using System.Web.Mvc;
+using Eagle.Repository.UI.Layout;
 
 namespace CommonLibrary.Modules.Dashboard.Components.Skins
 {
-    public class SkinPackageTemplates
+    public class SkinTemplateRepository
     {
+        public static SkinTemplateViewModel GetLayoutInfoByPageId(int? PageId)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                var entity = (from p in context.Pages
+                            join t in context.SkinPackageTemplates on p.TemplateId equals t.TemplateId
+                            join s in context.Skins on t.SkinPackageId equals s.SkinPackageId
+                            where s.IsSkinSelected == true && p.PageId == PageId
+                            select new SkinTemplateViewModel {
+                                TemplateId = t.TemplateId,
+                                TemplateName = t.TemplateName,
+                                TemplateKey = t.TemplateKey,
+                                TemplateSrc = t.TemplateSrc,
+                                SkinPackageId = t.SkinPackageId
+                            }).FirstOrDefault();
+                if (entity == null)
+                {
+                    entity = new SkinTemplateViewModel()
+                    {
+                        TemplateId = 1,
+                        TemplateName = LayoutType.MainTemplateName,
+                        TemplateKey = LayoutType.MainTemplateKey,
+                        TemplateSrc = LayoutType.MainLayout,
+                        SkinPackageId = 1
+                    };
+                }
+                return entity;
+            }           
+        }
+
+        public static string GetTemplateSrcByPageId(int? PageId)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                string TemplateSrc = (from p in context.Pages
+                              join t in context.SkinPackageTemplates on p.TemplateId equals t.TemplateId
+                              join s in context.Skins on t.SkinPackageId equals s.SkinPackageId
+                              where s.IsSkinSelected == true && p.PageId == PageId
+                              select t.TemplateSrc).FirstOrDefault();
+                if (string.IsNullOrEmpty(TemplateSrc))
+                    TemplateSrc = LayoutType.MainLayout;
+                return TemplateSrc;
+            }
+        }
+
+        public static SelectList PopulateTemplateSelectListBySelectedSkin(string SelectedValue = null, bool IsShowSelectText = false)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                var query = from t in context.SkinPackageTemplates
+                            join s in context.Skins on t.SkinPackageId equals s.SkinPackageId
+                            where s.IsSkinSelected == true
+                            select new { t.TemplateName, t.TemplateId };
+                var list = query.AsEnumerable().Select(t => new SelectListItem()
+                             { 
+                                 Text = t.TemplateName,
+                                 Value =t.TemplateId.ToString()
+                             }).ToList();
+                if (IsShowSelectText)
+                    list.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.NoneSpecified), Value = "" });
+                return new SelectList(list, "Value", "Text", SelectedValue);
+            }
+        }
+
+        public static List<SkinPackageTemplate> GetListBySelectedSkin()
+        {
+            using (EntityDataContext dbContext = new EntityDataContext())
+            {
+                var lst = (from sc in dbContext.SkinPackageTemplates
+                           join s in dbContext.Skins
+                           on sc.SkinPackageId equals s.SkinPackageId
+                           where s.IsSkinSelected == true
+                           select sc).ToList();
+                return lst;
+            }
+        }
+
         public static List<SkinPackageTemplate> GetListBySkinId(int SkinId)
         {
             using (EntityDataContext dbContext = new EntityDataContext())

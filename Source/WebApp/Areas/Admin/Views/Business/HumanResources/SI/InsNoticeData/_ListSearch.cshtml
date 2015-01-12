@@ -179,7 +179,7 @@
         </tbody>
     </table>
 </div>
-@Html.Action("ConfirmPopup","Common",null)
+
 <script>
     //InvokeDataTables();
     InvokeDateTimePicker();
@@ -188,26 +188,26 @@
     // region click delete
     $('.launchConfirm').on('click', function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
 
-                    var urlCreate = '/InsNoticeData/_ListSearch';
-                    $.ajax({
-                        type: "POST",
-                        url: areas + '/InsNoticeData/_Delete' + '/' + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                $('#btnSearch').trigger('click');
-                                AlterDeleteSuccess();
-                            } else {
-                                $('#divEdit').html(data);
-                            }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                var urlCreate = '/InsNoticeData/_ListSearch';
+                $.ajax({
+                    type: "POST",
+                    url: areas + '/InsNoticeData/_Delete' + '/' + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            $('#btnSearch').trigger('click');
+                            AlterDeleteSuccess();
+                        } else {
+                            $('#divEdit').html(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
+
+
     });
 </script>

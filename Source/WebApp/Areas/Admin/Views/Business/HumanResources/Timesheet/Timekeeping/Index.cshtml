@@ -138,25 +138,25 @@
     $(document).on('click', '.launchConfirm', function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
         var lsMonth = $(this).data('month');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
 
-                    $.ajax({
-                        type: "POST",
-                        url: areas + '/Timekeeping/_Delete?EmpID=' + lsID + "&MMYYYY=" + lsMonth,
-                        data: $("#frmAdd").serialize(),
-                        success: function (data) {
-                            if (data == 'success') {
-                                $('#btnSearch').trigger('click');
-                            } else {
-                                $('#divEdit').html(data);
-                            }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $.ajax({
+                    type: "POST",
+                    url: areas + '/Timekeeping/_Delete?EmpID=' + lsID + "&MMYYYY=" + lsMonth,
+                    data: $("#frmAdd").serialize(),
+                    success: function (data) {
+                        if (data == 'success') {
+                            $('#btnSearch').trigger('click');
+                        } else {
+                            $('#divEdit').html(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
+
+      
     });
 </script>

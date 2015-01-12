@@ -5,9 +5,6 @@
 <div id="MainBody">
     @Html.Partial("../Business/HumanResources/SecurityInsurance/GeneralInformation/_Reset")
 </div>
-<!--Confirm box-->
-@Html.Action("ConfirmPopup", "Common", null)
-
 <div id="divTmpForm">
 </div>
 <script>
@@ -258,33 +255,32 @@
     });
     $(document).on("click", ".deletePreviousRecord", function () {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $("body").addClass("loading");
-                    $.ajax({
-                        type: "POST",
-                        url: "_DeletePreviousRecord/" + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                //Load lại List
-                                $.ajax({
-                                    type: "GET",
-                                    url: "_Tab2PreviousRecordPartial",
-                                    success: function (list) {
-                                        $('#pane-2').html(list);
-                                    }
-                                });
-                                AlterUpdateSuccess();
-                            } else {
-                                AlterWarning(data);
-                            }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "_DeletePreviousRecord/" + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "_Tab2PreviousRecordPartial",
+                                success: function (list) {
+                                    $('#pane-2').html(list);
+                                }
+                            });
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterWarning(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
+
     });
 
 
@@ -431,32 +427,31 @@
     });
     $(document).on("click", ".deleteHICard", function () {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $("body").addClass("loading");
-                    $.ajax({
-                        type: "POST",
-                        url: "_DeleteHICard/" + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                //Load lại List
-                                $.ajax({
-                                    type: "GET",
-                                    url: "_Tab3HICardPartial",
-                                    success: function (list) {
-                                        $('#pane-3').html(list);
-                                    }
-                                });
-                                AlterUpdateSuccess();
-                            } else {
-                                AlterWarning(data);
-                            }
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "_DeleteHICard/" + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "_Tab3HICardPartial",
+                                success: function (list) {
+                                    $('#pane-3').html(list);
+                                }
+                            });
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterWarning(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                });
+                return false;
+            }
+        });
+
     });
 </script>

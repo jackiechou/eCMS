@@ -10,8 +10,7 @@
         @Html.Partial("../Hr/Relationship/_Reset")
     </div>
 }
-<!--Confirm box-->
-@Html.Action("ConfirmPopup", "Common", null)
+
 
 @*<style type="text/css">
         td.mtz-monthpicker-month {
@@ -22,7 +21,7 @@
             outline: none;
         }
     </style>*@
-@Html.Action("jqueryval", "Common", null)
+
 
 <script type="text/javascript">
     (function ($) {
@@ -180,14 +179,15 @@
                     // Click delete (get)
                     $(document).on("click", ".deleteItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    DataMgr.DeleteData(ID);
-                                    return false;
-                                }
-                            });
+
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                DataMgr.DeleteData(ID);
+                                return false;
+                            }
+                        });
+
+                  
                     });
 
                 },

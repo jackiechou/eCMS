@@ -27,7 +27,6 @@
     </div>
 </div>
 }
-@Html.Action("ConfirmPopup", "Common", null)
 
 <script type="text/javascript">
     (function ($) {
@@ -182,14 +181,14 @@
                     $(document).on("click", ".deleteItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu                       
                         DataMgr.config.mode = 3;
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {                                    
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                if ($(this).data('value')) {
                                     DataMgr.DeleteData(ID);
                                     return false;
                                 }
-                            });
+                            }
+                        });
                     });
 
                     // Click update Status (get)

@@ -7,7 +7,7 @@
             @Html.RequiredLabelFor(model => model.BannerTitle)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.BannerTitle, new { @class = "span12 ignored" })
+            @Html.TextBoxFor(model => model.BannerTitle, new { @class = "col-md-12 ignored" })
             @Html.ValidationMessageFor(model => model.BannerTitle)
         </div>
 
@@ -24,7 +24,7 @@
             @Html.LabelFor(model => model.AltText)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.AltText, new { @class = "span12 ignored" })
+            @Html.TextBoxFor(model => model.AltText, new { @class = "col-md-12 ignored" })
             @Html.ValidationMessageFor(model => model.AltText)
         </div>
 

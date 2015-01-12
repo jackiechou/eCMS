@@ -26,7 +26,7 @@
 
 
 
-@Html.Action("ConfirmPopup","Common",null)
+
 
     }
 <script>
@@ -200,33 +200,36 @@
     });
     $(document).on("click", ".deleteItemBackgroundWorking", function () {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $("body").addClass("loading");
-                    $.ajax({
-                        type: "POST",
-                        url: "_DeleteWorkingBackground/" + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                //Load lại List
-                                $.ajax({
-                                    type: "GET",
-                                    url: "Tab5WorkingBackgroundPartial",
-                                    success: function (list) {
-                                        $('#pane-5').html(list);
-                                    }
-                                });
-                                AlterUpdateSuccess();
-                            } else {
-                                AlterWarning(data);
-                            }
+
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+               
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "_DeleteWorkingBackground/" + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab5WorkingBackgroundPartial",
+                                success: function (list) {
+                                    $('#pane-5').html(list);
+                                }
+                            });
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterWarning(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                })
+                return false;
+
+            }
+        });
+
+     
     });
     /*End- Working Background*/
 
@@ -347,33 +350,36 @@
     });
     $(document).on("click", ".deleteItemQualification", function () {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $("body").addClass("loading");
-                    $.ajax({
-                        type: "POST",
-                        url: "_DeleteQualification/" + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                //Load lại List
-                                $.ajax({
-                                    type: "GET",
-                                    url: "Tab6QualificationPartial",
-                                    success: function (list) {
-                                        $('#pane-6').html(list);
-                                    }
-                                });
-                                AlterUpdateSuccess();
-                            } else {
-                                AlterWarning(data);
-                            }
+
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+               
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "_DeleteQualification/" + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab6QualificationPartial",
+                                success: function (list) {
+                                    $('#pane-6').html(list);
+                                }
+                            });
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterWarning(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                })
+                return false;
+
+            }
+        });
+
+
 
     });
     /*End - Qualification*/
@@ -497,33 +503,35 @@
     });
     $(document).on("click", ".deleteItemDocument", function () {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $("body").addClass("loading");
-                    $.ajax({
-                        type: "POST",
-                        url: "_DeleteDocument/" + lsID,
-                        success: function (data) {
-                            if (data == 'success') {
-                                //Load lại List
-                                $.ajax({
-                                    type: "GET",
-                                    url: "Tab7AttachFilesPartial",
-                                    success: function (list) {
-                                        $('#pane-7').html(list);
-                                    }
-                                });
-                                AlterUpdateSuccess();
-                            } else {
-                                AlterWarning(data);
-                            }
+
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+               
+                $("body").addClass("loading");
+                $.ajax({
+                    type: "POST",
+                    url: "_DeleteDocument/" + lsID,
+                    success: function (data) {
+                        if (data == 'success') {
+                            //Load lại List
+                            $.ajax({
+                                type: "GET",
+                                url: "Tab7AttachFilesPartial",
+                                success: function (list) {
+                                    $('#pane-7').html(list);
+                                }
+                            });
+                            AlterUpdateSuccess();
+                        } else {
+                            AlterWarning(data);
                         }
-                    })
-                    return false;
-                }
-            });
+                    }
+                })
+                return false;
+
+            }
+        });
+
 
     });
     /*End - Attach File*/

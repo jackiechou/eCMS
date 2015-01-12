@@ -14,7 +14,6 @@
     <div id="divFileEdit"></div>
 </div>
 
-@Html.Action("ConfirmPopup", "Common", null)
 <script type="text/javascript">
     (function ($) {
         $.createDataBuilder = function (p) {
@@ -120,13 +119,12 @@
                     $(document).on("click", ".deleteFileItem", function (e) {
                         e.preventDefault();
                         var FileId = $(this).data('id');
-                        //$('#confirm').modal({ backdrop: 'static', keyboard: false })
-                        //    .one('click', '[data-value]', function (e) {
-                        //        if ($(this).data('value')) {                                   
-                                    FileMgr.DeleteData(FileId);
-                                    return false;
-                            //    }
-                            //});
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                FileMgr.DeleteData(FileId);
+                                return false;
+                            }
+                        });
                     });
                 },       
                 ConvertFormToJSON: function (form) {

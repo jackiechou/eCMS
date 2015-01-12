@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Eagle.Model.SYS.Modules.ModuleViewModel>
-<div class="table datatable">
+
+
+<div id="divSortableList" class="table datatable list-container">
     <table id="dataTable" class="use-dataTable table table-bordered table-condensed table-hover table-striped tablesorter sortableTable">
         <thead>
             <tr>
@@ -10,15 +12,15 @@
                 <th class="table-actions text_center no-sort">@Eagle.Resource.LanguageResource.Actions</th>
             </tr>
         </thead>
-         <tbody>
+        <tbody>
             @{int i = 0;}
             @foreach (var item in Model)
-            {
-                i++;
+                {
+                    i++;
                 <tr>
                     <td class="center">
                         @i
-                    </td>                   
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ModuleTitle)
                     </td>
@@ -27,7 +29,7 @@
                         <a data-id="@item.ModuleId" title="Delete" class="ico deleteItem ">&nbsp;&nbsp;&nbsp;</a>
                     </td>
                 </tr>
-            }
+                }
         </tbody>
     </table>
 </div>

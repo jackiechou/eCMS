@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonLibrary.Modules.Dashboard.Components.Skins;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Eagle.Repository.UI.Layout
     public class LayoutAttribute: ActionFilterAttribute
     {
         private readonly string _masterName;
+
         public LayoutAttribute(string masterName)
         {
             _masterName = masterName;

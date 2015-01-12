@@ -99,10 +99,10 @@ namespace Eagle.Model
 
     public enum IsSecured
     { 
-        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "IsAdmin")]
-        IsAdmin = 1,
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "IsDesktop")]
-        IsDesktop = 0       
+        IsDesktop = 0,
+        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "IsAdmin")]
+        IsAdmin = 1
     }
 
     public class DropdownListItem

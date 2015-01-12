@@ -2,26 +2,26 @@
 <div class="tab-pane fade in" id="pane-4">
     <!--start row-->
 <div class="row">
-    <div class="group-control span6">
+    <div class="group-control col-md-6">
         <div>
-            <h6> @Html.LabelFor(model => model.Favourite, new { @class="reset-label" })</h6>
+            <h6> @Html.LabelFor(model => model.Favourite, new { @class = "reset-label" })</h6>
         </div>
         <hr />
         <div class="row">
             <div class="col-md-12">
-                @Html.TextAreaFor(model => model.Favourite,12,500, new { @class = "form-control" })
+                @Html.TextAreaFor(model => model.Favourite, 12, 500, new { @class = "form-control" })
             </div>
         </div>
     </div>
 
-     <div class="group-control span6">
+    <div class="group-control col-md-6">
         <div>
-            <h6> @Html.LabelFor(model => model.Skill, new { @class="reset-label" })</h6>
+            <h6> @Html.LabelFor(model => model.Skill, new { @class = "reset-label" })</h6>
         </div>
         <hr />
         <div class="row">
             <div class="col-md-12">
-                @Html.TextAreaFor(model => model.Skill,12,500, new { @class = "form-control" })
+                @Html.TextAreaFor(model => model.Skill, 12, 500, new { @class = "form-control" })
             </div>
         </div>
     </div>

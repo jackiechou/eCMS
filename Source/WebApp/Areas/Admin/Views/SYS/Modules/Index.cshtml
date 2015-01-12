@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = Html.Raw(Eagle.Resource.LanguageResource.Module);
-    Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
+    //Layout = Eagle.Repository.UI.Layout.LayoutType.FullMainLayout;
 }
 
 @section ContentSection
@@ -8,8 +8,10 @@
     <div id="MainBody">        
         @Html.Partial("../Sys/Modules/_Reset")
     </div>
-    <!--Confirm box-->
-    @Html.Action("ConfirmPopup", "Common", null)
+
+
+<link href="~/Scripts/app/plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<script src="~/Scripts/app/plugins/zTree/js/jquery.ztree.core-3.5.js"></script>
 
 <link href="~/Scripts/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet" />
 <script src="~/Scripts/plugins/bootstrap-fileinput/fileinput.min.js"></script>
@@ -22,10 +24,12 @@
 <link href="~/Scripts/app/plugins/jRange/jquery.range.css" rel="stylesheet" />
 <script src="~/Scripts/app/plugins/jRange/jquery.range.js"></script>
 
+
 <script type="text/javascript">
+    
     (function ($) {
         $.createDataBuilder = function (p) {
-            var DataMgr = {
+            var ModuleMgr = {
                 config: {
                     isPostBack: false,
                     async: true,
@@ -50,21 +54,21 @@
                     nomenu: "No Data"
                 },
                 init: function (config) {
-                    DataMgr.InitializeCotrols();
-                    DataMgr.BindEvents();
+                    ModuleMgr.InitializeCotrols();
+                    ModuleMgr.BindEvents();
                 },
                 ajaxSuccess: function (data) {
                     if (data.message == "timeout")
                         window.location.reload();
                     else {
-                        switch (parseInt(DataMgr.config.ajaxCallMode)) {
-                            //case 0:
-                            //    DataMgr.GetList();
+                        switch (parseInt(ModuleMgr.config.ajaxCallMode)) {
+                            case 0:
+                                ModuleMgr.BindList();
                             case 1:
-                                DataMgr.BindDetails(data);
+                                ModuleMgr.BindDetails(data);
                                 break;
                             case 2:
-                                DataMgr.ReloadData(data);
+                                ModuleMgr.ReloadData(data);
                                 break;
                         }
                     }
@@ -74,31 +78,36 @@
                 },
                 ajaxCall: function (config) {
                     $.ajax({
-                        type: DataMgr.config.type,
-                        contentType: DataMgr.config.contentType,
-                        cache: DataMgr.config.cache,
-                        url: DataMgr.config.url,
-                        data: DataMgr.config.data,
-                        dataType: DataMgr.config.dataType,
-                        success: DataMgr.ajaxSuccess,
-                        error: DataMgr.ajaxFailure,
+                        type: ModuleMgr.config.type,
+                        contentType: ModuleMgr.config.contentType,
+                        cache: ModuleMgr.config.cache,
+                        url: ModuleMgr.config.url,
+                        data: ModuleMgr.config.data,
+                        dataType: ModuleMgr.config.dataType,
+                        success: ModuleMgr.ajaxSuccess,
+                        error: ModuleMgr.ajaxFailure,
                         async: false
                     });
                 },
                 InitializeCotrols: function () {
+                    ModuleMgr.LoadContent('@Url.Action("AddNewModule", "Module")', '#pane-1');
+                    ModuleMgr.ConfigureSettings();
+                    ModuleMgr.LoadTreeList();
+                    ModuleMgr.GetModuleList();
                     InvokeDataTables();
-
-                    DataMgr.LoadContent('@Url.Action("AddNewModule", "Module")', '#pane-1');
-
-                    DataMgr.ConfigureSettings();
                 },
                 BindEvents: function () {
+                    $(document).on('change', '#sPageId', function () {
+                        if ($(this).val() != '') 
+                            $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
+                        ModuleMgr.GetModuleList();
+                    });
                     $('#myTab a').click(function (e) {
                         e.preventDefault()
                         var pageID = $(this).attr("href");
                         var pageUrl = $(this).data("url");
                         //$(pageID).load(pageUrl);
-                        DataMgr.LoadContent(pageUrl, pageID);
+                        ModuleMgr.LoadContent(pageUrl, pageID);
                         $(this).tab('show');
                     });
 
@@ -109,9 +118,7 @@
                         if (!$("#myform").valid()) { // Not Valid
                             return false;
                         } else {
-
-                            DataMgr.AddData();
-
+                            ModuleMgr.AddData();
                         }
                     });
 
@@ -119,20 +126,20 @@
                         if (!$("#myform").valid()) { // Not Valid
                             return false;
                         } else {
-                            DataMgr.UpdateData();
+                            ModuleMgr.UpdateData();
                         }
                     });
 
 
                     // Reset form
                     $(document).on("click", "#btnReset", function () {
-                        DataMgr.ResetControls();
+                        ModuleMgr.ResetControls();
                     });
 
                     // Click edit (get)
                     $(document).on("click", ".editItem", function () {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        DataMgr.GetDetails(ID);
+                        ModuleMgr.GetDetails(ID);
 
                         //Go to top
                         $('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -142,15 +149,14 @@
                     // Click delete (get)
                     $(document).on("click", ".deleteItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    DataMgr.config.mode = 2;
-                                    DataMgr.DeleteData(ID);
-                                    return false;
-                                }
-                            });
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                ModuleMgr.config.mode = 2;
+                                ModuleMgr.DeleteData(ID);
+                                return false;
+                            }
+                        });
+                       
                     });
 
                 },
@@ -159,7 +165,7 @@
                     // Instanciate colorpickers
                     $('.color-picker').colorpicker();
 
-                    DataMgr.LoadBorderSlider();
+                    ModuleMgr.LoadBorderSlider();
 
                     //Set UploadFile
                     $("#Icon").fileinput({
@@ -182,7 +188,7 @@
                 },
                 BindDetails: function (data) {
                     $('#divEdit').html(data);
-                    DataMgr.InitializeCotrols();
+                    ModuleMgr.InitializeCotrols();
                 },
                 LoadBorderSlider:function(){
                     $('.single-slider').jRange({
@@ -205,24 +211,105 @@
                                 window.location.reload();
                             else {
                                 $(container).html(data);
-                                DataMgr.ConfigureSettings();
+                                ModuleMgr.ConfigureSettings();
                             }
                         }, error: function (jqXHR, textStatus, errorThrown) {
                             handleAjaxErrors(jqXHR, textStatus, errorThrown);
                         }
+                    });
+                },                   
+                //BeforeClickOnTree: function (treeId, treeNode) {
+                //    var check = (treeNode && !treeNode.isParent);
+                //    if (!check) alert("Do not select province...");
+                //    return check;
+                //},
+                OnClickOnTree: function (e, treeId, treeNode) {
+                    var zTree = $.fn.zTree.getZTreeObj("tree"),
+			        nodes = zTree.getSelectedNodes();
+                    $(".inputTree").attr("value", nodes[0].name);
+                    $(".hiddenTreeValue").attr("value", nodes[0].id);
+                    $(".ztreeContainer").fadeOut("fast");
+                },
+                OnBodyDown: function (event) {
+                    if (!(event.target.id == "selectBtn" || event.target.id == "ztreeContainer" || $(event.target).parents("#ztreeContainer").length > 0)) {
+                        $(".ztreeContainer").fadeOut("fast");
+                    }
+                },
+                ShowListBox: function () {
+                    var ztreeContainer = $(".ztreeContainer");
+                    var inputObj = $(".inputTree");
+                    var inputOffset = inputObj.offset();
+                    ztreeContainer.css({ left: inputOffset.left + "px", top: inputOffset.top + inputObj.outerHeight() + "px" }).slideDown("fast");
+                    $("body").bind("mousedown", ModuleMgr.OnBodyDown);
+                },
+                LoadTreeList: function () {                   
+                    var tree_setting = {
+                        view: {
+                            dblClickExpand: false,
+                            //showLine: true,
+                            //selectedMulti: false
+                        },
+                        data: {
+                            simpleData: {
+                                enable: true,
+                                idKey: "id",
+                                pIdKey: "parentId",
+                                rootPId: ""
+                            }
+                        },
+                        callback: {
+                            //beforeClick: ModuleMgr.BeforeClickOnTree,
+                            onClick: ModuleMgr.OnClickOnTree
+                        }
+                    };
+
+
+                    $.ajax({
+                        async: false,
+                        cache: false,
+                        type: 'GET',
+                        dataType: "json",
+                        url: '/Admin/ContentItem/GetListByModule',//The action path making request
+                        error: function (jqXHR, textStatus, errorThrown) { //The request failed processing function making
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        },
+                        success: function (data) { //Request success post processing function.  
+                            $.fn.zTree.init($("#tree"), tree_setting, data);
+                        }
+                    });
+                    $(document).on("click", ".btnInvokeTree", function () {
+                        ModuleMgr.ShowListBox();
                     });
                 },
                 AddData: function () {
                     var data = convertFormToJSON("myform");
                     this.config.method = "Create";
                     this.config.data = data;
-                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.url = ModuleMgr.config.baseURL + this.config.method;
                     this.config.ajaxCallMode = 2;
                     this.ajaxCall(this.config);
                 },
+                GetModuleList: function () {                   
+                    var data = { "sPageId": $('#sPageId').val() };
+                    this.config.method = "List";
+                    $.ajax({
+                        async: false,
+                        cache: false,
+                        type: 'GET',
+                        data:data,
+                        url: this.config.baseURL + this.config.method,//The action path making request
+                        error: function (jqXHR, textStatus, errorThrown) { //The request failed processing function making
+                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                        },
+                        success: function (response) { //Request success post processing function.  
+                            $('#divList').html(response);
+                            //ModuleMgr.InitializeCotrols();
+                        }
+                    });
+                },
                 GetDetails: function (id) {
-                    DataMgr.config.mode = 1;
-                    DataMgr.config.key = id;
+                    ModuleMgr.config.mode = 1;
+                    ModuleMgr.config.key = id;
 
                     var data = { "id": id };
                     this.config.method = "Edit";
@@ -239,7 +326,7 @@
                     this.config.type = "POST";
                     this.config.dataType = "json";
                     this.config.data = data;
-                    this.config.url = DataMgr.config.baseURL + this.config.method;
+                    this.config.url = ModuleMgr.config.baseURL + this.config.method;
                     this.config.ajaxCallMode = 2;
                     this.ajaxCall(this.config);
                 },
@@ -247,12 +334,12 @@
                     this.config.method = "Delete";
                     this.config.type = "POST";
                     this.config.data = JSON.stringify({ "id": ID });
-                    this.config.url = DataMgr.config.baseURL + this.config.method + "/" + ID;
+                    this.config.url = ModuleMgr.config.baseURL + this.config.method + "/" + ID;
                     this.config.ajaxCallMode = 2;
                     this.ajaxCall(this.config);
                 },
                 ReloadData: function (data) {
-                    var mode = DataMgr.config.mode;
+                    var mode = ModuleMgr.config.mode;
                     var titleSuccess = "", titleFailure = "", titleAjaxError = "";
                     titleAjaxError = "@Eagle.Resource.LanguageResource.Error";
                     if (mode == 0) {
@@ -276,13 +363,13 @@
                         this.config.method = "Index";
                         $.ajax({
                             type: "GET",
-                            url: DataMgr.config.baseURL + this.config.method,
+                            url: ModuleMgr.config.baseURL + this.config.method,
                             success: function (data, statusCode, xhr) {
                                 if (data.message == "timeout") {
                                     window.location.reload();
                                 } else {
-                                    $('#' + DataMgr.config.ContainerClientID).html(data);
-                                    DataMgr.InitializeCotrols();
+                                    $('#' + ModuleMgr.config.ContainerClientID).html(data);
+                                    ModuleMgr.InitializeCotrols();
                                     showMessageWithTitle(titleSuccess, result.message, "success", 20000);
                                 }
                             }, error: function (jqXHR, textStatus, errorThrown) {
@@ -295,7 +382,7 @@
                     }
                 },
                 ResetControls: function () {
-                    var mode = DataMgr.config.mode;
+                    var mode = ModuleMgr.config.mode;
                     if (mode == 0) {
                         var validateObj = $('#myform');
                         validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
@@ -305,13 +392,13 @@
                         validateObj.find("[data-valmsg-summary=true]").removeClass("validation-summary-errors").addClass("validation-summary-valid").find("ul").empty();
                         validateObj.find("[data-valmsg-replace]").removeClass("field-validation-error").addClass("field-validation-valid").empty();
                     } else {
-                        var key = DataMgr.config.key;
-                        DataMgr.GetDetails(key);
+                        var key = ModuleMgr.config.key;
+                        ModuleMgr.GetDetails(key);
                     }
-                    DataMgr.InitializeCotrols();
+                    ModuleMgr.InitializeCotrols();
                 },
             };
-            DataMgr.init();
+            ModuleMgr.init();
         }
 
         var Controller = 'Module';

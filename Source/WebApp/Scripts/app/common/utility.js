@@ -378,10 +378,20 @@ function CloseToolTip(elementId) {
 
 function ShowDateTimePicker() {
     $('.datetimepicker').datetimepicker({
-        format: 'dd/MM/yyyy',
-        todayBtn: true,
-        pickTime: false
+        format: 'dd/mm/yyyy',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        pickTime: false,
+        minDate: '1/1/1900'
     }).on('changeDate', function (e) {
+
+       
+
 
         /* Chọn date tại datetime picker => cập nhật lại hidden input theo format của nước: 
         // EN => MM/dd/yyyy; 
@@ -395,7 +405,6 @@ function ShowDateTimePicker() {
         result = arr[1] + '/' + arr[0] + '/' + arr[2];
         if (arr[0] != undefined && arr[1] != undefined && arr[2] != undefined) {
             $('#' + hiddenId).val(result);
-            //$('#' + hiddenId).trigger('change');
         } else
             $('#' + hiddenId).val('');
 
@@ -433,12 +442,12 @@ function ShowDateTimePicker() {
     });
 
 
-    $('.timepicker').datetimepicker({
-        language: 'vi-VN',
-        pickDate: false,
-        timeFormat: 'hh:mm',
-        useSeconds: false
-    });
+    //$('.timepicker').datetimepicker({
+    //    language: 'vi-VN',
+    //    pickDate: false,
+    //    timeFormat: 'hh:mm',
+    //    useSeconds: false
+    //});
 }
 
 

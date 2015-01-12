@@ -5595,7 +5595,7 @@
     <value>Page</value>
   </data>
   <data name="ContentItemId" xml:space="preserve">
-    <value>Content Item</value>
+    <value>Category</value>
   </data>
   <data name="CreateForm" xml:space="preserve">
     <value>Create Form</value>
@@ -5770,5 +5770,59 @@
   </data>
   <data name="MailServerProtocol" xml:space="preserve">
     <value>Mail Server Protocol</value>
+  </data>
+  <data name="IconColor" xml:space="preserve">
+    <value>Icon Color</value>
+  </data>
+  <data name="LoadInANewWindow" xml:space="preserve">
+    <value>_blank - Load in a new window</value>
+  </data>
+  <data name="LoadInTheFullBodyOfTheWindow" xml:space="preserve">
+    <value>_top - Load in the full body of the window</value>
+  </data>
+  <data name="LoadInTheParentFrameset" xml:space="preserve">
+    <value>_parent - Load in the parent frameset</value>
+  </data>
+  <data name="LoadInTheSameFrameAsItWasClicked" xml:space="preserve">
+    <value>_self - Load in the same frame as it was clicked</value>
+  </data>
+  <data name="MenuId" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MenuCode" xml:space="preserve">
+    <value>Menu Code</value>
+  </data>
+  <data name="PageAlias" xml:space="preserve">
+    <value>Page Alias</value>
+  </data>
+  <data name="PageFooterText" xml:space="preserve">
+    <value>Page Footer Text</value>
+  </data>
+  <data name="PageGroupId" xml:space="preserve">
+    <value>Page Group</value>
+  </data>
+  <data name="PageHeadText" xml:space="preserve">
+    <value>Page Head Text</value>
+  </data>
+  <data name="PageName" xml:space="preserve">
+    <value>Page Name</value>
+  </data>
+  <data name="PagePath" xml:space="preserve">
+    <value>Page Path</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="PageUrl" xml:space="preserve">
+    <value>Page Url</value>
+  </data>
+  <data name="SkinId" xml:space="preserve">
+    <value>Skin</value>
+  </data>
+  <data name="TemplateId" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="ModuleName" xml:space="preserve">
+    <value>Module Name</value>
   </data>
 </root>

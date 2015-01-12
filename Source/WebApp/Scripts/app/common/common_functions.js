@@ -168,7 +168,16 @@ function ResizeDataTable() {
 
 function InvokeDateTimePicker() {
     $('.datetimepicker2').datetimepicker({
-        format: 'dd/MM/yyyy', todayBtn: true, pickTime: false
+        format: 'dd/mm/yyyy',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        pickTime: false,
+        minDate: '1/1/1900'
     }).on('changeDate', function (e) {
         var tmpId = $(this).find('input[type=text]').attr('id');
         var hiddenId = tmpId.substring(0, tmpId.length - 3);
@@ -185,7 +194,16 @@ function InvokeDateTimePicker() {
 
 
     $('.datetimepicker').datetimepicker({
-        format: 'dd/MM/yyyy', todayBtn: true, pickTime: false
+        format: 'dd/mm/yyyy',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        pickTime: false,
+        minDate: '1/1/1900'
     }).on('changeDate', function (e) {
 
         var tmpId = $(this).find('input[type=text]').attr('id');
@@ -215,13 +233,13 @@ function InvokeDateTimePicker() {
         $('#' + qtip).remove();
     });
 
-    $('.timepicker').datetimepicker({
-        language: 'vi-VN',
-        pickDate: false,
-        timeFormat: 'hh:mm',
-        pickSeconds: false,
-        showSecond: false
-    });
+    //$('.timepicker').datetimepicker({
+    //    language: 'vi-VN',
+    //    pickDate: false,
+    //    timeFormat: 'hh:mm',
+    //    pickSeconds: false,
+    //    showSecond: false
+    //});
 }
 
 function ValidateFormWithQtip(formId) {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Eagle.Repository.SYS.Permissions
 {
-    class PagePermissionRepository
+    public class PagePermissionRepository
     {
     }
 }

@@ -18,7 +18,7 @@
             <div id="right_accordion" class="accordion-group">
                  <div class="accordion-heading toolbar">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#form_accordion">
-                        <span class="pull-right"><i class="icon-chevron-up icon-white"></i></span>
+                        <span class="pull-right"><i class="glyphicon glyphicon-chevron-up icon-white"></i></span>
                         <span class="heading-tite">@Eagle.Resource.LanguageResource.InputArea</span>
                     </a>
                 </div>
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     @Html.HiddenFor(model => model.CompanyName)
-                                    <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>    
+                                    <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree col-md-2"></select>    
                                     <script>
                                         LoadComboTreeWithAction('LSCompanyID', 'GetAllWithSelectAll');
                                     </script>
@@ -97,7 +97,7 @@
         </div>
     </div>
 </form>
-@Html.Action("jqueryval", "Common", null)
+
 @*<script src="/Scripts/jquery.mtz.monthpicker.js" type="text/javascript"></script>
 <script src="/Scripts/jquery.mtz.monthpicker.custom.js" type="text/javascript"></script>*@
 <script>               

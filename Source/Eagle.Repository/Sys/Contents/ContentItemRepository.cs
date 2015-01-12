@@ -18,6 +18,78 @@ namespace Eagle.Repository.SYS.Contents
             this.context = context;
         }
 
+        #region Tree ====================================================================================================
+        public static List<ContentTreeModel> GetTreeList(int ContentTypeId, int ScopeTypeId)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                var lst = context.ContentItems.Where(m => m.ContentTypeId == ContentTypeId).OrderBy(m => m.ListOrder).ToList();
+                if (ScopeTypeId == 1)
+                    lst = lst.Where(c => c.ScopeTypeId == 1).ToList();
+                else
+                    lst = lst.Where(c => c.ScopeTypeId != 1).ToList();
+
+                List<ContentTreeModel> list = lst.Select(m => new ContentTreeModel()
+                {
+                    id = m.ContentItemId,
+                    key = m.ContentItemId,
+                    parentId = m.ParentId,
+                    name = m.ContentItemName,
+                    text = m.ContentItemTitle,
+                    title = m.ContentItemTitle,
+                    tooltip = m.Content,
+                    isParent = m.IsParent,
+                    open = (m.ParentId == 0) ? true : false
+                }).ToList();
+                List<ContentTreeModel> recursiveObjects = RecursiveFillTree(list, null);
+                return recursiveObjects;
+            }
+        }
+
+        public static List<ContentTreeModel> RecursiveFillTree(List<ContentTreeModel> list, int? id)
+        {
+            List<ContentTreeModel> items = new List<ContentTreeModel>();
+            List<ContentTreeModel> nodes = list.Where(m => m.parentId == id).Select(
+               m => new ContentTreeModel
+               {
+                   id = m.id,
+                   key = m.key,
+                   parentId = m.parentId,
+                   name = m.name,
+                   text = m.text,
+                   title = m.title,
+                   tooltip = m.tooltip,
+                   isParent = m.isParent,
+                   open = m.open
+               }).ToList();
+
+            if (nodes.Count > 0)
+            {
+                foreach (var child in nodes)
+                {
+                    //child.children = RecursiveFillTree(list, child.id);
+                    ContentTreeModel node = new ContentTreeModel()
+                    {
+                        id = child.id,
+                        key = child.key,
+                        parentId = child.parentId,
+                        name = child.name,
+                        text = child.text,
+                        title = child.title,
+                        tooltip = child.tooltip,
+                        isParent = child.isParent,
+                        open = child.open,
+                        children = RecursiveFillTree(list, child.id)
+                    };
+                    items.Add(node);
+                }
+            }
+            return items;
+        }
+        #endregion ==========================================================================================================================
+    
+
+
         #region Content Items----------------------------------------------------------------------------------------------
         public static SelectList PopulateContentItemsByPageToDropDownList(string SelectedValue, bool IsShowSelectText = false)
         {           
@@ -29,8 +101,8 @@ namespace Eagle.Repository.SYS.Contents
                        where p.ContentTypeId == (int)ContentTypeSetting.Page
                        select new SelectListItem
                        {
-                           Text = p.Content,
-                           Value = p.ContentTypeId.ToString()
+                           Text = p.ContentItemTitle,
+                           Value = p.ContentItemId.ToString()
                        }).ToList();
 
                 if (lst.Count == 0)
@@ -52,8 +124,8 @@ namespace Eagle.Repository.SYS.Contents
                 list = (from p in context.ContentItems.AsEnumerable()
                        where p.ContentTypeId == (int)ContentTypeSetting.Module
                        select new SelectListItem
-                       { 
-                           Text = p.Content,
+                       {
+                           Text = p.ContentItemTitle,
                            Value = p.ContentItemId.ToString()
                            
                        }).ToList();
@@ -139,11 +211,19 @@ namespace Eagle.Repository.SYS.Contents
                        {
                            PageId = p.PageId,
                            ModuleId = p.ModuleId,
+                           ScopeTypeId = p.ScopeTypeId,
                            ContentTypeId = p.ContentTypeId,
                            ContentItemId = p.ContentItemId,
-                           Content = p.Content,
+                           ContentItemName = p.ContentItemName,
+                           ContentItemTitle = p.ContentItemTitle,
                            ContentKey = p.ContentKey,
-                           Indexed = p.Indexed
+                           Content = p.Content,
+                           ParentId = p.ParentId,
+                           Depth = p.Depth,
+                           Lineage = p.Lineage,
+                           ListOrder = p.ListOrder,
+                           IsParent = p.IsParent,
+                           IsActive = p.IsActive
                        }).FirstOrDefault();
                 return entity;
             }
@@ -171,14 +251,14 @@ namespace Eagle.Repository.SYS.Contents
                                ContentItemId = c.ContentItemId,
                                Content =c.Content,
                                ContentKey = c.ContentKey,
-                               Indexed = c.Indexed
+                               IsActive = c.IsActive
                            }).OrderByDescending(c => c.ContentItemId).ToList();
 
                 return lst;
             }
         }
 
-        public static List<ContentItemViewModel> GetContentListByPage()
+        public static List<ContentItemViewModel> GetContentListByPage(int ScopeTypeId)
         {
             using(EntityDataContext context = new EntityDataContext()){
                 List<ContentItemViewModel> lst = new List<ContentItemViewModel>();
@@ -192,13 +272,17 @@ namespace Eagle.Repository.SYS.Contents
                                 ContentItemId = p.ContentItemId,
                                 Content = p.Content,
                                 ContentKey = p.ContentKey,
-                                Indexed = p.Indexed
+                                IsActive = p.IsActive
                             }).ToList();
+                if (ScopeTypeId == 1)
+                    lst = lst.Where(c => c.ScopeTypeId == 1).ToList();
+                if (ScopeTypeId == 2 || ScopeTypeId == 3)
+                    lst = lst.Where(c => c.ScopeTypeId == 2 || c.ScopeTypeId == 3).ToList();
                 return lst;
             }
         }
 
-        public static List<ContentItemViewModel> GetContentListByModule()
+        public static List<ContentItemViewModel> GetContentListByModule(int? ScopeTypeId)
         {
             using (EntityDataContext context = new EntityDataContext())
             {
@@ -213,12 +297,17 @@ namespace Eagle.Repository.SYS.Contents
                            ContentItemId = p.ContentItemId,
                            Content = p.Content,
                            ContentKey = p.ContentKey,
-                           Indexed = p.Indexed
+                           IsActive = p.IsActive
                        }).ToList();
+                if (ScopeTypeId == 1)
+                    lst = lst.Where(c => c.ScopeTypeId == 1).ToList();
+                if (ScopeTypeId == 2 || ScopeTypeId == 3)
+                    lst = lst.Where(c => c.ScopeTypeId == 2 || c.ScopeTypeId ==3).ToList();
                 return lst;
             }
         }
 
+      
         public static bool IsDataExisted(int ContentTypeId, string ContentKey, string Content)
         {
             using (EntityDataContext context = new EntityDataContext())
@@ -273,6 +362,154 @@ namespace Eagle.Repository.SYS.Contents
             }
             return result;
         }
+
+        public static bool InsertModuleContentItem(int ModuleId, string ModuleName, string Descriptiopn, out int? ContentItemId)
+        {
+            ContentItemId = 0;
+            bool result = false;
+            try
+            {
+                bool isDuplicate = IsDataExisted(2, ModuleName, Descriptiopn);
+                if (isDuplicate == false)
+                {
+                    using (EntityDataContext context = new EntityDataContext())
+                    {
+                        ContentItem model = new ContentItem();
+                        model.ModuleId = ModuleId;
+                        model.ContentTypeId = 2;
+                        model.ContentKey = ModuleName;
+                        model.Content = Descriptiopn;
+
+                        int affectedRow = 0;
+                        context.Entry(model).State = System.Data.Entity.EntityState.Added;
+                        affectedRow = context.SaveChanges();
+                        if (affectedRow == 1)
+                        {
+                            ContentItemId = model.ContentItemId;
+                            result = true;
+                        }
+                    }
+                }              
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                result = false;
+            }
+            return result;
+        }
+
+        public static bool InsertPageContentItem(int PageId, string PageName, string PageTitle, out int? ContentItemId)
+        {
+            ContentItemId = 0;
+            bool result = false;
+            try
+            {
+                bool isDuplicate = IsDataExisted(1, PageName, PageTitle);
+                if (isDuplicate == false)
+                {
+                    using (EntityDataContext context = new EntityDataContext())
+                    {
+                        ContentItem model = new ContentItem();
+                        model.PageId = PageId;
+                        model.ContentTypeId = 1;
+                        model.ContentKey = PageName;
+                        model.Content = PageTitle;
+
+                        int affectedRow = 0;
+                        context.Entry(model).State = System.Data.Entity.EntityState.Added;
+                        affectedRow = context.SaveChanges();
+                        if (affectedRow == 1)
+                        {
+                            ContentItemId = model.ContentItemId;
+                            result = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                result = false;
+            }
+            return result;
+        }
+
+        public static bool UpdateModuleContentItem(int ContentItemId, int ModuleId, string ModuleName, string ModuleTitle, out string Message)
+        {
+            Message = string.Empty;
+            bool result = false;
+            try
+            {
+                ContentItem model = Find(ContentItemId);
+                if (model != null)
+                {
+                    using (EntityDataContext context = new EntityDataContext())
+                    {
+                        model.ContentItemId = ContentItemId;
+                        model.ModuleId = ModuleId;
+                        model.ContentTypeId = 2;
+                        model.ContentKey = ModuleName;
+                        model.Content = ModuleTitle;
+
+                        context.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        int affectedRows = context.SaveChanges();
+                        if (affectedRows == 1)
+                        {
+                            Message = Eagle.Resource.LanguageResource.UpdateSuccess;
+                            result = true;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                result = false;
+                Message = Eagle.Resource.LanguageResource.SystemError;
+            }
+            return result;
+        }
+
+        public static bool UpdatePageContentItem(int ContentItemId, int PageId, string PageName, string PageTitle, out string Message)
+        {
+            Message = string.Empty;
+            bool result = false;
+            try
+            {
+                ContentItem model = Find(ContentItemId);
+                if (model != null)
+                {
+                    using (EntityDataContext context = new EntityDataContext())
+                    {
+                        model.ContentItemId = ContentItemId;
+                        model.PageId = PageId;
+                        model.ContentTypeId = 1;
+                        model.ContentKey = PageName;
+                        model.Content = PageTitle;
+
+                        context.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                        int affectedRows = context.SaveChanges();
+                        if (affectedRows == 1)
+                        {
+                            Message = Eagle.Resource.LanguageResource.UpdateSuccess;
+                            result = true;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+                result = false;
+                Message = Eagle.Resource.LanguageResource.SystemError;
+            }
+            return result;
+        }
+
+
 
         public static bool Update(ContentItemViewModel edit_model, out string Message)
         {

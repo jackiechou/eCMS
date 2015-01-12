@@ -24,7 +24,7 @@
         </div>
     }
 }
-@Html.Action("jqueryval", "Common", null)
+
 <script type="text/javascript">
     (function ($) {
         $.createDataBuilder = function (p) {
@@ -270,28 +270,26 @@
                    }
                },
                 InvokeConfirmationPopup: function () {
-                    $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    DataMgr.ResetForm();
-                                    return false;
-                                } else {
-                                    var params = {};
-                                    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
-                                        params[key] = value;
-                                    });
-                                    //var data = {
-                                    //    "LSCompanyID": '',
-                                    //    "InformedDate": '',
-                                    //    "EffectiveDate": '',
-                                    //    "ModuleId": params["ModuleID"]
-                                    //};
-                                    //DataMgr.ReloadData(data);
-                                    location.href = DataMgr.config.baseURL + "Index?ModuleID=" + params["ModuleID"];
-                                    
-                                }
+                    bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                        if (result) {
+                            DataMgr.ResetForm();
+                            return false;
+                        } else {
+                            var params = {};
+                            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) {
+                                params[key] = value;
                             });
+                            //var data = {
+                            //    "LSCompanyID": '',
+                            //    "InformedDate": '',
+                            //    "EffectiveDate": '',
+                            //    "ModuleId": params["ModuleID"]
+                            //};
+                            //DataMgr.ReloadData(data);
+                            location.href = DataMgr.config.baseURL + "Index?ModuleID=" + params["ModuleID"];
+
+                        }
+                    });                  
                 },
                @* ReloadData: function (data) {
                     var titleSuccess = "", titleFailure = "", titleAjaxError = "";

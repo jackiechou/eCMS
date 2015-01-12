@@ -549,6 +549,9 @@
     <Compile Include="Menu_GetSubNodesByMenuId_Result.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Menu_GetTreeNodesByMenuId_Result.cs">
+      <DependentUpon>EntityDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MetaData\MetaValidation.cs" />
     <Compile Include="Module.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
@@ -665,9 +668,6 @@
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PageBanner.cs">
-      <DependentUpon>EntityDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PageGroup.cs">
       <DependentUpon>EntityDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PageMeta.cs">

@@ -448,7 +448,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Timesheet
 
                         if (!string.IsNullOrEmpty(modelMaster.Comment))
                         {
-                            string template = "<div class=\"row-fluid reset-margin-top-bottom\"><div class=\"span8 offset2 reset-margin-top-bottom\"><strong>{0}</strong>:<br />{1}</div><div class=\"span2 reset-margin-top-bottom\"><i>{2} <br /> {3}</i></div></div>";
+                            string template = "<div class=\"row-fluid reset-margin-top-bottom\"><div class=\"col-md-8 offset2 reset-margin-top-bottom\"><strong>{0}</strong>:<br />{1}</div><div class=\"col-md-2 reset-margin-top-bottom\"><i>{2} <br /> {3}</i></div></div>";
                             addMaster.Comment = Server.HtmlEncode(string.Format(template, CurrentAcc.UserName, modelMaster.Comment, Eagle.Resource.LanguageResource.btnSendForApproval, DateTime.Now.ToString("dd/MM/yyy: hh:mm")));
                         }
                     }
@@ -556,12 +556,12 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Timesheet
                         {
                             if (modelUpdate.isFirstComment == true)
                             {
-                                string template = "<div class='row-fluid reset-margin-top-bottom'><div class='span8 offset2 reset-margin-top-bottom'><strong>{0}</strong>:<br />{1}</div><div class='span2 reset-margin-top-bottom'><i>{2} <br /> {3}</i></div></div>";
+                                string template = "<div class='row-fluid reset-margin-top-bottom'><div class='col-md-8 offset2 reset-margin-top-bottom'><strong>{0}</strong>:<br />{1}</div><div class='col-md-2 reset-margin-top-bottom'><i>{2} <br /> {3}</i></div></div>";
                                 modelUpdate.Comment = string.Format(template, CurrentAcc.UserName, modelMaster.Comment, Eagle.Resource.LanguageResource.btnSendForApproval, DateTime.Now.ToString("dd/MM/yyy: hh:mm"));
                             }
                             else
-                            {                            
-                                string template = "<div class='row-fluid reset-margin-top-bottom'><div class='span8 offset2 reset-margin-top-bottom'><strong>{0}</strong>:<br />{1}</div><div class='span2 reset-margin-top-bottom'><i>{2} <br /> {3}</i></div></div>";
+                            {
+                                string template = "<div class='row-fluid reset-margin-top-bottom'><div class='col-md-8 offset2 reset-margin-top-bottom'><strong>{0}</strong>:<br />{1}</div><div class='col-md-2 reset-margin-top-bottom'><i>{2} <br /> {3}</i></div></div>";
                                 modelUpdate.Comment += Server.HtmlEncode(string.Format(template, CurrentAcc.UserName, modelMaster.CurrentComment, Eagle.Resource.LanguageResource.btnSendForApproval, DateTime.Now.ToString("dd/MM/yyy: hh:mm")));
                             }
                         }
@@ -757,7 +757,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.Timesheet
                                 }
                             }
                         }
-                        string template = "<div class='row-fluid reset-margin-top-bottom'><div class='span8 offset2 reset-margin-top-bottom'><strong>{0}</strong>:<br />{1}</div><div class='span2 reset-margin-top-bottom'><i>{2} <br /> {3}</i></div></div>";
+                        string template = "<div class='row-fluid reset-margin-top-bottom'><div class='span8 offset2 reset-margin-top-bottom'><strong>{0}</strong>:<br />{1}</div><div class='col-md-2 reset-margin-top-bottom'><i>{2} <br /> {3}</i></div></div>";
                         modelEdit.Comment += string.Format(template, CurrentAcc.UserName, model.CurrentComment, statusName, DateTime.Now.ToString("dd/MM/yyy: hh:mm"));
 
                     }

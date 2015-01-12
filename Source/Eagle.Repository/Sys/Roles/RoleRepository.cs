@@ -41,6 +41,32 @@ namespace Eagle.Repository.SYS.Roles
                 }
             }
         }
+
+        public static List<RoleViewModel> GetList(int ApplicationId)
+        {
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                try
+                {
+                    return (from p in context.Roles
+                            where p.ApplicationId == ApplicationId
+                            select new RoleViewModel()
+                            {
+                                ApplicationId = p.ApplicationId,
+                                RoleGroupId = p.RoleGroupId,
+                                RoleId = p.RoleId,
+                                RoleCode = p.RoleCode,
+                                RoleName = p.RoleName,
+                                LoweredRoleName = p.LoweredRoleName,
+                                Description = p.Description
+                            }).ToList();
+                }
+                catch
+                {
+                    return new List<RoleViewModel>();
+                }
+            }
+        }
         public IEnumerable<GroupViewModel> List()
         {
 

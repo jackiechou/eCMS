@@ -87,10 +87,6 @@ namespace Eagle.Model.SYS.User
         public int RoleId { get; set; }        
         public int ScopeTypeId { get; set; }
 
-        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "EmpId")]
-        public Nullable<int> EmpId { get; set; }
-
-
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "RetypePassword")]
         [DataType(DataType.Password)]
         [Required(ErrorMessageResourceType = typeof(Eagle.Resource.LanguageResource), ErrorMessageResourceName = "Required")]
@@ -98,10 +94,11 @@ namespace Eagle.Model.SYS.User
         [StringLength(6, MinimumLength = 3)]
         [System.Web.Mvc.Compare("PasswordSalt", ErrorMessageResourceType = typeof(Eagle.Resource.LanguageResource), ErrorMessageResourceName = "ValidatePassword")]
         public string RetypePassword { get; set; }
-
         public string InitialUserName { get { return UserName; } }
         public string FullName { get; set; }
 
+        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "EmpId")]
+        public Nullable<int> EmpId { get; set; }
         public EmployeeViewModel EmployeeInfo { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@Html.RadioButtonsForEnum("IsSecured", typeof(Eagle.Model.IsSecured), true)
+﻿@Html.RadioButtonsForEnum("IsSecured", typeof(Eagle.Model.IsSecured), true,1)
 @*<div id="divPageType">
     @Html.RadioButton("IsSecured", true, true, new { id = "IsAdmin", @style = "float:left;" })
     @Html.Label("IsAdmin", Eagle.Resource.LanguageResource.IsAdmin, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
@@ -6,6 +6,7 @@
     @Html.RadioButton("IsSecured", false, false, new { id = "IsDesktop", @style = "float:left;" })
     @Html.Label("IsDesktop", Eagle.Resource.LanguageResource.Desktop, new { @style = "float:left;margin:-4px 20px -4px 4px;" })
 </div>*@
+
 <div id="PageContainer">
     <div id="divSortableList">
         <input type="text" id="txtPageSearch" class="sfInputbox" />
@@ -137,7 +138,7 @@
                 },
                 BindEvents: function () {
                     $('input:radio[name=IsSecured]').click(function () {
-                        var IsSecured = ($('input:radio[name=IsSecured]:checked').val());
+                        var IsSecured = $('input:radio[name=IsSecured]:checked').val();
                         PageMgr.GetPages(IsSecured);
                     });
                    
@@ -187,26 +188,22 @@
                     // Click delete (get)
                     $(document).on("click", ".deleteItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    PageMgr.config.mode = 2;
-                                    PageMgr.DeleteData(ID);
-                                    return false;
-                                }
-                            });
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                PageMgr.config.mode = 2;
+                                PageMgr.DeleteData(ID);
+                                return false;
+                            }
+                        });
+                       
                     });
 
                 },              
                 GetPages: function () {
-                    var rdbAdmin = $('input:radio[name=IsSecured]');
-                    var IsSecured = false;
-                    if (rdbAdmin != null)
-                        IsSecured = rdbAdmin.attr('checked') ? true : false;
+                    var data = { "Keywords": $("#txtPageSearch").val(), "IsSecured": $('input[name=IsSecured]:checked').val() };
                     this.config.method = "GetList";
                     this.config.url = this.config.baseURL + this.config.method;
-                    this.config.data = JSON.stringify({ "Keywords": $("#txtPageSearch").val(), "IsSecured": IsSecured });
+                    this.config.data = JSON.stringify(data);
                     this.config.ajaxCallMode = 1;
                     this.ajaxCall(this.config);
                 },

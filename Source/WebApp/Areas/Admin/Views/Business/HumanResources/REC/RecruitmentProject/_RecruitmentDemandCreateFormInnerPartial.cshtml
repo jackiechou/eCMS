@@ -21,7 +21,7 @@
             @Html.RequiredLabelFor(model => model.Year)
         </div>
         <div class="col-md-4">
-            @Html.TextBoxFor(model => model.Year, new { @class = "span3 text_center" })
+            @Html.TextBoxFor(model => model.Year, new { @class = "form-control col-md-3 text_center" })
         </div>
     </div>
     <!--start row-->
@@ -30,7 +30,7 @@
             @Html.LabelFor(model => model.LSCompanyID)
         </div>
         <div class="col-md-4">
-            <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+            <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree col-md-2"></select>
             @Html.ValidationMessageFor(model => model.LSCompanyID)
             @{ 
                 string LSCompanyID = Model.LSCompanyID == 0 ? "" : Model.LSCompanyID.ToString();
@@ -51,7 +51,7 @@
         </div>
     </div>
 </form>
-@Html.Action("jqueryval", "Common", null)
+
 <script>
     PopulateDropDownListAutoComplete("SelectLSPositionID", "LSPositionID", "LSPositionName", '@Html.Raw(Eagle.Resource.LanguageResource.PleaseInputPositionName)', areas + '/LS_tblPosition/DropdownList');
 </script>

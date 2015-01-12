@@ -1,10 +1,12 @@
 ﻿using Eagle.Common.Settings;
+using Eagle.Common.Utilities;
 using Eagle.Model;
 using Eagle.Model.Common;
 using Eagle.Model.SYS.Menu;
 using Eagle.Model.SYS.Permission;
 using Eagle.Repository;
 using Eagle.Repository.Sys.Menus;
+using Eagle.Repository.Sys.Permissions;
 using Eagle.Repository.SYS;
 using Eagle.Repository.SYS.Menus;
 using Eagle.Repository.SYS.Session;
@@ -31,17 +33,21 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         [SessionExpiration]
         public ActionResult Index()
         {
+            ViewBag.ScopeTypeId = CommonRepository.PopulateScopeTypeList(ScopeTypeId.ToString(), false);
            return View("../Sys/Menu/Index");
         }
 
-       
+
+      
+
+        #region LOAD MENU =====================================================================================================
         [SessionExpiration]
         [HttpGet]
         public JsonResult PopulateSiteMapByMenuCode(string MenuCode)
-        {    
-            string result = string.Empty;           
+        {
+            string result = string.Empty;
             MenuRepository _repository = new MenuRepository(db);
-            result = _repository.PopulateSiteMapByMenuCode(MenuCode);            
+            result = _repository.PopulateSiteMapByMenuCode(MenuCode);
             return base.Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -58,26 +64,11 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
 
         [SessionExpiration]
         [HttpGet]
-        public JsonResult PopulateListBox()
-        {  
-            //List<MenuModel> sources = MenuRepository.GetTreeList(ScopeTypeId);
-            //return PartialView("../Sys/Menu/_List", sources);
-
-            List<MenuTreeModel> sources = MenuRepository.GetTreeList(ScopeTypeId);
-            return base.Json(sources, JsonRequestBehavior.AllowGet);
-            //return PartialView("../Sys/Menu/_List", sources);
-        }
-        
-        [SessionExpiration]
-        public ActionResult Edit(int? MenuId)
+        public JsonResult PopulateListBox(int? iScopeTypeId)
         {
-            MenuViewModel entity = new MenuViewModel();
-            if(MenuId > 0)
-                entity = MenuRepository.GetDetails((int)MenuId);
-            ViewBag.MenuTypeId = MenuTypeRepository.PopulateActiveMenuTypeSelectList(ScopeTypeId, LanguageCode, entity.MenuTypeId.ToString(), true);
-            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, entity.PageId.ToString(), true);
-            
-            return PartialView("../Sys/Menu/_Edit", entity);
+            int _iScopeTypeId = (iScopeTypeId != null && iScopeTypeId > 0) ? (int)iScopeTypeId : ScopeTypeId;
+            List<MenuTreeModel> sources = MenuRepository.GetListByScopeTypeId(_iScopeTypeId);
+            return base.Json(sources, JsonRequestBehavior.AllowGet);
         }
 
         //[SessionExpiration]
@@ -105,7 +96,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         //            foreach (var item in menuList.Where(p => p.ParentId == null || p.ParentId == 0))
         //            {
         //                IconUrl = "<img style='width: 13px; height: 13px; margin-right: 2px;' sr='" + item.IconUrl + "' />";
-        //                IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='icon-th-large'></i>";
+        //                IconClass = (!string.IsNullOrEmpty(item.IconClass)) ? "<i class='" + item.IconClass + "'></i>" : "<i class='glyphicon glyphicon-th-large'></i>";
 
         //                Icon = (item.IconFile != null) ? IconUrl : IconClass;
 
@@ -180,8 +171,140 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
                 MenuTypeId = 15;//Desktop
             string strHTML = MenuRepository.LoadMenu(RoleId, MenuTypeId, ScopeTypeId);
             return PartialView("_LeftMainMenu", strHTML);
-        }   
-    
+        }
+
+
+
+        #endregion LOAD MENU ==================================================================================================
+
+
+       #region XU LY INSERT UPDATE DELETE MENU ==================================================================================================
+        [SessionExpiration]
+        public ActionResult Create()
+        {
+            ViewBag.MenuTypeId = MenuTypeRepository.PopulateActiveMenuTypeSelectList(ScopeTypeId, LanguageCode, null, true);
+            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, null, true);
+            ViewBag.MenuStatus = CommonRepository.GenerateThreeStatusModeList(null, false);
+            ViewBag.Target = CommonRepository.PopulateLinkTargets(null, false);
+            
+            return PartialView("../Sys/Menu/_Edit");
+        }
+
+
+        [SessionExpiration]
+        public ActionResult Edit(int id)
+        {
+            MenuViewModel entity = MenuRepository.GetDetails((int)id);
+            ViewBag.MenuTypeId = MenuTypeRepository.PopulateActiveMenuTypeSelectList(ScopeTypeId, LanguageCode, entity.MenuTypeId.ToString(), true);
+            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, entity.PageId.ToString(), true);
+            ViewBag.MenuStatus = CommonRepository.GenerateThreeStatusModeList(entity.MenuStatus.ToString(), false);
+            ViewBag.Target = CommonRepository.PopulateLinkTargets(null, false);
+           // ViewBag.ScopeType = CommonRepository.PopulateScopeTypeList(ScopeTypeId.ToString(), false);
+            return PartialView("../Sys/Menu/_Edit", entity);
+        }
+
+
+        // POST: /Admin/Menu/Insert
+        [HttpPost]
+        public ActionResult Insert(MenuViewModel add_model)
+        {
+            bool flag = false;
+            string message = string.Empty;
+            int id = 0;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    flag = MenuRepository.Insert(add_model, out id, out message);
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    foreach (var modelError in errors)
+                    {
+                        message += modelError.ErrorMessage + "-";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.ToString();
+                flag = false;
+            }
+            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        }
+
+        // POST: /Admin/Menu/Update
+        [HttpPost]
+        public ActionResult Update(MenuViewModel edit_model)
+        {
+            bool flag = false;
+            string message = string.Empty;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    flag = MenuRepository.Update(edit_model, out message);
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    foreach (var modelError in errors)
+                    {
+                        message += modelError.ErrorMessage + "-";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.ToString();
+                flag = false;
+            }
+            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePosition(MenuPositionModel edit_model)
+        {
+            bool flag = false;
+            string message = string.Empty;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    MenuRepository _repository = new MenuRepository(db);
+                    edit_model.LastModifiedByUserId = UserId;
+                    flag = _repository.UpdatePosition(edit_model, out message);
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    foreach (var modelError in errors)
+                    {
+                        message += modelError.ErrorMessage + "-";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.ToString();
+                flag = false;
+            }
+            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        }
+
+        //
+        // POST: /Admin/Menu/Delete/5
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            string message = string.Empty;
+            bool flag = MenuRepository.Delete(id, out message);
+            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        }  
+       #endregion XU LY INSERT UPDATE DELETE MENU ==================================================================================================
+
 
         //string xslt_filepath = "~/Areas/Admin/Views/Home/MenuTransformer.xslt";
         //public string ExecuteXSLTransformation(int LanguageId = 41)
@@ -256,18 +379,6 @@ namespace Eagle.WebApp.Areas.Admin.Controllers
         //}
 
 
-        //public static void AddMenuPermission(List<MenuPermissionInfo> lstMenuPermissions, int MenuID, int PortalID)
-        //{
-        //    try
-        //    {
-        //        MenuManagerDataProvider.AddMenuPermission(lstMenuPermissions, MenuID, PortalID);
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
 
     }
 }

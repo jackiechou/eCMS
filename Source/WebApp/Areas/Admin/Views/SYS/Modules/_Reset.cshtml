@@ -1,8 +1,25 @@
 ﻿<div class="row">
     <div id="divModuleList" class="col-md-4">
-        @Html.Action("List", "Module", null)
-    </div>
 
+        <div id="ModuleContainer" class="box-container">
+            <div class="heading-bar-container row">
+                <div class="heading-bar-inner">
+                    <div style="height: 43px; margin-top: 10px">
+                        <div style="float:left; width:61%;">
+                            <h6>@Eagle.Resource.LanguageResource.ModuleSelection</h6>
+                        </div>
+                        <div style="float: left; width: 39%; padding: 5px 0px 0px 0px; ">
+                            @Html.DropDownList("sPageId", null, new { @class = "form-control select-control", autocomplete = "off", @style = "width:150px;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divList">
+                @*@Html.Action("List", "Module")*@
+            </div>
+        </div>
+
+    </div>
     <div id="divEdit" class="col-md-8">
         @Html.Action("Create", "Module", null)
     </div>

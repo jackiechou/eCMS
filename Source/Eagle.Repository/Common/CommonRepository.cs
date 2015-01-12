@@ -575,6 +575,28 @@ namespace Eagle.Repository
         }
         #endregion  Status Mode ===========================================================================================================
 
+        public static SelectList PopulateLinkTargets(string SelectedValue, bool IsShowSelectText = false)
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.LoadInANewWindow, Value = "_blank" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.LoadInTheSameFrameAsItWasClicked, Value = "_self" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.LoadInTheParentFrameset, Value = "_parent" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.LoadInTheFullBodyOfTheWindow, Value = "_top" });
+            if (IsShowSelectText)
+                lst.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.Select), Value = "" });
+            return new SelectList(lst, "Value", "Text", SelectedValue);
+        }
+
+        public static SelectList PopulateIsSecured(string SelectedValue, bool IsShowSelectText = false)
+        {
+            List<SelectListItem> lst = new List<SelectListItem>();
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.IsAdmin, Value = "1" });
+            lst.Add(new SelectListItem { Text = Resource.LanguageResource.IsDesktop, Value = "0" });
+            if (IsShowSelectText)
+                lst.Insert(0, new SelectListItem { Text = string.Format("--- {0} ---", Eagle.Resource.LanguageResource.Select), Value = "" });
+            return new SelectList(lst, "Value", "Text", SelectedValue);
+        }
+
 
         #region HR============================================================================================================
         public static Dictionary<int?, string> GetProjectResult()

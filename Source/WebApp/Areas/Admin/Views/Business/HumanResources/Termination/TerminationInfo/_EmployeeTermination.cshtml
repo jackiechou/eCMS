@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-4">
                 <div class="input-append">
-                    @Html.TextBoxFor(model => model.EmpCode, new { @placeholder = @Eagle.Resource.LanguageResource.EmpCode, @class = "span10 ignored" })
+                    @Html.TextBoxFor(model => model.EmpCode, new { @placeholder = @Eagle.Resource.LanguageResource.EmpCode, @class = "col-md-10 ignored" })
                     @Html.HiddenFor(model => model.EmpID, new { @id = "EmpID"})
                     @Html.HiddenFor(model => model.JoinDate, new { @id = "JoinDate", @class = "ignored" })
                     <button id="btnPopuEmployeeCode" class="btn btnPopupEmp" type="button">...</button>
@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-4">
                 <div class="input-append">
-                    @Html.TextBoxFor(model => model.FullName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "span10 ignored" })
+                    @Html.TextBoxFor(model => model.FullName, new { @placeholder = @Eagle.Resource.LanguageResource.EmpName, @class = "col-md-10 ignored" })
                     <button id="btnPopuEmployeeName" class="btn btnPopupEmp" type="button">...</button>
                 </div>
             </div>

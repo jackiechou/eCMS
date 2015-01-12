@@ -19,6 +19,7 @@ namespace Eagle.Core
         public Nullable<int> ScopeTypeId { get; set; }
         public string LanguageCode { get; set; }
         public int PageId { get; set; }
+        public Nullable<int> PageGroupId { get; set; }
         public Nullable<System.Guid> PageCode { get; set; }
         public string PageTitle { get; set; }
         public string PageName { get; set; }

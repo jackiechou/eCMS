@@ -9,10 +9,6 @@
     @Html.Partial("../Hr/RewardDiscipline/_Reset")
 </div>
 }
-<!--Confirm box-->
-@Html.Action("ConfirmPopup", "Common", null)
-
-@Html.Action("jqueryval", "Common", null)
 
 <script type="text/javascript">
     (function ($) {
@@ -248,15 +244,13 @@
                     // Click delete (get)
                     $(document).on("click", ".deleteItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    DataMgr.config.mode = 2;
-                                    DataMgr.DeleteData(ID);
-                                    return false;
-                                }
-                            });
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                DataMgr.config.mode = 2;
+                                DataMgr.DeleteData(ID);
+                                return false;
+                            }
+                        });                       
                     });
 
                 },

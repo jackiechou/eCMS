@@ -15,19 +15,19 @@ namespace Eagle.Core
     public partial class Page
     {
         public Nullable<int> ApplicationId { get; set; }
-        public string LanguageCode { get; set; }
         public Nullable<int> ContentItemId { get; set; }
-        public Nullable<int> SkinId { get; set; }
+        public string LanguageCode { get; set; }
         public Nullable<int> TemplateId { get; set; }
         public Nullable<int> ScopeTypeId { get; set; }
         public int PageId { get; set; }
         public Nullable<System.Guid> PageCode { get; set; }
-        public string PageGroupCode { get; set; }
+        public Nullable<int> PageGroupId { get; set; }
         public string PageTitle { get; set; }
         public string PageName { get; set; }
         public string PageAlias { get; set; }
         public string PagePath { get; set; }
         public string PageUrl { get; set; }
+        public Nullable<int> Icon { get; set; }
         public int ListOrder { get; set; }
         public string Description { get; set; }
         public string Keywords { get; set; }
@@ -42,7 +42,6 @@ namespace Eagle.Core
         public Nullable<System.DateTime> EndDate { get; set; }
         public string PageHeadText { get; set; }
         public string PageFooterText { get; set; }
-        public Nullable<int> Icon { get; set; }
         public Nullable<System.Guid> CreatedByUserId { get; set; }
         public Nullable<System.DateTime> CreatedOnDate { get; set; }
         public Nullable<System.Guid> LastModifiedByUserId { get; set; }

@@ -1,0 +1,36 @@
+﻿<div class="box-container">
+    <div class="heading-bar-container row">
+        <div class="heading-bar-inner">
+            <div style="height: 43px; margin-top: 10px">
+                <div style="float:left; width:61%;">
+                    <h6>@Eagle.Resource.LanguageResource.MenuSelection</h6>
+                </div>
+                <div style="float: left; width: 39%; padding: 5px 0px 0px 0px; ">
+                    @Html.DropDownList("ScopeTypeId", null, new { @class = "form-control select-control", autocomplete = "off", @style = "width:150px;" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="treeContainer">            
+            <ul id="tree" class="ztree"></ul>
+        </div>
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div class="edit" data-options="iconCls:'icon-add'">@Html.Raw(Eagle.Resource.LanguageResource.Edit)</div>
+            <div class="menu-sep"></div>
+            <div class="delete" data-options="iconCls:'icon-remove'">@Html.Raw(Eagle.Resource.LanguageResource.Remove)</div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    #treeBox {
+        margin-left: 15px;
+    }
+    ul.dynatree-container {
+        overflow: scroll;
+        /*position: relative;*/
+        width: 430px;
+        height: 250px;       
+    }
+</style>

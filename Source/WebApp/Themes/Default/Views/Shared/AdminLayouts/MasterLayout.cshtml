@@ -1,23 +1,11 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    @section Meta{
-        <meta http-equiv="X-UA-Compatible" content="IE=8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta http-equiv="cache-control" content="no-cache" />
-        <meta name="keywords" content="" />
-        <meta name="description" content="" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    }
+<head>   
+    @RenderSection("Meta", required: false)
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <!-- jqgrid plugin -->
-    @*<link href="~/Scripts/plugins/jqgrid/css/ui.jqgrid.css" rel="stylesheet" />*@
-
-    @*@Styles.Render("~/Themes/Default/TwoColumnAdminStyle")*@
-    @RenderSection("HeaderStyle", required: true)   
-    @Scripts.Render("~/Scripts/App/HeaderScript", "~/Scripts/App/Validation")
+    @RenderSection("HeaderStyles", required: true)  
+    @RenderSection("HeaderScripts", required: true)
 
     <!--[if IE]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie-styles.css"/><![endif]-->
     <!--[if IE 7]><link rel="stylesheet" type="text/css" href="/Content/Admin/css/ie7style.css"><link rel="stylesheet" type="text/css" href="/Content/Admin/css/font-awesome.css"/><![endif]-->
@@ -25,6 +13,10 @@
     <!--[if IE]><script src="~/Scripts/plugins/flot/excanvas.js"></script><![endif]-->
 
     <!-- jgrid ui -->
+    <!-- jqgrid plugin -->
+    @*<link href="~/Scripts/plugins/jqgrid/css/ui.jqgrid.css" rel="stylesheet" />*@
+
+
     @*<link href="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.min.css" rel="stylesheet" />
         <link href="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.structure.min.css" rel="stylesheet" />
         <link href="~/Scripts/plugins/jqgrid/themes/redmond/jquery-ui.theme.min.css" rel="stylesheet" />
@@ -58,8 +50,7 @@
         <script src="~/Scripts/common/validateInput.js"></script>
         <script src="~/Scripts/common/icon.js"></script>*@
     <!-- end -->
-    <!-- layout master page -->
-    @*<link href="~/Areas/Admin/Themes/default/css/style.css" rel="stylesheet" />*@
+
 
     @*<script src="~/Areas/Admin/Themes/default/js/tablesorter-pager.js"></script>
         <script src="~/Areas/Admin/Themes/default/js/tablesorter.js"></script>
@@ -200,8 +191,6 @@
             @RenderBody()           
         </div>
         <div class="clearboth"></div>
-        <!-- end container -->
-
 
         @Scripts.Render("~/Scripts/App/FooterScript")
         @RenderSection("Scripts", required: false)
@@ -210,10 +199,16 @@
             @Html.Partial("_Footer")
         </div>
         <!-- and footer -->
+
+        <!-- end container -->
     </div>
+
+ 
+
     <div class="loading-modal"></div>
     <div id="divLoading"></div>
 
+    <!--start POPUP --------------------------------------------------------------------------------------------------->
     <div id="modal-popup" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" class="modal hide fade" style="z-index:14005;background: #eee;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -226,5 +221,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-primary" data-value="1">@Html.Raw(Eagle.Resource.LanguageResource.Close)</button>
         </div>
     </div>
+    <!--end POPUP ----------------------------------------------------------------------------------------------------->
+
 </body>
 </html>

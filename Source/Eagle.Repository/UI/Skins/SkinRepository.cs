@@ -13,6 +13,8 @@ using Eagle.Core;
 using System.Web.Mvc;
 using System.Configuration;
 using Eagle.Model.UI.Skins;
+using Eagle.Repository.UI.Layout;
+using System.Web;
 namespace CommonLibrary.UI.Skins
 {
     public class SkinRepository 
@@ -960,6 +962,17 @@ namespace CommonLibrary.UI.Skins
                                  SkinPackageName = ps.SkinPackageName,
                                  SkinPackageSrc = ps.SkinPackageSrc
                              }).FirstOrDefault();
+
+                if (entity == null)
+                {
+                    entity = new SkinViewModel()
+                    {
+                        SkinPackageName = ThemeSettings.ThemeName,
+                        SkinPackageSrc = ThemeSettings.ThemeSrc
+                    };
+                }
+                HttpContext.Current.Session[SettingKeys.ThemeName] = entity.SkinPackageName;
+                HttpContext.Current.Session[SettingKeys.ThemeSrc] = entity.SkinPackageSrc;
                 return entity;
             }
         }

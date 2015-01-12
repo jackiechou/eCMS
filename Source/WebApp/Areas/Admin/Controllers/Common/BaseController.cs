@@ -14,6 +14,10 @@ using Eagle.Repository.SYS.Session;
 using Eagle.Common.Settings;
 using Eagle.Model.SYS.Permission;
 using System.Web.Routing;
+using CommonLibrary.UI.Skins;
+using Eagle.Model.UI.Skins;
+using CommonLibrary.Modules.Dashboard.Components.Skins;
+using Eagle.Repository.UI.Layout;
 //namespace Eagle.WebApp.Areas.Admin.Controllers
 //{
     // trong này có chứa vài hàm viết sãn
@@ -203,29 +207,29 @@ using System.Web.Routing;
             }
         }
         
-        protected int RoleId
-        {
-            get
-            {
-                if (base.Session[SettingKeys.RoleId] != null)
-                    DefaultRoleId = (int)(base.Session[SettingKeys.RoleId]);
-                else
-                    Session[SettingKeys.RoleId] = DefaultRoleId;
-                return DefaultRoleId;
-            }
-        }
-
         //protected int RoleId
         //{
         //    get
         //    {
-        //        return Convert.ToInt32(base.Session[SettingKeys.RoleId]);
-        //    }
-        //    set
-        //    {
-        //        this.Session[SettingKeys.RoleId] = value;
+        //        if (base.Session[SettingKeys.RoleId] != null)
+        //            DefaultRoleId = (int)(base.Session[SettingKeys.RoleId]);
+        //        else
+        //            Session[SettingKeys.RoleId] = DefaultRoleId;
+        //        return DefaultRoleId;
         //    }
         //}
+
+        protected int RoleId
+        {
+            get
+            {
+                return Convert.ToInt32(base.Session[SettingKeys.RoleId]);
+            }
+            set
+            {
+                this.Session[SettingKeys.RoleId] = value;
+            }
+        }
 
         protected int ScopeTypeId
         {
@@ -506,46 +510,83 @@ using System.Web.Routing;
             ViewBag.Message = Message;
         }
 
-        //Default Theme Master Name
-        public string DefaultMasterName = "Default";
+        //Default Theme 
+        public string DefaultThemeName = "Default";
 
-        protected string MasterName
+        protected string ThemeName
         {
             get
             {
-                if (base.Session[SettingKeys.MasterName] != null)
-                    DefaultMasterName = base.Session[SettingKeys.MasterName].ToString();
-                return DefaultMasterName;
+                if (base.Session[SettingKeys.ThemeName] != null)
+                    DefaultThemeName = base.Session[SettingKeys.ThemeName].ToString();
+                return DefaultThemeName;
             }
             set
             {
-                this.Session[SettingKeys.MasterName] = value;
+                this.Session[SettingKeys.ThemeName] = value;
             }
         }
 
+        //Default Master - Layout
+        protected int PageId
+        {  
+            get
+            {
+                int _PageId = 0;
+                if (RouteData.DataTokens["pageid"]!=null)
+                    _PageId = Convert.ToInt32(RouteData.DataTokens["pageid"].ToString());
+                return _PageId;
+            }
+        }
+
+        //public string DefaultMasterName = LayoutType.MainLayout;
+        //protected string MasterName
+        //{
+        //    get
+        //    {
+        //        if (base.Session[SettingKeys.MasterName] != null)
+        //            DefaultMasterName = base.Session[SettingKeys.MasterName].ToString();
+        //        return DefaultMasterName;
+        //    }
+        //    set
+        //    {                
+        //        this.Session[SettingKeys.MasterName] = value;
+        //    }
+        //}
+        
+
         //protected override void Execute(System.Web.Routing.RequestContext requestContext)
         //{
-        //    var themeName = ConfigurationManager.AppSettings["DefaultThemeName"];
-        //    //var themeSrc = ConfigurationManager.AppSettings["DefaultThemeSource"];
-
-        //    if (requestContext.HttpContext.Items["themeName"] == null)
+        //    string themeName = string.Empty, themeSrc = string.Empty;
+        //    if (Session[SettingKeys.ThemeName] == null || Session[SettingKeys.ThemeName].ToString() == string.Empty)
         //    {
-        //        //first time load
-        //        requestContext.HttpContext.Items["themeName"] = requestContext.HttpContext.Request.Cookies.Get("theme").Value;
+        //        SkinViewModel skin_obj = SkinRepository.GetSelectedTheme(ApplicationId);
+        //        themeName = skin_obj.SkinPackageName;
+        //        themeSrc = skin_obj.SkinPackageSrc;               
         //    }
         //    else
         //    {
-        //        requestContext.HttpContext.Items["themeName"] = themeName;
+        //        themeName = Session[SettingKeys.ThemeName].ToString();
+        //        themeSrc = Session[SettingKeys.ThemeSrc].ToString();
+        //    }
+
+        //    if (requestContext.HttpContext.Items[themeName] == null)
+        //    {
+        //        //first time load
+        //        requestContext.HttpContext.Items[themeName] = requestContext.HttpContext.Request.Cookies.Get("theme").Value;
+        //    }
+        //    else
+        //    {
+        //        requestContext.HttpContext.Items[themeName] = themeSrc;
 
         //        var previewTheme = requestContext.RouteData.GetRequiredString("theme");
-        //        //  var previewTheme = requestContext.HttpContext.Request.QueryString["theme"];
+
         //        if (!string.IsNullOrEmpty(previewTheme))
         //        {
-        //            requestContext.HttpContext.Items["themeName"] = previewTheme;
+        //            requestContext.HttpContext.Items[themeName] = previewTheme;
         //        }
         //    }
 
         //    base.Execute(requestContext);
         //}
-    
 }

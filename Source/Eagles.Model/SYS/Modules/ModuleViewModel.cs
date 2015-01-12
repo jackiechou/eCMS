@@ -1,4 +1,5 @@
 ﻿using Eagle.Model.SYS.Pages;
+using Eagle.Model.SYS.Permission;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,24 @@ using System.Text;
 
 namespace Eagle.Model.SYS.Modules
 {
+    public class ModuleTreeModel
+    {
+        public int id { get; set; }
+        public int key { get; set; }
+        public int? parentId { get; set; }
+        public string name { get; set; }
+        public string title { get; set; }
+        public string text { get; set; }
+        public string tooltip { get; set; }
+        public bool? isParent { get; set; }
+        public bool? open { get; set; }
+        public List<ModuleTreeModel> children { get; set; }
+
+        public ModuleTreeModel()
+        {
+            children = new List<ModuleTreeModel>();
+        }
+    }
     public class ModuleViewModel
     {
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ApplicationId")]
@@ -16,13 +35,10 @@ namespace Eagle.Model.SYS.Modules
         public Nullable<int> ContentItemId { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ScopeTypeId")]
-        public int ScopeTypeId { get; set; }
+        public int? ScopeTypeId { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ModuleId")]
         public int ModuleId { get; set; }
-
-        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "PageId")]
-        public Nullable<int> PageId { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ModuleCode")]
         public System.Guid ModuleCode { get; set; }
@@ -37,8 +53,8 @@ namespace Eagle.Model.SYS.Modules
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ModuleName")]
         public string ModuleName { get; set; }
 
-        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "AllTabs")]
-        public bool AllTabs { get; set; }
+        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "AllPages")]
+        public bool AllPages { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "IsAdmin")]
         public bool IsAdmin { get; set; }
@@ -69,7 +85,16 @@ namespace Eagle.Model.SYS.Modules
         public Nullable<bool> Visibility { get; set; }
 
 
+
+        //Modified --------------------------------------------------------------------------
+
         public virtual List<PageModuleViewModel> PageModules { get; set; }
+
+        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "PageId")]
+        public Nullable<int> PageId { get; set; }
+
+        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ModuleOrder")]
+        public Nullable<int> ModuleOrder { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "Pane")]
         public string Pane { get; set; }
@@ -87,14 +112,13 @@ namespace Eagle.Model.SYS.Modules
         public string InsertedPosition { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "Icon")]
+        public int Icon { get; set; }
 
-        public Nullable<int> Icon { get; set; }
-
-        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "ModuleOrder")]
-        public Nullable<int> ModuleOrder { get; set; }
+        [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "IconClass")]
+        public int IconClass { get; set; }
 
         [Display(ResourceType = typeof(Eagle.Resource.LanguageResource), Name = "IsVisible")]
         public Nullable<bool> IsVisible { get; set; }
-
+        public List<RolePermissionViewModel> RolePermissionList { get; set; }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using Eagle.Common.Utilities;
 using Eagle.Model.SYS.Modules;
+using Eagle.Model.SYS.Permission;
 using Eagle.Model.SYS.Roles;
 using Eagle.Repository;
+using Eagle.Repository.Sys.Permissions;
 using Eagle.Repository.SYS;
 using Eagle.Repository.SYS.Contents;
 using Eagle.Repository.SYS.Modules;
 using Eagle.Repository.SYS.Roles;
 using Eagle.Repository.SYS.Session;
+using Eagle.Repository.UI.Layout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +21,13 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
     public class ModuleController : BaseController
     {
         //
-        // GET: /Admin/Module/
-
+        // GET: /Admin/Module/        
         [SessionExpiration]
+        [PageLayoutAttribute]
         public ActionResult Index()
         {
+            ViewBag.sPageId = PageRepository.PopulatePageSelectList(ScopeTypeId, null, null, true);
+
             if (Request.IsAjaxRequest())
                 return PartialView("../Sys/Modules/_Reset");
             else
@@ -30,9 +35,10 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         }
 
         [SessionExpiration]
-        public ActionResult List()
+        [HttpGet]
+        public ActionResult List(int? sPageId)
         {
-            List<ModuleViewModel> lst = ModuleRepository.GetList(true);
+            List<ModuleViewModel> lst = ModuleRepository.GetListByPageIdAndIsAdmin(ScopeTypeId,sPageId, true);
             return PartialView("../Sys/Modules/_List", lst);
         }
 
@@ -66,7 +72,14 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         public ActionResult Edit(int Id)
         {
             ModuleViewModel model = ModuleRepository.Details(Id);
-            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(model.ContentItemId.ToString(), false);
+            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, model.PageId.ToString(), true);
+            ViewBag.ModuleId = ModuleRepository.PopulateModuleList(model.ModuleId.ToString(), true);
+            ViewBag.Visibility = ModuleRepository.PopulateVisibilityList(model.Visibility.ToString(), true);
+            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(model.ContentItemId.ToString(), true);
+            ViewBag.Pane = ModuleRepository.PopulatePaneList(model.Pane, true);
+            ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(model.InsertedPosition, true);
+            ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(model.Alignment, true);
+
             return PartialView("../Sys/Modules/_Edit", model);
         }
 
@@ -77,7 +90,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
             string sCurrentController = CurrentController;
             string sAction = CurrentAction;
             string sCurrentMenuCode = CurrentMenuCode.ToString();
-           
+
             return PartialView("../Sys/Modules/_Create");
         }
 
@@ -85,12 +98,12 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         [HttpGet]
         public ActionResult AddNewModule()
         {
-            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode);           
-            ViewBag.Visibility = ModuleRepository.PopulateVisibilityList(null, false);
-            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(null, false);
-            ViewBag.Pane = ModuleRepository.PopulatePaneList(null, false);
-            ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(null, false);
-            ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(null, false);
+            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, null, true);
+            ViewBag.Visibility = ModuleRepository.PopulateVisibilityList(null, true);
+            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(null, true);
+            ViewBag.Pane = ModuleRepository.PopulatePaneList(null, true);
+            ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(null, true);
+            ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(null, true);
             return PartialView("../Sys/Modules/_AddNewModule");
         }
 
@@ -98,16 +111,17 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         [HttpGet]
         public ActionResult AddExistingModule()
         {
-            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode);
-            ViewBag.ModuleId = ModuleRepository.PopulateModuleList(null, false);
-            ViewBag.Visibility = ModuleRepository.PopulateVisibilityList(null, false);
-            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(null, false);
-            ViewBag.Pane = ModuleRepository.PopulatePaneList(null, false);
-            ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(null, false);
-            ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(null, false);
+            ViewBag.PageId = PageRepository.PopulateActivePageSelectList(ScopeTypeId, LanguageCode, null, true); 
+            ViewBag.ModuleId = ModuleRepository.PopulateModuleList(null, true);
+            ViewBag.Visibility = ModuleRepository.PopulateVisibilityList(null, true);
+            ViewBag.ContentItemId = ContentItemRepository.PopulateContentItemsByModuleToDropDownList(null, true);
+            ViewBag.Pane = ModuleRepository.PopulatePaneList(null, true);
+            ViewBag.InsertedPosition = ModuleRepository.PopulateInsertedPositionList(null, true);
+            ViewBag.Alignment = ModuleRepository.PopulateAlignmentList(null, true);
             return PartialView("../Sys/Modules/_AddExistingModule");
         }
 
+ 
         //// POST: /Admin/Module/Create
         //[AcceptVerbs(HttpVerbs.Post)]
         //public ActionResult Create(ModuleViewModel add_model, bool chkModuleStatus)

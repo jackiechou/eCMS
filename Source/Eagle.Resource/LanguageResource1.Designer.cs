@@ -2320,7 +2320,7 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hạng mục.
+        ///   Looks up a localized string similar to Nhóm.
         /// </summary>
         public static string ContentItemId {
             get {
@@ -2698,7 +2698,7 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lớp css.
+        ///   Looks up a localized string similar to Lớp CSS.
         /// </summary>
         public static string CssClass {
             get {
@@ -5821,7 +5821,7 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icon Class.
+        ///   Looks up a localized string similar to Lớp biểu tượng.
         /// </summary>
         public static string IconClass {
             get {
@@ -5830,7 +5830,16 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icon Attachment.
+        ///   Looks up a localized string similar to Màu sắc.
+        /// </summary>
+        public static string IconColor {
+            get {
+                return ResourceManager.GetString("IconColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đính kèm.
         /// </summary>
         public static string IconFile {
             get {
@@ -7306,6 +7315,42 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _blank - Tải trang trong cửa sổ mới.
+        /// </summary>
+        public static string LoadInANewWindow {
+            get {
+                return ResourceManager.GetString("LoadInANewWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _top - Tải trong toàn bộ thân của khung cửa sổ.
+        /// </summary>
+        public static string LoadInTheFullBodyOfTheWindow {
+            get {
+                return ResourceManager.GetString("LoadInTheFullBodyOfTheWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _parent - Tải trong khung trang cha.
+        /// </summary>
+        public static string LoadInTheParentFrameset {
+            get {
+                return ResourceManager.GetString("LoadInTheParentFrameset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _self - Tải trang trong cùng khung.
+        /// </summary>
+        public static string LoadInTheSameFrameAsItWasClicked {
+            get {
+                return ResourceManager.GetString("LoadInTheSameFrameAsItWasClicked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nơi làm việc.
         /// </summary>
         public static string Location {
@@ -8539,6 +8584,24 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã Menu.
+        /// </summary>
+        public static string MenuCode {
+            get {
+                return ResourceManager.GetString("MenuCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh mục.
+        /// </summary>
+        public static string MenuId {
+            get {
+                return ResourceManager.GetString("MenuId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quản lý danh mục chức năng.
         /// </summary>
         public static string MenuManagement {
@@ -8746,7 +8809,7 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã module.
+        ///   Looks up a localized string similar to Module.
         /// </summary>
         public static string ModuleCode {
             get {
@@ -8755,7 +8818,7 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã module.
+        ///   Looks up a localized string similar to Module.
         /// </summary>
         public static string ModuleId {
             get {
@@ -8764,7 +8827,7 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Từ khóa module.
+        ///   Looks up a localized string similar to Từ khóa.
         /// </summary>
         public static string ModuleKey {
             get {
@@ -8787,6 +8850,15 @@ namespace Eagle.Resource {
         public static string ModuleLocation {
             get {
                 return ResourceManager.GetString("ModuleLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên chức năng.
+        /// </summary>
+        public static string ModuleName {
+            get {
+                return ResourceManager.GetString("ModuleName", resourceCulture);
             }
         }
         
@@ -10114,6 +10186,15 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Biệt danh.
+        /// </summary>
+        public static string PageAlias {
+            get {
+                return ResourceManager.GetString("PageAlias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã trang.
         /// </summary>
         public static string PageCode {
@@ -10128,6 +10209,33 @@ namespace Eagle.Resource {
         public static string PageEditorsOnly {
             get {
                 return ResourceManager.GetString("PageEditorsOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phần cuối.
+        /// </summary>
+        public static string PageFooterText {
+            get {
+                return ResourceManager.GetString("PageFooterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhóm trang.
+        /// </summary>
+        public static string PageGroupId {
+            get {
+                return ResourceManager.GetString("PageGroupId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phần đầu.
+        /// </summary>
+        public static string PageHeadText {
+            get {
+                return ResourceManager.GetString("PageHeadText", resourceCulture);
             }
         }
         
@@ -10177,6 +10285,15 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tên trang.
+        /// </summary>
+        public static string PageName {
+            get {
+                return ResourceManager.GetString("PageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Không tìm thấy trang.
         /// </summary>
         public static string PageNotFound {
@@ -10186,11 +10303,38 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đường dẫn.
+        /// </summary>
+        public static string PagePath {
+            get {
+                return ResourceManager.GetString("PagePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chọn trang.
         /// </summary>
         public static string PageSelection {
             get {
                 return ResourceManager.GetString("PageSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu để trang.
+        /// </summary>
+        public static string PageTitle {
+            get {
+                return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Địa chỉ tài nguyên.
+        /// </summary>
+        public static string PageUrl {
+            get {
+                return ResourceManager.GetString("PageUrl", resourceCulture);
             }
         }
         
@@ -13948,6 +14092,15 @@ namespace Eagle.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lớp vỏ.
+        /// </summary>
+        public static string SkinId {
+            get {
+                return ResourceManager.GetString("SkinId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SLNV.
         /// </summary>
         public static string SLNV {
@@ -14655,6 +14808,15 @@ namespace Eagle.Resource {
         public static string Telephone {
             get {
                 return ResourceManager.GetString("Telephone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khuôn.
+        /// </summary>
+        public static string TemplateId {
+            get {
+                return ResourceManager.GetString("TemplateId", resourceCulture);
             }
         }
         

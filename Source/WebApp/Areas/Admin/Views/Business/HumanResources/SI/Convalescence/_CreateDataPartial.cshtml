@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.HiddenFor(model => model.LSCompanyName)
-                    <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+                    <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree col-md-2"></select>
                     <script>
                         LoadComboTreeWithAction('LSCompanyID', 'GetAllWithSelectAll');
                     </script>

@@ -1,4 +1,16 @@
-﻿<div id="ModuleContainer">
+﻿<div id="ModuleContainer" class="box-container">
+    <div class="heading-bar-container row">
+        <div class="heading-bar-inner">
+            <div style="height: 43px; margin-top: 10px">
+                <div style="float:left; width:61%;">
+                    <h6>@Eagle.Resource.LanguageResource.ModuleSelection</h6>
+                </div>
+                <div style="float: left; width: 39%; padding: 5px 0px 0px 0px; ">
+                    @Html.DropDownList("PageId", null, new { @class = "form-control select-control", autocomplete = "off", @style = "width:150px;" })
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="divSortableList">
         <input type="text" id="txtModuleSearch" class="sfInputbox" />
         <input type="button" value="Search" class="sfSearch" id="btnSearchModule">
@@ -128,15 +140,14 @@
                     // Click delete (get)
                     $(document).on("click", ".deleteItem", function (e) {
                         var ID = $(this).data('id');  // ID cua dong du lieu
-                        $('#confirm')
-                            .modal({ backdrop: 'static', keyboard: false })
-                            .one('click', '[data-value]', function (e) {
-                                if ($(this).data('value')) {
-                                    ModuleMgr.config.mode = 2;
-                                    ModuleMgr.DeleteData(ID);
-                                    return false;
-                                }
-                            });
+                        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+                            if (result) {
+                                ModuleMgr.config.mode = 2;
+                                ModuleMgr.DeleteData(ID);
+                                return false;
+                            }
+                        });
+                       
                     });
 
                 },

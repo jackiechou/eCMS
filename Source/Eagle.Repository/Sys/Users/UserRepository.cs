@@ -143,6 +143,11 @@ namespace Eagle.Repository.SYS.Users
                         HttpContext.Current.Session[SettingKeys.IsSuperUser] = userInfo.IsSuperUser;
                         HttpContext.Current.Session[SettingKeys.RoleId] = userInfo.RoleId;
                         HttpContext.Current.Session[SettingKeys.ScopeTypeId] = userInfo.ScopeTypeId;
+                        HttpContext.Current.Session[SettingKeys.ApplicationId] = userInfo.ApplicationId;
+
+                        HttpContext.Current.Session[SettingKeys.DisplayName] = userInfo.DisplayName;
+                        HttpContext.Current.Session[SettingKeys.DisplayName] = userInfo.DisplayName;
+
                         //Save employee info into session
                         EmployeeViewModel empInfo = EmployeeRepository.GetDetailsByEmpIdAndLanguageCode(userInfo.EmpId, LanguageCode);
                         if (empInfo != null)

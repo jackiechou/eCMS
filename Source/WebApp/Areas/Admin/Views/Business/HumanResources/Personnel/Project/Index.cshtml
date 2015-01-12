@@ -13,10 +13,7 @@
     <div id="divEdit"></div>
 </div>
 }
-<!--Confirm box-->
-@Html.Action("ConfirmPopup", "Common", null)
 
-@Html.Action("jqueryval", "Common", null)
 
 <script type="text/javascript">
     ShowDateTimePicker();
@@ -249,35 +246,36 @@
     // Click delete (get)
     $(document).on("click", ".deleteItem", function (e) {
         var lsID = $(this).data('id');  // ID cua dong du lieu
-        $('#confirm')
-            .modal({ backdrop: 'static', keyboard: false })
-            .one('click', '[data-value]', function (e) {
-                if ($(this).data('value')) {
-                    $.ajax({
-                        type: "POST",
-                        url: urlDelete + lsID,
-                        success: function (data, statusCode, xhr) {
-                            if (data == 'success') {
-                                $.ajax({
-                                    type: "GET",
-                                    url: urlReset,
-                                    success: function (data, statusCode, xhr) {
-                                        $('#MainBody').html(data);
-                                        AlterUpdateSuccess();
-                                        $('html, body').animate({ scrollTop: 0 }, 'fast');
-                                    }
-                                });
-                            } else {
-                                $('#divEdit').html(data);
-                                $('html, body').animate({ scrollTop: 0 }, 'fast');
-                            }
-                        }, error: function (jqXHR, textStatus, errorThrown) {
-                            handleAjaxErrors(jqXHR, textStatus, errorThrown);
+
+        bootbox.confirm("@Html.Raw(Eagle.Resource.LanguageResource.DoYouWantToContinue)", function (result) {
+            if (result) {
+              
+                $.ajax({
+                    type: "POST",
+                    url: urlDelete + lsID,
+                    success: function (data, statusCode, xhr) {
+                        if (data == 'success') {
+                            $.ajax({
+                                type: "GET",
+                                url: urlReset,
+                                success: function (data, statusCode, xhr) {
+                                    $('#MainBody').html(data);
+                                    AlterUpdateSuccess();
+                                    $('html, body').animate({ scrollTop: 0 }, 'fast');
+                                }
+                            });
+                        } else {
+                            $('#divEdit').html(data);
+                            $('html, body').animate({ scrollTop: 0 }, 'fast');
                         }
-                    })
-                    return false;
-                }
-            });
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        handleAjaxErrors(jqXHR, textStatus, errorThrown);
+                    }
+                });
+                return false;
+
+            }
+        });
     });
 
 })(jQuery);

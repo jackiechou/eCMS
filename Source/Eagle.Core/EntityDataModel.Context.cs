@@ -57,7 +57,6 @@ namespace Eagle.Core
         public virtual DbSet<NewsCategory> NewsCategories { get; set; }
         public virtual DbSet<NewsComment> NewsComments { get; set; }
         public virtual DbSet<PageBanner> PageBanners { get; set; }
-        public virtual DbSet<PageGroup> PageGroups { get; set; }
         public virtual DbSet<PageMeta> PageMetas { get; set; }
         public virtual DbSet<PageModule> PageModules { get; set; }
         public virtual DbSet<PageModuleSetting> PageModuleSettings { get; set; }
@@ -586,6 +585,23 @@ namespace Eagle.Core
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Menu_GetListByRoleUserTypeStatus_Result>("Menu_GetListByRoleUserTypeStatus", roleIdParameter, userIdParameter, menuTypeIdParameter, scopeTypeIdParameter, statusParameter);
         }
     
+        public virtual ObjectResult<Menu_GetListByTypeStatus_Result> Menu_GetListByTypeStatus(Nullable<int> menuTypeId, Nullable<int> scopeTypeId, string status)
+        {
+            var menuTypeIdParameter = menuTypeId.HasValue ?
+                new ObjectParameter("MenuTypeId", menuTypeId) :
+                new ObjectParameter("MenuTypeId", typeof(int));
+    
+            var scopeTypeIdParameter = scopeTypeId.HasValue ?
+                new ObjectParameter("ScopeTypeId", scopeTypeId) :
+                new ObjectParameter("ScopeTypeId", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Menu_GetListByTypeStatus_Result>("Menu_GetListByTypeStatus", menuTypeIdParameter, scopeTypeIdParameter, statusParameter);
+        }
+    
         public virtual int Menu_GetMenuLevelByMenuId(Nullable<int> menuId, ObjectParameter depth)
         {
             var menuIdParameter = menuId.HasValue ?
@@ -629,6 +645,15 @@ namespace Eagle.Core
                 new ObjectParameter("MenuId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Menu_GetSubNodesByMenuId_Result>("Menu_GetSubNodesByMenuId", menuIdParameter);
+        }
+    
+        public virtual ObjectResult<Menu_GetTreeNodesByMenuId_Result> Menu_GetTreeNodesByMenuId(Nullable<int> menuId)
+        {
+            var menuIdParameter = menuId.HasValue ?
+                new ObjectParameter("MenuId", menuId) :
+                new ObjectParameter("MenuId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Menu_GetTreeNodesByMenuId_Result>("Menu_GetTreeNodesByMenuId", menuIdParameter);
         }
     
         public virtual ObjectResult<string> Menu_Insert(Nullable<int> pageId, Nullable<int> menuTypeId, Nullable<int> parentId, Nullable<int> depth, string menuName, string menuTitle, string menuAlias, string description, string target, Nullable<int> iconFile, string iconClass, string cssClass, string menuStatus, Nullable<int> createdByUserId, ObjectParameter o_return, ObjectParameter o_MenuId)
@@ -749,7 +774,7 @@ namespace Eagle.Core
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Menu_Update", pageIdParameter, menuTypeIdParameter, menuIdParameter, menuNameParameter, menuTitleParameter, menuAliasParameter, descriptionParameter, targetParameter, iconFileParameter, iconClassParameter, cssClassParameter, menuStatusParameter, lastModifiedByUserIdParameter, o_return);
         }
     
-        public virtual int Menu_UpdateListOrder(Nullable<int> menuId, Nullable<int> parentId, Nullable<int> listOrder, Nullable<System.Guid> lastModifiedByUserId, ObjectParameter o_return)
+        public virtual ObjectResult<string> Menu_UpdateListOrder(Nullable<int> menuId, Nullable<int> parentId, Nullable<int> listOrder, Nullable<int> lastModifiedByUserId, ObjectParameter o_return)
         {
             var menuIdParameter = menuId.HasValue ?
                 new ObjectParameter("MenuId", menuId) :
@@ -765,9 +790,26 @@ namespace Eagle.Core
     
             var lastModifiedByUserIdParameter = lastModifiedByUserId.HasValue ?
                 new ObjectParameter("LastModifiedByUserId", lastModifiedByUserId) :
-                new ObjectParameter("LastModifiedByUserId", typeof(System.Guid));
+                new ObjectParameter("LastModifiedByUserId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Menu_UpdateListOrder", menuIdParameter, parentIdParameter, listOrderParameter, lastModifiedByUserIdParameter, o_return);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Menu_UpdateListOrder", menuIdParameter, parentIdParameter, listOrderParameter, lastModifiedByUserIdParameter, o_return);
+        }
+    
+        public virtual ObjectResult<string> Menu_UpdatePosition(Nullable<int> menuId, Nullable<int> parentId, Nullable<int> lastModifiedByUserId, ObjectParameter o_return)
+        {
+            var menuIdParameter = menuId.HasValue ?
+                new ObjectParameter("MenuId", menuId) :
+                new ObjectParameter("MenuId", typeof(int));
+    
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(int));
+    
+            var lastModifiedByUserIdParameter = lastModifiedByUserId.HasValue ?
+                new ObjectParameter("LastModifiedByUserId", lastModifiedByUserId) :
+                new ObjectParameter("LastModifiedByUserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Menu_UpdatePosition", menuIdParameter, parentIdParameter, lastModifiedByUserIdParameter, o_return);
         }
     
         public virtual int ModulePermissions_GetPivotList(Nullable<int> roleId)
@@ -1579,7 +1621,7 @@ namespace Eagle.Core
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pages_GetListByScopeTypeIdAndStatus_Result>("Pages_GetListByScopeTypeIdAndStatus", keywordsParameter, scopeTypeIdParameter, isVisibleParameter);
         }
     
-        public virtual int Pages_Insert(Nullable<int> applicationId, Nullable<int> skinId, Nullable<int> scopeTypeId, Nullable<int> contentItemId, string languageCode, string pageName, string pageAlias, string pageTitle, string pageUrl, string pagePath, Nullable<int> icon, Nullable<bool> disableLink, Nullable<bool> displayTitle, string description, string keywords, Nullable<bool> isDeleted, Nullable<bool> isExtenalLink, Nullable<bool> isMenu, Nullable<bool> isSecured, Nullable<bool> isVisible, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string pageHeadText, string pageFooterText, Nullable<System.Guid> createdByUserId, ObjectParameter o_return, ObjectParameter o_PageId)
+        public virtual int Pages_Insert(Nullable<int> applicationId, Nullable<int> skinId, Nullable<int> scopeTypeId, string languageCode, Nullable<int> pageGroupId, string pageName, string pageAlias, string pageTitle, string pageUrl, string pagePath, Nullable<int> icon, Nullable<bool> disableLink, Nullable<bool> displayTitle, string description, string keywords, Nullable<bool> isDeleted, Nullable<bool> isExtenalLink, Nullable<bool> isMenu, Nullable<bool> isSecured, Nullable<bool> isVisible, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string pageHeadText, string pageFooterText, Nullable<System.Guid> createdByUserId, ObjectParameter o_return, ObjectParameter o_PageId)
         {
             var applicationIdParameter = applicationId.HasValue ?
                 new ObjectParameter("ApplicationId", applicationId) :
@@ -1593,13 +1635,13 @@ namespace Eagle.Core
                 new ObjectParameter("ScopeTypeId", scopeTypeId) :
                 new ObjectParameter("ScopeTypeId", typeof(int));
     
-            var contentItemIdParameter = contentItemId.HasValue ?
-                new ObjectParameter("ContentItemId", contentItemId) :
-                new ObjectParameter("ContentItemId", typeof(int));
-    
             var languageCodeParameter = languageCode != null ?
                 new ObjectParameter("LanguageCode", languageCode) :
                 new ObjectParameter("LanguageCode", typeof(string));
+    
+            var pageGroupIdParameter = pageGroupId.HasValue ?
+                new ObjectParameter("PageGroupId", pageGroupId) :
+                new ObjectParameter("PageGroupId", typeof(int));
     
             var pageNameParameter = pageName != null ?
                 new ObjectParameter("PageName", pageName) :
@@ -1681,10 +1723,10 @@ namespace Eagle.Core
                 new ObjectParameter("CreatedByUserId", createdByUserId) :
                 new ObjectParameter("CreatedByUserId", typeof(System.Guid));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pages_Insert", applicationIdParameter, skinIdParameter, scopeTypeIdParameter, contentItemIdParameter, languageCodeParameter, pageNameParameter, pageAliasParameter, pageTitleParameter, pageUrlParameter, pagePathParameter, iconParameter, disableLinkParameter, displayTitleParameter, descriptionParameter, keywordsParameter, isDeletedParameter, isExtenalLinkParameter, isMenuParameter, isSecuredParameter, isVisibleParameter, startDateParameter, endDateParameter, pageHeadTextParameter, pageFooterTextParameter, createdByUserIdParameter, o_return, o_PageId);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pages_Insert", applicationIdParameter, skinIdParameter, scopeTypeIdParameter, languageCodeParameter, pageGroupIdParameter, pageNameParameter, pageAliasParameter, pageTitleParameter, pageUrlParameter, pagePathParameter, iconParameter, disableLinkParameter, displayTitleParameter, descriptionParameter, keywordsParameter, isDeletedParameter, isExtenalLinkParameter, isMenuParameter, isSecuredParameter, isVisibleParameter, startDateParameter, endDateParameter, pageHeadTextParameter, pageFooterTextParameter, createdByUserIdParameter, o_return, o_PageId);
         }
     
-        public virtual int Pages_Update(Nullable<int> applicationId, Nullable<int> contentItemId, Nullable<int> skinId, Nullable<int> scopeTypeId, string languageCode, Nullable<int> pageId, string pageName, string pageAlias, string pageTitle, string pageUrl, string pagePath, Nullable<int> icon, Nullable<bool> disableLink, Nullable<bool> displayTitle, string description, string keywords, Nullable<bool> isDeleted, Nullable<bool> isExtenalLink, Nullable<bool> isMenu, Nullable<bool> isSecured, Nullable<bool> isVisible, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string pageHeadText, string pageFooterText, Nullable<System.Guid> lastModifiedByUserId, ObjectParameter o_return, ObjectParameter o_PageId)
+        public virtual int Pages_Update(Nullable<int> applicationId, Nullable<int> contentItemId, Nullable<int> skinId, Nullable<int> scopeTypeId, string languageCode, Nullable<int> pageGroupId, Nullable<int> pageId, string pageName, string pageAlias, string pageTitle, string pageUrl, string pagePath, Nullable<int> icon, Nullable<bool> disableLink, Nullable<bool> displayTitle, string description, string keywords, Nullable<bool> isDeleted, Nullable<bool> isExtenalLink, Nullable<bool> isMenu, Nullable<bool> isSecured, Nullable<bool> isVisible, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, string pageHeadText, string pageFooterText, Nullable<System.Guid> lastModifiedByUserId, ObjectParameter o_return, ObjectParameter o_PageId)
         {
             var applicationIdParameter = applicationId.HasValue ?
                 new ObjectParameter("ApplicationId", applicationId) :
@@ -1705,6 +1747,10 @@ namespace Eagle.Core
             var languageCodeParameter = languageCode != null ?
                 new ObjectParameter("LanguageCode", languageCode) :
                 new ObjectParameter("LanguageCode", typeof(string));
+    
+            var pageGroupIdParameter = pageGroupId.HasValue ?
+                new ObjectParameter("PageGroupId", pageGroupId) :
+                new ObjectParameter("PageGroupId", typeof(int));
     
             var pageIdParameter = pageId.HasValue ?
                 new ObjectParameter("PageId", pageId) :
@@ -1790,7 +1836,7 @@ namespace Eagle.Core
                 new ObjectParameter("LastModifiedByUserId", lastModifiedByUserId) :
                 new ObjectParameter("LastModifiedByUserId", typeof(System.Guid));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pages_Update", applicationIdParameter, contentItemIdParameter, skinIdParameter, scopeTypeIdParameter, languageCodeParameter, pageIdParameter, pageNameParameter, pageAliasParameter, pageTitleParameter, pageUrlParameter, pagePathParameter, iconParameter, disableLinkParameter, displayTitleParameter, descriptionParameter, keywordsParameter, isDeletedParameter, isExtenalLinkParameter, isMenuParameter, isSecuredParameter, isVisibleParameter, startDateParameter, endDateParameter, pageHeadTextParameter, pageFooterTextParameter, lastModifiedByUserIdParameter, o_return, o_PageId);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pages_Update", applicationIdParameter, contentItemIdParameter, skinIdParameter, scopeTypeIdParameter, languageCodeParameter, pageGroupIdParameter, pageIdParameter, pageNameParameter, pageAliasParameter, pageTitleParameter, pageUrlParameter, pagePathParameter, iconParameter, disableLinkParameter, displayTitleParameter, descriptionParameter, keywordsParameter, isDeletedParameter, isExtenalLinkParameter, isMenuParameter, isSecuredParameter, isVisibleParameter, startDateParameter, endDateParameter, pageHeadTextParameter, pageFooterTextParameter, lastModifiedByUserIdParameter, o_return, o_PageId);
         }
     
         public virtual int SkinBackgrounds_Delete(Nullable<int> skinBackgroundId, ObjectParameter o_return)
@@ -4087,27 +4133,6 @@ namespace Eagle.Core
                 new ObjectParameter("p_LSTrainingCourseID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TR_sprptTrainingPlanExpense_Result>("TR_sprptTrainingPlanExpense", p_LSTrainingCodeIDParameter, p_LSTrainingCourseIDParameter);
-        }
-    
-        public virtual int ReportType_UpdateListOrder(Nullable<int> typeId, Nullable<int> parentId, Nullable<int> depth, Nullable<int> listOrder, ObjectParameter o_return)
-        {
-            var typeIdParameter = typeId.HasValue ?
-                new ObjectParameter("TypeId", typeId) :
-                new ObjectParameter("TypeId", typeof(int));
-    
-            var parentIdParameter = parentId.HasValue ?
-                new ObjectParameter("ParentId", parentId) :
-                new ObjectParameter("ParentId", typeof(int));
-    
-            var depthParameter = depth.HasValue ?
-                new ObjectParameter("Depth", depth) :
-                new ObjectParameter("Depth", typeof(int));
-    
-            var listOrderParameter = listOrder.HasValue ?
-                new ObjectParameter("ListOrder", listOrder) :
-                new ObjectParameter("ListOrder", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ReportType_UpdateListOrder", typeIdParameter, parentIdParameter, depthParameter, listOrderParameter, o_return);
         }
     
         public virtual int Contact_CheckEmail(string email, ObjectParameter o_return)
@@ -7233,6 +7258,27 @@ namespace Eagle.Core
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Vendors_Update_ClickThroughs", vendorIdParameter, o_return);
         }
     
+        public virtual int ReportType_UpdateListOrder(Nullable<int> typeId, Nullable<int> parentId, Nullable<int> depth, Nullable<int> listOrder, ObjectParameter o_return)
+        {
+            var typeIdParameter = typeId.HasValue ?
+                new ObjectParameter("TypeId", typeId) :
+                new ObjectParameter("TypeId", typeof(int));
+    
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(int));
+    
+            var depthParameter = depth.HasValue ?
+                new ObjectParameter("Depth", depth) :
+                new ObjectParameter("Depth", typeof(int));
+    
+            var listOrderParameter = listOrder.HasValue ?
+                new ObjectParameter("ListOrder", listOrder) :
+                new ObjectParameter("ListOrder", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ReportType_UpdateListOrder", typeIdParameter, parentIdParameter, depthParameter, listOrderParameter, o_return);
+        }
+    
         public virtual ObjectResult<Currency_GetDetails_Result> Currency_GetDetails(string currencyCode)
         {
             var currencyCodeParameter = currencyCode != null ?
@@ -9286,23 +9332,6 @@ namespace Eagle.Core
                 new ObjectParameter("Discontinued", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("TransactionMethods_UpdateDiscontinued", transactionMethod_IDParameter, discontinuedParameter, o_return);
-        }
-    
-        public virtual ObjectResult<Menu_GetListByTypeStatus_Result> Menu_GetListByTypeStatus(Nullable<int> menuTypeId, Nullable<int> scopeTypeId, string status)
-        {
-            var menuTypeIdParameter = menuTypeId.HasValue ?
-                new ObjectParameter("MenuTypeId", menuTypeId) :
-                new ObjectParameter("MenuTypeId", typeof(int));
-    
-            var scopeTypeIdParameter = scopeTypeId.HasValue ?
-                new ObjectParameter("ScopeTypeId", scopeTypeId) :
-                new ObjectParameter("ScopeTypeId", typeof(int));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Menu_GetListByTypeStatus_Result>("Menu_GetListByTypeStatus", menuTypeIdParameter, scopeTypeIdParameter, statusParameter);
         }
     }
 }

@@ -88,7 +88,6 @@
     <Compile Include="Business\ShopCart\Manufacturers\ManufacturerCategoryRepository.cs" />
     <Compile Include="Business\ShopCart\Manufacturers\ManufacturerRepository.cs" />
     <Compile Include="Business\ShopCart\Vendors\ContactRepository.cs" />
-    <Compile Include="Sys\Menus\MenuPermissionRepository.cs" />
     <Compile Include="Sys\Menus\MenuTypeRepository.cs" />
     <Compile Include="Extensions\HtmlExtensions\DropdownListUtils.cs" />
     <Compile Include="Common\GenderRespository.cs" />
@@ -270,7 +269,9 @@
     <Compile Include="Extensions\HtmlExtensions\HtmlRequestHelper.cs" />
     <Compile Include="UI\Layout\LayoutAttribute .cs" />
     <Compile Include="UI\Layout\LayoutType.cs" />
+    <Compile Include="UI\Layout\PageLayoutAttribute.cs" />
     <Compile Include="UI\Layout\SectionExtensions.cs" />
+    <Compile Include="UI\Layout\ThemeSettings.cs" />
     <Compile Include="UI\Skins\SkinRepository.cs" />
     <Compile Include="UI\Skins\SkinBackgrounds.cs" />
     <Compile Include="UI\Skins\SkinTemplateRepository.cs" />

@@ -73,7 +73,7 @@
             @Html.RequiredLabelFor(model => model.Year)
         </div>
          <div class="col-md-4">
-            @Html.TextBoxFor(model => model.Year, new { @class = "span3 text-center", @data_val = "true", @data_val_number = string.Format(Eagle.Resource.LanguageResource.NumberInvalid, Eagle.Resource.LanguageResource.Year), @data_val_required = string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.Year) })
+            @Html.TextBoxFor(model => model.Year, new { @class = "col-md-3 text-center", @data_val = "true", @data_val_number = string.Format(Eagle.Resource.LanguageResource.NumberInvalid, Eagle.Resource.LanguageResource.Year), @data_val_required = string.Format(Eagle.Resource.LanguageResource.Required, Eagle.Resource.LanguageResource.Year) })
             @Html.ValidationMessageFor(model => model.Year)
         </div>
     </div>
@@ -82,7 +82,7 @@
             @Html.RequiredLabelFor(model => model.LSCompanyID)
         </div>
         <div class="col-md-4">
-            <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree span2"></select>
+            <select id="LSCompanyID" name="LSCompanyID" class="easyui-combotree col-md-2"></select>
             @Html.ValidationMessageFor(model => model.LSCompanyID)    
             @{ 
                 string LSCompanyID = Model.LSCompanyID == 0 ? "" : Model.LSCompanyID.ToString();
@@ -216,4 +216,4 @@
 <script>
     InvokeDateTimePicker();
 </script>
-@Html.Action("jqueryval", "Common", null)
+

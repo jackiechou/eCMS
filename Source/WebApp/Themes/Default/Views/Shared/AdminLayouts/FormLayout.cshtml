@@ -1,22 +1,28 @@
-﻿@Html.AntiForgeryToken()
-@Html.ValidationSummary(true)
-
-<div id="FormContainer" class="form-container">
+﻿<div id="FormContainer" class="form-container">
     <div id="FormHeader" class="form-header">
         <div class="topbar">
-            @if (IsSectionDefined("TopActionButtons"))
-            {
+           
                 <div class="row topbar-inner">
-                    <div class="col-md-6">
-                        <h4>@ViewBag.Title</h4>
+                    <div class="col-md-6">                        
+                        @if (IsSectionDefined("TopHeading"))
+                        {
+                            @RenderSection("TopHeading", required: false)
+                        }
+                        else
+                        {
+                            <h6>@ViewBag.Title</h6>
+                        }
                     </div>
                     <div class="col-md-6">
                         <div class="right-button-align">
-                            @RenderSection("TopActionButtons", required: false)
+                            @if (IsSectionDefined("TopActionButtons"))
+                            {
+                                @RenderSection("TopActionButtons", required: false)
+                            }
                         </div>
                     </div>
                 </div>
-            }
+            
         </div>
     </div>
     
