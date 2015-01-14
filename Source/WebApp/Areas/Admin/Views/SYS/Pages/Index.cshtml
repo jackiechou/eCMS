@@ -87,18 +87,11 @@
                     });
                 },
                 InitializeCotrols: function () {
-
-                    //ShowDateTimePicker();
-
                     DataMgr.LoadContent('@Url.Action("Create", "Page")', '#divEdit');
                     @*BindAutoCompleteMultipleChoicesToSelect2('@Url.Action("DropDownListByPage", "ContentItem")',
                         'selectKeywords', '@Html.Raw(Eagle.Resource.LanguageResource.PleaseSelectAnItem)', 'Keywords', true);*@
 
                       
-            
-
-
-
                     //$('#tt').tree({
                     //    formatter: function (node) {
                     //        var s = node.text;
@@ -135,13 +128,6 @@
                     //    }
                     //});
 
-                    @*InvokeDataTables();
-
-                            DataMgr.LoadContent('@Url.Action("AddNewModule", "Module")', '#pane-1');*@
-
-
-                    //handleCheckBox("chkContractStatus");
-                    //  $("#modalEdit").draggable('disable');
                 },
                 BindEvents: function () {
                     $('#myTab a').click(function (e) {

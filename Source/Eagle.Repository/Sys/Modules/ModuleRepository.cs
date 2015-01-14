@@ -174,16 +174,22 @@ namespace Eagle.Repository.SYS.Modules
             }
         }
 
-        public bool IsIdExisted(int ModuleId)
+        public static bool IsIdExisted(int ModuleId)
         {
-            var query = context.Modules.FirstOrDefault(p => p.ModuleId.Equals(ModuleId));
-            return (query != null);
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                var query = context.Modules.FirstOrDefault(p => p.ModuleId.Equals(ModuleId));
+                return (query != null);
+            }
         }
 
-        public bool IsKeyExisted(string ModuleKey)
+        public static bool IsKeyExisted(string ModuleKey)
         {
-            var query = context.Modules.FirstOrDefault(p => p.ModuleKey.Equals(ModuleKey));
-            return (query != null);
+            using (EntityDataContext context = new EntityDataContext())
+            {
+                var query = context.Modules.FirstOrDefault(p => p.ModuleKey.Equals(ModuleKey));
+                return (query != null);
+            }
         }
 
         public static List<ModuleViewModel> GetList(bool IsAdmin)
@@ -380,7 +386,7 @@ namespace Eagle.Repository.SYS.Modules
             }
         }
 
-        public bool Insert(ModuleViewModel add_model, out string Message)
+        public static bool Insert(ModuleViewModel add_model, out string Message)
         {
             Message = string.Empty;
             bool result = false;
@@ -389,29 +395,38 @@ namespace Eagle.Repository.SYS.Modules
                 bool flag = IsKeyExisted(add_model.ModuleKey);
                 if (flag == false)
                 {
-                    Module model = new Module();
-                    model.ApplicationId = add_model.ApplicationId;
-                    model.ModuleId = add_model.ModuleId;
-                    model.ModuleCode = add_model.ModuleCode;
-                    model.ModuleKey = add_model.ModuleKey;
-                    model.ModuleTitle = add_model.ModuleTitle;
-                    model.ModuleName = add_model.ModuleName;
-                    model.AllPages = add_model.AllPages;
-                    model.IsAdmin = add_model.IsAdmin;
-                    model.IsDeleted = add_model.IsDeleted;
-                    model.InheritViewPermissions = add_model.InheritViewPermissions;
-                    model.Header = add_model.Header;
-                    model.Footer = add_model.Footer;
-                    model.StartDate = add_model.StartDate;
-
-                    int affectedRow = 0;
-                    context.Entry(model).State = System.Data.Entity.EntityState.Added;
-                    affectedRow = context.SaveChanges();
-                    if (affectedRow == 1)
+                    using (EntityDataContext context = new EntityDataContext())
                     {
-                        add_model.ModuleId = model.ModuleId;
-                        Message = Eagle.Resource.LanguageResource.CreateSuccess;
-                        result = true;
+                        add_model.ModuleCode = new Guid();
+
+                        Module model = new Module();                       
+                        model.ApplicationId = add_model.ApplicationId;
+                        model.ContentItemId = add_model.ContentItemId;
+                        model.ScopeTypeId = add_model.ScopeTypeId;
+                        // model.ModuleId = add_model.ModuleId;
+                        model.ModuleCode = add_model.ModuleCode;
+                        model.ModuleKey = add_model.ModuleKey;
+                        model.ModuleTitle = add_model.ModuleTitle;
+                        model.ModuleName = add_model.ModuleName;
+                        model.AllPages = add_model.AllPages;
+                        model.IsAdmin = add_model.IsAdmin;
+                        model.IsDeleted = add_model.IsDeleted;
+                        model.InheritViewPermissions = add_model.InheritViewPermissions;
+                        model.Header = add_model.Header;
+                        model.Footer = add_model.Footer;
+                        model.StartDate = add_model.StartDate;
+                        model.EndDate = add_model.EndDate;
+                        model.Visibility = add_model.Visibility;
+
+                        int affectedRow = 0;
+                        context.Entry(model).State = System.Data.Entity.EntityState.Added;
+                        affectedRow = context.SaveChanges();
+                        if (affectedRow == 1)
+                        {
+                            add_model.ModuleId = model.ModuleId;
+                            Message = Eagle.Resource.LanguageResource.CreateSuccess;
+                            result = true;
+                        }
                     }
                 }
                 else
@@ -429,7 +444,7 @@ namespace Eagle.Repository.SYS.Modules
             return result;
         }
 
-        public bool Update(ModuleViewModel edit_model, out string Message)
+        public static bool Update(ModuleViewModel edit_model, out string Message)
         {
             Message = string.Empty;
             bool result = false;
@@ -440,28 +455,36 @@ namespace Eagle.Repository.SYS.Modules
                 {
                     Module model = Find(edit_model.ModuleId);
                     if (model != null)
-                    {                    
-                        model.ModuleId = edit_model.ModuleId;
-                        model.ModuleCode = edit_model.ModuleCode;
-                        model.ModuleKey = edit_model.ModuleKey;
-                        model.ModuleTitle = edit_model.ModuleTitle;
-                        model.ModuleName = edit_model.ModuleName;
-                        model.AllPages = edit_model.AllPages;
-                        model.IsAdmin = edit_model.IsAdmin;
-                        model.IsDeleted = edit_model.IsDeleted;
-                        model.InheritViewPermissions = edit_model.InheritViewPermissions;
-                        model.Header = edit_model.Header;
-                        model.Footer = edit_model.Footer;
-                        model.StartDate = edit_model.StartDate;
-
-                        context.Entry(model).State = System.Data.Entity.EntityState.Modified;
-                        int affectedRows = context.SaveChanges();
-                        if (affectedRows == 1)
+                    {
+                        using (EntityDataContext context = new EntityDataContext())
                         {
-                            if (edit_model.ContentItemId !=null)
-                                ContentItemRepository.UpdateModuleContentItem((int)edit_model.ContentItemId, edit_model.ModuleId, edit_model.ModuleName, edit_model.ModuleTitle, out Message);
-                            Message = Eagle.Resource.LanguageResource.UpdateSuccess;
-                            result = true;
+                           // model.ApplicationId = edit_model.ApplicationId;
+                           //  model.ScopeTypeId = add_model.ScopeTypeId;
+                            // model.ModuleCode = edit_model.ModuleCode;
+                            // model.ModuleId = edit_model.ModuleId;
+                            model.ContentItemId = edit_model.ContentItemId;                                                      
+                            model.ModuleKey = edit_model.ModuleKey;
+                            model.ModuleTitle = edit_model.ModuleTitle;
+                            model.ModuleName = edit_model.ModuleName;
+                            model.AllPages = edit_model.AllPages;
+                            model.IsAdmin = edit_model.IsAdmin;
+                            model.IsDeleted = edit_model.IsDeleted;
+                            model.InheritViewPermissions = edit_model.InheritViewPermissions;
+                            model.Header = edit_model.Header;
+                            model.Footer = edit_model.Footer;
+                            model.StartDate = edit_model.StartDate;
+                            model.EndDate = edit_model.EndDate;
+                            model.Visibility = edit_model.Visibility;
+
+                            context.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                            int affectedRows = context.SaveChanges();
+                            if (affectedRows == 1)
+                            {
+                                if (edit_model.ContentItemId != null)
+                                    ContentItemRepository.UpdateModuleContentItem((int)edit_model.ContentItemId, edit_model.ModuleId, edit_model.ModuleName, edit_model.ModuleTitle, out Message);
+                                Message = Eagle.Resource.LanguageResource.UpdateSuccess;
+                                result = true;
+                            }
                         }
                     }
                 }
@@ -475,7 +498,7 @@ namespace Eagle.Repository.SYS.Modules
             return result;
         }
 
-        public bool Delete(int? id, out string message)
+        public static bool Delete(int? id, out string message)
         {
             bool result = false;
             message = string.Empty;
@@ -484,10 +507,13 @@ namespace Eagle.Repository.SYS.Modules
                 Module model = Find(id);
                 if (model != null)
                 {
-                    context.Entry(model).State = System.Data.Entity.EntityState.Deleted;
-                    context.SaveChanges();
-                    result = true;
-                    message = Eagle.Resource.LanguageResource.DeleteSuccess;
+                    using (EntityDataContext context = new EntityDataContext())
+                    {
+                        context.Entry(model).State = System.Data.Entity.EntityState.Deleted;
+                        context.SaveChanges();
+                        result = true;
+                        message = Eagle.Resource.LanguageResource.DeleteSuccess;
+                    }
                 }
                 else
                 {

@@ -3985,6 +3985,7 @@
     <Content Include="Areas\Admin\Views\Sys\Modules\_ModulePermission.cshtml" />
     <Content Include="Areas\Admin\Views\Sys\Permissions\_RolePermission.cshtml" />
     <Content Include="Areas\Admin\Views\Sys\Modules\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Sys\Pages\_PageTree.cshtml" />
     <None Include="Scripts\app\plugins\validation\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\app\plugins\validation\jquery.validate.js" />
     <Content Include="Scripts\app\plugins\validation\jquery.validate.unobtrusive.js" />

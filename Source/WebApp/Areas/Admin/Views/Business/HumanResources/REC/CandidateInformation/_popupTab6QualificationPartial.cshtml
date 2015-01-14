@@ -9,7 +9,7 @@
         <form id="frmQualification">
             @Html.HiddenFor(model => model.QualificationID)
             @Html.HiddenFor(model => model.InitialPriorityAlowNull)
-            @Html.HiddenFor(model => model.InitialQualificationNo)
+            @*@Html.HiddenFor(model => model.InitialQualificationNo)*@
             <div class="row">
                 <div class="col-md-2">
                     @Html.RequiredLabelFor(model => model.QualificationNo)
@@ -161,8 +161,8 @@
         <!--End button -->
     </div>
     <div class="modal-footer">
-        <input type="button" id="btnQCancel" class="btn" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
-        <input type="button" id="btnQSubmit" class="btn btn-info AddModel" value="@Eagle.Resource.LanguageResource.Save" />
+        <input type="button" id="btnQCancel" class="btn btn-default cancel" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Close" />
+        <input type="button" id="btnQSubmit" class="btn btn-info add AddModel" value="@Eagle.Resource.LanguageResource.Save" />
     </div>
 </div>
 

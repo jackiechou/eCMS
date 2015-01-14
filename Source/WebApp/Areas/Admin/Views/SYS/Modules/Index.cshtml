@@ -26,7 +26,7 @@
 
 
 <script type="text/javascript">
-    
+    //handleCheckBoxes();
     (function ($) {
         $.createDataBuilder = function (p) {
             var ModuleMgr = {
@@ -97,6 +97,8 @@
                     InvokeDataTables();
                 },
                 BindEvents: function () {
+                    handleCheckBoxes();
+
                     $(document).on('change', '#sPageId', function () {
                         if ($(this).val() != '') 
                             $(this).find("option[value=" + $(this).val() + "]").attr('selected', true).siblings().attr('selected', false);
@@ -114,16 +116,19 @@
 
 
                     //Add and update post action
-                    $(document).on("click", "#btnAdd", function () {
-                        if (!$("#myform").valid()) { // Not Valid
-                            return false;
-                        } else {
-                            ModuleMgr.AddData();
-                        }
+                    $(document).on("click", ".add", function () {                       
+                        //if (!$("#moduleForm").valid()) { // Not Valid
+                        //    alert("aaaaaa");
+                        //    return false;
+                           
+                        //} else {
+                        //    alert("bbbb");
+                            ModuleMgr.AddData();                            
+                        //}
                     });
 
-                    $(document).on("click", "#btnEdit", function () {
-                        if (!$("#myform").valid()) { // Not Valid
+                    $(document).on("click", ".edit", function () {
+                        if (!$("#moduleForm").valid()) { // Not Valid
                             return false;
                         } else {
                             ModuleMgr.UpdateData();
@@ -132,7 +137,7 @@
 
 
                     // Reset form
-                    $(document).on("click", "#btnReset", function () {
+                    $(document).on("click", ".reset", function () {
                         ModuleMgr.ResetControls();
                     });
 
@@ -224,7 +229,7 @@
                 //    return check;
                 //},
                 OnClickOnTree: function (e, treeId, treeNode) {
-                    var zTree = $.fn.zTree.getZTreeObj("tree"),
+                    var zTree = $.fn.zTree.getZTreeObj(treeId),
 			        nodes = zTree.getSelectedNodes();
                     $(".inputTree").attr("value", nodes[0].name);
                     $(".hiddenTreeValue").attr("value", nodes[0].id);
@@ -282,7 +287,7 @@
                     });
                 },
                 AddData: function () {
-                    var data = convertFormToJSON("myform");
+                    var data = convertFormToJSON("moduleForm");
                     this.config.method = "Create";
                     this.config.data = data;
                     this.config.url = ModuleMgr.config.baseURL + this.config.method;
@@ -321,7 +326,7 @@
                     this.ajaxCall(this.config);
                 },
                 UpdateData: function () {
-                    var data = convertFormToJSON("myform");
+                    var data = convertFormToJSON("moduleForm");
                     this.config.method = "Edit";
                     this.config.type = "POST";
                     this.config.dataType = "json";
@@ -384,7 +389,7 @@
                 ResetControls: function () {
                     var mode = ModuleMgr.config.mode;
                     if (mode == 0) {
-                        var validateObj = $('#myform');
+                        var validateObj = $('#moduleForm');
                         validateObj.find('input:text, input:password, input:file, select, textarea').not('.ignored').val('');
                         validateObj.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
                         validateObj.find('input[type="number"]').val(0);

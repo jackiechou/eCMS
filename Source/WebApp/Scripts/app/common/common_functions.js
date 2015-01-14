@@ -38,24 +38,33 @@ function handleRadioButton(elementId) {
 }
 
 function handleCheckBox(checkFieldId) {
-    var checkBoxSelector = $("input:checkbox[name=" + checkFieldId + "]");
-    var hiddenSelector = $("input:hidden[name=" + checkFieldId + "]");
-    checkBoxSelector.click(function () {
+    $("input:checkbox[name=" + checkFieldId + "]").click(function () {
         var checkBoxStatus = $(this).is(":checked");
-        checkBoxSelector.attr("checked", checkBoxStatus);
-        checkBoxSelector.val(checkBoxStatus);
-        hiddenSelector.val(checkBoxStatus);
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        $("input:hidden[name=" + checkFieldId + "]").val(checkBoxStatus);
     });
 }
 
-function handleCheckBoxClass(checkFieldClass) {
-    var checkBoxSelector = $('input[type=checkbox][class="' + checkFieldClass + '"]');
-    var hiddenSelector = $("input:hidden[name=" + checkBoxSelector.attr("name") + "]");
-    checkBoxSelector.click(function () {
+function handleCheckBoxes() {
+    $('input:checkbox').click(function () {
         var checkBoxStatus = $(this).is(":checked");
-        checkBoxSelector.attr("checked", checkBoxStatus);
-        checkBoxSelector.val(checkBoxStatus);
-        hiddenSelector.val(checkBoxStatus);
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        $("input:hidden[name=" + $(this).attr("name") + "]").val(checkBoxStatus);
+    });
+}
+
+function handleCheckBoxesWithStatus(status) {
+    $('input:checkbox').attr("checked", status);
+    $('input:checkbox').val(status);
+    $("input:hidden[name=" + $(this).attr("name") + "]").val(status);
+
+    $('input:checkbox').click(function () {
+        var checkBoxStatus = $(this).is(":checked");
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
+        $("input:hidden[name=" + $(this).attr("name") + "]").val(checkBoxStatus);
     });
 }
 
@@ -69,8 +78,8 @@ function handleCheckBoxStatus(checkFieldId, chkStatus) {
 
     checkBoxSelector.click(function () {
         var checkBoxStatus = $(this).is(":checked");
-        checkBoxSelector.attr("checked", checkBoxStatus);
-        checkBoxSelector.val(checkBoxStatus);
+        $(this).attr("checked", checkBoxStatus);
+        $(this).val(checkBoxStatus);
         hiddenSelector.val(checkBoxStatus);
     });
 }
@@ -274,38 +283,6 @@ function ValidateFormWithQtip(formId) {
     });
     $.validator.unobtrusive.parse($('#' + formName));
 }
-
-function InvokeQtip() {
-    $('.qtip').remove();
-    // Run this function for all validation error messages
-    $('.field-validation-error').each(function () {
-
-        // Get the name of the element the error message is intended for
-        // Note: ASP.NET MVC replaces the '[', ']', and '.' characters with an
-        // underscore but the data-valmsg-for value will have the original characters
-        var inputElem = '#' + $(this).attr('data-valmsg-for').replace('.', '_').replace('[', '_').replace(']', '_');
-
-        var corners = ['left bottom', 'top left'];
-        var flipIt = $(inputElem).parents('span.right').length > 0;
-
-        // Hide the default validation error
-        $(this).addClass('Hidden');
-
-        // Show the validation error using qTip
-        $(inputElem).filter(':not(.valid)').qtip({
-            content: { text: $(this).text() }, // Set the content to be the error message
-            position: {
-                my: corners[flipIt ? 0 : 1],
-                at: corners[flipIt ? 1 : 0],
-                viewport: $(window)
-            },
-            show: { ready: true },
-            hide: false,
-            style: { classes: 'ui-tooltip-red' }
-        });
-    });
-}
-
 
 function PopulateDropDownListAutoComplete(strSelectBox, strHiddenId, strHiddenName, strPlaceholder, requestUrl) {
     var pageSize = 20;

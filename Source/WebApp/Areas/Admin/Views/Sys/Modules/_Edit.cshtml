@@ -4,15 +4,15 @@
 }
 @model Eagle.Model.SYS.Modules.ModuleViewModel
 @section TopActionButtons {
-    <input type="button" class="btn btnReset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
-    <input type="button" class="btn btn-info add btnAdd" value="@Eagle.Resource.LanguageResource.Save" />
+    <input type="button" class="btn btn-default reset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+    <input type="button" class="btn btn-info edit" value="@Eagle.Resource.LanguageResource.Save" />
 }
 @section BottomActionButtons {
-    <input type="button" class="btn btnReset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
-    <input type="button" class="btn btn-info add btnAdd" value="@Eagle.Resource.LanguageResource.Save" />
+    <input type="button" class="btn btn-default reset" data-dismiss="modal" aria-hidden="true" value="@Eagle.Resource.LanguageResource.Reset" />
+    <input type="button" class="btn btn-info edit" value="@Eagle.Resource.LanguageResource.Save" />
 }
 
-@using (Html.BeginForm("Update", "Module", FormMethod.Post, new { enctype = "multipart/form-data", id = "myform", name = "myform", autocomplete = "off", @class = "form-horizontal" }))
+@using (Html.BeginForm("Update", "Module", FormMethod.Post, new { enctype = "multipart/form-data", id = "moduleForm", name = "moduleForm", autocomplete = "off", @class = "form-horizontal" }))
 {
     <div class="form-container">
         <div class="form-lead">@Html.Raw(@Eagle.Resource.LanguageResource.RequiredFill)</div>

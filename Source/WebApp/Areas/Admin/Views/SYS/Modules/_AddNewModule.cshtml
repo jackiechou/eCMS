@@ -78,6 +78,8 @@
                 </div>
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.PageId, null, new { @class = "form-control", autocomplete = "off" })
+
+                    @Html.Partial("../Sys/Pages/_PageTree")
                 </div>
             </div>
             <!--end row-->
@@ -116,7 +118,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="border-range">
-                        <input class="single-slider" id="Border" type="hidden" value="0" />
+                        <input id="Border" class="single-slider" type="hidden" value="0" />
                     </div>
                 </div>
             </div>
@@ -147,9 +149,25 @@
                             data-iconset="glyphicon|ionicon|fontawesome|weathericon|mapicon|octicon|typicon|elusiveicon" data-icon="glyphicon-picture"></button>
                     <input type="hidden" id="IconClass" name="IconClass" />
                 </div>
+            </div>
+            <!--end row-->
+
+            <!--start row-->
+            <div class="form-group">
                 <div class="col-md-2">
+                    @Html.CheckBoxFor(model => model.AllPages, new { value = "True", @checked = "checked", @class = "checkbox" }) @Html.LabelFor(m => m.AllPages)
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                    @Html.CheckBoxFor(model => model.IsAdmin, new { value = "True", @checked = "checked", @class = "checkbox" }) @Html.LabelFor(m => m.IsAdmin)
+                </div>
+                <div class="col-md-2">
+                    @Html.CheckBoxFor(model => model.IsDeleted, new { value = "True", @checked = "checked", @class = "checkbox" }) @Html.LabelFor(m => m.IsDeleted)
+                </div>
+                <div class="col-md-3">
+                   @Html.CheckBoxFor(model => model.InheritViewPermissions, new { value = "True", @checked = "checked", @class = "checkbox" }) @Html.LabelFor(m => m.InheritViewPermissions)
+                </div>
+                <div class="col-md-3">
+                    @Html.CheckBoxFor(model => model.IsVisible, new { value = "True", @checked = "checked", @class = "checkbox" }) @Html.LabelFor(m => m.IsVisible)
                 </div>
             </div>
             <!--end row-->

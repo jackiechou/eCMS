@@ -179,6 +179,16 @@ namespace Eagle.WebApp
                 "~/Scripts/app/common/jquery-ui-1.10.4.js",
                 "~/Scripts/app/common/jquery-ui-1.10.4.js",
                 "~/Scripts/app/common/jquery.cookie.js",
+                "~/Scripts/app/plugins/superfish/js/hoverIntent.js",
+                "~/Scripts/app/plugins/superfish/js/superfish.js",
+                "~/Scripts/app/plugins/superfish/js/supersubs.js",
+                "~/Scripts/app/plugins/validation/jquery.validate.js",
+                "~/Scripts/app/plugins/validation/jquery.validate.unobtrusive.js",
+                "~/Scripts/app/plugins/validation/jquery.unobtrusive-ajax.js",
+                "~/Scripts/app/plugins/validation/additional-methods.js",
+                 "~/Scripts/app/plugins/qtip/js/jquery.qtip.js",
+                "~/Scripts/app/plugins/qtip/js/jquery.qtip.custom.js",
+                //"~/Scripts/app/plugins/qtip/js/imagesloaded.pkg.js",      
 
                 "~/Scripts/app/plugins/bootstrap/bootstrap-core/js/bootstrap.js",
                 "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/bootbox.js",
@@ -189,13 +199,6 @@ namespace Eagle.WebApp
                 "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/select2/select2.js",
                 "~/Scripts/app/plugins/bootstrap/bootstrap-plugins/select2/select2custom.js",
 
-                "~/Scripts/app/plugins/superfish/js/hoverIntent.js",
-                "~/Scripts/app/plugins/superfish/js/superfish.js",
-                "~/Scripts/app/plugins/superfish/js/supersubs.js",
-
-                "~/Scripts/app/plugins/qtip/js/jquery.qtip.js",
-                "~/Scripts/app/plugins/qtip/js/jquery.qtip.custom.js",
-                //"~/Scripts/app/plugins/qtip/js/imagesloaded.pkg.js",                                              
 
                 "~/Scripts/app/plugins/datatables/js/jquery.dataTables.js",
                 "~/Scripts/plugins/tablednd/js/jquery.tablednd.js",
@@ -203,7 +206,7 @@ namespace Eagle.WebApp
                 "~/Scripts/app/plugins/contextmenu/jquery.contextMenu.js",
                 "~/Scripts/app/plugins/tagsinput/jquery.tagsinput.js",
                 "~/Scripts/app/plugins/monthpicker/jquery.mtz.monthpicker.js",
-                "~/Scripts/app/plugins/monthpicker/jquery.mtz.monthpicker.custom.js",     
+                "~/Scripts/app/plugins/monthpicker/jquery.mtz.monthpicker.custom.js",    
 
                 "~/Scripts/app/common/common_functions.js",
                 "~/Scripts/app/common/main.js",
@@ -219,10 +222,13 @@ namespace Eagle.WebApp
             ));
 
             bundles.Add(new ScriptBundle("~/Scripts/App/Validation").Include(
-                     "~/Scripts/app/plugins/validation/jquery.validate.js",
-                     "~/Scripts/app/plugins/validation/jquery.validate.unobtrusive.js",
-                     "~/Scripts/app/plugins/validation/jquery.unobtrusive-ajax.js",
-                     "~/Scripts/app/plugins/validation/additional-methods.js"
+                        "~/Scripts/app/plugins/validation/jquery.validate.js",
+                        "~/Scripts/app/plugins/validation/jquery.validate.unobtrusive.js",
+                        "~/Scripts/app/plugins/validation/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/app/plugins/validation/additional-methods.js",
+                        "~/Scripts/app/plugins/qtip/js/jquery.qtip.js",
+                        "~/Scripts/app/plugins/qtip/js/jquery.qtip.custom.js"
+                        //"~/Scripts/app/plugins/qtip/js/imagesloaded.pkg.js",     
                      ));
             #endregion =============================================================
 

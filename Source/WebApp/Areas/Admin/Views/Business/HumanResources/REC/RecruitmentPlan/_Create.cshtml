@@ -201,9 +201,9 @@
                             <div class="row">
                                 <div class="footbar">
                                     @if (Model.LevelApprove == 0)
-                                    {
-                                        <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn" @ViewBag.DisabledSaveAndSend />                                
-                                        <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info AddModel" @ViewBag.DisabledSaveAndSend />
+{
+    <input type="button" id="btnReset" value="@Eagle.Resource.LanguageResource.btnReset" class="btn btn-default reset" @ViewBag.DisabledSaveAndSend />
+                                        <input type="button" id="btnAdd" value="@Eagle.Resource.LanguageResource.btnSave" class="btn btn-info add AddModel" @ViewBag.DisabledSaveAndSend />
                                         <input type="button" id="btnSendForApproval" value="@Eagle.Resource.LanguageResource.btnSendForApproval" class="btn btn-info" @ViewBag.DisabledSaveAndSend />
                                     }
                                     else

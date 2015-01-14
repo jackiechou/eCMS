@@ -63,7 +63,6 @@ a.accordion-toggle {text-decoration:none;}
 .reset-label {text-align:left !important;display:inline-block !important;}
 .margin-left-25 {margin-left:25px;}
 .cursor-pointer {cursor:pointer;}
-.reset {margin:0px 0px 0px 0px !important; text-align:left !important; padding: 0px 0px 0px 0px !important;}
 .enable-false {background-color:#aaa !important;color:#eee!important;cursor:no-drop;}
 a.enable-false {margin:0px !important;padding:0px !important;background-color:#aaa !important;color:#eee!important;cursor:no-drop;}
 .enable-false .select2-chosen {padding-left:5px;padding-right:0px!important;margin-right:0px!important;cursor:no-drop;}

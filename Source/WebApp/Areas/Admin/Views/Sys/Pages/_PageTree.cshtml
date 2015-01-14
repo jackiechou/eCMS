@@ -1,0 +1,58 @@
+﻿<div id="dropDownButton">
+    <div style="border: none;" id='jqxTree'>
+        <ul>
+            <li item-selected='true'>Home</li>
+            <li item-expanded='true'>
+                Solutions
+                <ul>
+                    <li id="1">Education</li>
+                    <li id="2">Financial services</li>
+                    <li id="3">Government</li>
+                    <li id="4">Manufacturing</li>
+                    <li id="5">
+                        Solutions
+                        <ul>
+                            <li id="6">eLearning</li>
+                            <li id="7">Mobile</li>
+                            <li id="8">RIA</li>
+                            <li id="9">Training</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Products
+                <ul>
+                    <li>PC products</li>
+                    <li>Mobile products</li>
+                    <li>All products</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<input type="hidden" id="PageId" name="PageId"/>
+<link href="~/Scripts/plugins/jqwidgets/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
+
+<script src="~/Scripts/plugins/jqwidgets/scripts/demos.js"></script>
+
+<script type="text/javascript" src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxdropdownbutton.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxtree.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jqwidgets/jqwidgets/jqxpanel.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dropDownButton").jqxDropDownButton({ width: 150, height: 25 });
+        $('#jqxTree').on('select', function (event) {
+            var args = event.args;
+            var item = $('#jqxTree').jqxTree('getItem', args.element);
+            
+            $('input[type=hidden][id="PageId"]').val(item.id);
+            var dropDownContent = '<div style="position: relative; margin-left: 3px; margin-top: 5px;">' + item.label + '</div>';
+            $("#dropDownButton").jqxDropDownButton('setContent', dropDownContent);
+        });
+        $("#jqxTree").jqxTree({ width: 200, height: 220 });
+    });
+</script>

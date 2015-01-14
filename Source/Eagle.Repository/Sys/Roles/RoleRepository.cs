@@ -59,7 +59,7 @@ namespace Eagle.Repository.SYS.Roles
                                 RoleName = p.RoleName,
                                 LoweredRoleName = p.LoweredRoleName,
                                 Description = p.Description
-                            }).ToList();
+                            }).OrderBy(p=>p.RoleId).ToList();
                 }
                 catch
                 {

@@ -51,7 +51,7 @@
                     <input type="text" name="[@k].TotalHours" value="@item.TotalHours" class="col-md-10" style="text-align:right;width:100%" onkeydown="CheckNumber(this);" onkeyup="CheckNumber(this);" onchange="UpdateOfTrainingDuration(this);"/>                                                            
                 </td>
                 <td>
-                    <input data-id="@k" type="button" id="btnAddEmployee" value="@Eagle.Resource.LanguageResource.TrainingRequestParticipant" class="btn btn-info AddModel"  @ViewBag.EnableSaveAndSendForApproval/>
+                    <input data-id="@k" type="button" id="btnAddEmployee" value="@Eagle.Resource.LanguageResource.TrainingRequestParticipant" class="btn btn-info add AddModel"  @ViewBag.EnableSaveAndSendForApproval/>
                 </td>
                 <td class="table-actions text_center no-sort">                        
                     <a data-id="@item.Key"  title="Delete" class="ico deleteItem " onclick="DeleteRowOfDuration(this);">&nbsp;&nbsp;&nbsp;</a>

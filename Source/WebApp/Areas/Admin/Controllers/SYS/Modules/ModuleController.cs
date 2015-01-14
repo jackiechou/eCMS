@@ -121,50 +121,87 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
             return PartialView("../Sys/Modules/_AddExistingModule");
         }
 
- 
-        //// POST: /Admin/Module/Create
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult Create(ModuleViewModel add_model, bool chkModuleStatus)
-        //{
-        //    bool flag = false;
-        //    string message = string.Empty;
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            DateTime? startDate = add_model.EffectiveDate;
-        //            DateTime? endDate = add_model.ExpiredDate;
-        //            if (startDate.HasValue && endDate.HasValue)
-        //            {
-        //                if (DateTime.Compare(startDate.Value, endDate.Value) > 0)
-        //                {
-        //                    flag = false;
-        //                    message = Eagle.Resource.LanguageResource.ValidateEffectiveDateExpiredDate;
-        //                    return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
-        //                }
-        //            }
-        //            ModuleRepository _repository = new ModuleRepository(db);
-        //            add_model.Creater = CurrentEmpId;
-        //            add_model.ModuleStatus = chkModuleStatus == true ? 1 : 0;
-        //            flag = _repository.Add(add_model, out message);
-        //        }
-        //        else
-        //        {
-        //            var errors = ModelState.Values.SelectMany(v => v.Errors);
-        //            foreach (var modelError in errors)
-        //            {
-        //                message += modelError.ErrorMessage + "-";
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        message = ex.ToString();
-        //        flag = false;
-        //    }
-        //    return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
-        //}
 
+        // POST: /Admin/Module/Create
+        [HttpPost]
+        public ActionResult Create(ModuleViewModel add_model)
+        {
+            bool flag = false;
+            string message = string.Empty;
+            add_model.ApplicationId = ApplicationId;
+            add_model.ScopeTypeId = ScopeTypeId;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    DateTime? startDate = add_model.StartDate;
+                    DateTime? endDate = add_model.EndDate;
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        if (DateTime.Compare(startDate.Value, endDate.Value) > 0)
+                        {
+                            flag = false;
+                            message = Eagle.Resource.LanguageResource.ValidateStartDateEndDate;
+                            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    flag = ModuleRepository.Insert(add_model, out message);
+                }
+                else
+                {
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    foreach (var modelError in errors)
+                    {
+                        message += modelError.ErrorMessage + "-";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.ToString();
+                flag = false;
+            }
+            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        }
+
+     
+        ////
+        //// POST: 
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Edit(ModuleViewModel edit_model)
+        {
+            bool flag = false;
+            string message = string.Empty;
+            edit_model.ApplicationId = ApplicationId;
+            edit_model.ScopeTypeId = ScopeTypeId;
+
+            if (ModelState.IsValid)
+            {
+                DateTime? startDate = edit_model.StartDate;
+                DateTime? endDate = edit_model.EndDate;
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    if (DateTime.Compare(startDate.Value, endDate.Value) > 0)
+                    {
+                        flag = false;
+                        message = Eagle.Resource.LanguageResource.ValidateEffectiveDateExpiredDate;
+                        return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+                    }
+                }
+                flag = ModuleRepository.Update(edit_model, out message);
+            }
+            else
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var modelError in errors)
+                {
+                    message += modelError.ErrorMessage + "-";
+                }
+            }
+            return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
+        }
         ////POST - UpdateFileIds
         ////[HttpPost]
         //public ActionResult UpdateFileIds(int Id, string Added_FileIds)
@@ -172,44 +209,6 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         //    bool flag = false;
         //    string message = string.Empty;
         //    flag = ModuleRepository.UpdateFileIds(Id, Added_FileIds, out message);
-        //    return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
-        //}
-
-        ////
-        //// POST: 
-
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult Edit(ModuleViewModel edit_model, bool chkModuleStatus)
-        //{
-        //    bool flag = false;
-        //    string message = string.Empty;
-        //    if (ModelState.IsValid)
-        //    {
-        //        DateTime? startDate = edit_model.EffectiveDate;
-        //        DateTime? endDate = edit_model.ExpiredDate;
-        //        if (startDate.HasValue && endDate.HasValue)
-        //        {
-        //            if (DateTime.Compare(startDate.Value, endDate.Value) > 0)
-        //            {
-        //                flag = false;
-        //                message = Eagle.Resource.LanguageResource.ValidateEffectiveDateExpiredDate;
-        //                return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
-        //            }
-        //        }
-
-        //        ModuleRepository _repository = new ModuleRepository(db);
-        //        edit_model.Creater = CurrentEmpId;
-        //        edit_model.ModuleStatus = chkModuleStatus == true ? 1 : 0;
-        //        flag = _repository.Edit(edit_model, out message);
-        //    }
-        //    else
-        //    {
-        //        var errors = ModelState.Values.SelectMany(v => v.Errors);
-        //        foreach (var modelError in errors)
-        //        {
-        //            message += modelError.ErrorMessage + "-";
-        //        }
-        //    }
         //    return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
         //}
 
@@ -222,8 +221,7 @@ namespace Eagle.WebApp.Areas.Admin.Controllers.SYS.Modules
         {
             string message = string.Empty;
             bool flag = false;
-            ModuleRepository _repository = new ModuleRepository(db);
-            flag = _repository.Delete(id, out message);
+            flag = ModuleRepository.Delete(id, out message);
             return Json(JsonUtils.SerializeResult(flag, message), JsonRequestBehavior.AllowGet);
         }
 
